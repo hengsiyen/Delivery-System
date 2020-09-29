@@ -1,4 +1,7 @@
-# Box Backend integrated with [Nuxtjs](https://nuxtjs.org)
+Box Backend integrated with [Nuxtjs](https://nuxtjs.org)
+------------------------------------------------
+
+A box backend is integrated with the Nuxtjs framework
 
 ![Screenshot](./assets/img/screenshot.png)
 
