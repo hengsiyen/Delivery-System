@@ -10,9 +10,15 @@ files.keys().forEach((key) => {
   messages[lang] = files(key)
 })
 
+let locale = 'en'
+
+if (process.browser) {
+  locale = localStorage.getItem('locale')
+}
+
 export default ({ app }) => {
   app.i18n = new VueI18n({
-    locale: 'en',
+    locale,
     fallbackLocale: 'en',
     messages
   })

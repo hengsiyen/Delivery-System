@@ -33,7 +33,8 @@ export default {
   plugins: [
     '~/plugins/i18n.js',
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
-    { src: '~/plugins/vue-loading.js', mode: 'client' }
+    { src: '~/plugins/vue-loading.js', mode: 'client' },
+    { src: '~/plugins/vue-sweetalert.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -43,7 +44,8 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/moment'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)

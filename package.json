@@ -8,18 +8,21 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint": "npm run lint:js"
+    "lint": "npm run lint:js",
+    "i18n": "python ./geni18n.py ./pages ./locales km en"
   },
   "dependencies": {
     "@deveodk/vue-toastr": "^1.1.0",
     "@nuxt/content": "^1.8.1",
     "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/pwa": "^3.0.2",
     "adminlte": "^2.4.1",
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
     "nuxt": "^2.14.5",
     "vue-i18n": "^8.21.1",
+    "vue-sweetalert2": "^3.0.8",
     "vuejs-loading-screen": "^1.0.8"
   },
   "devDependencies": {
