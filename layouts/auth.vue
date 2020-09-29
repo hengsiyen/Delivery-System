@@ -9,11 +9,7 @@ export default {
     return {
       bodyAttrs: {
         class: 'hold-transition login-page'
-      },
-      script: [
-        { src: 'js/adminlte/icheck.min.js' },
-        { src: 'js/login.js' }
-      ]
+      }
     }
   }
 }

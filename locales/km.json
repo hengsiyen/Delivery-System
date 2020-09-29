@@ -1,4 +1,15 @@
 {
+    "button": {
+        "login": "ចូលប្រព័ន្ធ"
+    },
+    "label": {
+        "email": "អាស័យ​ដ្ឋាន​អ៊ី​ម៉េ​ល",
+        "forget_password": "ភ្លេចពាក្យសម្ងាត់",
+        "online": "កំពុងអនឡាញ",
+        "password": "ការពាក្យសម្ងាត់",
+        "profile": "ទម្រង់",
+        "signOut": "ចាកចេញ"
+    },
     "menu": {
         "dashboard": "ផ្ទាំងគ្រប់គ្រង",
         "gender": "ភេទ",
@@ -9,6 +20,17 @@
         "user": "អ្នក​ប្រើប្រាស់"
     },
     "message": {
-        "hello": "សួស្តី"
+        "hello": "សួស្តី",
+        "success": "ជោគជ័យ"
+    },
+    "string": {
+        "allRightsReserved": "រក្សា​រ​សិទ្ធ​គ្រប់យ៉ាង",
+        "developedBy": "អភិវឌ្ឍន៏ដោយ៖ ",
+        "login": "ចូលប្រព័ន្ធ",
+        "memberSince": "សមាជិកតាំងពី",
+        "right_reserved": "រក្សា​សិទ្ធ​គ្រប់យ៉ាង",
+        "theProcessHasBeenUpdatedSuccessfully": "ដំណើរការនេះត្រូវបានអនុវត្តន៍ដោយជោគជ័យ",
+        "welcomeTo": "ស្វាគមន៍​មកកាន់",
+        "welcome_back": "ស្វា​គម​ន៏​ការ​ត្រ​លប់​មក​វិញ"
     }
 }

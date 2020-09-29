@@ -1,10 +1,25 @@
 <template>
-  <h3>Permission</h3>
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">
+        {{ $t('menu.permission') }}
+      </h3>
+    </div>
+    <div class="box-body">
+      <h3>Content</h3>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Index'
+  name: 'Index',
+  head () {
+    return {
+      title: this.$t('menu.permission'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  }
 }
 </script>
 

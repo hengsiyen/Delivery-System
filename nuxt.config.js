@@ -25,13 +25,15 @@ export default {
     { src: 'adminlte/dist/css/AdminLTE.min.css', lang: 'css' },
     { src: 'adminlte/dist/css/skins/skin-blue.min.css', lang: 'css' },
     '@/assets/css/fonts.css',
-    '@/assets/css/app.css',
-    '@/assets/css/adminlte/icheck/blue.css'
+    '@/assets/css/login.css',
+    '@/assets/css/app.css'
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/i18n.js'
+    '~/plugins/i18n.js',
+    { src: '~/plugins/vue-toastr.js', mode: 'client' },
+    { src: '~/plugins/vue-loading.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

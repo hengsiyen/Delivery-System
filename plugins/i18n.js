@@ -10,7 +10,7 @@ files.keys().forEach((key) => {
   messages[lang] = files(key)
 })
 
-export default ({ app, store }) => {
+export default ({ app }) => {
   app.i18n = new VueI18n({
     locale: 'en',
     fallbackLocale: 'en',

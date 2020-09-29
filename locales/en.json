@@ -1,4 +1,15 @@
 {
+    "button": {
+        "login": "Log In"
+    },
+    "label": {
+        "email": "E-Mail Address",
+        "forget_password": "Forget password",
+        "online": "Online",
+        "password": "Password",
+        "profile": "Profile",
+        "signOut": "Sign out"
+    },
     "menu": {
         "dashboard": "Dashboard",
         "gender": "Gender",
@@ -9,6 +20,17 @@
         "user": "User"
     },
     "message": {
-        "hello": "Hello"
+        "hello": "Hello",
+        "success": "Success"
+    },
+    "string": {
+        "allRightsReserved": "All Rights Reserved",
+        "developedBy": "Developed by",
+        "login": "Log In",
+        "memberSince": "Member since",
+        "right_reserved": "All Right Reserved",
+        "theProcessHasBeenUpdatedSuccessfully": "The process has been updated successfully",
+        "welcomeTo": "Welcome to",
+        "welcome_back": "Welcome back"
     }
 }
