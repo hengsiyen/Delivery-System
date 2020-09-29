@@ -1,62 +1,97 @@
 <template>
   <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success" /> Online</a>
-        </div>
-      </div>
-
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-            <button id="search-btn" type="submit" name="search" class="btn btn-flat"><i class="fa fa-search" />
-            </button>
-          </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-
-      <!-- Sidebar Menu -->
+      <sidebar-user />
+      <sidebar-search />
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">
-          HEADER
-        </li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="active">
-          <a href="#"><i class="fa fa-link" /> <span>Link</span></a>
-        </li>
-        <li><a href="#"><i class="fa fa-link" /> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link" /> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right" />
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
+        <template v-for="(menu, key) in menus">
+          <template v-if="menu.route === null && menu.children === null">
+            <li :key="key" class="header">
+              {{ menu.label }}
+            </li>
+          </template>
+          <template v-else-if="menu.route !== null && menu.children === null">
+            <li :key="key">
+              <nuxt-link :to="menu.route">
+                <i :class="menu.icon" /> <span>{{ menu.label }}</span>
+              </nuxt-link>
+            </li>
+          </template>
+          <template v-else>
+            <sidebar-tree :key="key" :menu="menu" />
+          </template>
+        </template>
       </ul>
-      <!-- /.sidebar-menu -->
     </section>
-    <!-- /.sidebar -->
   </aside>
 </template>
 
 <script>
+import SidebarUser from '@/components/SidebarUser'
+import SidebarSearch from '@/components/SidebarSearch'
+import SidebarTree from '@/components/SidebarTree'
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  components: {
+    SidebarTree,
+    SidebarSearch,
+    SidebarUser
+  },
+  computed: {
+    menus () {
+      return [
+        {
+          label: this.$t('menu.dashboard'),
+          route: null,
+          icon: null,
+          children: null,
+          permissions: []
+        },
+        {
+          label: this.$t('menu.dashboard'),
+          route: { name: 'admin' },
+          icon: 'fa fa-home',
+          children: null,
+          permissions: []
+        },
+        {
+          label: this.$t('menu.system'),
+          route: null,
+          icon: null,
+          children: null,
+          permissions: []
+        },
+        {
+          label: this.$t('menu.settings'),
+          route: null,
+          icon: 'fa fa-cogs',
+          permissions: [],
+          children: [
+            {
+              label: this.$t('menu.user'),
+              route: { name: 'admin-settings-user' },
+              permissions: []
+            },
+            {
+              label: this.$t('menu.role'),
+              route: { name: 'admin-settings-role' },
+              permissions: []
+            },
+            {
+              label: this.$t('menu.permission'),
+              route: { name: 'admin-settings-permission' },
+              permissions: []
+            },
+            {
+              label: this.$t('menu.gender'),
+              route: { name: 'admin-settings-gender' },
+              permissions: []
+            }
+          ]
+        }
+      ]
+    }
+  }
 }
 </script>
 

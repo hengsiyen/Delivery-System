@@ -12,9 +12,9 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic' }
     ],
     script: [
-      { src: 'js/adminlte/jquery.min.js' },
-      { src: 'js/adminlte/bootstrap.min.js' },
-      { src: 'js/adminlte/adminlte.min.js' }
+      { src: '/js/adminlte/jquery.min.js' },
+      { src: '/js/adminlte/bootstrap.min.js' },
+      { src: '/js/adminlte/adminlte.min.js' }
     ]
   },
 
@@ -24,6 +24,8 @@ export default {
     { src: 'font-awesome/css/font-awesome.min.css', lang: 'css' },
     { src: 'adminlte/dist/css/AdminLTE.min.css', lang: 'css' },
     { src: 'adminlte/dist/css/skins/skin-blue.min.css', lang: 'css' },
+    '@/assets/css/fonts.css',
+    '@/assets/css/app.css',
     '@/assets/css/adminlte/icheck/blue.css'
   ],
 

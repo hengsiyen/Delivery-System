@@ -1,17 +1,21 @@
 <template>
   <footer class="main-footer">
-    <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Anything you want
+      {{ $t('string.developedBy') }} <a href="http://asorasoft.com" target="_blank">Asorasoft.com</a>
     </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    &copy; 2019 {{ $t('string.allRightsReserved') }} <a :href="appUrl"><strong>{{ appName }}</strong></a>
   </footer>
 </template>
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  data () {
+    return {
+      appName: process.env.VUE_APP_COMPANY_NAME,
+      appUrl: process.env.VUE_APP_COMPANY_URL
+    }
+  }
 }
 </script>
 

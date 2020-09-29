@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import Header from '~/partials/Header'
 import Sidebar from '~/partials/Sidebar'
+import Header from '~/partials/Header'
 import Footer from '~/partials/Footer'
 import ControlSidebar from '~/partials/ControlSidebar'
 import ControlSidebarBg from '~/partials/ControlSidebarBg'
@@ -42,5 +42,7 @@ export default {
 </script>
 
 <style>
-
+.wrapper {
+  height: 100vh !important;
+}
 </style>

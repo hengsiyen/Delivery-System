@@ -1,5 +1,14 @@
 {
-  "message": {
-    "hello": "Hello"
-  }
+    "menu": {
+        "dashboard": "Dashboard",
+        "gender": "Gender",
+        "permission": "Permission",
+        "role": "Role",
+        "settings": "Settings",
+        "system": "System",
+        "user": "User"
+    },
+    "message": {
+        "hello": "Hello"
+    }
 }
