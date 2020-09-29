@@ -8,12 +8,23 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic' }
+    ],
+    script: [
+      { src: 'js/adminlte/jquery.min.js' },
+      { src: 'js/adminlte/bootstrap.min.js' },
+      { src: 'js/adminlte/adminlte.min.js' }
     ]
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
+    { src: 'bootstrap/dist/css/bootstrap.min.css', lang: 'css' },
+    { src: 'font-awesome/css/font-awesome.min.css', lang: 'css' },
+    { src: 'adminlte/dist/css/AdminLTE.min.css', lang: 'css' },
+    { src: 'adminlte/dist/css/skins/skin-blue.min.css', lang: 'css' },
+    '@/assets/css/adminlte/icheck/blue.css'
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -26,7 +37,8 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
