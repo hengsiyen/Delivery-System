@@ -6,13 +6,39 @@
       </h3>
     </div>
     <div class="box-body">
-      <h3>Content</h3>
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Laravel</td>
+            <td>Laravel</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: 'Index',
+  data () {
+    return {
+      oTable: null
+    }
+  },
+  mounted () {
+    this.oTable = this.datatable()
+  },
+  methods: {
+    datatable () {
+      return $('#gender-table').datatable()
+    }
+  },
   head () {
     return {
       title: this.$t('menu.gender'),

@@ -128,18 +128,18 @@ export default {
             const token = result.access_token
             const refresh = result.refresh_token
 
-            localStorage.setItem(this.$token, token)
+            localStorage.setItem(process.env.VUE_APP_TOKEN, token)
             localStorage.setItem(process.env.VUE_APP_REFRESH_TOKEN, refresh)
 
             self.$axios.defaults.headers.common.Authorization = 'Bearer ' + token
             self.$axios.defaults.headers.common.Accept = 'application/json'
 
-            /* $.ajaxSetup({
+            $.ajaxSetup({
               headers: {
                 Accept: 'application/json',
                 Authorization: 'Bearer ' + localStorage.getItem(this.$token)
               }
-            }) */
+            })
             self.$store.dispatch('user/setUser', { user: result.user })
 
             // store roles

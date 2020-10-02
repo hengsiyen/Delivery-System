@@ -18,7 +18,8 @@ export default {
     script: [
       { src: '/js/adminlte/jquery.min.js' },
       { src: '/js/adminlte/bootstrap.min.js' },
-      { src: '/js/adminlte/adminlte.min.js' }
+      { src: '/js/adminlte/adminlte.min.js' },
+      { src: '/js/adminlte/jquery-ui.min.js' }
     ]
   },
 
@@ -28,6 +29,8 @@ export default {
     { src: 'font-awesome/css/font-awesome.min.css', lang: 'css' },
     { src: 'adminlte/dist/css/AdminLTE.min.css', lang: 'css' },
     { src: 'adminlte/dist/css/skins/skin-blue.min.css', lang: 'css' },
+    { src: 'datatables.net-bs/css/dataTables.bootstrap.min.css', lang: 'css' },
+    { src: 'datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.css', lang: 'css' },
     '@/assets/css/fonts.css',
     '@/assets/css/login.css',
     '@/assets/css/app.css'
