@@ -32,6 +32,11 @@ export default {
     opened () {
       return this.menu.children.some(child => child.route.name === this.$route.name)
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      // $(document.body).tree({ selector: '.sidebar-menu' })
+    })
   }
 }
 </script>

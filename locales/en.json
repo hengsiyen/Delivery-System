@@ -1,16 +1,36 @@
 {
     "button": {
-        "login": "Log In"
+        "cancel": "Cancel",
+        "login": "Log In",
+        "resetPassword": "Rese​ Password",
+        "save": "Save",
+        "update": "Update"
+    },
+    "fields": {
+        "createdAt": "Created at",
+        "email": "E-Mail Address",
+        "firstName": "First name",
+        "gender": "Gender",
+        "lastName": "Last name",
+        "updatedAt": "Updated at"
     },
     "label": {
+        "changeAvatar": "Change Avatar",
+        "confirmPassword": "Confirm password",
         "email": "E-Mail Address",
+        "female": "Female",
         "forget_password": "Forget password",
-        "online": "Online",
+        "location": "Location",
+        "male": "Male",
+        "oldPassword": "Old password",
         "password": "Password",
         "profile": "Profile",
-        "signOut": "Sign out"
+        "resetPassword": "Reset Password",
+        "signOut": "Sign out",
+        "uploadYourAvatar": "Upload your avatar"
     },
     "menu": {
+        "account": "Account",
         "dashboard": "Dashboard",
         "gender": "Gender",
         "permission": "Permission",
@@ -27,8 +47,8 @@
         "allRightsReserved": "All Rights Reserved",
         "developedBy": "Developed by",
         "login": "Log In",
-        "memberSince": "Member since",
         "right_reserved": "All Right Reserved",
+        "selectGender": "Select gender",
         "theProcessHasBeenUpdatedSuccessfully": "The process has been updated successfully",
         "welcomeTo": "Welcome to",
         "welcome_back": "Welcome back"

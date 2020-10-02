@@ -1,16 +1,37 @@
 {
     "button": {
-        "login": "ចូលប្រព័ន្ធ"
+        "cancel": "បោះបង់",
+        "login": "ចូលប្រព័ន្ធ",
+        "resetPassword": "កំណត់ពាក្យសម្ងាត់ឡើងវិញ",
+        "save": "រក្សាទុក",
+        "update": "ធ្វើបច្ចុប្បន្នភាព"
+    },
+    "fields": {
+        "createdAt": "បានបង្កើតនៅ",
+        "email": "អាស័យ​ដ្ឋាន​អ៊ី​ម៉េ​ល",
+        "firstName": "គោត្តនាម",
+        "gender": "ភេទ",
+        "lastName": "នាមត្រកូល",
+        "updatedAt": "បានធ្វើបច្ចុប្បន្នភាពនៅ"
     },
     "label": {
+        "changeAvatar": "ប្ដូររូបតំណាង",
+        "confirmPassword": "ពាក្យសម្ងាត់បញ្ជាក់",
         "email": "អាស័យ​ដ្ឋាន​អ៊ី​ម៉េ​ល",
+        "female": "ស្រី",
         "forget_password": "ភ្លេចពាក្យសម្ងាត់",
+        "location": "ទីតាំង",
+        "male": "ប្រុស",
+        "oldPassword": "លេខសំងាត់​ចាស់",
         "online": "កំពុងអនឡាញ",
         "password": "ការពាក្យសម្ងាត់",
         "profile": "ទម្រង់",
-        "signOut": "ចាកចេញ"
+        "resetPassword": "ពាក្យសម្ងាត់កំណត់ឡើងវិញ",
+        "signOut": "ចាកចេញ",
+        "uploadYourAvatar": "ផ្ទុកឡើងរូបតំនាងរបស់អ្នក"
     },
     "menu": {
+        "account": "គណនី",
         "dashboard": "ផ្ទាំងគ្រប់គ្រង",
         "gender": "ភេទ",
         "permission": "សិទ្ធិប្រើប្រាស់",
@@ -29,6 +50,7 @@
         "login": "ចូលប្រព័ន្ធ",
         "memberSince": "សមាជិកតាំងពី",
         "right_reserved": "រក្សា​សិទ្ធ​គ្រប់យ៉ាង",
+        "selectGender": "ជ្រើសរើស​ភេទ",
         "theProcessHasBeenUpdatedSuccessfully": "ដំណើរការនេះត្រូវបានអនុវត្តន៍ដោយជោគជ័យ",
         "welcomeTo": "ស្វាគមន៍​មកកាន់",
         "welcome_back": "ស្វា​គម​ន៏​ការ​ត្រ​លប់​មក​វិញ"
