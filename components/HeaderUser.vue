@@ -76,10 +76,15 @@ export default {
     signOut () {
       this.$isLoading(true)
       this.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/logout')
-        .finally(() => {
+        .then(() => {
           localStorage.clear()
+          this.$router.push({ path: '/' })
+        })
+        .catch((error) => {
+          this.onResponseError(error)
+        })
+        .finally(() => {
           this.$isLoading(false)
-          this.$router.push({ name: 'login' })
         })
     }
   }
