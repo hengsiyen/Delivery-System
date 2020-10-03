@@ -94,7 +94,11 @@
 
 <script>
 export default {
+  name: 'Index',
   layout: 'auth',
+  meta: {
+    theme: 'dark'
+  },
   data () {
     return {
       appName: process.env.VUE_APP_NAME,
