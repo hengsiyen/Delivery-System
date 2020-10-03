@@ -8,7 +8,7 @@
           </h3>
         </div>
         <div class="box-body">
-          <h3>{{ $t('string.welcomeTo') }} {{ config }}</h3>
+          <h3>{{ $t('string.welcomeTo') }} {{ $env }}</h3>
         </div>
       </div>
     </div>
@@ -16,20 +16,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   name: 'Dashboard',
-  data () {
-    return {
-      config: process.env
-    }
-  },
-  computed: {
-    ...mapState({
-      administrators: state => state.user.administrators
-    })
-  },
   head () {
     return {
       title: this.$t('menu.dashboard'),

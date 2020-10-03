@@ -3,6 +3,7 @@ const webpack = require('webpack')
 require('dotenv').config()
 
 export default {
+  loading: '~/components/Loading.vue',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'box-backend-nuxtjs',
@@ -16,10 +17,10 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic' }
     ],
     script: [
-      { src: '/js/adminlte/jquery.min.js' },
-      { src: '/js/adminlte/bootstrap.min.js' },
-      { src: '/js/adminlte/adminlte.min.js' },
-      { src: '/js/adminlte/jquery-ui.min.js' }
+      // { src: '/js/adminlte/jquery.min.js' },
+      // { src: '/js/adminlte/bootstrap.min.js' },
+      // { src: '/js/adminlte/adminlte.min.js' },
+      // { src: '/js/adminlte/jquery-ui.min.js' }
     ]
   },
 
@@ -38,6 +39,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    { src: '~/plugins/script.js', mode: 'client' },
     '~/plugins/i18n.js',
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
     { src: '~/plugins/vue-loading.js', mode: 'client' },

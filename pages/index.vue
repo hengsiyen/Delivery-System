@@ -137,7 +137,7 @@ export default {
             $.ajaxSetup({
               headers: {
                 Accept: 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem(this.$token)
+                Authorization: 'Bearer ' + localStorage.getItem(process.env.VUE_APP_TOKEN)
               }
             })
             self.$store.dispatch('user/setUser', { user: result.user })

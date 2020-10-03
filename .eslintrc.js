@@ -18,6 +18,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     'no-console': 'off',
-    'no-undef': 'off'
+    'no-undef': 'off',
+    'vue/order-in-components': 'off'
   }
 }

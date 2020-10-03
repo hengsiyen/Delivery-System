@@ -35,7 +35,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      // $(document.body).tree({ selector: '.sidebar-menu' })
+      $(document.body).tree({ selector: '.sidebar-menu' })
     })
   }
 }

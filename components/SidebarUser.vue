@@ -19,11 +19,6 @@
 import { mapState } from 'vuex'
 export default {
   name: 'SidebarUser',
-  data () {
-    return {
-      baseUrl: process.env.VUE_APP_API
-    }
-  },
   computed: {
     ...mapState({
       user: state => state.user.data

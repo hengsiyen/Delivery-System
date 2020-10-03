@@ -1,0 +1,7 @@
+import 'jquery'
+import 'bootstrap'
+import 'admin-lte/dist/js/adminlte.js'
+import 'jquery-ui-dist/jquery-ui.js'
+import 'datatables.net'
+import 'datatables.net-bs'
+import 'datatables-bootstrap3-plugin'
