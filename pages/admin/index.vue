@@ -23,6 +23,9 @@ export default {
       title: this.$t('menu.dashboard'),
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
+  },
+  meta: {
+    groups: ['test']
   }
 }
 </script>

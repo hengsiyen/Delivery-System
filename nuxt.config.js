@@ -3,7 +3,7 @@ const webpack = require('webpack')
 require('dotenv').config()
 
 export default {
-  loading: '~/components/Loading.vue',
+  // loading: '~/components/Loading.vue',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'box-backend-nuxtjs',
@@ -43,7 +43,8 @@ export default {
     '~/plugins/i18n.js',
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
     { src: '~/plugins/vue-loading.js', mode: 'client' },
-    { src: '~/plugins/vue-sweetalert.js', mode: 'client' }
+    { src: '~/plugins/vue-sweetalert.js', mode: 'client' },
+    { src: '~/plugins/storage.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
