@@ -48,37 +48,36 @@ export default {
       }
     }
   },
-  middleware ({ store, redirect }) {
-    console.log(this.Storage)
-    // function clearUser () {
-    //   localStorage.clear()
-    //   store.dispatch('user/clearUser')
-    //   redirect('/')
-    // }
-    //
-    // if (!store.state.user.data) {
-    //   console.log('test')
-    //   const _token = localStorage.getItem(process.env.VUE_APP_TOKEN)
-    //
-    //   if (_token) {
-    //     this.$axios.post(process.env.VUE_APP_API + '/api/backend/user/get-roles-and-permissions')
-    //       .then((response) => {
-    //         const result = response.data.data
-    //         store.dispatch('user/setUser', { user: result.user })
-    //         // store roles
-    //         store.dispatch('user/setRoles', result.roles)
-    //         // store permission
-    //         store.dispatch('user/setPermissions', result.permissions)
-    //       })
-    //       .catch((error) => {
-    //         if (error.response && error.response.status === 401) {
-    //           clearUser()
-    //         }
-    //       })
-    //   } else {
-    //     clearUser()
-    //   }
-    // }
+  middleware ({ store, redirect, $storage }) {
+    function clearUser () {
+      localStorage.clear()
+      store.dispatch('user/clearUser')
+      redirect('/')
+    }
+
+    if (process.client && !store.state.user.data) {
+      console.log('test')
+      const _token = $storage.getLocalStorage(process.env.VUE_APP_TOKEN)
+
+      if (_token) {
+        this.$axios.post(process.env.VUE_APP_API + '/api/backend/user/get-roles-and-permissions')
+          .then((response) => {
+            const result = response.data.data
+            store.dispatch('user/setUser', { user: result.user })
+            // store roles
+            store.dispatch('user/setRoles', result.roles)
+            // store permission
+            store.dispatch('user/setPermissions', result.permissions)
+          })
+          .catch((error) => {
+            if (error.response && error.response.status === 401) {
+              clearUser()
+            }
+          })
+      } else {
+        clearUser()
+      }
+    }
   }
 }
 </script>

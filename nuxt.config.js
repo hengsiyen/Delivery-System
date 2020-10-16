@@ -3,7 +3,6 @@ const webpack = require('webpack')
 require('dotenv').config()
 
 export default {
-  // loading: '~/components/Loading.vue',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'box-backend-nuxtjs',
@@ -44,7 +43,7 @@ export default {
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
     { src: '~/plugins/vue-loading.js', mode: 'client' },
     { src: '~/plugins/vue-sweetalert.js', mode: 'client' },
-    { src: '~/plugins/storage.js', mode: 'client' }
+    { src: '~/plugins/axios.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -52,11 +51,18 @@ export default {
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
+    '@nuxtjs/router',
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     '@nuxtjs/dotenv',
     '@nuxtjs/moment'
   ],
+
+  routerModule: {
+    path: '~/routes',
+    fileName: 'router.js',
+    keepDefaultRouter: true
+  },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
@@ -65,11 +71,15 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
-    '@nuxt/content'
+    '@nuxt/content',
+    // https://github.com/nuxt-community/universal-storage-module
+    '@nuxtjs/universal-storage'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: process.env.VUE_APP_API
+  },
 
   // Content module configuration (https://go.nuxtjs.dev/content-config)
   content: {},

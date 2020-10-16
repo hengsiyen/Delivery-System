@@ -7,8 +7,8 @@
             {{ $t('menu.dashboard') }}
           </h3>
         </div>
-        <div class="box-body">
-          <h3>{{ $t('string.welcomeTo') }} {{ $env }}</h3>
+        <div v-if="env" class="box-body">
+          <h3>{{ $t('string.welcomeTo') }} {{ env }}</h3>
         </div>
       </div>
     </div>
@@ -24,8 +24,10 @@ export default {
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
   },
-  meta: {
-    groups: ['test']
+  data () {
+    return {
+      env: process.env
+    }
   }
 }
 </script>

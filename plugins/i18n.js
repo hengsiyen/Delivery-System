@@ -13,7 +13,7 @@ files.keys().forEach((key) => {
 let locale = 'en'
 
 if (process.browser) {
-  locale = localStorage.getItem('locale')
+  locale = localStorage.getItem('locale') || 'en'
 }
 
 export default ({ app }) => {

@@ -59,7 +59,7 @@ const helpers = {
       methods: {
         getDateFormat (date, format = process.env.VUE_APP_DATE_FORMAT) {
           if (this.$moment(date).isValid()) {
-            return this.$moment(date).format(format)
+            return this.$moment(date, 'YYYY-MM-DD').format(format)
           }
           return this.$t('string.na')
         },

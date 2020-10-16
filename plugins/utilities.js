@@ -6,7 +6,7 @@ export const isSameURL = (a, b) => a.split('?')[0].replace(/\/+$/, '') === b.spl
 export const isRelativeURL = u =>
   u && u.length && /^\/([a-zA-Z0-9@\-%_~][/a-zA-Z0-9@\-%_~]*)?([?][^#]*)?(#[^#]*)?$/.test(u)
 
-export const parseQuery = queryString => {
+export const parseQuery = (queryString) => {
   const query = {}
   const pairs = queryString.split('&')
   for (let i = 0; i < pairs.length; i++) {
@@ -16,7 +16,7 @@ export const parseQuery = queryString => {
   return query
 }
 
-export const encodeQuery = queryObject => {
+export const encodeQuery = (queryObject) => {
   return Object.entries(queryObject)
     .filter(([key, value]) => typeof value !== 'undefined')
     .map(
@@ -27,7 +27,7 @@ export const encodeQuery = queryObject => {
 }
 
 export const routeOption = (route, key, value) => {
-  return route.matched.some(m => {
+  return route.matched.some((m) => {
     if (process.client) {
       // Client
       return Object.values(m.components).some(
@@ -77,7 +77,9 @@ export function decodeValue (val) {
   if (typeof val === 'string') {
     try {
       return JSON.parse(val)
-    } catch (_) { }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   // Return as is

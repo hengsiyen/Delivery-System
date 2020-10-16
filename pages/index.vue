@@ -70,7 +70,7 @@
               <div class="col-md-12 item-center margin-bottom">
                 <button
                   class="btn btn-primary btn-block capitalize btn-login slide"
-                  @click="onClickLogin"
+                  @click="onLogin"
                 >
                   <i class="fa fa-sign-in" /> {{ $t('button.login') }}
                 </button>
@@ -96,8 +96,11 @@
 export default {
   name: 'Index',
   layout: 'auth',
-  meta: {
-    theme: 'dark'
+  head () {
+    return {
+      title: this.$t('string.login'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
   },
   data () {
     return {
@@ -112,14 +115,8 @@ export default {
       config: process.env
     }
   },
-  mounted () {
-    window.addEventListener('keypress', this.onPressEnter)
-  },
-  destroyed () {
-    window.removeEventListener('keypress', this.onPressEnter)
-  },
   methods: {
-    onClickLogin (e) {
+    onLogin (e) {
       const self = this
       self.isLoginFail = false
       this.messageLoginFail = ''
@@ -135,8 +132,8 @@ export default {
             localStorage.setItem(process.env.VUE_APP_TOKEN, token)
             localStorage.setItem(process.env.VUE_APP_REFRESH_TOKEN, refresh)
 
-            self.$axios.defaults.headers.common.Authorization = 'Bearer ' + token
-            self.$axios.defaults.headers.common.Accept = 'application/json'
+            self.$axios.setHeader('Authorization', 'Bearer ' + token)
+            self.$axios.setHeader('Accept', 'application/json')
 
             $.ajaxSetup({
               headers: {
@@ -144,9 +141,9 @@ export default {
                 Authorization: 'Bearer ' + localStorage.getItem(process.env.VUE_APP_TOKEN)
               }
             })
-            self.$store.dispatch('user/setUser', { user: result.user })
 
             // store roles
+            self.$store.dispatch('user/setUser', { user: result.user })
             self.$store.dispatch('user/setRoles', result.roles)
 
             // store permission
@@ -173,15 +170,15 @@ export default {
     },
     onPressEnter (e) {
       if (e.code === 'Enter') {
-        this.onClickLogin()
+        this.onLogin()
       }
     }
   },
-  head () {
-    return {
-      title: this.$t('string.login'),
-      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
-    }
+  mounted () {
+    window.addEventListener('keypress', this.onPressEnter)
+  },
+  destroyed () {
+    window.removeEventListener('keypress', this.onPressEnter)
   }
 }
 </script>

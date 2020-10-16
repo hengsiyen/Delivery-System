@@ -75,8 +75,9 @@ export default {
           localStorage.clear()
           this.$router.push({ path: '/' })
         })
-        .catch((error) => {
-          this.onResponseError(error)
+        .catch(() => {
+          localStorage.clear()
+          this.$router.push({ path: '/' })
         })
         .finally(() => {
           this.$isLoading(false)
