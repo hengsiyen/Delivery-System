@@ -12,18 +12,17 @@
             <div class="form-horizontal">
               <div v-if="isEdit" class="form-group text-center margin-50">
                 <div class="change-avatar">
-                  <p class="text-center" style="margin-bottom: 10px;">
+                  <div style="display: inline-grid">
                     <img
                       :src="imgDataUrl || '/images/avatar/avatar.png'"
                       alt="User Avatar"
-                      width="200"
-                      height="200"
+                      class="container-avatar"
                     >
-                  </p>
-                  <a
-                    class="btn btn-primary"
-                    @click="toggleShow"
-                  >{{ $t('label.uploadYourAvatar') }}</a>
+                    <a
+                      class="btn btn-primary"
+                      @click="toggleShow"
+                    >{{ $t('label.uploadYourAvatar') }}</a>
+                  </div>
                   <my-upload
                     v-model="show"
                     field="avatar"
@@ -240,6 +239,7 @@
 </template>
 
 <script>
+import 'babel-polyfill'
 import myUpload from 'vue-image-crop-upload'
 import PermissionTree from '~/pages/admin/settings/permission/_components/PermissionTree'
 
@@ -357,5 +357,19 @@ export default {
 .permission-tree-wrapper {
   padding-bottom: 20px;
   overflow: auto;
+}
+.change-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+}
+.container-avatar {
+  width: 300px;
+  height: 300px;
+  border: 1px solid #f1f1f1;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
 </style>

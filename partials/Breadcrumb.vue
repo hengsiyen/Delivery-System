@@ -1,8 +1,8 @@
 <template>
   <section class="content-header">
     <h1>
-      Page Header
-      <small>Optional description</small>
+      {{ appName }}
+      <small>{{ appDescription }}</small>
     </h1>
     <ol v-if="$route.meta.breadcrumb" class="breadcrumb">
       <li>
@@ -30,7 +30,13 @@
 
 <script>
 export default {
-  name: 'Breadcrumb'
+  name: 'Breadcrumb',
+  data () {
+    return {
+      appName: process.env.VUE_APP_NAME,
+      appDescription: process.env.VUE_APP_DESC
+    }
+  }
 }
 </script>
 

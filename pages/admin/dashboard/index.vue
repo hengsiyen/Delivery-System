@@ -7,8 +7,8 @@
             {{ $t('menu.dashboard') }}
           </h3>
         </div>
-        <div v-if="env" class="box-body">
-          <h3>{{ $t('string.welcomeTo') }} {{ env }}</h3>
+        <div v-if="appName" class="box-body">
+          <h3>{{ $t('string.welcomeTo') }} {{ appName }}</h3>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@ export default {
   },
   data () {
     return {
-      env: process.env
+      appName: process.env.VUE_APP_NAME
     }
   }
 }
