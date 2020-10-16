@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import RoleForm from './../form'
+import RoleForm from './form'
 
 export default {
   name: 'EditRole',

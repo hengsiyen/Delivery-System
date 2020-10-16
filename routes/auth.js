@@ -1,11 +1,21 @@
+import Auth from '~/layouts/auth'
+import Login from '~/pages/index'
+
 export const authRouters = {
-  path: '',
-  component: () => import('~/layouts/auth'),
+  path: '/',
+  component: Auth,
+  redirect: 'login',
+  meta: {
+    noAuth: true
+  },
   children: [
     {
       name: 'login',
-      path: 'login',
-      component: () => import('~/pages/index')
+      path: '/login',
+      component: Login,
+      meta: {
+        noAuth: true
+      }
     }
   ]
 }

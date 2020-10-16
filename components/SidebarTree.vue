@@ -8,7 +8,7 @@
     <ul class="treeview-menu" :style="opened ? 'display: block' : 'display: none'">
       <template v-if="menu.children">
         <template v-for="(child, key) in menu.children">
-          <li :key="key">
+          <li :key="key" :class="{active: $route.name === child.route.name}">
             <nuxt-link :to="child.route">
               {{ child.label }}
             </nuxt-link>

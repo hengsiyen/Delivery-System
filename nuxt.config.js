@@ -38,12 +38,12 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    { src: '~/plugins/script.js', mode: 'client' },
     '~/plugins/i18n.js',
+    { src: '~/plugins/axios.js', mode: 'client' },
+    { src: '~/plugins/script.js', mode: 'client' },
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
     { src: '~/plugins/vue-loading.js', mode: 'client' },
-    { src: '~/plugins/vue-sweetalert.js', mode: 'client' },
-    { src: '~/plugins/axios.js', mode: 'client' }
+    { src: '~/plugins/vue-sweetalert.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -52,17 +52,10 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     '@nuxtjs/router',
-    // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     '@nuxtjs/dotenv',
     '@nuxtjs/moment'
   ],
-
-  routerModule: {
-    path: '~/routes',
-    fileName: 'router.js',
-    keepDefaultRouter: true
-  },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [

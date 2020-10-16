@@ -1,3 +1,20 @@
+import { dashboardRoutes } from '@/routes/dashboard'
+import Permissions from '@/permissions'
+import { accountRouters } from '@/routes/account'
+import { settingRouters } from '@/routes/settings'
+import App from '~/pages/admin/index'
+
 export const defaultRouters = {
-  name: ''
+  path: '/admin',
+  name: 'primary',
+  component: App,
+  redirect: '/admin/dashboard',
+  meta: {
+    permissions: [Permissions.backend.manage]
+  },
+  children: [
+    dashboardRoutes,
+    accountRouters,
+    settingRouters
+  ]
 }

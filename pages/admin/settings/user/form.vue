@@ -241,7 +241,8 @@
 
 <script>
 import myUpload from 'vue-image-crop-upload'
-import PermissionTree from './../permission/_components/PermissionTree'
+import PermissionTree from '~/pages/admin/settings/permission/_components/PermissionTree'
+
 export default {
   name: 'UserForm',
   components: {

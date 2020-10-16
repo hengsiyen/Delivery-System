@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import UserForm from './../form'
+import UserForm from './form'
 
 export default {
   name: 'Edit',

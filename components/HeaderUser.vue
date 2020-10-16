@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     profile () {
-      this.$router.push({ name: 'admin-account' })
+      this.$router.push({ name: 'account' })
     },
     signOut () {
       this.$isLoading(true)

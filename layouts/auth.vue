@@ -5,6 +5,7 @@
 <script>
 export default {
   name: 'Auth',
+  layout: 'auth',
   head () {
     return {
       bodyAttrs: {

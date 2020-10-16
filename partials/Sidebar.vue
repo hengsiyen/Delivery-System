@@ -11,7 +11,7 @@
             </li>
           </template>
           <template v-else-if="menu.route !== null && menu.children === null">
-            <li :key="key">
+            <li :key="key" :class="{active: $route.name === menu.route.name}">
               <nuxt-link :to="menu.route">
                 <i :class="menu.icon" /> <span>{{ menu.label }}</span>
               </nuxt-link>
@@ -45,47 +45,47 @@ export default {
           route: null,
           icon: null,
           children: null,
-          permissions: []
+          permissions: [this.$Permissions.backend.manage]
         },
         {
           label: this.$t('menu.dashboard'),
           route: { name: 'admin' },
           icon: 'fa fa-home',
           children: null,
-          permissions: []
+          permissions: [this.$Permissions.backend.manage]
         },
         {
           label: this.$t('menu.system'),
           route: null,
           icon: null,
           children: null,
-          permissions: []
+          permissions: [this.$Permissions.backend.setting.manage]
         },
         {
           label: this.$t('menu.settings'),
           route: null,
           icon: 'fa fa-cogs',
-          permissions: [],
+          permissions: [this.$Permissions.backend.setting.manage],
           children: [
             {
               label: this.$t('menu.user'),
-              route: { name: 'admin-settings-user' },
-              permissions: []
+              route: { name: 'list-user' },
+              permissions: [this.$Permissions.backend.setting.user.list]
             },
             {
               label: this.$t('menu.role'),
-              route: { name: 'admin-settings-role' },
-              permissions: []
+              route: { name: 'list-role' },
+              permissions: [this.$Permissions.backend.setting.role.list]
             },
             {
               label: this.$t('menu.permission'),
-              route: { name: 'admin-settings-permission' },
-              permissions: []
+              route: { name: 'list-permission' },
+              permissions: [this.$Permissions.backend.setting.permission.list]
             },
             {
               label: this.$t('menu.gender'),
-              route: { name: 'admin-settings-gender' },
-              permissions: []
+              route: { name: 'list-gender' },
+              permissions: [this.$Permissions.backend.setting.gender.list]
             }
           ]
         }

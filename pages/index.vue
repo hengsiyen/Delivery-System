@@ -95,7 +95,6 @@
 <script>
 export default {
   name: 'Index',
-  layout: 'auth',
   head () {
     return {
       title: this.$t('string.login'),
