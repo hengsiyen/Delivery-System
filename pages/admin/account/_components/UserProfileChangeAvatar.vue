@@ -8,7 +8,7 @@
       >
       <a class="btn btn-primary" @click="toggleShow">{{ $t('label.uploadYourAvatar') }}</a>
     </div>
-    <my-upload
+    <!--<my-upload
       v-model="show"
       field="avatar"
       :width="300"
@@ -21,19 +21,19 @@
       @crop-success="cropSuccess"
       @crop-upload-success="cropUploadSuccess"
       @crop-upload-fail="cropUploadFail"
-    />
+    />-->
   </div>
 </template>
 
 <script>
-import 'babel-polyfill'
-import myUpload from 'vue-image-crop-upload'
+// import 'babel-polyfill'
+// import myUpload from 'vue-image-crop-upload'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'UserProfileChangeAvatar',
   components: {
-    'my-upload': myUpload
+    // 'my-upload': myUpload
   },
   data () {
     return {

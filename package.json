@@ -35,7 +35,8 @@
     "vue-image-crop-upload": "^2.5.0",
     "vue-jstree": "^2.1.6",
     "vue-sweetalert2": "^3.0.8",
-    "vuejs-loading-screen": "^1.0.8"
+    "vuejs-loading-screen": "^1.0.8",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1",

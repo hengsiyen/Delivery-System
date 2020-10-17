@@ -31,13 +31,14 @@ export const mutations = {
         Vue.set(state.data, attribute, data.user[attribute])
       }
     }
+    console.log(state.data)
   },
   setRoles (state, roles) {
     if (state.data) {
       state.data.roles = roles
     } else {
       // eslint-disable-next-line no-console
-      console.log('User data not yet defined')
+      console.log('[Roles]: User data not yet defined')
     }
   },
   setPermissions (state, permissions) {
@@ -45,7 +46,7 @@ export const mutations = {
       state.data.permissions = permissions
     } else {
       // eslint-disable-next-line no-console
-      console.log('User data not yet defined')
+      console.log('[Permissions]: User data not yet defined')
     }
   },
 
@@ -67,4 +68,12 @@ export const actions = {
   clearUser ({ commit, state }) {
     commit('clearUser')
   }
+}
+
+export default {
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
 }
