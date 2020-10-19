@@ -6,19 +6,25 @@
       <ul class="sidebar-menu" data-widget="tree">
         <template v-for="(menu, key) in menus">
           <template v-if="menu.route === null && menu.children === null">
-            <li :key="key" class="header">
-              {{ menu.label }}
-            </li>
+            <template v-if="can(menu.permissions) && hasRoles(menu.roles)">
+              <li :key="key" class="header">
+                {{ menu.label }}
+              </li>
+            </template>
           </template>
           <template v-else-if="menu.route !== null && menu.children === null">
-            <li :key="key" :class="{active: $route.name === menu.route.name}">
-              <nuxt-link :to="menu.route">
-                <i :class="menu.icon" /> <span>{{ menu.label }}</span>
-              </nuxt-link>
-            </li>
+            <template v-if="can(menu.permissions) && hasRoles(menu.roles)">
+              <li :key="key" :class="{active: $route.name === menu.route.name}">
+                <nuxt-link :to="menu.route">
+                  <i :class="menu.icon" /> <span>{{ menu.label }}</span>
+                </nuxt-link>
+              </li>
+            </template>
           </template>
           <template v-else>
-            <sidebar-tree :key="key" :menu="menu" />
+            <template v-if="can(menu.permissions) && hasRoles(menu.roles)">
+              <sidebar-tree :key="key" :menu="menu" />
+            </template>
           </template>
         </template>
       </ul>

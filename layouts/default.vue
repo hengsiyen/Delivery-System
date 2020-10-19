@@ -5,6 +5,7 @@
 <script>
 export default {
   name: 'App',
+  middleware: 'auth',
   head () {
     return {
       bodyAttrs: {

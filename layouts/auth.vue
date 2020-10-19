@@ -6,6 +6,7 @@
 export default {
   name: 'Auth',
   layout: 'auth',
+  middleware: 'guest',
   head () {
     return {
       bodyAttrs: {

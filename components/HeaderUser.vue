@@ -70,6 +70,7 @@ export default {
     },
     signOut () {
       this.$isLoading(true)
+      this.$store.dispatch('user/clearUser')
       this.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/logout')
         .then(() => {
           localStorage.clear()

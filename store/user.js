@@ -1,5 +1,7 @@
 import Vue from 'vue'
 
+// eslint-disable-next-line no-console
+
 export const state = () => ({
   data: null,
   administrators: [
@@ -31,13 +33,11 @@ export const mutations = {
         Vue.set(state.data, attribute, data.user[attribute])
       }
     }
-    console.log(state.data)
   },
   setRoles (state, roles) {
     if (state.data) {
       state.data.roles = roles
     } else {
-      // eslint-disable-next-line no-console
       console.log('[Roles]: User data not yet defined')
     }
   },
@@ -45,7 +45,6 @@ export const mutations = {
     if (state.data) {
       state.data.permissions = permissions
     } else {
-      // eslint-disable-next-line no-console
       console.log('[Permissions]: User data not yet defined')
     }
   },

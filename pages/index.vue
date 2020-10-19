@@ -141,11 +141,9 @@ export default {
               }
             })
 
-            // store roles
+            // store user, roles and permissions
             self.$store.dispatch('user/setUser', { user: result.user })
             self.$store.dispatch('user/setRoles', result.roles)
-
-            // store permission
             self.$store.commit('user/setPermissions', result.permissions)
 
             self.$router.push({

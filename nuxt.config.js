@@ -3,9 +3,11 @@ const webpack = require('webpack')
 require('dotenv').config()
 
 export default {
+  ssr: false,
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'box-backend-nuxtjs',
+    title: 'Asorabox',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -14,12 +16,6 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic' }
-    ],
-    script: [
-      // { src: '/js/adminlte/jquery.min.js' },
-      // { src: '/js/adminlte/bootstrap.min.js' },
-      // { src: '/js/adminlte/adminlte.min.js' },
-      // { src: '/js/adminlte/jquery-ui.min.js' }
     ]
   },
 
