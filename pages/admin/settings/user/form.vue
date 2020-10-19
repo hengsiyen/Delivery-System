@@ -14,7 +14,7 @@
                 <div class="change-avatar">
                   <div style="display: inline-grid">
                     <img
-                      :src="imgDataUrl || '/images/avatar/avatar.png'"
+                      :src="imgDataUrl || avatar"
                       alt="User Avatar"
                       class="container-avatar"
                     >

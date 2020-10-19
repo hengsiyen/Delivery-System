@@ -47,7 +47,7 @@ export default {
           title: self.$t('label.swal.success'),
           text: self.$t('label.roleCreated'),
           type: 'success',
-          confirmButtonText: self.i18nSwalYes
+          confirmButtonText: self.$t('label.swal.yes')
         }).then(() => {
           this.$router.back()
         })

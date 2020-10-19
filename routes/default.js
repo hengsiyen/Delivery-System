@@ -2,6 +2,8 @@ import { dashboardRoutes } from '@/routes/dashboard'
 import Permissions from '@/permissions'
 import { accountRouters } from '@/routes/account'
 import { settingRouters } from '@/routes/settings'
+import { unauthorizedRouters } from './unauthorized'
+import { errorsRouters } from './error'
 import App from '~/pages/admin/index'
 
 export const defaultRouters = {
@@ -15,6 +17,8 @@ export const defaultRouters = {
   children: [
     dashboardRoutes,
     accountRouters,
-    settingRouters
+    settingRouters,
+    unauthorizedRouters,
+    errorsRouters
   ]
 }

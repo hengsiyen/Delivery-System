@@ -11,7 +11,7 @@
       <template v-else>
         <img
           class="profile-user-img img-responsive img-circle"
-          src="/images/avatar/avatar.png"
+          :src="avatar"
           alt="User profile picture"
         >
       </template>
@@ -25,7 +25,7 @@
             {{ $t('label.location') }}
           </strong>
           <p class="text-muted">
-            {{ user.address }}
+            {{ user.address || $t('string.na') }}
           </p>
         </li>
       </ul>

@@ -8,7 +8,9 @@ const helpers = {
           administrators: [
             process.env.VUE_APP_ROLE_ADMIN,
             'admin'
-          ]
+          ],
+          avatar: '/img/svgs/avatar.svg',
+          appName: process.env.VUE_APP_NAME
         }
       },
       computed: {
@@ -18,50 +20,18 @@ const helpers = {
         }),
         baseUrl () {
           return process.env.VUE_APP_API
-        },
-        i18nDeactive () {
-          return this.$t('label.deactive')
-        },
-        i18nChangePassword () {
-          return this.$t('label.changePassword')
-        },
-        i18nActive () {
-          return this.$t('label.active')
-        },
-        i18nEdit () {
-          return this.$t('label.edit')
-        },
-        i18nShow () {
-          return this.$t('label.show')
-        },
-        i18nDelete () {
-          return this.$t('label.delete')
-        },
-        i18nSwalTitle () {
-          return this.$t('label.swal.title')
-        },
-        i18nSwalDesc () {
-          return this.$t('label.swal.desc')
-        },
-        i18nSwalYes () {
-          return this.$t('label.swal.yes')
-        },
-        i18nSwalNo () {
-          return this.$t('label.swal.no')
-        },
-        i18nSwalSuccess () {
-          return this.$t('label.swal.success')
-        },
-        i18nSwalDeleteLabel () {
-          return this.$t('label.swal.deleteLabel')
         }
       },
       methods: {
         getDateFormat (date, format = process.env.VUE_APP_DATE_FORMAT) {
-          if (this.$moment(date).isValid()) {
-            return this.$moment(date, 'YYYY-MM-DD').format(format)
+          try {
+            if (this.$moment(date).isValid()) {
+              return this.$moment(date, 'YYYY-MM-DD').format(format)
+            }
+            return this.$t('string.na')
+          } catch (error) {
+            return date
           }
-          return this.$t('string.na')
         },
         // Return value that can be used in img tag. both src or image file
         createObjectURL (media) {
@@ -92,14 +62,14 @@ const helpers = {
           const self = this
           return new Promise((resolve, reject) => {
             this.$swal.fire(Object.assign({
-              title: self.i18nSwalTitle,
-              text: self.i18nSwalDesc,
+              title: self.$t('label.swal.title'),
+              text: self.$t('label.swal.desc'),
               type: 'warning',
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
-              cancelButtonText: self.i18nSwalNo,
-              confirmButtonText: self.i18nSwalYes
+              cancelButtonText: self.$t('label.swal.no'),
+              confirmButtonText: self.$t('label.swal.yes')
             }, options)).then((result) => {
               if (result.value) {
                 resolve({
@@ -192,7 +162,7 @@ const helpers = {
           return this.$t('label.na')
         },
         showSwalSuccess () {
-          this.$swal(this.i18nSwalDeleteLabel, this.i18nSwalSuccess, 'success')
+          this.$swal(this.$t('label.swal.deleteLabel'), this.$t('label.swal.success'), 'success')
         },
         showToastr () {
           this.$toastr('success', this.$t('string.theRequestHaveBeenProcessed'), this.$t('string.success'))

@@ -42,7 +42,22 @@
                       <tr>
                         <td>{{ $t('label.avatar') }}</td>
                         <td>
-                          <img src="/img/avatar.png" alt="User Avatar">
+                          <template v-if="user.avatar">
+                            <img
+                              :src="`${baseUrl}/${user.avatar}`"
+                              class="user-image"
+                              alt="User Avatar"
+                              width="200px"
+                            >
+                          </template>
+                          <template v-else>
+                            <img
+                              :src="avatar"
+                              class="user-image"
+                              alt="User Avatar"
+                              width="200px"
+                            >
+                          </template>
                         </td>
                       </tr>
                       <tr>

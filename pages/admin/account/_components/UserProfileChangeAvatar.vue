@@ -2,7 +2,7 @@
   <div v-if="imgDataUrl" class="change-avatar">
     <div style="display: inline-grid">
       <img
-        :src="imgDataUrl || '/images/avatar/avatar.png'"
+        :src="imgDataUrl || avatar"
         alt="User Avatar"
         class="container-avatar"
       >
@@ -64,7 +64,7 @@ export default {
     if (this.user && this.user.avatar) {
       this.imgDataUrl = this.apiUrl + '/' + this.user.avatar
     } else {
-      this.imgDataUrl = '/img/avatar.png'
+      this.imgDataUrl = '/img/svgs/avatar.svg'
     }
   },
   methods: {

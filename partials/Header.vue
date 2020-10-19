@@ -1,8 +1,10 @@
 <template>
   <header class="main-header">
     <nuxt-link :to="{name: 'admin'}" class="logo">
-      <span class="logo-mini"><b>A</b>LT</span>
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-mini">{{ appName }}</span>
+      <span class="logo-lg">
+        <strong>{{ appName }}</strong>
+      </span>
     </nuxt-link>
 
     <nav class="navbar navbar-static-top" role="navigation">

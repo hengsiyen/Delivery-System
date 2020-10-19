@@ -5,7 +5,7 @@
         <img :src="`${baseUrl}/${user.avatar}`" class="user-image" alt="User Image">
       </template>
       <template v-else>
-        <img src="/images/avatar/avatar.png" class="user-image" alt="User Image">
+        <img :src="avatar" class="user-image" alt="User Image">
       </template>
       <span v-if="user" class="hidden-xs">{{ user.first_name }} {{ user.last_name }}</span>
       <span v-else>[UNKNOWN]</span>
@@ -16,7 +16,7 @@
           <img :src="`${baseUrl}/${user.avatar}`" class="user-image" alt="User Image">
         </template>
         <template v-else>
-          <img src="/images/avatar/avatar.png" class="user-image" alt="User Image">
+          <img :src="avatar" class="user-image" alt="User Image">
         </template>
         <div class="user-header-txt">
           <div class="user-name">

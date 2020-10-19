@@ -101,12 +101,12 @@ export default {
           method: 'POST',
           url: process.env.VUE_APP_API + '/api/backend/user/datatable',
           data: (d) => {
-            d.active = self.i18nActive
-            d.edit = self.i18nEdit
-            d.show = self.i18nShow
-            d.delete = self.i18nDelete
-            d.deactive = self.i18nDeactive
-            d.changePassword = self.i18nChangePassword
+            d.active = self.$t('label.active')
+            d.edit = self.$t('label.edit')
+            d.show = self.$t('label.show')
+            d.delete = self.$t('label.delete')
+            d.deactive = self.$t('label.deactive')
+            d.changePassword = self.$t('label.changePassword')
             d.language = self.$i18n.locale || 'en'
           },
           error: (xhr, error, thrown) => {
@@ -126,14 +126,14 @@ export default {
     deleteUser (uuid) {
       const self = this
       this.$swal({
-        title: self.i18nSwalTitle,
-        text: self.i18nSwalDesc,
+        title: self.$t('label.swal.title'),
+        text: self.$t('label.swal.desc'),
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        cancelButtonText: self.i18nSwalNo,
-        confirmButtonText: self.i18nSwalYes
+        cancelButtonText: self.$t('label.swal.no'),
+        confirmButtonText: self.$t('label.swal.yes')
       }).then((result) => {
         if (result.value) {
           this.$axios.post(process.env.VUE_APP_API + '/api/backend/user/delete', {

@@ -9,8 +9,7 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint": "npm run lint:js",
-    "i18n": "python ./geni18n.py ./pages ./locales km en"
+    "lint": "npm run lint:js"
   },
   "dependencies": {
     "@deveodk/vue-toastr": "^1.1.0",

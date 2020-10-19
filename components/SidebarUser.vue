@@ -5,7 +5,7 @@
         <img :src="`${baseUrl}/${user.avatar}`" class="img-circle" alt="User Image">
       </template>
       <template v-else>
-        <img src="/images/avatar/avatar.png" class="img-circle" alt="User Image">
+        <img :src="avatar" class="img-circle" alt="User Image">
       </template>
     </div>
     <div class="pull-left info">

@@ -24,11 +24,6 @@ export default {
       title: this.$t('menu.dashboard'),
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
-  },
-  data () {
-    return {
-      appName: process.env.VUE_APP_NAME
-    }
   }
 }
 </script>

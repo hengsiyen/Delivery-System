@@ -96,7 +96,7 @@ export default function ({ route, store, redirect }) {
     if (rolesQualified && permissionsQualified) {
       return redirect()
     } else {
-      return redirect('/login')
+      return redirect('/admin/unauthorized')
     }
   })
 }
