@@ -38,8 +38,7 @@ export default {
     { src: '~/plugins/axios.js', mode: 'client' },
     { src: '~/plugins/script.js', mode: 'client' },
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
-    { src: '~/plugins/vue-loading.js', mode: 'client' },
-    { src: '~/plugins/vue-sweetalert.js', mode: 'client' }
+    { src: '~/plugins/vue-loading.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -62,7 +61,9 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     // https://github.com/nuxt-community/universal-storage-module
-    '@nuxtjs/universal-storage'
+    '@nuxtjs/universal-storage',
+    // https://www.npmjs.com/package/vue-sweetalert2
+    'vue-sweetalert2/nuxt'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)

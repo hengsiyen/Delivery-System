@@ -162,7 +162,12 @@ const helpers = {
           return this.$t('label.na')
         },
         showSwalSuccess () {
-          this.$swal(this.$t('label.swal.deleteLabel'), this.$t('label.swal.success'), 'success')
+          this.$swal({
+            text: this.$t('label.swal.deleteLabel'),
+            icon: 'success',
+            title: this.$t('label.swal.success'),
+            confirmButtonText: this.$t('button.ok')
+          })
         },
         showToastr () {
           this.$toastr('success', this.$t('string.theRequestHaveBeenProcessed'), this.$t('string.success'))

@@ -71,10 +71,10 @@
         "streetNumber": "Street number",
         "swal": {
             "deleteLabel": "Delete label",
-            "desc": "Desc",
+            "desc": "You won't be able to revert this!",
             "no": "No",
             "success": "Success",
-            "title": "Title",
+            "title": "Are you sure?",
             "yes": "Yes"
         },
         "updatedAt": "Updated at",

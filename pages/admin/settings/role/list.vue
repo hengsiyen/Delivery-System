@@ -125,7 +125,7 @@ export default {
       this.$swal({
         title: self.$t('label.swal.title'),
         text: self.$t('label.swal.desc'),
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -139,7 +139,7 @@ export default {
             self.$swal({
               title: self.$t('label.swal.deleteLabel'),
               text: self.$t('label.swal.success'),
-              type: 'success',
+              icon: 'success',
               confirmButtonText: self.$t('label.swal.yes')
             })
             self.oTable.draw(true)

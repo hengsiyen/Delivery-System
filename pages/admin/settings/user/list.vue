@@ -128,7 +128,7 @@ export default {
       this.$swal({
         title: self.$t('label.swal.title'),
         text: self.$t('label.swal.desc'),
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -151,7 +151,7 @@ export default {
       this.$swal({
         title: this.$t('string.areYouSure?'),
         text: this.$t('string.theActionWillToggleUserAccess'),
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
