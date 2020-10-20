@@ -8,7 +8,7 @@
         <div class="pull-right box-tools">
           <nuxt-link
             v-if="can([$Permissions.backend.administration.user.store])"
-            to="/admin/settings/user/create"
+            to="/admin/administration/user/create"
             class="btn btn-primary btn-sm"
           >
             <i class="fa fa-plus-circle" /> {{ $t('button.newUser') }}
@@ -191,19 +191,19 @@ export default {
         $(document).on('click', '.btn-show-user', function (e) {
           e.preventDefault()
           self.$router.push({
-            path: `/admin/settings/user/show/${$(this).attr('data-uuid')}`
+            path: `/admin/administration/user/show/${$(this).attr('data-uuid')}`
           })
         })
         $(document).on('click', '.btn-edit-user', function (e) {
           e.preventDefault()
           self.$router.push({
-            path: `/admin/settings/user/edit/${$(this).attr('data-uuid')}`
+            path: `/admin/administration/user/edit/${$(this).attr('data-uuid')}`
           })
         })
         $(document).on('click', '.btn-reset-password-user', function (e) {
           e.preventDefault()
           self.$router.push({
-            path: `/admin/settings/user/reset-password/${$(this).attr('data-uuid')}`
+            path: `/admin/administration/user/reset-password/${$(this).attr('data-uuid')}`
           })
         })
       })

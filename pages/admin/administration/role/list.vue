@@ -8,7 +8,7 @@
         <div class="box-tools pull-right">
           <nuxt-link
             v-if="can([$Permissions.backend.administration.role.store])"
-            to="/admin/settings/role/create"
+            to="/admin/administration/role/create"
             type="button"
             class="btn btn-primary btn-sm"
           >
@@ -189,7 +189,7 @@ export default {
         $(document).on('click', '.btn-edit', function (e) {
           e.preventDefault()
           self.$router.push({
-            path: `/admin/settings/role/edit/${$(this).attr('data-id')}`
+            path: `/admin/administration/role/edit/${$(this).attr('data-id')}`
           })
         })
         $(document).on('click', '.btn-delete', function (e) {
