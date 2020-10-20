@@ -7,7 +7,7 @@
         </h3>
         <div class="pull-right box-tools">
           <nuxt-link
-            v-if="can([$Permissions.backend.setting.user.store])"
+            v-if="can([$Permissions.backend.administration.user.store])"
             to="/admin/settings/user/create"
             class="btn btn-primary btn-sm"
           >

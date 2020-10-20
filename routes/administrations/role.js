@@ -1,15 +1,15 @@
 import Permissions from '~/permissions'
-import index from '~/pages/admin/settings/role/index'
-import list from '~/pages/admin/settings/role/list'
-import create from '~/pages/admin/settings/role/create'
-import edit from '~/pages/admin/settings/role/edit'
+import index from '~/pages/admin/administration/role/index'
+import list from '~/pages/admin/administration/role/list'
+import create from '~/pages/admin/administration/role/create'
+import edit from '~/pages/admin/administration/role/edit'
 
 export const roleRouters = {
   path: 'role',
   component: index,
   redirect: 'role',
   meta: {
-    permissions: [Permissions.backend.setting.role.manage]
+    permissions: [Permissions.backend.administration.role.manage]
   },
   children: [
     {
@@ -17,11 +17,11 @@ export const roleRouters = {
       name: 'list-role',
       component: list,
       meta: {
-        permissions: [Permissions.backend.setting.role.list],
+        permissions: [Permissions.backend.administration.role.list],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'Role List',
@@ -35,11 +35,11 @@ export const roleRouters = {
       name: 'create-role',
       component: create,
       meta: {
-        permissions: [Permissions.backend.setting.role.store],
+        permissions: [Permissions.backend.administration.role.store],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'Role List',
@@ -58,11 +58,11 @@ export const roleRouters = {
       name: 'show-role',
       component: create,
       meta: {
-        permissions: [Permissions.backend.setting.role.show],
+        permissions: [Permissions.backend.administration.role.show],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'Role List',
@@ -81,11 +81,11 @@ export const roleRouters = {
       name: 'edit-role',
       component: edit,
       meta: {
-        permissions: [Permissions.backend.setting.role.edit],
+        permissions: [Permissions.backend.administration.role.edit],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'Role List',

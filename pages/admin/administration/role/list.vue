@@ -7,7 +7,7 @@
         </h3>
         <div class="box-tools pull-right">
           <nuxt-link
-            v-if="can([$Permissions.backend.setting.role.store])"
+            v-if="can([$Permissions.backend.administration.role.store])"
             to="/admin/settings/role/create"
             type="button"
             class="btn btn-primary btn-sm"

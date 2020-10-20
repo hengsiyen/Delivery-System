@@ -12,38 +12,6 @@ const Permissions = {
         km: 'ការកំណត់'
       },
       manage: 'manage-setting',
-      user: {
-        name: {
-          en: 'User',
-          km: 'អ្នកប្រើប្រាស់'
-        },
-        manage: 'manage-user',
-        list: 'list-user',
-        show: 'show-user',
-        store: 'store-user',
-        edit: 'edit-user',
-        changePassword: 'change-user-password'
-      },
-      role: {
-        name: {
-          en: 'Role',
-          km: 'តួនាទី'
-        },
-        manage: 'manage-role',
-        list: 'list-role',
-        show: 'show-role',
-        store: 'store-role',
-        edit: 'edit-role',
-        delete: 'delete-role'
-      },
-      permission: {
-        name: {
-          en: 'Permission',
-          km: 'សិទ្ធិ'
-        },
-        manage: 'manage-permission',
-        list: 'list-permission'
-      },
       gender: {
         name: {
           en: 'Gender',
@@ -77,6 +45,45 @@ const Permissions = {
         delete: 'delete-term-and-condition',
         show: 'show-term-and-condition',
         toggle: 'toggle-term-and-condition'
+      }
+    },
+    administration: {
+      name: {
+        en: 'Administration',
+        km: 'រដ្ឋបាល'
+      },
+      manage: 'manage-administration',
+      user: {
+        name: {
+          en: 'User',
+          km: 'អ្នកប្រើប្រាស់'
+        },
+        manage: 'manage-user',
+        list: 'list-user',
+        show: 'show-user',
+        store: 'store-user',
+        edit: 'edit-user',
+        changePassword: 'change-user-password'
+      },
+      role: {
+        name: {
+          en: 'Role',
+          km: 'តួនាទី'
+        },
+        manage: 'manage-role',
+        list: 'list-role',
+        show: 'show-role',
+        store: 'store-role',
+        edit: 'edit-role',
+        delete: 'delete-role'
+      },
+      permission: {
+        name: {
+          en: 'Permission',
+          km: 'សិទ្ធិ'
+        },
+        manage: 'manage-permission',
+        list: 'list-permission'
       }
     }
   }

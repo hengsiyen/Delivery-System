@@ -1,13 +1,13 @@
 import Permissions from '~/permissions'
-import index from '~/pages/admin/settings/permission/index'
-import list from '~/pages/admin/settings/permission/list'
+import index from '~/pages/admin/administration/permission/index'
+import list from '~/pages/admin/administration/permission/list'
 
 export const permissionRouters = {
   path: 'permission',
   component: index,
   redirect: 'permission',
   meta: {
-    permissions: [Permissions.backend.setting.permission.manage]
+    permissions: [Permissions.backend.administration.permission.manage]
   },
   children: [
     {
@@ -15,11 +15,11 @@ export const permissionRouters = {
       name: 'list-permission',
       component: list,
       meta: {
-        permissions: [Permissions.backend.setting.permission.list],
+        permissions: [Permissions.backend.administration.permission.list],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'Permission',

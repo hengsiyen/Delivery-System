@@ -1,17 +1,17 @@
 import Permissions from '~/permissions'
-import index from '~/pages/admin/settings/user/index'
-import list from '~/pages/admin/settings/user/list'
-import create from '~/pages/admin/settings/user/create'
-import edit from '~/pages/admin/settings/user/edit'
-import show from '~/pages/admin/settings/user/show'
-import resetPassword from '~/pages/admin/settings/user/resetPassword'
+import index from '~/pages/admin/administration/user/index'
+import list from '~/pages/admin/administration/user/list'
+import create from '~/pages/admin/administration/user/create'
+import edit from '~/pages/admin/administration/user/edit'
+import show from '~/pages/admin/administration/user/show'
+import resetPassword from '~/pages/admin/administration/user/resetPassword'
 
 export const userRouters = {
   path: 'user',
   component: index,
   redirect: 'user',
   meta: {
-    permissions: [Permissions.backend.setting.user.manage]
+    permissions: [Permissions.backend.administration.user.manage]
   },
   children: [
     {
@@ -19,11 +19,11 @@ export const userRouters = {
       name: 'list-user',
       component: list,
       meta: {
-        permissions: [Permissions.backend.setting.user.list],
+        permissions: [Permissions.backend.administration.user.list],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'User List',
@@ -37,11 +37,11 @@ export const userRouters = {
       name: 'create-user',
       component: create,
       meta: {
-        permissions: [Permissions.backend.setting.user.store],
+        permissions: [Permissions.backend.administration.user.store],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'User List',
@@ -60,11 +60,11 @@ export const userRouters = {
       name: 'edit-user',
       component: edit,
       meta: {
-        permissions: [Permissions.backend.setting.user.edit],
+        permissions: [Permissions.backend.administration.user.edit],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'User List',
@@ -83,11 +83,11 @@ export const userRouters = {
       name: 'show-user',
       component: show,
       meta: {
-        permissions: [Permissions.backend.setting.user.show],
+        permissions: [Permissions.backend.administration.user.show],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'User List',
@@ -106,11 +106,11 @@ export const userRouters = {
       name: 'reset-password',
       component: resetPassword,
       meta: {
-        permissions: [Permissions.backend.setting.user.changePassword],
+        permissions: [Permissions.backend.administration.user.changePassword],
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
+            name_en: 'Administration',
+            name_km: 'រដ្ឋបាល'
           },
           {
             name_en: 'User List',

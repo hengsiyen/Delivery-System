@@ -74,24 +74,32 @@ export default {
           permissions: [this.$Permissions.backend.setting.manage],
           children: [
             {
+              label: this.$t('menu.gender'),
+              route: { name: 'list-gender' },
+              permissions: [this.$Permissions.backend.setting.gender.list]
+            }
+          ]
+        },
+        {
+          label: this.$t('menu.administration'),
+          route: null,
+          icon: 'fa fa-code',
+          permissions: [this.$Permissions.backend.administration.manage],
+          children: [
+            {
               label: this.$t('menu.user'),
               route: { name: 'list-user' },
-              permissions: [this.$Permissions.backend.setting.user.list]
+              permissions: [this.$Permissions.backend.administration.user.list]
             },
             {
               label: this.$t('menu.role'),
               route: { name: 'list-role' },
-              permissions: [this.$Permissions.backend.setting.role.list]
+              permissions: [this.$Permissions.backend.administration.role.list]
             },
             {
               label: this.$t('menu.permission'),
               route: { name: 'list-permission' },
-              permissions: [this.$Permissions.backend.setting.permission.list]
-            },
-            {
-              label: this.$t('menu.gender'),
-              route: { name: 'list-gender' },
-              permissions: [this.$Permissions.backend.setting.gender.list]
+              permissions: [this.$Permissions.backend.administration.permission.list]
             }
           ]
         }
