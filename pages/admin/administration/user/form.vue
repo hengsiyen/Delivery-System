@@ -23,7 +23,7 @@
                       @click="toggleShow"
                     >{{ $t('label.uploadYourAvatar') }}</a>
                   </div>
-                  <my-upload
+                  <vue-crop-avatar
                     v-model="show"
                     field="avatar"
                     :width="200"
@@ -239,15 +239,12 @@
 </template>
 
 <script>
-import 'babel-polyfill'
-import myUpload from 'vue-image-crop-upload'
 import PermissionTree from '~/pages/admin/administration/permission/_components/PermissionTree'
 
 export default {
   name: 'UserForm',
   components: {
-    PermissionTree,
-    myUpload
+    PermissionTree
   },
   props: {
     title: {

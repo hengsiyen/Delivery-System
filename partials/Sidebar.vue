@@ -2,8 +2,7 @@
   <aside class="main-sidebar">
     <section class="sidebar">
       <sidebar-user />
-      <sidebar-search />
-      <ul class="sidebar-menu" data-widget="tree">
+      <ul class="sidebar-menu">
         <template v-for="(menu, key) in menus">
           <template v-if="menu.route === null && menu.children === null">
             <template v-if="can(menu.permissions) && hasRoles(menu.roles)">
@@ -14,7 +13,7 @@
           </template>
           <template v-else-if="menu.route !== null && menu.children === null">
             <template v-if="can(menu.permissions) && hasRoles(menu.roles)">
-              <li :key="key" :class="{active: $route.name === menu.route.name}">
+              <li :key="key" :class="{active: $route.meta.groups === menu.route.groups}">
                 <nuxt-link :to="menu.route">
                   <i :class="menu.icon" /> <span>{{ menu.label }}</span>
                 </nuxt-link>
@@ -34,13 +33,11 @@
 
 <script>
 import SidebarUser from '@/components/SidebarUser'
-import SidebarSearch from '@/components/SidebarSearch'
 import SidebarTree from '@/components/SidebarTree'
 export default {
   name: 'Sidebar',
   components: {
     SidebarTree,
-    SidebarSearch,
     SidebarUser
   },
   computed: {
@@ -55,7 +52,7 @@ export default {
         },
         {
           label: this.$t('menu.dashboard'),
-          route: { name: 'admin' },
+          route: { name: 'admin', groups: 'dashboard' },
           icon: 'fa fa-home',
           children: null,
           permissions: [this.$Permissions.backend.manage]
@@ -75,7 +72,7 @@ export default {
           children: [
             {
               label: this.$t('menu.gender'),
-              route: { name: 'list-gender' },
+              route: { name: 'list-gender', groups: 'gender' },
               permissions: [this.$Permissions.backend.setting.gender.list]
             }
           ]
@@ -88,17 +85,17 @@ export default {
           children: [
             {
               label: this.$t('menu.user'),
-              route: { name: 'list-user' },
+              route: { name: 'list-user', groups: 'user' },
               permissions: [this.$Permissions.backend.administration.user.list]
             },
             {
               label: this.$t('menu.role'),
-              route: { name: 'list-role' },
+              route: { name: 'list-role', groups: 'role' },
               permissions: [this.$Permissions.backend.administration.role.list]
             },
             {
               label: this.$t('menu.permission'),
-              route: { name: 'list-permission' },
+              route: { name: 'list-permission', groups: 'permission' },
               permissions: [this.$Permissions.backend.administration.permission.list]
             }
           ]

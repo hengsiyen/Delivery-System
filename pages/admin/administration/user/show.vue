@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="user !== null"
+    v-if="user"
     class="user"
   >
     <div class="box box-primary">
@@ -79,22 +79,31 @@
                       <tr>
                         <td>{{ $t('label.role') }}</td>
                         <td>
-                          <ul>
-                            <li v-for="(role, key) in user.roles" :key="key">
-                              {{ role['display_name_' + $i18n.locale] || role.name }}
-                            </li>
-                          </ul>
+                          <template v-if="user.roles && Array.isArray(user.roles) && user.roles.length">
+                            <ul>
+                              <li v-for="(role, key) in user.roles" :key="key">
+                                {{ role['display_name_' + $i18n.locale] || role.name }}
+                              </li>
+                            </ul>
+                          </template>
+                          <template v-else>
+                            {{ $t('string.na') }}
+                          </template>
                         </td>
                       </tr>
                       <tr>
                         <td>{{ $t('label.additionalPermissions') }}</td>
                         <td>
-                          <ul>
-                            <li v-for="(permission, key) in user.permissions" :key="key">
-                              {{ permission['display_name_' + $i18n.locale] ||
-                                role.name }}
-                            </li>
-                          </ul>
+                          <template v-if="user.permissions && Array.isArray(user.permissions) && user.permissions.length">
+                            <ul>
+                              <li v-for="(permission, key) in user.permissions" :key="key">
+                                {{ permission['display_name_' + $i18n.locale] || role.name }}
+                              </li>
+                            </ul>
+                          </template>
+                          <template v-else>
+                            {{ $t('string.na') }}
+                          </template>
                         </td>
                       </tr>
                     </tbody>

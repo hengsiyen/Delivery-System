@@ -1,10 +1,12 @@
 export default function ({ $axios, redirect }) {
   $axios.onRequest((config) => {
-    console.info('Making request to ' + config.url)
+    const _token = localStorage.getItem(process.env.VUE_APP_TOKEN)
+    $axios.setHeader('Authorization', 'Bearer ' + _token)
+    $axios.setHeader('Accept', 'application/json')
   })
 
   $axios.onResponse((response) => {
-    console.log(response.data)
+
   })
 
   $axios.onResponseError((error) => {

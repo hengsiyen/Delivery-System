@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@deveodk/vue-toastr": "^1.1.0",
+    "@laramab/x-chart": "^1.0.1",
     "@nuxt/content": "^1.8.1",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/moment": "^1.6.1",
@@ -22,6 +23,7 @@
     "admin-lte": "^2.4.18",
     "adminlte": "^2.4.1",
     "babel-polyfill": "^6.26.0",
+    "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
     "datatables-bootstrap3-plugin": "^0.6.0",
     "datatables.net": "^1.10.22",
@@ -32,12 +34,14 @@
     "npm": "^6.14.8",
     "nuxt": "^2.14.5",
     "nuxt-ssr-cache": "^1.5.2",
+    "vue-chartjs": "^3.5.1",
     "vue-i18n": "^8.21.1",
     "vue-image-crop-upload": "^2.5.0",
     "vue-jstree": "^2.1.6",
     "vue-sweetalert2": "^3.0.8",
     "vuejs-loading-screen": "^1.0.8",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "x-backend": "^1.0.0"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1",

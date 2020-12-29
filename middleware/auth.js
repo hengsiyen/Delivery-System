@@ -1,5 +1,4 @@
-export default function ({ route, store, redirect }) {
-  const to = route.to
+export default function ({ route, store, redirect, $axios }) {
   const redirectLoginPage = () => {
     if (process.client) {
       localStorage.clear()
@@ -20,8 +19,8 @@ export default function ({ route, store, redirect }) {
        * Otherwise, it will redirect to login page
        */
       if (_token) {
-        window.$nuxt.$axios.setHeader('Authorization', 'Bearer ' + _token)
-        window.$nuxt.$axios.setHeader('Accept', 'application/json')
+        $axios.setHeader('Authorization', 'Bearer ' + _token)
+        $axios.setHeader('Accept', 'application/json')
 
         $.ajaxSetup({
           headers: {
@@ -30,7 +29,7 @@ export default function ({ route, store, redirect }) {
           }
         })
 
-        window.$nuxt.$axios.post(process.env.VUE_APP_API + '/api/backend/user/get-roles-and-permissions')
+        $axios.post(process.env.VUE_APP_API + '/api/backend/user/get-roles-and-permissions')
           .then((response) => {
             const result = response.data.data
             try {
@@ -66,8 +65,9 @@ export default function ({ route, store, redirect }) {
       if (store.state.user.data && store.state.user.data.roles) {
         userRoles = store.state.user.data.roles
       }
-      if (!store.getters['user/isAdmin'] && to.matched) {
-        for (const route of to.matched) {
+      if (!store.getters['user/isAdmin'] && route.matched) {
+        // eslint-disable-next-line no-use-before-define
+        for (const route of route.matched) {
           const qualifiedAtRoute = route.meta.roles ? userRoles.some(role => route.meta.roles.includes(role)) : true
           if (!qualifiedAtRoute) {
             rolesQualified = false
@@ -81,8 +81,9 @@ export default function ({ route, store, redirect }) {
         if (store.state.user.data && store.state.user.data.permissions) {
           userPermissions = store.state.user.data.permissions
         }
-        if (!store.getters['user/isAdmin'] && to.matched) {
-          for (const route of to.matched) {
+        if (!store.getters['user/isAdmin'] && route.matched) {
+          // eslint-disable-next-line no-use-before-define
+          for (const route of route.matched) {
             const qualifiedAtRoute = route.meta.permissions ? userPermissions.some(permission => route.meta.permissions.includes(permission)) : true
             if (!qualifiedAtRoute) {
               permissionsQualified = false

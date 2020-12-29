@@ -4,6 +4,7 @@
         "cancel": "Cancel",
         "login": "Log in",
         "newUser": "New user",
+        "ok": "Ok",
         "resetPassword": "Reset password",
         "save": "Save",
         "update": "Update"
@@ -70,10 +71,10 @@
         "signOut": "Sign out",
         "streetNumber": "Street number",
         "swal": {
-            "deleteLabel": "Delete label",
+            "deleteLabel": "The record has been deleted.",
             "desc": "You won't be able to revert this!",
             "no": "No",
-            "success": "Success",
+            "success": "Deleted!",
             "title": "Are you sure?",
             "yes": "Yes"
         },

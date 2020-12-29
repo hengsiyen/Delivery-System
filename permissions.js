@@ -6,6 +6,14 @@ const Permissions = {
       km: 'ផ្ទាំងក្រោយ'
     },
     manage: 'manage-backend',
+    dashboard: {
+      name: {
+        en: 'Dashboard',
+        km: 'ទំព័រដើម'
+      },
+      manage: 'manage-dashboard',
+      show: 'show-dashboard'
+    },
     setting: {
       name: {
         en: 'Settings',
@@ -19,32 +27,6 @@ const Permissions = {
         },
         manage: 'manage-gender',
         list: 'list-gender'
-      },
-      privacyPolicy: {
-        name: {
-          en: 'Privacy Policy',
-          km: 'គោលការណ៍ឯកជនភាព'
-        },
-        manage: 'manage-privacy-policy',
-        list: 'list-privacy-policy',
-        store: 'store-privacy-policy',
-        edit: 'edit-privacy-policy',
-        delete: 'delete-privacy-policy',
-        show: 'show-privacy-policy',
-        toggle: 'toggle-privacy-policy'
-      },
-      termsAndConditions: {
-        name: {
-          en: 'Terms and Conditions',
-          km: 'កិច្ចព្រមព្រៀង និង លក្ខខណ្ឌ'
-        },
-        manage: 'manage-term-and-condition',
-        list: 'list-term-and-condition',
-        store: 'store-term-and-condition',
-        edit: 'edit-term-and-condition',
-        delete: 'delete-term-and-condition',
-        show: 'show-term-and-condition',
-        toggle: 'toggle-term-and-condition'
       }
     },
     administration: {

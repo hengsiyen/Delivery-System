@@ -1,35 +1,10 @@
 <template>
-  <div v-if="user" class="box box-primary">
-    <div class="box-body box-profile">
-      <template v-if="user.avatar">
-        <img
-          class="profile-user-img img-responsive img-circle"
-          :src="`${apiUrl}/${user.avatar}`"
-          alt="User profile picture"
-        >
-      </template>
-      <template v-else>
-        <img
-          class="profile-user-img img-responsive img-circle"
-          :src="avatar"
-          alt="User profile picture"
-        >
-      </template>
-      <h3 class="profile-username text-center">
-        {{ user.full_name }}
-      </h3>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <strong>
-            <i class="fas fa-map-marker-alt margin-r-5" />
-            {{ $t('label.location') }}
-          </strong>
-          <p class="text-muted">
-            {{ user.address || $t('string.na') }}
-          </p>
-        </li>
-      </ul>
-    </div>
+  <div v-if="user">
+    <x-user-header
+      :avatar="userAvatar"
+      :name="`${user.first_name} ${user.last_name}`"
+      position="Web Developer"
+    />
   </div>
 </template>
 
@@ -46,7 +21,21 @@ export default {
   computed: {
     ...mapState({
       user: state => state.user.data
-    })
+    }),
+    properties () {
+      if (this.user) {
+        return [
+          { label: this.$t('label.location'), value: this.user.address || this.$t('string.na') }
+        ]
+      }
+      return []
+    },
+    userAvatar () {
+      if (this.user.avatar) {
+        return `${this.apiUrl}/${this.user.avatar}`
+      }
+      return this.avatar
+    }
   },
   methods: {
     ...mapActions([

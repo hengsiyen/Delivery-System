@@ -34,11 +34,15 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/i18n.js',
+    { src: '~/plugins/main.js', mode: 'client' },
+    { src: '~/plugins/i18n.js', mode: 'client' },
     { src: '~/plugins/axios.js', mode: 'client' },
     { src: '~/plugins/script.js', mode: 'client' },
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
-    { src: '~/plugins/vue-loading.js', mode: 'client' }
+    { src: '~/plugins/vue-loading.js', mode: 'client' },
+    { src: '~/plugins/x-backend.js', mode: 'client' },
+    { src: '~/plugins/x-chart.js', mode: 'client' },
+    { src: '~/plugins/vue-crop-avatar.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

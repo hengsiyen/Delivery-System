@@ -41,6 +41,10 @@ export default {
     Footer,
     Sidebar,
     Header
+  },
+  mounted () {
+    this.showSwalSuccess()
+    this.showToastr()
   }
 }
 </script>

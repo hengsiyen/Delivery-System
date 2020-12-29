@@ -7,7 +7,8 @@ export const permissionRouters = {
   component: index,
   redirect: 'permission',
   meta: {
-    permissions: [Permissions.backend.administration.permission.manage]
+    permissions: [Permissions.backend.administration.permission.manage],
+    groups: 'permission'
   },
   children: [
     {
@@ -16,6 +17,7 @@ export const permissionRouters = {
       component: list,
       meta: {
         permissions: [Permissions.backend.administration.permission.list],
+        groups: 'permission',
         breadcrumb: [
           {
             name_en: 'Administration',

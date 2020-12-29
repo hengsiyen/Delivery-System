@@ -25,7 +25,7 @@ const helpers = {
       methods: {
         getDateFormat (date, format = process.env.VUE_APP_DATE_FORMAT) {
           try {
-            if (this.$moment(date).isValid()) {
+            if (this.$moment(date, 'YYYY-MM-DD').isValid()) {
               return this.$moment(date, 'YYYY-MM-DD').format(format)
             }
             return this.$t('string.na')
@@ -95,7 +95,9 @@ const helpers = {
             const strippedKey = getStrippedKey(prefixKey)
 
             // Exclude key
-            if (exceptFields.includes(strippedKey)) { return }
+            if (exceptFields.includes(strippedKey)) {
+              return
+            }
 
             // map
             if (mappings && mappings[strippedKey] !== undefined) {

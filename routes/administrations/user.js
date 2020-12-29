@@ -11,7 +11,8 @@ export const userRouters = {
   component: index,
   redirect: 'user',
   meta: {
-    permissions: [Permissions.backend.administration.user.manage]
+    permissions: [Permissions.backend.administration.user.manage],
+    groups: 'user'
   },
   children: [
     {
@@ -20,6 +21,7 @@ export const userRouters = {
       component: list,
       meta: {
         permissions: [Permissions.backend.administration.user.list],
+        groups: 'user',
         breadcrumb: [
           {
             name_en: 'Administration',
@@ -38,6 +40,7 @@ export const userRouters = {
       component: create,
       meta: {
         permissions: [Permissions.backend.administration.user.store],
+        groups: 'user',
         breadcrumb: [
           {
             name_en: 'Administration',
@@ -61,6 +64,7 @@ export const userRouters = {
       component: edit,
       meta: {
         permissions: [Permissions.backend.administration.user.edit],
+        groups: 'user',
         breadcrumb: [
           {
             name_en: 'Administration',
@@ -84,6 +88,7 @@ export const userRouters = {
       component: show,
       meta: {
         permissions: [Permissions.backend.administration.user.show],
+        groups: 'user',
         breadcrumb: [
           {
             name_en: 'Administration',
@@ -107,6 +112,7 @@ export const userRouters = {
       component: resetPassword,
       meta: {
         permissions: [Permissions.backend.administration.user.changePassword],
+        groups: 'user',
         breadcrumb: [
           {
             name_en: 'Administration',

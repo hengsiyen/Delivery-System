@@ -9,7 +9,8 @@ export const roleRouters = {
   component: index,
   redirect: 'role',
   meta: {
-    permissions: [Permissions.backend.administration.role.manage]
+    permissions: [Permissions.backend.administration.role.manage],
+    groups: 'role'
   },
   children: [
     {
@@ -18,6 +19,7 @@ export const roleRouters = {
       component: list,
       meta: {
         permissions: [Permissions.backend.administration.role.list],
+        groups: 'role',
         breadcrumb: [
           {
             name_en: 'Administration',
@@ -36,6 +38,7 @@ export const roleRouters = {
       component: create,
       meta: {
         permissions: [Permissions.backend.administration.role.store],
+        groups: 'role',
         breadcrumb: [
           {
             name_en: 'Administration',
@@ -59,6 +62,7 @@ export const roleRouters = {
       component: create,
       meta: {
         permissions: [Permissions.backend.administration.role.show],
+        groups: 'role',
         breadcrumb: [
           {
             name_en: 'Administration',
@@ -82,6 +86,7 @@ export const roleRouters = {
       component: edit,
       meta: {
         permissions: [Permissions.backend.administration.role.edit],
+        groups: 'role',
         breadcrumb: [
           {
             name_en: 'Administration',

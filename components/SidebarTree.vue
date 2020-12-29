@@ -9,11 +9,20 @@
       <template v-if="menu.children">
         <template v-for="(child, key) in menu.children">
           <template v-if="can(child.permissions) && hasRoles(child.roles)">
-            <li :key="key" :class="{active: $route.name === child.route.name}">
-              <nuxt-link :to="child.route">
-                {{ child.label }}
-              </nuxt-link>
-            </li>
+            <template v-if="child.route.hasOwnProperty('groups') && $route.meta.hasOwnProperty('groups')">
+              <li :key="key" :class="{active: $route.meta.groups === child.route.groups}">
+                <nuxt-link :to="child.route">
+                  {{ child.label }}
+                </nuxt-link>
+              </li>
+            </template>
+            <template v-else>
+              <li :key="key" :class="{active: $route.name === child.route.name}">
+                <nuxt-link :to="child.route">
+                  {{ child.label }}
+                </nuxt-link>
+              </li>
+            </template>
           </template>
         </template>
       </template>
@@ -32,7 +41,11 @@ export default {
   },
   computed: {
     opened () {
-      return this.menu.children.some(child => child.route.name === this.$route.name)
+      try {
+        return this.menu.children.some(child => child.route.groups === this.$route.meta.group)
+      } catch (e) {
+        return this.menu.children.some(child => child.route.name === this.$route.name)
+      }
     }
   },
   mounted () {
