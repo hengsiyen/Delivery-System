@@ -223,11 +223,9 @@
                     class="btn btn-primary btn-sm margin-r-5"
                     @click="onSubmit"
                   >
-                    <i class="fa fa-check-circle" /> {{ $t('button.save') }}
+                    {{ $t('button.save') }}
                   </button>
-                  <a class="btn btn-default btn-sm" @click="$router.back()">
-                    <i class="fa fa-arrow-circle-left" /> {{ $t('button.back') }}
-                  </a>
+                  <ButtonBack />
                 </div>
               </div>
             </div>
@@ -239,11 +237,13 @@
 </template>
 
 <script>
+import ButtonBack from '@/components/UiElements/ButtonBack'
 import PermissionTree from '~/pages/admin/administration/permission/_components/PermissionTree'
 
 export default {
   name: 'UserForm',
   components: {
+    ButtonBack,
     PermissionTree
   },
   props: {

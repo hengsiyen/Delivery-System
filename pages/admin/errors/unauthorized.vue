@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <box-information
+      <XBoxInfo
         img="/img/svgs/unauthorized.svg"
         :title="$t('string.unauthorized')"
       />
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import BoxInformation from '~/components/BoxInformation'
+import XBoxInfo from '@/components/XBoxInfo'
 export default {
   name: 'Unauthorized',
   head () {
@@ -19,7 +19,7 @@ export default {
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
   },
-  components: { BoxInformation }
+  components: { XBoxInfo }
 }
 </script>
 

@@ -56,12 +56,7 @@
               >
                 <i class="fa fa-check-circle" /> {{ $t('button.update') }}
               </button>
-              <a
-                class="btn btn-default btn-sm"
-                @click="$router.back()"
-              >
-                <i class="fa fa-arrow-circle-left" /> {{ $t('button.back') }}
-              </a>
+              <ButtonBack />
             </div>
           </div>
         </div>
@@ -72,8 +67,10 @@
 
 <script>
 
+import ButtonBack from '@/components/UiElements/ButtonBack'
 export default {
   name: 'ResetPassword',
+  components: { ButtonBack },
   head () {
     return {
       title: this.$t('label.resetPassword'),

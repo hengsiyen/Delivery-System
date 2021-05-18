@@ -6,7 +6,7 @@
           <i class="fa fa-times-circle" /> {{ $t('button.cancel') }}
         </button>
         <button class="btn btn-success pull-right mr-5" @click="updateProfile">
-          <i class="fa fa-save" /> {{ $t('button.save') }}
+          {{ $t('button.save') }}
         </button>
       </template>
       <template v-else>
@@ -15,7 +15,7 @@
         </button>
       </template>
     </div>
-    <table class="table table-striped table-hover">
+    <table class="table table-bordered table-striped">
       <tbody>
         <tr>
           <th>{{ $t('fields.firstName') }}</th>

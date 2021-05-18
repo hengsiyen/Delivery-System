@@ -28,17 +28,17 @@
             <div class="row">
               <div
                 class="col-md-12 form-group"
-                :class="{'has-error' : validations.hasOwnProperty('email')}"
+                :class="{'has-error' : validations.username}"
               >
                 <input
-                  v-model="credentials.email"
+                  v-model="credentials.username"
                   :placeholder="$t('label.email')"
                   class="form-control"
-                  type="email"
+                  type="text"
                 >
-                <template v-if="validations.hasOwnProperty('email')">
+                <template v-if="validations.username">
                   <span class="label-error">
-                    {{ validations['email'][0] }}
+                    {{ validations['username'][0] }}
                   </span>
                 </template>
               </div>
@@ -105,7 +105,7 @@ export default {
     return {
       appName: process.env.VUE_APP_NAME,
       credentials: {
-        email: '',
+        username: '',
         password: ''
       },
       validations: {},
@@ -122,9 +122,9 @@ export default {
       self.validations = {}
       self.$isLoading(true)
       self.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/login', self.credentials)
-        .then((response) => {
-          if (response.data && response.data.data) {
-            const result = response.data.data
+        .then(({ data }) => {
+          if (data) {
+            /* const result = response.data.data
             const token = result.access_token
             const refresh = result.refresh_token
 
@@ -149,10 +149,34 @@ export default {
             self.$router.push({
               name: 'admin'
             })
-            // path: localStorage.getItem('fromRoutePath')
+            // path: localStorage.getItem('fromRoutePath') */
+
+            const result = data.data
+            const token = result.access_token
+            const refresh = result.refresh_token
+
+            this.$cookies.set(process.env.VUE_APP_TOKEN, token)
+            this.$cookies.set(process.env.VUE_APP_REFRESH_TOKEN, refresh)
+
+            self.$axios.setHeader('Authorization', 'Bearer ' + token)
+            self.$axios.setHeader('Accept', 'application/json')
+
+            $.ajaxSetup({
+              headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`
+              }
+            })
+
+            self.$store.dispatch('user/setUserRolesPermissions', result)
+
+            self.$router.push({
+              name: 'admin'
+            })
           }
         })
         .catch((error) => {
+          console.log(error)
           if (error.response.status === 422) {
             self.validations = error.response.data.errors
           } else {

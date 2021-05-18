@@ -80,7 +80,7 @@ export default {
         {
           data: 'action',
           name: 'action',
-          width: '120px',
+          width: '140px',
           orderable: false,
           searchable: false,
           title: this.$t('table.action')

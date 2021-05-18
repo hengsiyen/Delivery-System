@@ -196,17 +196,36 @@ const helpers = {
         },
         getUserInfo () {
           const self = this
-          this.$axios.post(this.$base_api + '/api/backend/user/get-roles-and-permissions')
-            .then((response) => {
-              const result = response.data.data
-              self.$store.dispatch('user/setUser', { user: result.user })
-              // store roles
-              self.$store.commit('user/setRoles', result.roles)
+          const token = this.$cookies.get(process.env.VUE_APP_TOKEN)
 
-              // store permission
-              self.$store.commit('user/setPermissions', result.permissions)
-            }).catch((error) => {
+          if (!token) {
+            this.$router.push('/login').then()
+            this.$cookies.remove(process.env.VUE_APP_TOKEN)
+            this.$cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
+          }
+
+          self.$axios.setHeader('Authorization', 'Bearer ' + token)
+          self.$axios.setHeader('Accept', 'application/json')
+
+          $.ajaxSetup({
+            headers: {
+              Accept: 'application/json',
+              Authorization: `Bearer ${token}`
+            }
+          })
+
+          this.$axios.post(this.$base_api + '/api/backend/user/get-roles-and-permissions')
+            .then(async ({ data }) => {
+              if (data.data) {
+                const result = data.data
+
+                await self.$store.dispatch('user/setUserRolesPermissions', result)
+              }
+            }).catch(async (error) => {
               self.onResponseError(error)
+              self.$cookies.remove(process.env.VUE_APP_TOKEN)
+              self.$cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
+              await self.$router.push('/login')
             })
         },
         clearEventHandler (classNames) {

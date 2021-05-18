@@ -1,58 +1,43 @@
-export default function ({ route, store, redirect, $axios }) {
+export default function ({ route, store, redirect, $axios, $storage, $cookies }) {
+  const _token = $cookies.get(process.env.VUE_APP_TOKEN)
+
   const redirectLoginPage = () => {
-    if (process.client) {
-      localStorage.clear()
-      store.dispatch('user/clearUser')
-    }
+    $cookies.remove(process.env.VUE_APP_TOKEN)
+    $cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
     return redirect('/login')
   }
 
   const handleUserData = (route, callback) => {
     /**
-     * If no user data, we need to fetch it first
+     * Token must be defined in localstorage in order to fetch user data,
+     * Otherwise, it will redirect to login page
      */
-    if (process.client && store.state.user.data === null) {
-      const _token = localStorage.getItem(process.env.VUE_APP_TOKEN)
+    if (_token) {
+      $axios.setHeader('Authorization', 'Bearer ' + _token)
+      $axios.setHeader('Accept', 'application/json')
 
-      /**
-       * Token must be defined in localstorage in order to fetch user data,
-       * Otherwise, it will redirect to login page
-       */
-      if (_token) {
-        $axios.setHeader('Authorization', 'Bearer ' + _token)
-        $axios.setHeader('Accept', 'application/json')
-
-        $.ajaxSetup({
-          headers: {
-            Accept: 'application/json',
-            Authorization: 'Bearer ' + _token
-          }
-        })
-
+      // if (!(store.state && store.state.user && store.state.user.data)) {
+      if (!_token) {
         $axios.post(process.env.VUE_APP_API + '/api/backend/user/get-roles-and-permissions')
-          .then((response) => {
-            const result = response.data.data
-            try {
+          .then(({ data }) => {
+            if (data.data) {
+              const result = data.data
               // store user, roles and permissions
               store.dispatch('user/setUser', { user: result.user })
               store.dispatch('user/setRoles', result.roles)
               store.dispatch('user/setPermissions', result.permissions)
               callback()
-            } catch (e) {
-              console.log(e)
             }
           }).catch((error) => {
-            if (error.response && error.response.status === 401) {
+            if (error.response && error.response.status === 422) {
               redirectLoginPage()
             } else {
               return redirect()
             }
           })
-      } else {
-        redirectLoginPage()
       }
     } else {
-      return redirect()
+      redirectLoginPage()
     }
   }
 
@@ -97,7 +82,7 @@ export default function ({ route, store, redirect, $axios }) {
     if (rolesQualified && permissionsQualified) {
       return redirect()
     } else {
-      return redirect('/admin/unauthorized')
+      return redirect('/apps/unauthorized')
     }
   })
 }

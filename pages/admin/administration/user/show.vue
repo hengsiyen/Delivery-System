@@ -9,9 +9,7 @@
           {{ $t('label.showUser') }}
         </h3>
         <div class="pull-right box-tools">
-          <a class="btn btn-default btn-sm" @click="$router.back()">
-            <i class="fa fa-arrow-circle-left" /> {{ $t('button.back') }}
-          </a>
+          <ButtonBack />
         </div>
       </div>
       <div class="box-body">
@@ -119,8 +117,10 @@
 </template>
 
 <script>
+import ButtonBack from '@/components/UiElements/ButtonBack'
 export default {
   name: 'Show',
+  components: { ButtonBack },
   head () {
     return {
       title: this.$t('label.showUser'),

@@ -5,5 +5,5 @@ import '@deveodk/vue-toastr/dist/@deveodk/vue-toastr.css'
 Vue.use(VueToastr, {
   defaultPosition: 'toast-top-right',
   defaultType: 'info',
-  defaultTimeout: 1000
+  defaultTimeout: 15000
 })

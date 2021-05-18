@@ -26,6 +26,9 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ## [AdminLTE](https://github.com/ColorlibHQ/AdminLTE/releases/tag/v2.4.18)
 
+### Permission
+Enter ``permission`` in console to copy permission configuration from `permission.js` file.
+
 ###Release Notes
 
 - updated jquery-ui to 1.12.1

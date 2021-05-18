@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "wingding";
+  src: url("../fonts/symbols/wingding.ttf");
+}
+
+@font-face {
+  font-family: "KhmerMEF1";
+  src: url("../fonts/KhmerMEF1/KHMERMEF1.eot");
+  src: url("../fonts/KhmerMEF1/KHMERMEF1.eot?#iefix") format("embedded-opentype"),
+  url("../fonts/KhmerMEF1/KHMERMEF1.otf") format("opentype"),
+  url("../fonts/KhmerMEF1/KHMERMEF1.svg") format("svg"),
+  url("../fonts/KhmerMEF1/KHMERMEF1.ttf") format("truetype"),
+  url("../fonts/KhmerMEF1/KHMERMEF1.woff") format("woff"),
+  url("../fonts/KhmerMEF1/KHMERMEF1.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "KhmerMEF2";
+  src: url("../fonts/KhmerMEF2/KHMERMEF2.eot");
+  src: url("../fonts/KhmerMEF2/KHMERMEF2.eot?#iefix") format("embedded-opentype"),
+  url("../fonts/KhmerMEF2/KHMERMEF2.otf") format("opentype"),
+  url("../fonts/KhmerMEF2/KHMERMEF2.svg") format("svg"),
+  url("../fonts/KhmerMEF2/KHMERMEF2.ttf") format("truetype"),
+  url("../fonts/KhmerMEF2/KHMERMEF2.woff") format("woff"),
+  url("../fonts/KhmerMEF2/KHMERMEF2.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-secondary {
+  font-family: var(--secondary-font) !important;
+}
+
+.font-primary {
+  font-family: var(--primary-font) !important;
+}

@@ -16,14 +16,14 @@
 
 <script>
 import Vue from 'vue'
-import helpers from '~/plugins/helpers'
+import Sidebar from '@/components/Layouts/Sidebar'
+import Header from '@/components/Layouts/Header'
+import Footer from '@/components/Layouts/Footer'
+import ControlSidebar from '@/components/Layouts/ControlSidebar'
+import ControlSidebarBg from '@/components/Layouts/ControlSidebarBg'
+import Breadcrumb from '@/components/Layouts/Breadcrumb'
 import Permissions from '~/permissions'
-import Sidebar from '~/partials/Sidebar'
-import Header from '~/partials/Header'
-import Footer from '~/partials/Footer'
-import ControlSidebar from '~/partials/ControlSidebar'
-import ControlSidebarBg from '~/partials/ControlSidebarBg'
-import Breadcrumb from '~/partials/Breadcrumb'
+import helpers from '~/plugins/helpers'
 
 Vue.use(helpers)
 

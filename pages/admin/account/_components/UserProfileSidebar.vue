@@ -1,7 +1,7 @@
 <template>
   <div v-if="user">
     <x-user-header
-      :avatar="userAvatar"
+      :user-avatar="userAvatar"
       :name="`${user.first_name} ${user.last_name}`"
       position="Web Developer"
     />

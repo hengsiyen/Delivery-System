@@ -3,8 +3,6 @@ const webpack = require('webpack')
 require('dotenv').config()
 
 export default {
-  ssr: false,
-
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Asorabox',
@@ -21,23 +19,16 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
-    { src: 'bootstrap/dist/css/bootstrap.min.css', lang: 'css' },
-    { src: 'font-awesome/css/font-awesome.min.css', lang: 'css' },
-    { src: 'adminlte/dist/css/AdminLTE.min.css', lang: 'css' },
-    { src: 'adminlte/dist/css/skins/skin-blue.min.css', lang: 'css' },
-    { src: 'datatables.net-bs/css/dataTables.bootstrap.min.css', lang: 'css' },
-    { src: 'datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.css', lang: 'css' },
-    '@/assets/css/fonts.css',
-    '@/assets/css/login.css',
-    '@/assets/css/app.css'
+    '@/assets/scss/app.scss'
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '~/plugins/main.js', mode: 'client' },
-    { src: '~/plugins/i18n.js', mode: 'client' },
+    { src: '~/plugins/i18n.js' },
     { src: '~/plugins/axios.js', mode: 'client' },
     { src: '~/plugins/script.js', mode: 'client' },
+    { src: '~/plugins/permission.js', mode: 'client' },
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
     { src: '~/plugins/vue-loading.js', mode: 'client' },
     { src: '~/plugins/x-backend.js', mode: 'client' },
@@ -53,7 +44,8 @@ export default {
     '@nuxtjs/router',
     '@nuxtjs/eslint-module',
     '@nuxtjs/dotenv',
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    '@nuxtjs/google-fonts'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -67,7 +59,8 @@ export default {
     // https://github.com/nuxt-community/universal-storage-module
     '@nuxtjs/universal-storage',
     // https://www.npmjs.com/package/vue-sweetalert2
-    'vue-sweetalert2/nuxt'
+    'vue-sweetalert2/nuxt',
+    'cookie-universal-nuxt'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -87,5 +80,27 @@ export default {
         'window.jQuery': 'jquery'
       })
     ]
+  },
+
+  sweetalert: {
+    confirmButtonColor: '#3a7afe',
+    cancelButtonColor: '#ed524f'
+  },
+
+  server: {
+    port: 3000
+  },
+
+  extend (config, ctx) {
+    config.resolve.symlinks = false
+  },
+
+  googleFonts: {
+    families: {
+      Nunito: true,
+      Lato: true,
+      'Source Sans Pro': true,
+      Raleway: true
+    }
   }
 }

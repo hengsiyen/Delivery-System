@@ -7,7 +7,7 @@
       <section class="content container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <box-information
+            <XBoxInfo
               :title="page.title"
               :img="page.img"
             />
@@ -23,13 +23,13 @@
 
 <script>
 
-import BoxInformation from '~/components/BoxInformation'
-import Sidebar from '~/partials/Sidebar'
-import Header from '~/partials/Header'
-import Footer from '~/partials/Footer'
-import ControlSidebar from '~/partials/ControlSidebar'
-import ControlSidebarBg from '~/partials/ControlSidebarBg'
-import Breadcrumb from '~/partials/Breadcrumb'
+import XBoxInfo from '@/components/XBoxInfo'
+import Sidebar from '@/components/Layouts/Sidebar'
+import Header from '@/components/Layouts/Header'
+import Footer from '@/components/Layouts/Footer'
+import ControlSidebar from '@/components/Layouts/ControlSidebar'
+import ControlSidebarBg from '@/components/Layouts/ControlSidebarBg'
+import Breadcrumb from '@/components/Layouts/Breadcrumb'
 
 export default {
   name: 'PageError',
@@ -43,7 +43,7 @@ export default {
     }
   },
   components: {
-    BoxInformation,
+    XBoxInfo,
     Breadcrumb,
     ControlSidebarBg,
     ControlSidebar,

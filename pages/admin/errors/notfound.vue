@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <box-information
+      <XBoxInfo
         img="/img/svgs/notfound.svg"
         :title="$t('string.pageNotFound')"
       />
@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import BoxInformation from '~/components/BoxInformation'
+import XBoxInfo from '@/components/XBoxInfo'
+
 export default {
   name: 'Notfound',
   head () {
@@ -19,7 +20,7 @@ export default {
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
   },
-  components: { BoxInformation }
+  components: { XBoxInfo }
 }
 </script>
 

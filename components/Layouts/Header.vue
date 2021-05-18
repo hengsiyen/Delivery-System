@@ -1,0 +1,40 @@
+<template>
+  <header class="main-header">
+    <nuxt-link :to="{name: 'admin'}" class="logo">
+      <span class="logo-mini">{{ appName }}</span>
+      <span class="logo-lg">
+        <strong>{{ appName }}</strong>
+      </span>
+    </nuxt-link>
+
+    <nav class="navbar navbar-static-top" role="navigation">
+      <a class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <switch-locale />
+          <header-user />
+        </ul>
+      </div>
+    </nav>
+  </header>
+</template>
+
+<script>
+import SwitchLocale from '@/components/Layouts/SwitchLocale'
+import HeaderUser from '@/components/Layouts/HeaderUser'
+
+export default {
+  name: 'Header',
+  components: {
+    HeaderUser,
+    SwitchLocale
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

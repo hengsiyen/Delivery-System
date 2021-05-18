@@ -12,6 +12,12 @@ export default {
         class: 'hold-transition skin-blue sidebar-mini'
       }
     }
+  },
+  mounted () {
+    this.getUserInfo()
+    $(document).ready(function () {
+      $(document.body).tooltip({ selector: '[title]' })
+    })
   }
 }
 </script>

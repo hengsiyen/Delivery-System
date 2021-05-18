@@ -53,7 +53,7 @@ export default {
   },
   mounted () {
     this.headers = {
-      Authorization: 'Bearer ' + localStorage.getItem(this.$token),
+      Authorization: `Bearer ${this.$cookies.get(process.env.VUE_APP_TOKEN)}`,
       Accept: 'application/json'
     }
 

@@ -1,0 +1,59 @@
+.required:after {
+  content: ' *';
+  color: var(--danger);
+}
+
+.margin-right-5 {
+  margin-right: 5px;
+}
+
+.label-error {
+  color: var(--danger);
+  font-size: 12px;
+}
+
+body {
+  font-family: var(--primary-font);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+p, span, article, b, ul, li, ol,
+.toast-message, .toast-title {
+  font-family: var(--primary-font);
+}
+
+.sidebar-toggle {
+  font-family: "fontAwesome", serif !important;
+}
+
+.swal2-popup {
+  font-size: 1.6rem !important;
+}
+
+.tooltip {
+  position: fixed;
+}
+
+.table-full-width {
+  width: 100% !important;
+}
+
+.sidebar-menu > li > a > .fa,
+.sidebar-menu > li > a > .far,
+.sidebar-menu > li > a > .fas {
+  width: 20px;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
+
+li.treeview {
+  cursor: pointer;
+}

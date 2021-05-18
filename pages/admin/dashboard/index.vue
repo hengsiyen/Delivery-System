@@ -1,18 +1,18 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <x-alert />
+      <XAlert />
     </div>
     <template v-if="can([$Permissions.backend.dashboard.show])">
       <div class="col-md-3">
-        <x-small-box
+        <XSmallBox
           :number="box.domain"
           title="Houses"
           icon="fa fa-university"
         />
       </div>
       <div class="col-md-3">
-        <x-small-box
+        <XSmallBox
           :number="box.article"
           bg="yellow"
           title="Article"
@@ -20,7 +20,7 @@
         />
       </div>
       <div class="col-md-3">
-        <x-small-box
+        <XSmallBox
           :number="box.user"
           bg="green"
           title="Users"
@@ -28,7 +28,7 @@
         />
       </div>
       <div class="col-md-3">
-        <x-small-box
+        <XSmallBox
           bg="red"
           :number="box.inbox"
           title="Inbox"
@@ -38,21 +38,21 @@
       <div class="col-md-12">
         <div class="row">
           <div class="col-md-7">
-            <x-box title="Monthly Report">
+            <XBox title="Monthly Report">
               <x-chart-line />
-            </x-box>
+            </XBox>
           </div>
           <div class="col-md-5">
-            <x-box title="Users and Collaborations">
+            <XBox title="Users and Collaborations">
               <x-chart-doughnut />
-            </x-box>
+            </XBox>
           </div>
         </div>
       </div>
       <div class="col-md-12">
-        <x-box title="Analytic">
+        <XBox title="Analytic">
           <x-chart-bar />
-        </x-box>
+        </XBox>
       </div>
     </template>
   </div>
@@ -60,8 +60,13 @@
 
 <script>
 
+import XAlert from '@/components/Widgets/XAlert'
+import XSmallBox from '@/components/Widgets/XSmallBox'
+import XBox from '@/components/Widgets/XBox'
+
 export default {
   name: 'Dashboard',
+  components: { XBox, XSmallBox, XAlert },
   head () {
     return {
       title: this.$t('menu.dashboard'),
