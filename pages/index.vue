@@ -124,33 +124,6 @@ export default {
       self.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/login', self.credentials)
         .then(({ data }) => {
           if (data) {
-            /* const result = response.data.data
-            const token = result.access_token
-            const refresh = result.refresh_token
-
-            localStorage.setItem(process.env.VUE_APP_TOKEN, token)
-            localStorage.setItem(process.env.VUE_APP_REFRESH_TOKEN, refresh)
-
-            self.$axios.setHeader('Authorization', 'Bearer ' + token)
-            self.$axios.setHeader('Accept', 'application/json')
-
-            $.ajaxSetup({
-              headers: {
-                Accept: 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem(process.env.VUE_APP_TOKEN)
-              }
-            })
-
-            // store user, roles and permissions
-            self.$store.dispatch('user/setUser', { user: result.user })
-            self.$store.dispatch('user/setRoles', result.roles)
-            self.$store.commit('user/setPermissions', result.permissions)
-
-            self.$router.push({
-              name: 'admin'
-            })
-            // path: localStorage.getItem('fromRoutePath') */
-
             const result = data.data
             const token = result.access_token
             const refresh = result.refresh_token
@@ -193,6 +166,13 @@ export default {
       if (e.code === 'Enter') {
         this.onLogin()
       }
+    }
+  },
+  beforeCreate () {
+    const token = this.$cookies.get(process.env.VUE_APP_TOKEN)
+    if (token) {
+      // eslint-disable-next-line handle-callback-err
+      this.$router.push({ name: 'admin' }).catch((error) => {})
     }
   },
   mounted () {

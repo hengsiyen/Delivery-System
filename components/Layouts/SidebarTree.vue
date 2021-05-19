@@ -42,7 +42,7 @@ export default {
   computed: {
     opened () {
       try {
-        return this.menu.children.some(child => child.route.groups === this.$route.meta.group)
+        return this.menu.children.some(child => child.route.groups === this.$route.meta.groups)
       } catch (e) {
         return this.menu.children.some(child => child.route.name === this.$route.name)
       }
