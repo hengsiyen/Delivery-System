@@ -57,3 +57,22 @@ p, span, article, b, ul, li, ol,
 li.treeview {
   cursor: pointer;
 }
+
+.tooltip {
+  font-family: var(--primary-font);
+}
+
+.margin-top {
+  margin-top: 15px;
+}
+
+.mx-datepicker-popup {
+  z-index: 1060 !important;
+}
+
+.box-title {
+  display: inline-block;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1;
+}

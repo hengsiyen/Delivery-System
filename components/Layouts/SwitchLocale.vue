@@ -29,15 +29,9 @@ export default {
   },
   methods: {
     onChangeLocale () {
-      if (this.$i18n.locale === 'km') {
-        this.$i18n.locale = 'en'
-        localStorage.setItem('locale', 'en')
-        // this.$moment.locale('en')
-      } else {
-        this.$i18n.locale = 'km'
-        localStorage.setItem('locale', 'km')
-        // this.$moment.locale('km')
-      }
+      const locale = this.$i18n.locale === 'km' ? 'en' : 'km'
+      this.$i18n.locale = locale
+      this.$cookies.set('locale', locale)
     }
   }
 }

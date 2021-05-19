@@ -2,15 +2,24 @@
   <div v-if="user" class="table-responsive">
     <div class="mb-20 clearfix">
       <template v-if="isUpdating">
-        <button class="btn btn-danger pull-right" @click="switchUpdateMode(false)">
+        <button
+          class="btn btn-danger pull-right"
+          @click="switchUpdateMode(false)"
+        >
           <i class="fa fa-times-circle" /> {{ $t('button.cancel') }}
         </button>
-        <button class="btn btn-success pull-right mr-5" @click="updateProfile">
+        <button
+          class="btn btn-success pull-right mr-5"
+          @click="updateProfile"
+        >
           {{ $t('button.save') }}
         </button>
       </template>
       <template v-else>
-        <button class="btn btn-primary pull-right" @click="switchUpdateMode(true)">
+        <button
+          class="btn btn-primary pull-right"
+          @click="switchUpdateMode(true)"
+        >
           <i class="fa fa-edit" /> {{ $t('button.update') }}
         </button>
       </template>
@@ -21,17 +30,18 @@
           <th>{{ $t('fields.firstName') }}</th>
           <template v-if="isUpdating">
             <td>
-              <div class="form-group no-margin" :class="{'has-error': validations.hasOwnProperty('first_name')}">
+              <div
+                class="form-group no-margin"
+                :class="{'has-error': validations.first_name}"
+              >
                 <input
                   v-model="userForm.first_name"
                   type="text"
                   class="form-control"
                   :placeholder="$t('placeholder.firstName')"
                 >
-                <template v-if="validations.hasOwnProperty('first_name')">
-                  <span class="label-error">
-                    {{ validations['first_name'][0] }}
-                  </span>
+                <template v-if="validations.first_name">
+                  <FiledIsRequired />
                 </template>
               </div>
             </td>
@@ -44,17 +54,18 @@
           <th>{{ $t('fields.lastName') }}</th>
           <template v-if="isUpdating">
             <td>
-              <div class="form-group no-margin" :class="{'has-error': validations.hasOwnProperty('last_name')}">
+              <div
+                class="form-group no-margin"
+                :class="{'has-error': validations.last_name}"
+              >
                 <input
                   v-model="userForm.last_name"
                   type="text"
                   class="form-control"
                   :placeholder="$t('placeholder.lastName')"
                 >
-                <template v-if="validations.hasOwnProperty('last_name')">
-                  <span class="label-error">
-                    {{ validations['last_name'][0] }}
-                  </span>
+                <template v-if="validations.last_name">
+                  <FiledIsRequired />
                 </template>
               </div>
             </td>
@@ -67,7 +78,9 @@
           <th>{{ $t('fields.email') }}</th>
           <template v-if="isUpdating">
             <td>
-              <div class="form-group no-margin" :class="{'has-error': validations.hasOwnProperty('email')}">
+              <div
+                class="form-group no-margin"
+              >
                 <input
                   v-model="userForm.email"
                   type="email"
@@ -75,11 +88,6 @@
                   class="form-control"
                   :placeholder="$t('placeholder.email')"
                 >
-                <template v-if="validations.hasOwnProperty('email')">
-                  <span class="label-error">
-                    {{ validations['email'][0] }}
-                  </span>
-                </template>
               </div>
             </td>
           </template>
@@ -91,22 +99,23 @@
           <th>{{ $t('fields.gender') }}</th>
           <template v-if="isUpdating">
             <td>
-              <div class="form-group no-margin" :class="{'has-error': validations.hasOwnProperty('gender_id')}">
-                <select v-model="user.gender_id" class="form-control">
-                  <option selected disabled value="0">
+              <div
+                class="form-group no-margin"
+                :class="{'has-error': validations.gender_id}"
+              >
+                <select v-model="userForm.gender_id" class="form-control">
+                  <option selected disabled :value="null">
                     {{ $t('string.selectGender') }}
                   </option>
-                  <option value="1">
+                  <option :value="1">
                     {{ $t('label.male') }}
                   </option>
-                  <option value="2">
+                  <option :value="2">
                     {{ $t('label.female') }}
                   </option>
                 </select>
-                <template v-if="validations.hasOwnProperty('gender_id')">
-                  <span class="label-error">
-                    {{ validations['gender_id'][0] }}
-                  </span>
+                <template v-if="validations.gender_id">
+                  <FiledIsRequired />
                 </template>
               </div>
             </td>
@@ -134,9 +143,11 @@
 
 <script>
 import { mapState } from 'vuex'
+import FiledIsRequired from '@/components/FiledIsRequired'
 
 export default {
   name: 'UserProfile',
+  components: { FiledIsRequired },
   data () {
     return {
       isUpdating: false,

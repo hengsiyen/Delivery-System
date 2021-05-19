@@ -42,7 +42,7 @@
                         <td>
                           <template v-if="user.avatar">
                             <img
-                              :src="`${baseUrl}/${user.avatar}`"
+                              :src="`${getSrc(user.avatar)}`"
                               class="user-image"
                               alt="User Avatar"
                               width="200px"

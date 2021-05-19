@@ -1,9 +1,9 @@
-export default function ({ $axios, redirect }) {
-  $axios.onRequest((config) => {
-    const _token = localStorage.getItem(process.env.VUE_APP_TOKEN)
+export default function ({ $axios, redirect, $cookies }) {
+  const _token = $cookies.get(process.env.VUE_APP_TOKEN)
+  if (_token) {
     $axios.setHeader('Authorization', 'Bearer ' + _token)
     $axios.setHeader('Accept', 'application/json')
-  })
+  }
 
   $axios.onResponse((response) => {
 
