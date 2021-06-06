@@ -29,7 +29,7 @@
                   class="nav-link"
                   :to="child.route"
                 >
-                  <i class="far fa-circle nav-icon" />
+                  <i class="nav-icon far fa-circle nav-icon" />
                   <p>{{ child.label }}</p>
                 </nuxt-link>
               </li>
@@ -44,7 +44,7 @@
                   class="nav-link"
                   :to="child.route"
                 >
-                  <i class="far fa-circle nav-icon" />
+                  <i class="nav-icon far fa-circle nav-icon" />
                   <p>{{ child.label }}</p>
                 </nuxt-link>
               </li>

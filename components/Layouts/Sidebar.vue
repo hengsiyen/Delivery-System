@@ -80,7 +80,7 @@ export default {
         {
           label: this.$t('menu.dashboard'),
           route: { name: 'admin', groups: 'dashboard' },
-          icon: 'fas fa-tachometer-alt',
+          icon: 'nav-icon fas fa-tachometer-alt',
           children: null,
           permissions: [this.$Permissions.backend.manage]
         },
@@ -94,7 +94,7 @@ export default {
         {
           label: this.$t('menu.settings'),
           route: null,
-          icon: 'fas fa-cog',
+          icon: 'nav-icon fas fa-cog',
           permissions: [this.$Permissions.backend.setting.manage],
           children: [
             {
@@ -107,7 +107,7 @@ export default {
         {
           label: this.$t('menu.administration'),
           route: null,
-          icon: 'fa fa-code',
+          icon: 'nav-icon fa fa-code',
           permissions: [this.$Permissions.backend.administration.manage],
           children: [
             {
