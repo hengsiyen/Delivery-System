@@ -1,30 +1,29 @@
 <template>
-  <li class="dropdown notifications-menu">
-    <!-- Menu toggle button -->
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-bell-o" />
-      <span class="label label-warning">10</span>
+  <li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+      <i class="far fa-bell" />
+      <span class="badge badge-warning navbar-badge">15</span>
     </a>
-    <ul class="dropdown-menu">
-      <li class="header">
-        You have 10 notifications
-      </li>
-      <li>
-        <!-- Inner Menu: contains the notifications -->
-        <ul class="menu">
-          <li>
-            <!-- start notification -->
-            <a href="#">
-              <i class="fa fa-users text-aqua" /> 5 new members joined today
-            </a>
-          </li>
-          <!-- end notification -->
-        </ul>
-      </li>
-      <li class="footer">
-        <a href="#">View all</a>
-      </li>
-    </ul>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      <span class="dropdown-header">15 Notifications</span>
+      <div class="dropdown-divider" />
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-envelope mr-2" /> 4 new messages
+        <span class="float-right text-muted text-sm">3 mins</span>
+      </a>
+      <div class="dropdown-divider" />
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-users mr-2" /> 8 friend requests
+        <span class="float-right text-muted text-sm">12 hours</span>
+      </a>
+      <div class="dropdown-divider" />
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-file mr-2" /> 3 new reports
+        <span class="float-right text-muted text-sm">2 days</span>
+      </a>
+      <div class="dropdown-divider" />
+      <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+    </div>
   </li>
 </template>
 

@@ -1,41 +1,60 @@
 <template>
-  <li class="dropdown messages-menu">
-    <!-- Menu toggle button -->
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-envelope-o" />
-      <span class="label label-success">4</span>
+  <li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+      <i class="far fa-comments" />
+      <span class="badge badge-danger navbar-badge">3</span>
     </a>
-    <ul class="dropdown-menu">
-      <li class="header">
-        You have 4 messages
-      </li>
-      <li>
-        <!-- inner menu: contains the messages -->
-        <ul class="menu">
-          <li>
-            <!-- start message -->
-            <a href="#">
-              <div class="pull-left">
-                <!-- User Image -->
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-              </div>
-              <!-- Message title and timestamp -->
-              <h4>
-                Support Team
-                <small><i class="fa fa-clock-o" /> 5 mins</small>
-              </h4>
-              <!-- The message -->
-              <p>Why not buy a new awesome theme?</p>
-            </a>
-          </li>
-          <!-- end message -->
-        </ul>
-        <!-- /.menu -->
-      </li>
-      <li class="footer">
-        <a href="#">See All Messages</a>
-      </li>
-    </ul>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      <a href="#" class="dropdown-item">
+        <!-- Message Start -->
+        <div class="media">
+          <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+          <div class="media-body">
+            <h3 class="dropdown-item-title">
+              Brad Diesel
+              <span class="float-right text-sm text-danger"><i class="fas fa-star" /></span>
+            </h3>
+            <p class="text-sm">Call me whenever you can...</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1" /> 4 Hours Ago</p>
+          </div>
+        </div>
+        <!-- Message End -->
+      </a>
+      <div class="dropdown-divider" />
+      <a href="#" class="dropdown-item">
+        <!-- Message Start -->
+        <div class="media">
+          <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+          <div class="media-body">
+            <h3 class="dropdown-item-title">
+              John Pierce
+              <span class="float-right text-sm text-muted"><i class="fas fa-star" /></span>
+            </h3>
+            <p class="text-sm">I got your message bro</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1" /> 4 Hours Ago</p>
+          </div>
+        </div>
+        <!-- Message End -->
+      </a>
+      <div class="dropdown-divider" />
+      <a href="#" class="dropdown-item">
+        <!-- Message Start -->
+        <div class="media">
+          <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+          <div class="media-body">
+            <h3 class="dropdown-item-title">
+              Nora Silvester
+              <span class="float-right text-sm text-warning"><i class="fas fa-star" /></span>
+            </h3>
+            <p class="text-sm">The subject goes here</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1" /> 4 Hours Ago</p>
+          </div>
+        </div>
+        <!-- Message End -->
+      </a>
+      <div class="dropdown-divider" />
+      <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+    </div>
   </li>
 </template>
 

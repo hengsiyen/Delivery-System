@@ -6,6 +6,7 @@
     <template v-if="can([$Permissions.backend.dashboard.show])">
       <div class="col-md-3">
         <XSmallBox
+          bg="info"
           :number="box.domain"
           title="Houses"
           icon="fa fa-university"

@@ -1,9 +1,8 @@
 <template>
-  <li class="dropdown tasks-menu">
+  <li class="nav-item">
     <a
       href="javascript:void(0)"
-      data-toggle="dropdown"
-      class="dropdown-toggle"
+      class="nav-link"
       @click="onChangeLocale"
     >
       <img :src="srcFlagImg" class="flag" alt="Flag Image">

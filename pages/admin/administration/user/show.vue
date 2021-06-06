@@ -3,23 +3,24 @@
     v-if="user"
     class="user"
   >
-    <div class="box box-primary">
-      <div class="box-header with-border">
-        <h3 class="box-title">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
           {{ $t('label.showUser') }}
         </h3>
         <div class="pull-right box-tools">
           <ButtonBack />
         </div>
       </div>
-      <div class="box-body">
+      <div class="card-body">
         <ul class="nav nav-tabs" role="tablist">
-          <li class="active" role="presentation">
+          <li class="nav-item" role="presentation">
             <a
               aria-controls="profile"
               data-toggle="tab"
               href="#profile"
               role="tab"
+              class="nav-link active"
             >
               <i class="fa fa-user" /> {{ $t('label.profile') }}
             </a>

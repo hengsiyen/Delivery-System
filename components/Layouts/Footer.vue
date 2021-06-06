@@ -1,6 +1,6 @@
 <template>
   <footer class="main-footer">
-    <div class="pull-right hidden-xs">
+    <div class="float-right d-none d-sm-inline">
       {{ $t('string.developedBy') }} <a href="http://asorasoft.com" target="_blank">Asorasoft.com</a>
     </div>
     &copy; 2019 {{ $t('string.allRightsReserved') }} <a :href="appUrl"><strong>{{ appName }}</strong></a>

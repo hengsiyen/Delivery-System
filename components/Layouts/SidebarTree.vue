@@ -1,25 +1,51 @@
 <template>
-  <li v-if="menu" class="treeview" :class="{'menu-open': opened}">
-    <a><i :class="menu.icon" /> <span>{{ menu.label }}</span>
-      <span class="pull-right-container">
-        <i class="fa fa-angle-left pull-right" />
-      </span>
+  <li
+    v-if="menu"
+    class="nav-item"
+    :class="{ 'menu-open menu-is-opening': opened }"
+  >
+    <a
+      href="#"
+      class="nav-link"
+      :class="{'active': allGroups.includes($route.meta.groups)}"
+    >
+      <i :class="menu.icon" />
+      <p>
+        {{ menu.label }}
+        <i class="right fas fa-angle-left" />
+      </p>
     </a>
-    <ul class="treeview-menu" :style="opened ? 'display: block' : 'display: none'">
+    <ul class="nav nav-treeview" :style="opened ? 'display: block' : 'display: none'">
       <template v-if="menu.children">
         <template v-for="(child, key) in menu.children">
           <template v-if="can(child.permissions) && hasRoles(child.roles)">
             <template v-if="child.route.hasOwnProperty('groups') && $route.meta.hasOwnProperty('groups')">
-              <li :key="key" :class="{active: $route.meta.groups === child.route.groups}">
-                <nuxt-link :to="child.route">
-                  {{ child.label }}
+              <li
+                :key="key"
+                class="nav-item"
+              >
+                <nuxt-link
+                  :class="{active: $route.meta.groups === child.route.groups}"
+                  class="nav-link"
+                  :to="child.route"
+                >
+                  <i class="far fa-circle nav-icon" />
+                  <p>{{ child.label }}</p>
                 </nuxt-link>
               </li>
             </template>
             <template v-else>
-              <li :key="key" :class="{active: $route.name === child.route.name}">
-                <nuxt-link :to="child.route">
-                  {{ child.label }}
+              <li
+                :key="key"
+                class="nav-item"
+                :class="{active: $route.name === child.route.name}"
+              >
+                <nuxt-link
+                  class="nav-link"
+                  :to="child.route"
+                >
+                  <i class="far fa-circle nav-icon" />
+                  <p>{{ child.label }}</p>
                 </nuxt-link>
               </li>
             </template>
@@ -46,12 +72,13 @@ export default {
       } catch (e) {
         return this.menu.children.some(child => child.route.name === this.$route.name)
       }
+    },
+    allGroups () {
+      if (this.menu && this.menu.children && Array.isArray(this.menu.children)) {
+        return this.menu.children.map(m => m.route && m.route.groups ? m.route.groups : null).filter(Boolean)
+      }
+      return []
     }
-  },
-  mounted () {
-    this.$nextTick(() => {
-      $(document.body).tree({ selector: '.sidebar-menu' })
-    })
   }
 }
 </script>

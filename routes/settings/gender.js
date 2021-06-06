@@ -7,7 +7,8 @@ export const genderRouters = {
   component: index,
   redirect: 'gender',
   meta: {
-    permissions: [Permissions.backend.setting.gender.manage]
+    permissions: [Permissions.backend.setting.gender.manage],
+    groups: 'gender'
   },
   children: [
     {
@@ -16,6 +17,7 @@ export const genderRouters = {
       component: list,
       meta: {
         permissions: [Permissions.backend.setting.gender.list],
+        groups: 'gender',
         breadcrumb: [
           {
             name_en: 'Settings',

@@ -1,35 +1,74 @@
 <template>
-  <header class="main-header">
-    <nuxt-link :to="{name: 'admin'}" class="logo">
-      <span class="logo-mini">{{ appName }}</span>
-      <span class="logo-lg">
-        <strong>{{ appName }}</strong>
-      </span>
-    </nuxt-link>
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" /></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">{{ appName }}</a>
+      </li>
+    </ul>
 
-    <nav class="navbar navbar-static-top" role="navigation">
-      <a class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <switch-locale />
-          <header-user />
-        </ul>
-      </div>
-    </nav>
-  </header>
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search" />
+        </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input
+                class="form-control form-control-navbar"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              >
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search" />
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times" />
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          data-widget="fullscreen"
+          href="#"
+          role="button"
+        >
+          <i class="fas fa-expand-arrows-alt" />
+        </a>
+      </li>
+      <SwitchLocale />
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          data-widget="control-sidebar"
+          data-slide="true"
+          href="#"
+          role="button"
+        >
+          <i class="fas fa-th-large" />
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
 import SwitchLocale from '@/components/Layouts/SwitchLocale'
-import HeaderUser from '@/components/Layouts/HeaderUser'
 
 export default {
   name: 'Header',
   components: {
-    HeaderUser,
     SwitchLocale
   }
 }

@@ -1,232 +1,241 @@
 <template>
   <div class="user">
-    <div class="box box-primary">
-      <div class="box-header with-border">
-        <h3 class="box-title">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
           {{ title }}
         </h3>
       </div>
-      <div class="box-body">
+      <div class="card-body">
         <div class="row">
           <div class="col-md-12">
-            <div class="form-horizontal">
-              <div v-if="isEdit" class="form-group text-center margin-50">
-                <div class="change-avatar">
-                  <div style="display: inline-grid">
-                    <img
-                      :src="imgDataUrl || avatar"
-                      alt="User Avatar"
-                      class="container-avatar"
-                    >
-                    <a
-                      class="btn btn-primary"
-                      @click="toggleShow"
-                    >{{ $t('label.uploadYourAvatar') }}</a>
+            <div
+              v-if="isEdit"
+              class="form-group text-center margin-50"
+            >
+              <div class="change-avatar">
+                <div style="display: inline-grid">
+                  <img
+                    :src="imgDataUrl || avatar"
+                    alt="User Avatar"
+                    class="container-avatar"
+                  >
+                  <a
+                    class="btn btn-primary"
+                    @click="toggleShow"
+                  >{{ $t('label.uploadYourAvatar') }}</a>
+                </div>
+                <vue-crop-avatar
+                  v-model="show"
+                  field="avatar"
+                  :width="200"
+                  lang-type="en"
+                  :height="200"
+                  :url="`${apiUrl}/api/backend/user/change-avatar`"
+                  :params="params"
+                  :headers="headers"
+                  img-format="png"
+                  @crop-success="cropSuccess"
+                  @crop-upload-success="cropUploadSuccess"
+                  @crop-upload-fail="cropUploadFail"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="required col-sm-3 col-form-label text-right">{{ $t('label.firstName') }}</label>
+              <div class="col-sm-9">
+                <input
+                  v-model="user.first_name"
+                  type="text"
+                  :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('first_name')}"
+                  autofocus
+                  class="form-control"
+                  :placeholder="$t('label.firstName')"
+                >
+                <div
+                  v-if="validations !== null && validations.hasOwnProperty('first_name')"
+                  class="invalid-feedback"
+                >
+                  {{ validations['first_name'][0] }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                class="required col-sm-3 col-form-label text-right"
+              >{{ $t('label.lastName') }}</label>
+              <div class="col-sm-9">
+                <input
+                  v-model="user.last_name"
+                  type="text"
+                  :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('last_name')}"
+                  autofocus
+                  class="form-control"
+                  :placeholder="$t('label.lastName')"
+                >
+                <div
+                  v-if="validations !== null && validations.hasOwnProperty('last_name')"
+                  class="invalid-feedback"
+                >
+                  {{ validations['last_name'][0] }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="required col-sm-3 col-form-label text-right">{{ $t('label.email') }}</label>
+              <div class="col-sm-9">
+                <input
+                  v-model="user.email"
+                  type="email"
+                  :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('email')}"
+                  autofocus
+                  class="form-control"
+                  :placeholder="$t('label.email')"
+                >
+                <div
+                  v-if="validations !== null && validations.hasOwnProperty('email')"
+                  class="invalid-feedback"
+                >
+                  {{ validations['email'][0] }}
+                </div>
+              </div>
+            </div>
+            <template v-if="!isEdit">
+              <div class="form-group row">
+                <label class="required col-sm-3 col-form-label text-right">{{ $t('label.password') }}</label>
+                <div class="col-sm-9">
+                  <input
+                    v-model="user.password"
+                    type="password"
+                    autofocus
+                    :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('password')}"
+                    class="form-control"
+                    :placeholder="$t('label.password')"
+                  >
+                  <div
+                    v-if="validations !== null && validations.hasOwnProperty('password')"
+                    class="invalid-feedback"
+                  >
+                    {{ validations['password'][0] }}
                   </div>
-                  <vue-crop-avatar
-                    v-model="show"
-                    field="avatar"
-                    :width="200"
-                    lang-type="en"
-                    :height="200"
-                    :url="`${apiUrl}/api/backend/user/change-avatar`"
-                    :params="params"
-                    :headers="headers"
-                    img-format="png"
-                    @crop-success="cropSuccess"
-                    @crop-upload-success="cropUploadSuccess"
-                    @crop-upload-fail="cropUploadFail"
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="required col-sm-3 col-form-label text-right">{{ $t('label.passwordConfirmation') }}</label>
+                <div class="col-sm-9">
+                  <input
+                    v-model="user.password_confirmation"
+                    type="password"
+                    autofocus
+                    :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('password_confirmation')}"
+                    class="form-control"
+                    :placeholder="$t('label.passwordConfirmation')"
+                  >
+                  <div
+                    v-if="validations !== null && validations.hasOwnProperty('password_confirmation')"
+                    class="invalid-feedback"
+                  >
+                    {{ validations['password_confirmation'][0] }}
+                  </div>
+                </div>
+              </div>
+            </template>
+            <div
+              class="form-group row"
+            >
+              <label
+                class="required col-sm-3 col-form-label text-right"
+              >{{ $t('label.gender') }}</label>
+              <div class="col-sm-9">
+                <select
+                  v-model="user.gender_id"
+                  :class="{'is-invalid': validations !== null && validations.hasOwnProperty('gender_id')}"
+                  class="form-control"
+                >
+                  <option selected disabled value="0">
+                    {{ $t('string.selectGender') }}
+                  </option>
+                  <option value="1">
+                    {{ $t('label.male') }}
+                  </option>
+                  <option value="2">
+                    {{ $t('label.female') }}
+                  </option>
+                </select>
+                <div
+                  v-if="validations !== null && validations.hasOwnProperty('gender_id')"
+                  class="invalid-feedback"
+                >
+                  {{ validations['gender_id'][0] }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                class="required col-sm-3 col-form-label text-right"
+              >{{ $t('label.active') }}</label>
+              <div class="col-sm-9">
+                <label>
+                  <input
+                    v-model="user.active"
+                    type="checkbox"
+                    :value="true"
+                  > {{ $t('label.active?') }}
+                </label>
+              </div>
+            </div>
+            <div
+              class="form-group row"
+            >
+              <label class="required col-sm-3 col-form-label text-right">{{ $t('label.role') }}</label>
+              <div class="col-sm-9">
+                <div class="row">
+                  <template v-if="rolesOption.length > 0">
+                    <div v-for="(role, key) in rolesOption" :key="key" class="col-md-12">
+                      <label :key="key" style="color: #333333">
+                        <input
+                          v-model="user.roles"
+                          type="checkbox"
+                          :value="role"
+                          :class="{'is-invalid': validations !== null && validations.hasOwnProperty('roles')}"
+                        > {{ role['display_name_' + $i18n.locale] || role.name }}
+                      </label>
+                    </div>
+                  </template>
+                  <div
+                    v-if="validations !== null && validations.hasOwnProperty('roles')"
+                    class="text-red"
+                  >
+                    {{ validations['roles'][0] }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label text-right">{{ $t('label.additionalPermissions') }}</label>
+              <div class="col-sm-9">
+                <div
+                  class="permission-tree-wrapper"
+                  :class="{'red-border': validations !== null && validations.hasOwnProperty('permissions')}"
+                >
+                  <permission-tree
+                    v-model="user.permissions"
+                    :disabled-permissions="disabledPermissions"
+                    :disable-all="disableAll"
+                    :selected="selected"
                   />
                 </div>
               </div>
-              <div
-                :class="'form-group ' + (validations !== null && validations.hasOwnProperty('first_name') ? 'has-error' : '')"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.firstName') }}</label>
-                <div class="col-sm-9">
-                  <input
-                    v-model="user.first_name"
-                    type="text"
-                    autofocus
-                    class="form-control"
-                    :placeholder="$t('label.firstName')"
-                  >
-                  <span
-                    v-if="validations !== null && validations.hasOwnProperty('first_name')"
-                    class="label-error"
-                  >
-                    {{ validations['first_name'][0] }}
-                  </span>
-                </div>
-              </div>
-              <div
-                :class="'form-group ' + (validations !== null && validations.hasOwnProperty('last_name') ? 'has-error' : '')"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.lastName') }}</label>
-                <div class="col-sm-9">
-                  <input
-                    v-model="user.last_name"
-                    type="text"
-                    autofocus
-                    class="form-control"
-                    :placeholder="$t('label.lastName')"
-                  >
-                  <span
-                    v-if="validations !== null && validations.hasOwnProperty('last_name')"
-                    class="label-error"
-                  >
-                    {{ validations['last_name'][0] }}
-                  </span>
-                </div>
-              </div>
-              <div
-                :class="'form-group ' + (validations !== null && validations.hasOwnProperty('email') ? 'has-error' : '')"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.email') }}</label>
-                <div class="col-sm-9">
-                  <input
-                    v-model="user.email"
-                    type="email"
-                    autofocus
-                    class="form-control"
-                    :placeholder="$t('label.email')"
-                  >
-                  <span
-                    v-if="validations !== null && validations.hasOwnProperty('email')"
-                    class="label-error"
-                  >
-                    {{ validations['email'][0] }}
-                  </span>
-                </div>
-              </div>
-              <template v-if="!isEdit">
-                <div
-                  :class="'form-group ' + (validations !== null && validations.hasOwnProperty('password') ? 'has-error' : '')"
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-9 offset-sm-3">
+                <button
+                  class="btn btn-primary btn-sm"
+                  @click="onSubmit"
                 >
-                  <label class="required col-sm-3 control-label">{{ $t('label.password') }}</label>
-                  <div class="col-sm-9">
-                    <input
-                      v-model="user.password"
-                      type="password"
-                      autofocus
-                      class="form-control"
-                      :placeholder="$t('label.password')"
-                    >
-                    <span
-                      v-if="validations !== null && validations.hasOwnProperty('password')"
-                      class="label-error"
-                    >
-                      {{ validations['password'][0] }}
-                    </span>
-                  </div>
-                </div>
-                <div
-                  :class="'form-group ' + (validations !== null && validations.hasOwnProperty('password_confirmation') ? 'has-error' : '')"
-                >
-                  <label class="required col-sm-3 control-label">{{ $t('label.passwordConfirmation') }}</label>
-                  <div class="col-sm-9">
-                    <input
-                      v-model="user.password_confirmation"
-                      type="password"
-                      autofocus
-                      class="form-control"
-                      :placeholder="$t('label.passwordConfirmation')"
-                    >
-                    <span
-                      v-if="validations !== null && validations.hasOwnProperty('password_confirmation')"
-                      class="label-error"
-                    >
-                      {{ validations['password_confirmation'][0] }}
-                    </span>
-                  </div>
-                </div>
-              </template>
-              <div
-                class="form-group"
-                :class="{'has-error': validations !== null && validations.hasOwnProperty('gender_id')}"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.gender') }}</label>
-                <div class="col-sm-9">
-                  <select v-model="user.gender_id" class="form-control">
-                    <option selected disabled value="0">
-                      {{ $t('string.selectGender') }}
-                    </option>
-                    <option value="1">
-                      {{ $t('label.male') }}
-                    </option>
-                    <option value="2">
-                      {{ $t('label.female') }}
-                    </option>
-                  </select>
-                  <span
-                    v-if="validations !== null && validations.hasOwnProperty('gender_id')"
-                    class="label-error"
-                  >
-                    {{ validations['gender_id'][0] }}
-                  </span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="required col-sm-3 control-label">{{ $t('label.active') }}</label>
-                <div class="col-sm-9">
-                  <label>
-                    <input v-model="user.active" type="checkbox" :value="true"> {{ $t('label.active?') }}
-                  </label>
-                </div>
-              </div>
-              <div
-                class="form-group"
-                :class="{'has-error': validations !== null && validations.hasOwnProperty('role')}"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.role') }}</label>
-                <div class="col-sm-9">
-                  <div class="row">
-                    <template v-if="rolesOption.length > 0">
-                      <div v-for="(role, key) in rolesOption" :key="key" class="col-md-12">
-                        <label :key="key" style="color: #333333">
-                          <input
-                            v-model="user.roles"
-                            type="checkbox"
-                            :value="role"
-                          > {{ role['display_name_' + $i18n.locale] || role.name }}
-                        </label>
-                      </div>
-                    </template>
-                    <span
-                      v-if="validations !== null && validations.hasOwnProperty('role')"
-                      class="label-error"
-                    >
-                      {{ validations['role'][0] }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="form-group"
-                :class="{'has-error': validations !== null && validations.hasOwnProperty('permissions')}"
-              >
-                <label class="col-sm-3 control-label">{{ $t('label.additionalPermissions') }}</label>
-                <div class="col-sm-9">
-                  <div class="permission-tree-wrapper" :class="{'red-border': validations !== null && validations.hasOwnProperty('permissions')}">
-                    <permission-tree
-                      v-model="user.permissions"
-                      :disabled-permissions="disabledPermissions"
-                      :disable-all="disableAll"
-                      :selected="selected"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9 col-sm-offset-3">
-                  <button
-                    class="btn btn-primary btn-sm margin-r-5"
-                    @click="onSubmit"
-                  >
-                    {{ $t('button.save') }}
-                  </button>
-                  <ButtonBack />
-                </div>
+                  {{ $t('button.save') }}
+                </button>
+                <ButtonBack />
               </div>
             </div>
           </div>

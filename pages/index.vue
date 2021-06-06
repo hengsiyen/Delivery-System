@@ -28,17 +28,17 @@
             <div class="row">
               <div
                 class="col-md-12 form-group"
-                :class="{'has-error' : validations.username}"
+                :class="{'has-error' : validations.email}"
               >
                 <input
-                  v-model="credentials.username"
+                  v-model="credentials.email"
                   :placeholder="$t('label.email')"
                   class="form-control"
                   type="text"
                 >
-                <template v-if="validations.username">
+                <template v-if="validations.email">
                   <span class="label-error">
-                    {{ validations['username'][0] }}
+                    {{ validations['email'][0] }}
                   </span>
                 </template>
               </div>
@@ -105,7 +105,7 @@ export default {
     return {
       appName: process.env.VUE_APP_NAME,
       credentials: {
-        username: '',
+        email: '',
         password: ''
       },
       validations: {},

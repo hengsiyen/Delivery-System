@@ -9,15 +9,12 @@ export default {
   head () {
     return {
       bodyAttrs: {
-        class: 'hold-transition skin-blue sidebar-mini'
+        class: 'hold-transition sidebar-mini'
       }
     }
   },
   mounted () {
     this.getUserInfo()
-    $(document).ready(function () {
-      $(document.body).tooltip({ selector: '[title]' })
-    })
   }
 }
 </script>

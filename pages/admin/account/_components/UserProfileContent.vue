@@ -1,23 +1,43 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-          <li class="active">
-            <a href="#profile" data-toggle="tab">{{ $t('label.profile') }}</a>
-          </li>
-          <li><a href="#resetPassword" data-toggle="tab">{{ $t('label.resetPassword') }}</a></li>
-          <li><a href="#changeAvatar" data-toggle="tab">{{ $t('label.changeAvatar') }}</a></li>
-        </ul>
-        <div class="tab-content">
-          <div id="profile" class="active tab-pane">
-            <UserProfile />
-          </div>
-          <div id="resetPassword" class="tab-pane">
-            <UserProfileResetPassword />
-          </div>
-          <div id="changeAvatar" class="tab-pane">
-            <UserProfileChangeAvatar />
+      <div class="card">
+        <div class="card-header p-0">
+          <ul class="nav nav-pills ml-auto p-2">
+            <li class="nav-item">
+              <a
+                href="#profile"
+                class="nav-link active"
+                data-toggle="tab"
+              >{{ $t('label.profile') }}</a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="#resetPassword"
+                class="nav-link"
+                data-toggle="tab"
+              >{{ $t('label.resetPassword') }}</a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="#changeAvatar"
+                class="nav-link"
+                data-toggle="tab"
+              >{{ $t('label.changeAvatar') }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div id="profile" class="active tab-pane">
+              <UserProfile />
+            </div>
+            <div id="resetPassword" class="tab-pane">
+              <UserProfileResetPassword />
+            </div>
+            <div id="changeAvatar" class="tab-pane">
+              <UserProfileChangeAvatar />
+            </div>
           </div>
         </div>
       </div>

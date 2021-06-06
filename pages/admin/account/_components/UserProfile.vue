@@ -1,15 +1,15 @@
 <template>
   <div v-if="user" class="table-responsive">
-    <div class="mb-20 clearfix">
+    <div class="mb-20 float-right">
       <template v-if="isUpdating">
         <button
-          class="btn btn-danger pull-right"
+          class="btn btn-default"
           @click="switchUpdateMode(false)"
         >
-          <i class="fa fa-times-circle" /> {{ $t('button.cancel') }}
+          {{ $t('button.cancel') }}
         </button>
         <button
-          class="btn btn-success pull-right mr-5"
+          class="btn btn-info"
           @click="updateProfile"
         >
           {{ $t('button.save') }}
@@ -17,10 +17,10 @@
       </template>
       <template v-else>
         <button
-          class="btn btn-primary pull-right"
+          class="btn btn-primary"
           @click="switchUpdateMode(true)"
         >
-          <i class="fa fa-edit" /> {{ $t('button.update') }}
+          <i class="fa fa-edit" /> {{ $t('button.edit') }}
         </button>
       </template>
     </div>
@@ -32,11 +32,11 @@
             <td>
               <div
                 class="form-group no-margin"
-                :class="{'has-error': validations.first_name}"
               >
                 <input
                   v-model="userForm.first_name"
                   type="text"
+                  :class="{'is-invalid': validations.first_name}"
                   class="form-control"
                   :placeholder="$t('placeholder.firstName')"
                 >
@@ -56,10 +56,10 @@
             <td>
               <div
                 class="form-group no-margin"
-                :class="{'has-error': validations.last_name}"
               >
                 <input
                   v-model="userForm.last_name"
+                  :class="{'is-invalid': validations.last_name}"
                   type="text"
                   class="form-control"
                   :placeholder="$t('placeholder.lastName')"
@@ -101,9 +101,12 @@
             <td>
               <div
                 class="form-group no-margin"
-                :class="{'has-error': validations.gender_id}"
               >
-                <select v-model="userForm.gender_id" class="form-control">
+                <select
+                  v-model="userForm.gender_id"
+                  :class="{'is-invalid': validations.gender_id}"
+                  class="form-control"
+                >
                   <option selected disabled :value="null">
                     {{ $t('string.selectGender') }}
                   </option>

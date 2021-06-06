@@ -1,8 +1,8 @@
 <template>
   <div class="user">
-    <div class="box box-primary">
-      <div class="box-header with-border">
-        <h3 class="box-title">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
           {{ $t('label.list.user') }}
         </h3>
         <div class="pull-right box-tools">
@@ -15,7 +15,7 @@
           </nuxt-link>
         </div>
       </div>
-      <div class="box-body">
+      <div class="card-body">
         <div>
           <table id="user-table" class="table table-hover table-full-width table-striped table-bordered">
             <thead>
@@ -70,7 +70,7 @@ export default {
         {
           data: 'created_at',
           name: 'created_at',
-          width: '150px',
+          width: '180px',
           searchable: false,
           title: this.$t('table.createdAt'),
           render: (data, type, row) => {

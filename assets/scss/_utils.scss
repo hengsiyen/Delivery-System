@@ -23,14 +23,6 @@ p, span, article, b, ul, li, ol,
   font-family: var(--primary-font);
 }
 
-.sidebar-toggle {
-  font-family: "fontAwesome", serif !important;
-}
-
-.swal2-popup {
-  font-size: 1.6rem !important;
-}
-
 .tooltip {
   position: fixed;
 }
@@ -54,10 +46,6 @@ p, span, article, b, ul, li, ol,
   opacity: 0;
 }
 
-li.treeview {
-  cursor: pointer;
-}
-
 .tooltip {
   font-family: var(--primary-font);
 }
@@ -75,4 +63,8 @@ li.treeview {
   font-size: 18px;
   margin: 0;
   line-height: 1;
+}
+
+.toast {
+  opacity: 1 !important;
 }

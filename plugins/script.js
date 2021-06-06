@@ -1,6 +1,6 @@
 import 'jquery'
 import 'jquery-ui-dist/jquery-ui.js'
 import 'bootstrap'
-import 'adminlte/dist/js/adminlte.min'
+import 'admin-lte'
 import 'datatables.net'
-import 'datatables.net-bs'
+import 'datatables.net-bs4'

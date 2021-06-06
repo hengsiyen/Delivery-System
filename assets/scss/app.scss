@@ -1,10 +1,9 @@
 @import "variables";
 
 @import "node_modules/bootstrap/dist/css/bootstrap.min.css";
-@import "node_modules/font-awesome/css/font-awesome.min.css";
-@import "node_modules/adminlte/dist/css/AdminLTE.min.css";
-@import "node_modules/adminlte/dist/css/skins/skin-blue.min.css";
-@import "node_modules/datatables.net-bs/css/dataTables.bootstrap.min.css";
+@import "node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "node_modules/admin-lte/dist/css/adminlte.min.css";
+@import "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css";
 
 @import "plugins";
 @import "components";

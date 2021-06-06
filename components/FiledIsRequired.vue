@@ -1,5 +1,7 @@
 <template>
-  <span class="label-error">{{ message }}</span>
+  <div class="invalid-feedback">
+    {{ message }}
+  </div>
 </template>
 
 <script>

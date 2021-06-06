@@ -1,107 +1,93 @@
 <template>
   <div class="role">
-    <div class="box box-primary">
-      <div class="box-header with-border">
-        <h3 class="box-title">
+    <div class="card card-default color-palette-box">
+      <div class="card-header">
+        <h3 class="card-title">
           {{ title }}
         </h3>
       </div>
-      <div class="box-body">
+      <div class="card-body">
         <div class="row">
           <div class="col-md-12">
             <div class="form-horizontal">
-              <div
-                class="form-group"
-                :class="{
-                  'has-error': validations !== null && validations.hasOwnProperty('name')
-                }"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.roleName') }}</label>
+              <div class="form-group row">
+                <label class="required col-sm-3 col-form-label text-right">{{ $t('label.roleName') }}</label>
                 <div class="col-sm-9">
                   <input
                     v-model="role.name"
                     type="text"
+                    :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('name')}"
                     class="form-control"
                     :placeholder="$t('placeholder.roleName')"
                   >
-                  <span
+                  <div
                     v-if="validations !== null && validations.hasOwnProperty('name')"
-                    class="label-error"
+                    class="invalid-feedback"
                   >
                     {{ validations['name'][0] }}
-                  </span>
+                  </div>
                 </div>
               </div>
-              <div
-                class="form-group"
-                :class="{
-                  'has-error': validations !== null && validations.hasOwnProperty('display_name_en')
-                }"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.nameEn') }}</label>
+              <div class="form-group row">
+                <label class="required col-sm-3 col-form-label text-right">{{ $t('label.nameEn') }}</label>
                 <div class="col-sm-9">
                   <input
                     v-model="role.display_name_en"
                     type="text"
                     class="form-control"
+                    :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('display_name_en')}"
                     :placeholder="$t('placeholder.role.nameEn')"
                   >
-                  <span
+                  <div
                     v-if="validations !== null && validations.hasOwnProperty('display_name_en')"
-                    class="label-error"
+                    class="invalid-feedback"
                   >
                     {{ validations['display_name_en'][0] }}
-                  </span>
+                  </div>
                 </div>
               </div>
-              <div
-                class="form-group"
-                :class="{
-                  'has-error': validations !== null && validations.hasOwnProperty('display_name_km')
-                }"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.nameKm') }}</label>
+              <div class="form-group row">
+                <label class="required col-sm-3 col-form-label text-right">{{ $t('label.nameKm') }}</label>
                 <div class="col-sm-9">
                   <input
                     v-model="role.display_name_km"
                     type="text"
+                    :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('display_name_km')}"
                     class="form-control"
                     :placeholder="$t('placeholder.role.nameKm')"
                   >
-                  <span
+                  <div
                     v-if="validations !== null && validations.hasOwnProperty('display_name_km')"
-                    class="label-error"
+                    class="invalid-feedback"
                   >
                     {{ validations['display_name_km'][0] }}
-                  </span>
+                  </div>
                 </div>
               </div>
-              <div
-                class="form-group"
-                :class="{'has-error': validations !== null && validations.hasOwnProperty('permissions')}"
-              >
-                <label class="required col-sm-3 control-label">{{ $t('label.permissions') }}</label>
-                <div
-                  class="col-sm-9"
-                >
-                  <div class="permission-tree-wrapper" :class="{'red-border': validations !== null && validations.hasOwnProperty('permissions')}">
+              <div class="form-group row">
+                <label class="required col-sm-3 col-form-label text-right">{{ $t('label.permissions') }}</label>
+                <div class="col-sm-9">
+                  <div
+                    class="permission-tree-wrapper"
+                    :class="{'red-border': validations !== null && validations.hasOwnProperty('permissions')}"
+                  >
                     <permission-tree
                       v-model="role.permissions"
                       :selected="selected"
                     />
                   </div>
-                  <span
+                  <div
                     v-if="validations !== null && validations.hasOwnProperty('permissions')"
-                    class="label-error"
+                    class="invalid-feedback"
                   >
                     {{ validations['permissions'][0] }}
-                  </span>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <div class="col-sm-9 col-sm-offset-3">
+              <div class="form-group row">
+                <div class="col-sm-9 offset-sm-3">
                   <button
-                    class="btn btn-primary btn-sm margin-r-5"
+                    class="btn btn-primary btn-sm"
                     @click="onSubmit"
                   >
                     {{ $t('button.save') }}

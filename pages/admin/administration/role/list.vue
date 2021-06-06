@@ -1,8 +1,8 @@
 <template>
   <div class="role">
-    <div class="box box-primary">
-      <div class="box-header with-border">
-        <h3 class="box-title">
+    <div class="card card-default color-palette-box">
+      <div class="card-header">
+        <h3 class="card-title">
           {{ $t('label.list.role') }}
         </h3>
         <div class="box-tools pull-right">
@@ -16,7 +16,7 @@
           </nuxt-link>
         </div>
       </div>
-      <div class="box-body">
+      <div class="card-body">
         <div>
           <table id="role-table" class="table table-full-width table-hover table-striped table-bordered">
             <thead>
@@ -101,7 +101,7 @@ export default {
         {
           data: 'created_at',
           name: 'created_at',
-          width: '150px',
+          width: '180px',
           searchable: false,
           title: self.$t('table.createdAt'),
           render: (data, type, row) => {

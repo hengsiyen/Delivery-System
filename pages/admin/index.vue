@@ -4,9 +4,11 @@
     <Sidebar />
     <div class="content-wrapper">
       <Breadcrumb />
-      <section class="content container-fluid">
-        <Nuxt />
-      </section>
+      <div class="content">
+        <div class="container-fluid">
+          <Nuxt />
+        </div>
+      </div>
     </div>
     <Footer />
     <ControlSidebar />
@@ -50,7 +52,5 @@ export default {
 </script>
 
 <style>
-.wrapper {
-  height: 100vh !important;
-}
+
 </style>

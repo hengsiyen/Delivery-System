@@ -1,11 +1,11 @@
 <template>
-  <div class="box box-primary">
-    <div class="box-header with-border">
-      <h3 class="box-title">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
         {{ $t('menu.gender') }}
       </h3>
     </div>
-    <div class="box-body">
+    <div class="card-body">
       <Datatable
         :columns="columns"
         table-id="gender-table"
