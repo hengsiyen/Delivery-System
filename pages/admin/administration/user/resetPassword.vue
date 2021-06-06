@@ -37,12 +37,12 @@
                 :placeholder="$t('label.passwordConfirmation')"
                 class="form-control"
               >
-              <duv
+              <div
                 v-if="validations !== null && validations.hasOwnProperty('password_confirmation')"
                 class="invalid-feedback"
               >
                 {{ validations['password_confirmation'][0] }}
-              </duv>
+              </div>
             </div>
           </div>
 
