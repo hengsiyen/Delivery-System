@@ -1,55 +1,53 @@
 <template>
   <div class="user">
-    <div class="card card-default color-palette-box">
-      <div class="card-body">
+    <div class="card">
+      <div class="card-header">
         <h3 class="card-title">
           {{ $t('label.resetPassword') }}
         </h3>
       </div>
       <div class="card-body">
         <div class="form-horizontal">
-          <div
-            :class="'form-group ' + (validations !== null && validations.hasOwnProperty('password') ? 'has-error' : '')"
-          >
-            <label class="required col-sm-3 control-label">{{ $t('label.password') }}</label>
+          <div class="form-group row">
+            <label class="required col-sm-3 col-form-label text-right">{{ $t('label.password') }}</label>
             <div class="col-sm-9">
               <input
                 v-model="user.password"
                 type="password"
+                :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('password')}"
                 :placeholder="$t('label.password')"
                 class="form-control"
               >
-              <span
+              <div
                 v-if="validations !== null && validations.hasOwnProperty('password')"
-                class="label-error"
+                class="invalid-feedback"
               >
                 {{ validations['password'][0] }}
-              </span>
+              </div>
             </div>
           </div>
 
-          <div
-            :class="'form-group ' + (validations !== null && validations.hasOwnProperty('password_confirmation') ? 'has-error' : '')"
-          >
-            <label class="required col-sm-3 control-label">{{ $t('label.passwordConfirmation') }}</label>
+          <div class="form-group row">
+            <label class="required col-sm-3 col-form-label text-right">{{ $t('label.passwordConfirmation') }}</label>
             <div class="col-sm-9">
               <input
                 v-model="user.password_confirmation"
+                :class="{'is-invalid' : validations !== null && validations.hasOwnProperty('password_confirmation')}"
                 type="password"
                 :placeholder="$t('label.passwordConfirmation')"
                 class="form-control"
               >
-              <span
+              <duv
                 v-if="validations !== null && validations.hasOwnProperty('password_confirmation')"
-                class="label-error"
+                class="invalid-feedback"
               >
                 {{ validations['password_confirmation'][0] }}
-              </span>
+              </duv>
             </div>
           </div>
 
-          <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
+          <div class="form-group row">
+            <div class="offset-sm-3 col-sm-9">
               <button
                 class="btn btn-info btn-sm margin-r-5"
                 @click="resetPassword"
