@@ -1,7 +1,7 @@
 <template>
   <div class="asr">
     <div class="asr-container">
-      <div class="asr-wrap">
+      <div class="asr-wrap rounded">
         <div class="asr-block-form">
           <div class="asr-form-create">
             <div class="row asr-block-title">
@@ -28,36 +28,36 @@
             <div class="row">
               <div
                 class="col-md-12 form-group"
-                :class="{'has-error' : validations.email}"
               >
                 <input
                   v-model="credentials.email"
                   :placeholder="$t('label.email')"
                   class="form-control"
+                  :class="{'is-invalid' : validations.email}"
                   type="text"
                 >
                 <template v-if="validations.email">
-                  <span class="label-error">
+                  <div class="invalid-feedback">
                     {{ validations['email'][0] }}
-                  </span>
+                  </div>
                 </template>
               </div>
             </div>
             <div class="row">
               <div
                 class="col-md-12 form-group"
-                :class="{'has-error' : validations.hasOwnProperty('password')}"
               >
                 <input
                   v-model="credentials.password"
                   :placeholder="$t('label.password')"
                   class="form-control"
+                  :class="{'is-invalid' : validations.password}"
                   type="password"
                 >
-                <template v-if="validations.hasOwnProperty('password')">
-                  <span class="label-error">
+                <template v-if="validations.password">
+                  <div class="invalid-feedback">
                     {{ validations['password'][0] }}
-                  </span>
+                  </div>
                 </template>
               </div>
             </div>
@@ -69,7 +69,7 @@
             <div class="row">
               <div class="col-md-12 item-center margin-bottom">
                 <button
-                  class="btn btn-primary btn-block capitalize btn-login slide"
+                  class="btn btn-primary btn-block capitalize btn-login slide my-3"
                   @click="onLogin"
                 >
                   <i class="fa fa-sign-in" /> {{ $t('button.login') }}
@@ -185,5 +185,7 @@ export default {
 </script>
 
 <style>
-
+.login-page {
+  background-color: #f5f5f5 !important;
+}
 </style>

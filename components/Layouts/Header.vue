@@ -50,6 +50,16 @@
       <SwitchLocale />
       <li class="nav-item">
         <a
+          class="nav-link text-red"
+          href="#"
+          role="button"
+          @click="logout"
+        >
+          <i class="fas fa-power-off" />
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
           class="nav-link"
           data-widget="control-sidebar"
           data-slide="true"
@@ -70,6 +80,19 @@ export default {
   name: 'Header',
   components: {
     SwitchLocale
+  },
+  methods: {
+    logout () {
+      this.$isLoading(true)
+      this.$store.dispatch('user/clearUser')
+      this.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/logout')
+        .finally(() => {
+          this.$router.push({ path: '/' })
+          this.$cookies.remove(process.env.VUE_APP_TOKEN)
+          this.$cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
+          this.$isLoading(false)
+        })
+    }
   }
 }
 </script>
