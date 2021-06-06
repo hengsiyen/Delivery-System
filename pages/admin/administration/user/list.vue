@@ -16,47 +16,35 @@
         </div>
       </div>
       <div class="card-body">
-        <div>
-          <table id="user-table" class="table table-hover table-full-width table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>{{ $t('table.name') }}</th>
-                <th>{{ $t('table.email') }}</th>
-                <th>{{ $t('table.gender') }}</th>
-                <th>{{ $t('table.confirmed') }}</th>
-                <th>{{ $t('table.role') }}</th>
-                <th>{{ $t('table.createdAt') }}</th>
-                <th>{{ $t('table.action') }}</th>
-              </tr>
-            </thead>
-            <tbody />
-          </table>
-        </div>
+        <Datatable
+          ref="oTable"
+          :columns="columns"
+          table-id="user-table"
+          url="api/backend/user/datatable"
+          :params="{
+            active: $t('label.active'),
+            edit: $t('label.edit'),
+            show: $t('label.show'),
+            delete: $t('label.delete'),
+            deactive: $t('label.deactive'),
+            changePassword: $t('label.changePassword'),
+            language: $i18n.locale || 'en',
+          }"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Datatable from '@/components/Datatable'
 export default {
-  name: 'Index',
+  name: 'List',
+  components: { Datatable },
   head () {
     return {
       title: this.$t('string.userList'),
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
-    }
-  },
-  data () {
-    return {
-      oTable: null
-    }
-  },
-  watch: {
-    '$i18n.locale' () {
-      this.oTable.clear()
-      this.oTable.destroy()
-      this.oTable = this.refreshTable()
-      this.oTable.draw(true)
     }
   },
   computed: {
@@ -89,81 +77,34 @@ export default {
     }
   },
   methods: {
-    refreshTable () {
-      const self = this
-      return $('#user-table').DataTable({
-        stateSave: true,
-        processing: true,
-        serverSide: true,
-        scrollX: true,
-        pageLength: 100,
-        ajax: {
-          method: 'POST',
-          url: process.env.VUE_APP_API + '/api/backend/user/datatable',
-          data: (d) => {
-            d.active = self.$t('label.active')
-            d.edit = self.$t('label.edit')
-            d.show = self.$t('label.show')
-            d.delete = self.$t('label.delete')
-            d.deactive = self.$t('label.deactive')
-            d.changePassword = self.$t('label.changePassword')
-            d.language = self.$i18n.locale || 'en'
-          },
-          error: (xhr, error, thrown) => {
-            self.onResponseError(xhr)
-          }
-        },
-        columns: self.columns,
-        language: {
-          url: `/locale/${self.$i18n.locale}.json`
-        },
-        fixedColumns: true,
-        order: [
-          [5, 'desc']
-        ]
-      })
-    },
     deleteUser (uuid) {
-      const self = this
-      this.$swal({
-        title: self.$t('label.swal.title'),
-        text: self.$t('label.swal.desc'),
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: self.$t('label.swal.no'),
-        confirmButtonText: self.$t('label.swal.yes')
-      }).then((result) => {
-        if (result.value) {
-          this.$axios.post(process.env.VUE_APP_API + '/api/backend/user/delete', {
-            uuid
-          }).then(() => {
-            this.showSwalSuccess()
-            this.oTable.draw(true)
-          }).then((error) => {
-            this.onResponseError(error)
-          })
-        }
-      })
+      this.onConfirm({})
+        .then((accept) => {
+          if (accept) {
+            this.$axios.post(process.env.VUE_APP_API + '/api/backend/user/delete', {
+              uuid
+            }).then(() => {
+              this.showSwalSuccess()
+              this.$refs.oTable.draw()
+            }).then((error) => {
+              this.onResponseError(error)
+            })
+          }
+        })
     },
     toggleUserAccess (uuid) {
-      this.$swal({
+      this.onConfirm({
         title: this.$t('string.areYouSure?'),
         text: this.$t('string.theActionWillToggleUserAccess'),
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
         cancelButtonText: this.$t('button.cancel'),
         confirmButtonText: this.$t('string.yesIWish!')
-      }).then((result) => {
-        if (result.value) {
+      }).then((accept) => {
+        if (accept) {
           this.$axios.post(process.env.VUE_APP_API + '/api/backend/user/toggle', {
             uuid
           }).then(() => {
             this.showToastr()
-            this.oTable.draw(true)
+            this.$refs.oTable.draw()
           }).catch((error) => {
             this.onResponseError(error)
           })
@@ -210,12 +151,7 @@ export default {
     }
   },
   mounted () {
-    this.oTable = this.refreshTable()
     this.loadAction()
-  },
-  beforeDestroy () {
-    this.oTable.clear()
-    this.oTable.destroy()
   }
 }
 </script>

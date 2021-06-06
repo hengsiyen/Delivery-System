@@ -17,21 +17,17 @@
         </div>
       </div>
       <div class="card-body">
-        <div>
-          <table id="role-table" class="table table-full-width table-hover table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>{{ $t('table.name') }}</th>
-                <th>{{ $t('table.nameInEnglish') }}</th>
-                <th>{{ $t('table.nameInKhmer') }}</th>
-                <th>{{ $t('table.numberOfUsers') }}</th>
-                <th>{{ $t('table.createdAt') }}</th>
-                <th>{{ $t('table.action') }}</th>
-              </tr>
-            </thead>
-            <tbody />
-          </table>
-        </div>
+        <Datatable
+          ref="oTable"
+          :columns="columns"
+          table-id="user-role"
+          url="api/backend/role/datatable"
+          :params="{
+            edit: $t('label.edit'),
+            delete: $t('label.delete'),
+            language: $i18n.locale || 'en',
+          }"
+        />
       </div>
     </div>
   </div>
@@ -39,25 +35,14 @@
 
 <script>
 
+import Datatable from '@/components/Datatable'
 export default {
-  name: 'Index',
+  name: 'List',
+  components: { Datatable },
   head () {
     return {
       title: this.$t('string.roleList'),
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
-    }
-  },
-  data () {
-    return {
-      oTable: null
-    }
-  },
-  watch: {
-    '$i18n.locale' () {
-      this.oTable.clear()
-      this.oTable.destroy()
-      this.oTable = this.refreshTable()
-      this.oTable.draw(true)
     }
   },
   computed: {
@@ -121,63 +106,19 @@ export default {
   },
   methods: {
     deleteRole (id) {
-      const self = this
-      this.$swal({
-        title: self.$t('label.swal.title'),
-        text: self.$t('label.swal.desc'),
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: self.$t('label.swal.no'),
-        confirmButtonText: self.$t('label.swal.yes')
-      }).then((result) => {
-        if (result.value) {
-          this.$axios.post(process.env.VUE_APP_API + '/api/backend/role/delete', {
-            id
-          }).then(() => {
-            self.$swal({
-              title: self.$t('label.swal.deleteLabel'),
-              text: self.$t('label.swal.success'),
-              icon: 'success',
-              confirmButtonText: self.$t('label.swal.yes')
+      this.onConfirm({})
+        .then((accept) => {
+          if (accept) {
+            this.$axios.post(process.env.VUE_APP_API + '/api/backend/role/delete', {
+              id
+            }).then(() => {
+              this.showToastr()
+              this.$refs.oTable.draw()
+            }).catch((error) => {
+              this.onResponseError(error)
             })
-            self.oTable.draw(true)
-          }).catch((error) => {
-            this.onResponseError(error)
-          })
-        }
-      })
-    },
-    refreshTable () {
-      const self = this
-      return $('#role-table').DataTable({
-        stateSave: true,
-        processing: true,
-        serverSide: true,
-        scrollX: true,
-        pageLength: 100,
-        ajax: {
-          method: 'POST',
-          url: process.env.VUE_APP_API + '/api/backend/role/datatable',
-          data: (d) => {
-            d.edit = self.$t('label.edit')
-            d.delete = self.$t('label.delete')
-            d.language = self.$i18n.locale || 'en'
-          },
-          error: (xhr, error, thrown) => {
-            self.onResponseError(xhr)
           }
-        },
-        columns: self.columns,
-        language: {
-          url: `/locale/${self.$i18n.locale}.json`
-        },
-        fixedColumns: true,
-        order: [
-          [4, 'desc']
-        ]
-      })
+        })
     },
     loadAction () {
       const self = this
@@ -200,12 +141,7 @@ export default {
     }
   },
   mounted () {
-    this.oTable = this.refreshTable()
     this.loadAction()
-  },
-  beforeDestroy () {
-    this.oTable.clear()
-    this.oTable.destroy()
   }
 }
 </script>

@@ -61,10 +61,10 @@ const helpers = {
         onConfirm (options) {
           const self = this
           return new Promise((resolve, reject) => {
-            this.$swal.fire(Object.assign({
+            this.$swal(Object.assign({
               title: self.$t('label.swal.title'),
               text: self.$t('label.swal.desc'),
-              type: 'warning',
+              icon: 'warning',
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',

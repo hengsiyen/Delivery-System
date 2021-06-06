@@ -52,7 +52,7 @@
                 class="btn btn-info btn-sm margin-r-5"
                 @click="resetPassword"
               >
-                <i class="fa fa-check-circle" /> {{ $t('button.update') }}
+                {{ $t('button.update') }}
               </button>
               <ButtonBack />
             </div>

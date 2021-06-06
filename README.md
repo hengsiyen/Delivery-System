@@ -3,7 +3,7 @@ Box Backend integrated with [Nuxtjs](https://nuxtjs.org)
 
 A box backend is integrated with the Nuxtjs framework
 
-![Screenshot](./assets/img/screenshot.png)
+![Screenshot](https://adminlte.io/AdminLTE3.png)
 
 ## Build Setup
 

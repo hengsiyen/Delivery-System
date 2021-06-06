@@ -48,12 +48,14 @@
         </a>
       </li>
       <SwitchLocale />
-      <li class="nav-item">
+      <li
+        class="nav-item"
+        @click="logout"
+      >
         <a
           class="nav-link text-red"
           href="#"
           role="button"
-          @click="logout"
         >
           <i class="fas fa-power-off" />
         </a>
@@ -83,15 +85,25 @@ export default {
   },
   methods: {
     logout () {
-      this.$isLoading(true)
-      this.$store.dispatch('user/clearUser')
-      this.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/logout')
-        .finally(() => {
-          this.$router.push({ path: '/' })
-          this.$cookies.remove(process.env.VUE_APP_TOKEN)
-          this.$cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
-          this.$isLoading(false)
-        })
+      this.onConfirm({
+        icon: 'warning',
+        title: this.$t('string.confirm_logout'),
+        text: this.$t('string.are_you_sure_want_to_logout'),
+        confirmButtonText: this.$t('string.ok'),
+        cancelButtonText: this.$t('string.cancel')
+      }).then((accept) => {
+        if (accept) {
+          this.$isLoading(true)
+          this.$store.dispatch('user/clearUser')
+          this.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/logout')
+            .finally(() => {
+              this.$router.push({ path: '/' })
+              this.$cookies.remove(process.env.VUE_APP_TOKEN)
+              this.$cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
+              this.$isLoading(false)
+            })
+        }
+      })
     }
   }
 }
