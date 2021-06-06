@@ -72,15 +72,10 @@ export default {
       this.$isLoading(true)
       this.$store.dispatch('user/clearUser')
       this.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/logout')
-        .then(() => {
-          localStorage.clear()
-          this.$router.push({ path: '/' })
-        })
-        .catch(() => {
-          localStorage.clear()
-          this.$router.push({ path: '/' })
-        })
         .finally(() => {
+          this.$router.push({ path: '/' })
+          this.$cookies.remove(process.env.VUE_APP_TOKEN)
+          this.$cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
           this.$isLoading(false)
         })
     }
