@@ -39,7 +39,7 @@ export const generatePhpArray = (Permissions) => {
         php += tabs(tab + 1) + '],\n'
         if (dependencies[permission[key].manage]) {
           php += tabs(tab + 1) + '\'dependencies\' => ['
-          php += dependencies[obj[key]].map(dep => `\n${tabs(tab + 2)} ${dep}`)
+          php += dependencies[obj[key]].map(dep => `\n${tabs(tab + 2)} '${dep}'`)
           php += `\n${tabs(tab + 1)}]\n`
         } else {
           php += tabs(tab + 1) + '\'dependencies\' => [],\n'
@@ -57,7 +57,7 @@ export const generatePhpArray = (Permissions) => {
         php += tabs(tab + 1) + '\'children\' => [],\n'
         if (dependencies[obj[key]]) {
           php += tabs(tab + 1) + '\'dependencies\' => ['
-          php += dependencies[obj[key]].map(dep => `\n${tabs(tab + 2)} ${dep}`)
+          php += dependencies[obj[key]].map(dep => `\n${tabs(tab + 2)} '${dep}'`)
           php += `\n${tabs(tab + 1)}]\n`
         } else {
           php += tabs(tab + 1) + '\'dependencies\' => [],\n'
