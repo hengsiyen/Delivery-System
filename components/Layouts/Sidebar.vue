@@ -11,7 +11,7 @@
       <span class="brand-text font-weight-light">{{ appName }}</span>
     </NuxtLink>
 
-    <section class="sidebar">
+    <div class="sidebar">
       <sidebar-user />
       <nav
         class="mt-2"
@@ -39,7 +39,7 @@
                     :class="{active: $route.meta.groups === menu.route.groups}"
                     :to="menu.route"
                   >
-                    <i :class="menu.icon" />
+                    <i class="nav-icon" :class="menu.icon" />
                     <p>{{ menu.label }}</p>
                   </nuxt-link>
                 </li>
@@ -53,7 +53,7 @@
           </template>
         </ul>
       </nav>
-    </section>
+    </div>
   </aside>
 </template>
 

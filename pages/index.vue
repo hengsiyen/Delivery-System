@@ -94,7 +94,7 @@
 
 <script>
 export default {
-  name: 'Index',
+  name: 'Login',
   head () {
     return {
       title: this.$t('string.login'),
@@ -149,7 +149,6 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error)
           if (error.response.status === 422) {
             self.validations = error.response.data.errors
           } else {

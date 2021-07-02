@@ -31,12 +31,6 @@ p, span, article, b, ul, li, ol,
   width: 100% !important;
 }
 
-.sidebar-menu > li > a > .fa,
-.sidebar-menu > li > a > .far,
-.sidebar-menu > li > a > .fas {
-  width: 20px;
-}
-
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.5s;
@@ -67,4 +61,8 @@ p, span, article, b, ul, li, ol,
 
 .toast {
   opacity: 1 !important;
+}
+
+a.nav-link:hover {
+  cursor: pointer;
 }
