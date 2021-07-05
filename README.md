@@ -1,7 +1,7 @@
-Box Backend integrated with [Nuxtjs](https://nuxtjs.org)
+Delivery System Backend
 ------------------------------------------------
 
-A box backend is integrated with the Nuxtjs framework
+A Delivery System backend is integrated with the Nuxtjs framework
 
 ![Screenshot](https://adminlte.io/AdminLTE3.png)
 
@@ -24,7 +24,7 @@ $ npm run generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
-## [AdminLTE](https://github.com/ColorlibHQ/AdminLTE/releases/tag/v2.4.18)
+## [AdminLTE](https://github.com/ColorlibHQ/AdminLTE)
 
 ### Permission
 Enter ``permission`` in console to copy permission configuration from `permission.js` file.
@@ -38,4 +38,4 @@ Enter ``permission`` in console to copy permission configuration from `permissio
 
 ## License
 
-Box Backend is an open source project by [Asorasoft.com](http://asorasoft.com) that is licensed under MIT. [Asorasoft.com](http://asorasoft.com) reserves the right to change the license of future releases.
+Delivery System Backend is a project developed by [Asorasoft.com](http://asorasoft.com) that is licensed under MIT. [Asorasoft.com](http://asorasoft.com) reserves the right to change the license of future releases.
