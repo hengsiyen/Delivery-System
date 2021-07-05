@@ -88,7 +88,7 @@ export default {
   },
 
   server: {
-    port: 3000
+    port: 3008
   },
 
   extend (config, ctx) {

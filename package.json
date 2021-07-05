@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "serve": "nuxt",
-    "build": "nuxt build",
+    "build": "nuxt build && pm2 restart delivery-system-backend",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
