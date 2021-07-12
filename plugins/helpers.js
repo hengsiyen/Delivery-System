@@ -263,6 +263,17 @@ const helpers = {
             return false
           }
           return this.userRoles.some(role => this.administrators.includes(role))
+        },
+        routerPush (route) {
+          if (this.$route.name !== route.name) {
+            this.$router.push(route)
+          }
+        },
+        replaceImgUrl (string, type = 'original') {
+          if (string) {
+            return string.replace('storage', 'media/' + type)
+          }
+          return null
         }
       }
     })

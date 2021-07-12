@@ -30,15 +30,15 @@
                 class="col-md-12 form-group"
               >
                 <input
-                  v-model="credentials.email"
-                  :placeholder="$t('label.email')"
+                  v-model="credentials.username"
+                  :placeholder="$t('label.username')"
                   class="form-control"
-                  :class="{'is-invalid' : validations.email}"
+                  :class="{'is-invalid' : validations.username}"
                   type="text"
                 >
-                <template v-if="validations.email">
+                <template v-if="validations.username">
                   <div class="invalid-feedback">
-                    {{ validations['email'][0] }}
+                    {{ validations['username'][0] }}
                   </div>
                 </template>
               </div>
@@ -105,7 +105,7 @@ export default {
     return {
       appName: process.env.VUE_APP_NAME,
       credentials: {
-        email: '',
+        username: '',
         password: ''
       },
       validations: {},
@@ -118,7 +118,7 @@ export default {
     onLogin (e) {
       const self = this
       self.isLoginFail = false
-      this.messageLoginFail = ''
+      self.messageLoginFail = ''
       self.validations = {}
       self.$isLoading(true)
       self.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/login', self.credentials)
@@ -127,9 +127,10 @@ export default {
             const result = data.data
             const token = result.access_token
             const refresh = result.refresh_token
+            const deliveryCompany = result.delivery_company
 
-            this.$cookies.set(process.env.VUE_APP_TOKEN, token)
-            this.$cookies.set(process.env.VUE_APP_REFRESH_TOKEN, refresh)
+            self.$cookies.set(process.env.VUE_APP_TOKEN, token)
+            self.$cookies.set(process.env.VUE_APP_REFRESH_TOKEN, refresh)
 
             self.$axios.setHeader('Authorization', 'Bearer ' + token)
             self.$axios.setHeader('Accept', 'application/json')
@@ -141,6 +142,9 @@ export default {
               }
             })
 
+            if (deliveryCompany.length) {
+              this.$store.dispatch('shop/setShop', deliveryCompany[0])
+            }
             self.$store.dispatch('user/setUserRolesPermissions', result)
 
             self.$router.push({
@@ -160,6 +164,15 @@ export default {
         .finally(() => {
           this.$isLoading(false)
         })
+    },
+    getDeliveryCompany (id) {
+      this.$axios.post(this.$base_api + '/api/backend/delivery-company/get-delivery-company-by-user', {
+        user_id: id
+      }).then((res) => {
+        if (res.data.data) {
+          this.$store.dispatch('shop/setShop', res.data.data)
+        }
+      })
     },
     onPressEnter (e) {
       if (e.code === 'Enter') {

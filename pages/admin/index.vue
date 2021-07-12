@@ -45,8 +45,8 @@ export default {
     Header
   },
   mounted () {
-    this.showSwalSuccess()
-    this.showToastr()
+    // this.showSwalSuccess()
+    // this.showToastr()
   }
 }
 </script>

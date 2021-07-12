@@ -16,6 +16,18 @@ const Permissions = {
       manage: 'manage-dashboard',
       show: 'show-dashboard'
     },
+    shop: {
+      name: {
+        en: 'Shop',
+        km: 'ហាង'
+      },
+      manage: 'manage-shop',
+      list: 'list-shop',
+      create: 'create-shop',
+      edit: 'edit-shop',
+      show: 'show-shop',
+      delete: 'delete-shop'
+    },
     setting: {
       name: {
         en: 'Settings',
@@ -29,6 +41,102 @@ const Permissions = {
         },
         manage: 'manage-gender',
         list: 'list-gender'
+      },
+      packageType: {
+        name: {
+          en: 'Package Type',
+          km: 'ប្រភេទកញ្ចប់'
+        },
+        manage: 'manage-package-type',
+        list: 'list-package-type',
+        create: 'create-package-type',
+        edit: 'edit-package-type',
+        show: 'show-package-type',
+        delete: 'delete-package-type'
+      },
+      currency: {
+        name: {
+          en: 'Currency',
+          km: 'រូបិយប័ណ្ណ'
+        },
+        manage: 'manage-currency',
+        list: 'list-currency',
+        create: 'create-currency',
+        edit: 'edit-currency',
+        show: 'show-currency',
+        delete: 'delete-currency'
+      },
+      exchangeRate: {
+        name: {
+          en: 'Exchange Rate',
+          km: 'អត្រាប្តូរប្រាក់'
+        },
+        manage: 'manage-exchange-rate',
+        list: 'list-exchange-rate',
+        create: 'create-exchange-rate',
+        edit: 'edit-exchange-rate',
+        show: 'show-exchange-rate',
+        delete: 'delete-exchange-rate'
+      },
+      paymentType: {
+        name: {
+          en: 'Payment Type',
+          km: 'ប្រភេទការទូទាត់'
+        },
+        manage: 'manage-payment-type',
+        list: 'list-payment-type',
+        create: 'create-payment-type',
+        edit: 'edit-payment-type',
+        show: 'show-payment-type',
+        delete: 'delete-payment-type'
+      },
+      village: {
+        name: {
+          en: 'Village',
+          km: 'ភូមិ'
+        },
+        manage: 'manage-village',
+        list: 'list-village',
+        create: 'create-village',
+        edit: 'edit-village',
+        show: 'show-village',
+        delete: 'delete-village'
+      },
+      commune: {
+        name: {
+          en: 'Commune / Sangkat',
+          km: 'ឃុំ / សង្កាត់'
+        },
+        manage: 'manage-commune',
+        list: 'list-commune',
+        create: 'create-commune',
+        edit: 'edit-commune',
+        show: 'show-commune',
+        delete: 'delete-commune'
+      },
+      district: {
+        name: {
+          en: 'District / Khan',
+          km: 'ស្រុក / ខណ្ឌ'
+        },
+        manage: 'manage-district',
+        list: 'list-district',
+        create: 'create-district',
+        edit: 'edit-district',
+        show: 'show-district',
+        delete: 'delete-district'
+      },
+      province: {
+        name: {
+          en: 'Province / Capital',
+          km: 'ខេត្ត / រាជធានី'
+        },
+        manage: 'manage-province',
+        list: 'list-province',
+        create: 'create-province',
+        edit: 'edit-province',
+        show: 'show-province',
+        delete: 'delete-province'
       }
     },
     administration: {

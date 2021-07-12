@@ -1,4 +1,11 @@
 {
+    "btn": {
+        "add_new": "បន្ថែមថ្មី",
+        "cancel": "បោះបង់",
+        "disable": " បិទដំណើរការ",
+        "enable": "បើកដំណើរការ",
+        "save": "រក្សាទុក"
+    },
     "button": {
         "back": "ត្រលប់ក្រោយ",
         "cancel": "បោះបង់",
@@ -21,8 +28,10 @@
         "updatedAt": "កាលបរិច្ឆេទកែប្រែ"
     },
     "label": {
+        "action": "សកម្មភាព",
         "active": "សកម្ម",
         "active?": "សកម្ម?",
+        "add_new": "បន្ថែមថ្មី",
         "additionalPermissions": "សិទ្ធិបន្ថែម",
         "avatar": "រូបតំណាង",
         "changeAvatar": "ប្តូររូបតំណាង",
@@ -31,17 +40,20 @@
         "confirmPassword": "បញ្ជាក់ពាក្យសម្ងាត់",
         "deactive": "អសកម្ម",
         "delete": "លុប",
+        "description": "ការពិពណ៌នា",
         "district": "ស្រុក",
-        "edit": "កែប្រែ",
+        "edit": "កែសម្រួល",
         "editRole": "កែសម្រួលតួនាទី",
         "editUser": "កែសម្រួលព័ត៌មានអ្នកប្រើប្រាស់",
         "email": "អ៊ីម៉ែល",
+        "enabled": "បើកដំណើរការ",
         "female": "ស្រី",
         "firstName": "គោត្តនាម",
         "forget_password": "ភ្លេចពាក្យសម្ងាត់ឬ?",
         "gender": "ភេទ",
         "here": "ទីនេះ",
         "homeNumber": "លេខផ្ទះ",
+        "home_number": "លេខផ្ទះ",
         "lastName": "នាមខ្លួន",
         "level": "កម្រិត",
         "list": {
@@ -56,6 +68,7 @@
         "newUser": "បង្កើតអ្នកប្រើប្រាស់",
         "oldPassword": "ពាក្យសំងាត់ចាស់",
         "online": "កំពុងដំណើរការ",
+        "owner_name": "ឈ្មោះម្ចាស់ហាង",
         "password": "ពាក្យសំងាត់",
         "passwordConfirmation": "ការបញ្ជាក់ពាក្យសម្ងាត់",
         "permissions": "សិទ្ធិ",
@@ -67,10 +80,15 @@
         "roleCreated": "តួនាទីមួយត្រូវបានបង្កើត",
         "roleName": "ឈ្មោះតួនាទី",
         "roleUpdated": "តួនាទីបានកែប្រែ",
+        "select_one_option": "ជ្រើសរើសជំរើសមួយ",
+        "shop_logo": "ស្លាកយីហោហាង",
+        "shop_name": "ឈ្មោះហាង",
+        "shop_owner": "ម្ចាស់ហាង",
         "show": "បង្ហាញ",
         "showUser": "ព័ត៏មានលំអិត",
         "signOut": "ចាកចេញ",
         "streetNumber": "ផ្លូវលេខ",
+        "street_number": "លេខផ្លូវ",
         "swal": {
             "deleteLabel": "សំណើត្រូវបានដំណើរការ។",
             "desc": "អ្នកនឹងមិនអាចត្រឡប់វាវិញបានទេ!",
@@ -81,22 +99,41 @@
         },
         "updatedAt": "កាលបរិច្ឆេទកែប្រែ",
         "uploadYourAvatar": "ជ្រើសរើសរូបតំណាងថ្មី",
+        "username": "ឈ្មោះ​អ្នកប្រើប្រាស់",
         "village": "ភូមិ"
     },
     "menu": {
         "account": "គណនី",
         "administration": "រដ្ឋបាល",
+        "commune": "ឃុំ / សង្កាត់",
         "company": "ក្រុមហ៊ុន",
         "companyType": "ប្រភេទក្រុមហ៊ុន",
+        "currency": "រូបិយប័ណ្ណ",
         "dashboard": "ផ្ទាំងគ្រប់គ្រង",
         "dataset": "សំណុំទិន្នន័យ",
+        "district": "ស្រុក / ខណ្ឌ",
+        "exchange_rate": "អត្រាប្តូរប្រាក់",
         "gender": "បញ្ជីភេទ",
         "option": "ជម្រើស",
+        "package_type": "ប្រភេទកញ្ចប់",
+        "payment_type": "ប្រភេទការទូទាត់",
         "permission": "បញ្ជីសិទ្ធិ",
+        "province": "ខេត្ត / រាជធានី",
         "role": "បញ្ជីតួនាទី",
         "settings": "ការកំណត់",
+        "shop": "ហាង",
         "system": "ប្រព័ន្ធ",
-        "user": "បញ្ជីអ្នកប្រើប្រាស់"
+        "user": "បញ្ជីអ្នកប្រើប្រាស់",
+        "village": "ភូមិ"
+    },
+    "pla": {
+        "description": "បញ្ចូលការពិពណ៌នានៅទីនេះ",
+        "email": "បញ្ចូលអ៊ីមែល",
+        "home_number": "បញ្ចូលលេខផ្ទះ",
+        "owner_name": "បញ្ជូលឈ្មោះម្ចាស់ហាង",
+        "phone_number": "បញ្ជូលលេខទូរស័ព្ទ",
+        "shop_name": "បញ្ជូលឈ្មោះហាង",
+        "street_number": "បញ្ចូលលេខផ្លូវ"
     },
     "placeholder": {
         "email": "សូមបញ្ចូលអ៊ីម៉ែល",
@@ -154,6 +191,8 @@
     },
     "table": {
         "action": "ប្រតិបត្តិការ",
+        "amount": "ចំនួន",
+        "code": "កូដ",
         "confirmed": "បានបញ្ជាក់",
         "createdAt": "បានបង្កើតនៅ",
         "email": "អ៊ីមែល",
@@ -164,7 +203,11 @@
         "nameInKhmer": "ឈ្មោះជាភាសាខ្មែរ",
         "numberOfUsers": "ចំនួនអ្នកប្រើប្រាស់",
         "permissions": "សិទ្ធិ",
-        "role": "តួនាទី"
+        "role": "តួនាទី",
+        "symbol": "និមិត្តសញ្ញា"
+    },
+    "text": {
+        "list": "បញ្ជី"
     },
     "validation": {
         "filed_is_required": "សូមបញ្ជូលតម្លៃនៃប្រអប់ខាងលើនេះ។"

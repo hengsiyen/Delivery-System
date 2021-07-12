@@ -1,11 +1,12 @@
 import { dashboardRoutes } from '@/routes/dashboard'
-import Permissions from '@/permissions'
 import { accountRouters } from '@/routes/account'
 import { settingRouters } from '@/routes/settings'
 import { administrationRouters } from '@/routes/administrations'
-import { unauthorizedRouters } from './unauthorized'
-import { errorsRouters } from './error'
-import App from '~/pages/admin/index'
+import { unauthorizedRouters } from '@/routes/unauthorized'
+import { errorsRouters } from '@/routes/error'
+import { shopRouters } from '@/routes/shop'
+import Permissions from '@/permissions'
+import App from '@/pages/admin/index'
 
 export const defaultRouters = {
   path: '/admin',
@@ -17,6 +18,7 @@ export const defaultRouters = {
   },
   children: [
     dashboardRoutes,
+    shopRouters,
     accountRouters,
     settingRouters,
     administrationRouters,

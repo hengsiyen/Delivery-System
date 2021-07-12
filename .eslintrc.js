@@ -19,6 +19,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-undef': 'off',
-    'vue/order-in-components': 'off'
+    'vue/order-in-components': 'off',
+    'no-prototype-builtins': 'off'
   }
 }

@@ -1,11 +1,10 @@
 <template>
   <button
-    class="btn btn-default btn-sm"
-    @click="hasHistory()
-      ? $router.go(-1)
-      : $router.push('/')"
+    class="btn btn-light btn-sm"
+    @click="hasHistory ? $router.back(-1) : $router.push('/')"
   >
-    {{ $t('button.back') }}
+    <i class="fas fa-arrow-left mr-2" />
+    <strong>{{ $t('button.back') }}</strong>
   </button>
 </template>
 

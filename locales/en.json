@@ -1,4 +1,11 @@
 {
+    "btn": {
+        "add_new": "Add New",
+        "cancel": "Cancel",
+        "disable": "Disable",
+        "enable": "Enable",
+        "save": "Save"
+    },
     "button": {
         "back": "Back",
         "cancel": "Cancel",
@@ -21,8 +28,10 @@
         "updatedAt": "Updated at"
     },
     "label": {
+        "action": "Action",
         "active": "Active",
         "active?": "Active?",
+        "add_new": "Add New",
         "additionalPermissions": "Additional permissions",
         "avatar": "Avatar",
         "changeAvatar": "Change avatar",
@@ -31,17 +40,20 @@
         "confirmPassword": "Confirm password",
         "deactive": "Deactive",
         "delete": "Delete",
+        "description": "Description",
         "district": "District",
         "edit": "Edit",
         "editRole": "Edit role",
         "editUser": "Edit User Information",
         "email": "Email",
+        "enabled": "Enabled",
         "female": "Female",
         "firstName": "First name",
         "forget_password": "Forget password?",
         "gender": "Gender",
         "here": "Here",
         "homeNumber": "Home number",
+        "home_number": "Home number",
         "lastName": "Last name",
         "level": "Level",
         "list": {
@@ -56,6 +68,7 @@
         "newUser": "New user",
         "oldPassword": "Old password",
         "online": "Online",
+        "owner_name": "Owner name",
         "password": "Password",
         "passwordConfirmation": "Password confirmation",
         "permissions": "Permissions",
@@ -67,10 +80,15 @@
         "roleCreated": "A role is created",
         "roleName": "Role name",
         "roleUpdated": "Role updated",
+        "select_one_option": "Select one option",
+        "shop_logo": "Shop logo",
+        "shop_name": "Shop name",
+        "shop_owner": "Shop owner",
         "show": "Show",
         "showUser": "Show user",
         "signOut": "Sign out",
         "streetNumber": "Street number",
+        "street_number": "Street number",
         "swal": {
             "deleteLabel": "The record has been deleted.",
             "desc": "You won't be able to revert this!",
@@ -81,22 +99,41 @@
         },
         "updatedAt": "Updated at",
         "uploadYourAvatar": "Upload your avatar",
+        "username": "Username",
         "village": "Village"
     },
     "menu": {
         "account": "Account",
         "administration": "Administration",
+        "commune": "Commune / Sangkat",
         "company": "Company",
         "companyType": "Company type",
+        "currency": "Currency",
         "dashboard": "Dashboard",
         "dataset": "Data set",
+        "district": "District / Khan",
+        "exchange_rate": "Exchange Rate",
         "gender": "Gender",
         "option": "Option",
+        "package_type": "Package Type",
+        "payment_type": "Payment Type",
         "permission": "Permission",
+        "province": "Province / Capital",
         "role": "Role",
         "settings": "Settings",
+        "shop": "Shop",
         "system": "System",
-        "user": "User"
+        "user": "User",
+        "village": "Village"
+    },
+    "pla": {
+        "description": "Enter description here",
+        "email": "Enter the email",
+        "home_number": "Enter the home number",
+        "owner_name": "Enter the owner name",
+        "phone_number": "Enter the phone number",
+        "shop_name": "Enter the shop name",
+        "street_number": "Enter the street number"
     },
     "placeholder": {
         "email": "Please input E-mail",
@@ -154,6 +191,8 @@
     },
     "table": {
         "action": "Action",
+        "amount": "Amount",
+        "code": "Code",
         "confirmed": "Confirmed",
         "createdAt": "Created at",
         "email": "Email",
@@ -164,7 +203,11 @@
         "nameInKhmer": "Name in khmer",
         "numberOfUsers": "Number of users",
         "permissions": "Permissions",
-        "role": "Role"
+        "role": "Role",
+        "symbol": "Symbol"
+    },
+    "text": {
+        "list": "List"
     },
     "validation": {
         "field_is_required": "The filed is required.",

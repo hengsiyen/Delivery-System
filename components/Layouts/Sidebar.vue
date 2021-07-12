@@ -85,6 +85,13 @@ export default {
           permissions: [this.$Permissions.backend.manage]
         },
         {
+          label: this.$t('menu.shop'),
+          route: { name: 'list-shop', groups: 'shop' },
+          icon: 'nav-icon fas fa-building',
+          children: null,
+          permissions: [this.$Permissions.backend.shop.manage]
+        },
+        {
           label: this.$t('menu.system'),
           route: null,
           icon: null,
@@ -98,9 +105,49 @@ export default {
           permissions: [this.$Permissions.backend.setting.manage],
           children: [
             {
+              label: this.$t('menu.package_type'),
+              route: { name: 'list-package-type', groups: 'package-type' },
+              permissions: [this.$Permissions.backend.setting.packageType.list]
+            },
+            {
+              label: this.$t('menu.payment_type'),
+              route: { name: 'list-payment-type', groups: 'payment-type' },
+              permissions: [this.$Permissions.backend.setting.paymentType.list]
+            },
+            {
+              label: this.$t('menu.exchange_rate'),
+              route: { name: 'list-exchange-rate', groups: 'exchange-rate' },
+              permissions: [this.$Permissions.backend.setting.exchangeRate.list]
+            },
+            {
+              label: this.$t('menu.currency'),
+              route: { name: 'list-currency', groups: 'currency' },
+              permissions: [this.$Permissions.backend.setting.currency.list]
+            },
+            {
               label: this.$t('menu.gender'),
               route: { name: 'list-gender', groups: 'gender' },
               permissions: [this.$Permissions.backend.setting.gender.list]
+            },
+            {
+              label: this.$t('menu.province'),
+              route: { name: 'list-province', groups: 'province' },
+              permissions: [this.$Permissions.backend.setting.province.list]
+            },
+            {
+              label: this.$t('menu.district'),
+              route: { name: 'list-district', groups: 'district' },
+              permissions: [this.$Permissions.backend.setting.district.list]
+            },
+            {
+              label: this.$t('menu.commune'),
+              route: { name: 'list-commune', groups: 'commune' },
+              permissions: [this.$Permissions.backend.setting.commune.list]
+            },
+            {
+              label: this.$t('menu.village'),
+              route: { name: 'list-village', groups: 'village' },
+              permissions: [this.$Permissions.backend.setting.village.list]
             }
           ]
         },
