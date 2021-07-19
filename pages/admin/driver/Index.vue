@@ -5,7 +5,7 @@
         <div class="row mb-2">
           <div class="col-12">
             <h1 class="m-0">
-              {{ $t('menu.shop') }}
+              {{ $t('menu.driver') }}
             </h1>
           </div>
         </div>
@@ -23,14 +23,8 @@
 <script>
 import Breadcrumb from '@/components/Layouts/Breadcrumb'
 export default {
-  name: 'ShopIndex',
-  components: { Breadcrumb },
-  head () {
-    return {
-      title: this.$t('menu.shop'),
-      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
-    }
-  }
+  name: 'DriverIndex',
+  components: { Breadcrumb }
 }
 </script>
 

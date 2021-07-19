@@ -23,10 +23,6 @@ export const shopRouters = {
         groups: 'shop',
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
-          },
-          {
             name_en: 'Shop',
             name_km: 'ហាង'
           },
@@ -46,10 +42,6 @@ export const shopRouters = {
         groups: 'shop',
         breadcrumb: [
           {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
-          },
-          {
             name_en: 'Shop',
             name_km: 'ហាង'
           },
@@ -61,17 +53,13 @@ export const shopRouters = {
       }
     },
     {
-      path: 'edit/:uuid',
+      path: 'edit/:id',
       name: 'edit-shop',
       component: edit,
       meta: {
         permissions: [Permissions.backend.shop.edit],
         groups: 'shop',
         breadcrumb: [
-          {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
-          },
           {
             name_en: 'Shop',
             name_km: 'ហាង'
@@ -84,17 +72,13 @@ export const shopRouters = {
       }
     },
     {
-      path: 'show/:uuid',
+      path: 'show/:id',
       name: 'show-shop',
       component: show,
       meta: {
         permissions: [Permissions.backend.shop.show],
         groups: 'shop',
         breadcrumb: [
-          {
-            name_en: 'Settings',
-            name_km: 'ការកំណត់'
-          },
           {
             name_en: 'Shop',
             name_km: 'ហាង'

@@ -4,3 +4,44 @@ p, span, article, b, ul, li, ol,
 .toast-message, .toast-title {
   font-family: var(--primary-font);
 }
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+.label-default {
+  background-color: var(--secondary);
+}
+
+.label-primary {
+  background-color: var(--primary);
+}
+
+.label-success {
+  background-color: var(--success);
+}
+
+.label-info {
+  background-color: var(--info);
+}
+
+.label-warning {
+  background-color: var(--warning);
+}
+
+.label-danger {
+  background-color: var(--danger);
+}
+
+.font-s-14 {
+  font-size: 14px;
+}

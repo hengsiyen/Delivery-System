@@ -85,6 +85,27 @@ export default {
           permissions: [this.$Permissions.backend.manage]
         },
         {
+          label: this.$t('menu.package'),
+          route: { name: 'list-package', groups: 'package' },
+          icon: 'nav-icon fa fa-cube',
+          children: null,
+          permissions: [this.$Permissions.backend.package.manage]
+        },
+        {
+          label: this.$t('menu.delivery'),
+          route: { name: 'assign-package', groups: 'delivery' },
+          icon: 'nav-icon fas fa-truck',
+          children: null,
+          permissions: [this.$Permissions.backend.delivery.manage]
+        },
+        {
+          label: this.$t('menu.driver'),
+          route: { name: 'list-driver', groups: 'driver' },
+          icon: 'nav-icon fas fa-motorcycle',
+          children: null,
+          permissions: [this.$Permissions.backend.driver.manage]
+        },
+        {
           label: this.$t('menu.shop'),
           route: { name: 'list-shop', groups: 'shop' },
           icon: 'nav-icon fas fa-building',

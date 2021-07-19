@@ -12,17 +12,6 @@
   font-size: 12px;
 }
 
-body {
-  font-family: var(--primary-font);
-}
-
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6,
-p, span, article, b, ul, li, ol,
-.toast-message, .toast-title {
-  font-family: var(--primary-font);
-}
-
 .tooltip {
   position: fixed;
 }
@@ -70,4 +59,8 @@ p, span, article, b, ul, li, ol,
 
 a.nav-link:hover {
   cursor: pointer;
+}
+
+.modal-min-height {
+  min-height: calc(100% - 24rem);
 }

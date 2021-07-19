@@ -5,7 +5,7 @@
         {{ $t('text.list') }}
       </h3>
       <div class="card-tools">
-        <ButtonAddNew link-to="create-shop" />
+        <ButtonAddNew link-to="create-package" />
       </div>
     </div>
     <div class="card-body">
@@ -13,8 +13,8 @@
         ref="oTable"
         :columns="columns"
         :params="params"
-        table-id="shop-table"
-        url="api/backend/shop/datatable"
+        table-id="package-table"
+        url="api/backend/package/datatable"
       />
     </div>
   </div>
@@ -23,7 +23,7 @@
 import Datatable from '@/components/Datatable'
 import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
 export default {
-  name: 'ShopList',
+  name: 'PackageList',
   components: { ButtonAddNew, Datatable },
   computed: {
     params () {
@@ -33,22 +33,19 @@ export default {
     },
     columns () {
       return [
-        { data: 'name_en', name: 'name_en', title: this.$t('label.shop_name') },
-        { data: 'owner_name', name: 'owner_name', title: this.$t('label.owner_name') },
-        { data: 'phone', name: 'phone', title: this.$t('label.phone') },
-        { data: 'email', name: 'email', title: this.$t('label.email') },
         {
-          data: 'province',
-          name: 'province',
-          title: this.$t('label.province'),
+          data: 'shop',
+          name: 'shop',
+          title: this.$t('label.shop'),
           render: (data, type, row) => {
             if (data) {
-              return data['name_' + this.$i18n.locale]
+              return data.name_en
             } else {
               return '-'
             }
           }
         },
+        { data: 'package', name: 'package', title: this.$t('menu.package'), width: '35%' },
         {
           data: 'created_at',
           name: 'created_at',
@@ -57,13 +54,6 @@ export default {
           render: (data, type, row) => {
             return this.getDateFormat(data)
           }
-        },
-        {
-          data: 'enabled',
-          name: 'enabled',
-          searchable: false,
-          orderable: false,
-          title: this.$t('label.enabled')
         },
         {
           data: 'actions',
@@ -88,7 +78,7 @@ export default {
       $(function () {
         $(document).on('click', '.btn-show', function () {
           self.routerPush({
-            name: 'show-shop',
+            name: 'show-package',
             params: {
               id: $(this).attr('data-id')
             }
@@ -96,7 +86,7 @@ export default {
         })
         $(document).on('click', '.btn-edit', function () {
           self.routerPush({
-            name: 'edit-shop',
+            name: 'edit-package',
             params: {
               id: $(this).attr('data-id')
             }
@@ -105,8 +95,8 @@ export default {
         $(document).on('click', '.btn-delete', function () {
           self.deleteRecord(
             $(this).attr('data-id'),
-            self.$t('label.delete_shop'),
-            '/api/backend/shop/delete'
+            self.$t('label.package'),
+            '/api/backend/package/delete'
           )
         })
       })

@@ -16,6 +16,14 @@ const Permissions = {
       manage: 'manage-dashboard',
       show: 'show-dashboard'
     },
+    delivery: {
+      name: {
+        en: 'Delivery',
+        km: 'ការដឹកជញ្ជូន'
+      },
+      manage: 'manage-delivery',
+      assign: 'assign-delivery'
+    },
     shop: {
       name: {
         en: 'Shop',
@@ -27,6 +35,30 @@ const Permissions = {
       edit: 'edit-shop',
       show: 'show-shop',
       delete: 'delete-shop'
+    },
+    package: {
+      name: {
+        en: 'Package',
+        km: 'កញ្ចប់អីវ៉ាន់'
+      },
+      manage: 'manage-package',
+      list: 'list-package',
+      create: 'create-package',
+      edit: 'edit-package',
+      show: 'show-package',
+      delete: 'delete-package'
+    },
+    driver: {
+      name: {
+        en: 'Driver',
+        km: 'អ្នកដឹកជញ្ជូន'
+      },
+      manage: 'manage-driver',
+      list: 'list-package',
+      create: 'create-driver',
+      edit: 'edit-driver',
+      show: 'show-driver',
+      delete: 'delete-driver'
     },
     setting: {
       name: {

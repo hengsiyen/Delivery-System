@@ -5,7 +5,7 @@
         <div class="row mb-2">
           <div class="col-12">
             <h1 class="m-0">
-              {{ $t('menu.shop') }}
+              {{ $t('menu.delivery') }}
             </h1>
           </div>
         </div>
@@ -23,11 +23,11 @@
 <script>
 import Breadcrumb from '@/components/Layouts/Breadcrumb'
 export default {
-  name: 'ShopIndex',
+  name: 'DeliveryIndex',
   components: { Breadcrumb },
   head () {
     return {
-      title: this.$t('menu.shop'),
+      title: this.$t('menu.delivery'),
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
   }

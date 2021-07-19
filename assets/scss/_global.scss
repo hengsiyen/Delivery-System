@@ -12,7 +12,7 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #f4623a;
+  --primary: var(--blue);
   --secondary: #6c757d;
   --success: #28a745;
   --info: #17a2b8;
@@ -30,4 +30,75 @@
 
   --secondary-font: #{$secondary-font};
   --primary-font: #{$primary-font};
+}
+
+body {
+  font-family: var(--primary-font);
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.bg-unset {
+  background-color: unset !important;
+  background: unset !important;
+}
+
+.w-65 {
+  width: 65% !important;
+}
+
+.w-35 {
+  width: 35% !important;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+.onloading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & i {
+    color: var(--primary);
+    font-size: 35px;
+  }
+}
+
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  &:after {
+    content: unset;
+  }
+
+  & .card-title {
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  & .card-tools,
+  & .card-title {
+    display: block;
+    float: unset;
+  }
+
+  & .card-tools {
+    margin-right: 0;
+  }
 }

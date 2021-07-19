@@ -65,6 +65,7 @@
                   <input
                     id="phone"
                     v-model="phone"
+                    v-mask="'### ### ####'"
                     type="text"
                     class="form-control"
                     :placeholder="$t('pla.phone_number')"
@@ -201,10 +202,12 @@
                   </select>
                 </div>
                 <div class="form-group col-lg-12">
-                  <label for="village">
+                  <label for="description">
                     {{ $t('label.description') }}
                   </label>
                   <textarea
+                    id="description"
+                    v-model="description"
                     class="form-control overflow-auto"
                     rows="10"
                     :placeholder="$t('pla.description') + ' ...'"
@@ -240,7 +243,7 @@
             </div>
             <div class="col-lg-4">
               <div class="form-group text-center mb-5">
-                <label for="village">
+                <label>
                   {{ $t('label.shop_logo') }}
                 </label>
                 <template v-if="preview_shop_logo">
@@ -253,7 +256,7 @@
                 </template>
                 <div class="shop__btn-upload">
                   <button class="btn btn-primary btn-block mt-2" @click="toggleShowShopLogo">
-                    {{ $t('label.uploadYourAvatar') }}
+                    {{ $t('label.uploadShopLogo') }}
                   </button>
                   <vue-crop-avatar
                     v-model="show_shop_logo"
@@ -284,7 +287,7 @@
                 </template>
                 <div class="shop__btn-upload">
                   <button class="btn btn-primary btn-block mt-2" @click="toggleShowShopOwner">
-                    {{ $t('label.uploadYourAvatar') }}
+                    {{ $t('label.uploadShopOwner') }}
                   </button>
                   <vue-crop-avatar
                     v-model="show_shop_owner"
@@ -305,7 +308,7 @@
         </div>
         <div class="card-footer text-right">
           <button class="btn btn-light" @click="$router.back()">
-            <i class="fas fa-times mr-2" />
+            <i class="fas fa-times mr-1" />
             <strong>{{ $t('btn.cancel') }}</strong>
           </button>
           <button
@@ -313,7 +316,7 @@
             :class="isEdit ? 'btn-primary' : 'btn-success'"
             @click="storeOrEdit"
           >
-            <i class="fas fa-save mr-2" />
+            <i class="fas fa-save mr-1" />
             <strong>{{ isEdit ? $t('btn.update') : $t('btn.save') }}</strong>
           </button>
         </div>
@@ -336,15 +339,22 @@ export default {
     isEdit: {
       type: Boolean,
       default: false
+    },
+    oldData: {
+      type: Object,
+      default: () => {
+        return null
+      }
     }
   },
   data () {
     return {
       base_api: process.env.VUE_APP_API,
+      villages: [],
+
       provinces: [],
       districts: [],
       communes: [],
-      villages: [],
       validate: null,
       show_shop_logo: false,
       show_shop_owner: false,
@@ -363,6 +373,9 @@ export default {
       district: null,
       commune: null,
       village: null,
+      logo: null,
+      description: null,
+      owner_avatar: null,
       enabled: false,
       params: {
         shop_id: null,
@@ -373,6 +386,40 @@ export default {
   computed: {
     langType () {
       return this.$i18n.locale
+    }
+  },
+  created () {
+    if (this.oldData) {
+      this.id = this.oldData._id
+      this.shop_name = this.oldData.name_en
+      this.owner_name = this.oldData.owner_name
+      this.phone = this.oldData.phone
+      this.email = this.oldData.email
+      this.home_number = this.oldData.home_number
+      this.street_number = this.oldData.street_number
+      this.description = this.oldData.description
+      this.enabled = this.oldData.enabled
+      if (this.oldData.province) {
+        this.province = this.oldData.province
+      }
+      if (this.oldData.province) {
+        this.getDistrict()
+        this.district = this.oldData.district
+      }
+      if (this.oldData.district) {
+        this.getCommune()
+        this.commune = this.oldData.commune
+      }
+      if (this.oldData.commune) {
+        this.getVillage()
+        this.village = this.oldData.village
+      }
+      if (this.oldData.logo) {
+        this.preview_shop_logo = process.env.VUE_APP_API + '/' + this.oldData.logo
+      }
+      if (this.oldData.avatar) {
+        this.preview_shop_owner = process.env.VUE_APP_API + '/' + this.oldData.avatar
+      }
     }
   },
   mounted () {
@@ -392,11 +439,11 @@ export default {
       this.show_shop_logo = !this.show_shop_logo
     },
     cropShopLogoSuccess (imgDataUrl, field) {
-      console.log(field)
+      this.logo = imgDataUrl
       this.preview_shop_logo = imgDataUrl
     },
     cropShopOwnerSuccess (imgDataUrl, field) {
-      console.log(field)
+      this.owner_avatar = imgDataUrl
       this.preview_shop_owner = imgDataUrl
     },
     storeOrEdit () {
@@ -411,13 +458,13 @@ export default {
       if (this.email) { formData.append('email', this.email) }
       if (this.home_number) { formData.append('home_number', this.home_number) }
       if (this.street_number) { formData.append('street_number', this.street_number) }
-      if (this.province_id) { formData.append('province_id', this.province._id) }
-      if (this.district_id) { formData.append('district_id', this.district._id) }
-      if (this.commune_id) { formData.append('commune_id', this.commune._id) }
-      if (this.village_id) { formData.append('village_id', this.village._id) }
+      if (this.province) { formData.append('province_id', this.province._id) }
+      if (this.district) { formData.append('district_id', this.district._id) }
+      if (this.commune) { formData.append('commune_id', this.commune._id) }
+      if (this.village) { formData.append('village_id', this.village._id) }
       if (this.description) { formData.append('description', this.description) }
-      if (this.preview_shop_logo) { formData.append('logo', this.preview_shop_logo) }
-      if (this.preview_shop_owner) { formData.append('shop_owner', this.preview_shop_owner) }
+      if (this.logo) { formData.append('logo', this.logo) }
+      if (this.owner_avatar) { formData.append('shop_owner', this.owner_avatar) }
       formData.append('enabled', this.enabled)
       this.$axios
         .post(this.$base_api + '/api/backend/shop/store-or-edit', formData)

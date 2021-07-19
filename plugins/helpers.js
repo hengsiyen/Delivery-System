@@ -1,4 +1,4 @@
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 const helpers = {
   install (Vue, options) {
@@ -18,6 +18,9 @@ const helpers = {
           userRoles: state => state.user.data ? state.user.data.roles : null,
           userPermissions: state => state.user.data ? state.user.data.permissions : null
         }),
+        ...mapGetters({
+          dc_exchange_rate: 'delivery_company/dc_exchange_rate'
+        }),
         baseUrl () {
           return process.env.VUE_APP_API
         }
@@ -26,7 +29,7 @@ const helpers = {
         getDateFormat (date, format = process.env.VUE_APP_DATE_FORMAT) {
           try {
             if (this.$moment(date, 'YYYY-MM-DD').isValid()) {
-              return this.$moment(date, 'YYYY-MM-DD').format(format)
+              return this.$moment(date, 'YYYY-MM-DD hh:mm:ss A').format(format)
             }
             return this.$t('string.na')
           } catch (error) {
@@ -40,6 +43,36 @@ const helpers = {
           } else {
             return this.getSrc(media)
           }
+        },
+        exchangeMoney (from, to, value) {
+          if (value === '' || value === 0 || value === null) {
+            value = 0
+          }
+          if (from === to) {
+            return parseFloat(value)
+          }
+          switch (from) {
+            case 'USD':
+              switch (to) {
+                case 'KHR':
+                  return value * parseFloat(this.dc_exchange_rate.value)
+              }
+            // eslint-disable-next-line no-fallthrough
+            case 'KHR':
+              switch (to) {
+                case 'USD':
+                  // eslint-disable-next-line no-case-declarations
+                  const result = value / parseFloat(this.dc_exchange_rate.value)
+                  if (this.countDecimals(result)) {
+                    return parseFloat(result) + 0.005
+                  } else {
+                    return parseFloat(result)
+                  }
+              }
+          }
+        },
+        countDecimals (value) {
+          return value % 1 ? value.toString().split('.')[1].length : 0
         },
         validateEmail (email) {
           // const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

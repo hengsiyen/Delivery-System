@@ -143,7 +143,8 @@ export default {
             })
 
             if (deliveryCompany.length) {
-              this.$store.dispatch('shop/setShop', deliveryCompany[0])
+              self.$cookies.set('dc', JSON.stringify(deliveryCompany[0]))
+              this.$store.dispatch('delivery_company/setDeliveryCompany', deliveryCompany[0])
             }
             self.$store.dispatch('user/setUserRolesPermissions', result)
 
@@ -165,15 +166,15 @@ export default {
           this.$isLoading(false)
         })
     },
-    getDeliveryCompany (id) {
-      this.$axios.post(this.$base_api + '/api/backend/delivery-company/get-delivery-company-by-user', {
-        user_id: id
-      }).then((res) => {
-        if (res.data.data) {
-          this.$store.dispatch('shop/setShop', res.data.data)
-        }
-      })
-    },
+    // getDeliveryCompany (id) {
+    //   this.$axios.post(this.$base_api + '/api/backend/delivery-company/get-delivery-company-by-user', {
+    //     user_id: id
+    //   }).then((res) => {
+    //     if (res.data.data) {
+    //       this.$store.dispatch('shop/setShop', res.data.data)
+    //     }
+    //   })
+    // },
     onPressEnter (e) {
       if (e.code === 'Enter') {
         this.onLogin()

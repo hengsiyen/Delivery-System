@@ -1,12 +1,15 @@
+import Permissions from '@/permissions'
 import { dashboardRoutes } from '@/routes/dashboard'
 import { accountRouters } from '@/routes/account'
 import { settingRouters } from '@/routes/settings'
 import { administrationRouters } from '@/routes/administrations'
 import { unauthorizedRouters } from '@/routes/unauthorized'
 import { errorsRouters } from '@/routes/error'
+import { packageRouters } from '@/routes/pacakge'
 import { shopRouters } from '@/routes/shop'
-import Permissions from '@/permissions'
+import { deliveryRouters } from '@/routes/delivery'
 import App from '@/pages/admin/index'
+import { driverRouters } from '@/routes/userdriver'
 
 export const defaultRouters = {
   path: '/admin',
@@ -18,6 +21,9 @@ export const defaultRouters = {
   },
   children: [
     dashboardRoutes,
+    packageRouters,
+    deliveryRouters,
+    driverRouters,
     shopRouters,
     accountRouters,
     settingRouters,
