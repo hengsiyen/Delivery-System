@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
           <div v-if="package_data" class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-7">
               <dl v-if="package_data.shop" class="row">
                 <dt class="col-sm-3 text-capitalize text-truncate">
                   {{ $t('menu.shop') }}
@@ -118,6 +118,99 @@
                 </dd>
               </dl>
             </div>
+            <div class="col-lg-5 position-relative">
+              <template v-if="show_package_history">
+                <div class="package_history" :class="{'active': show_package_history}">
+                  <template v-if="package_data.package_histories && package_data.package_histories.length">
+                    <div class="mb-4 d-flex align-items-center justify-content-between">
+                      <div><h5>Package History</h5></div>
+                      <div>
+                        <button class="btn btn-link text-dark" @click="show_package_history = false">
+                          <i class="fas fa-times" />
+                        </button>
+                      </div>
+                    </div>
+                    <div class="timeline">
+                      <template v-for="(item, key) in package_data.package_histories">
+                        <div :key="key">
+                          <i class="fas" :class="historyIcon(item)" />
+                          <div class="timeline-item">
+                            <span class="time text-muted"><i class="fas fa-clock" /> {{
+                              $moment(item.created_at).format('llll')
+                            }}</span>
+                            <h3 v-if="item.user" class="timeline-header border-bottom-0">
+                              <strong>{{ item.user.full_name }}</strong>
+                            </h3>
+                            <div class="timeline-body">
+                              <div>
+                                <p class="mb-1">
+                                  {{ $t('label.customer_name') }}: {{ item.data.customer_name }}
+                                </p>
+                                <p class="mb-1">
+                                  {{ $t('label.customer_phone') }}: {{ item.data.customer_phone }}
+                                </p>
+                                <p class="mb-1">
+                                  {{ $t('label.customer_address') }}: {{ item.data.customer_address }}
+                                </p>
+                                <p class="mb-1">
+                                  {{ $t('label.price') }}: {{ item.data.price }}
+                                </p>
+                                <hr class="my-2">
+                                <div v-html="handleNewLine(item.description[$i18n.locale])">
+                                  {{ }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                      <div>
+                        <i class="fas fa-clock bg-gray" />
+                      </div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+              <template v-else>
+                <template v-if="package_data.package_transitions && package_data.package_transitions.length">
+                  <div class="package_transition">
+                    <div class="mb-4 d-flex align-items-center justify-content-between">
+                      <div><h5>Package Transition</h5></div>
+                      <div>
+                        <button class="btn btn-default" @click="show_package_history = !show_package_history">
+                          <i class="fas fa-history mr-1" />
+                          <strong>Package History</strong>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="timeline">
+                      <template v-for="(item, key) in package_data.package_transitions">
+                        <div :key="key">
+                          <i class="fas" :class="statusIcon(item)" />
+                          <div class="timeline-item">
+                            <span class="time text-muted"><i class="fas fa-clock" /> {{
+                              $moment(item.created_at).format('llll')
+                            }}</span>
+                            <h3 class="timeline-header border-bottom-0">
+                              <strong>{{ checkStatus(item.status) }}</strong>
+                            </h3>
+                            <div class="timeline-body">
+                              <p v-if="item.user" class="mb-1">
+                                <i class="fas fa-user mr-2"></i>{{ item.user.full_name }}
+                              </p>
+                              {{ item.description['message_' + $i18n.locale] }}
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                      <div>
+                        <i class="fas fa-clock bg-gray" />
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </template>
+            </div>
           </div>
         </div>
       </div>
@@ -127,6 +220,7 @@
 
 <script>
 import ButtonBack from '@/components/UiElements/ButtonBack'
+
 export default {
   name: 'PackageShow',
   components: { ButtonBack },
@@ -138,7 +232,6 @@ export default {
         })
         .then((res) => {
           const result = res.data.data
-          console.log(result)
           return {
             package_data: result
           }
@@ -148,10 +241,30 @@ export default {
         package_data: null
       }
     }
+  },
+  data () {
+    return {
+      show_package_history: false
+    }
   }
 }
 </script>
 
 <style scoped>
+.package_transition,
+.package_history {
+  height: 100%;
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 0.25rem;
+}
 
+.package_history {
+  opacity: 0;
+}
+
+.package_history.active {
+  opacity: 1;
+}
 </style>

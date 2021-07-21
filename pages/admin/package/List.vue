@@ -46,6 +46,7 @@ export default {
           }
         },
         { data: 'package', name: 'package', title: this.$t('menu.package'), width: '35%' },
+        { data: 'status', name: 'status', title: this.$t('label.status') },
         {
           data: 'created_at',
           name: 'created_at',

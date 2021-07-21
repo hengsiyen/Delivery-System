@@ -10,6 +10,7 @@ import { shopRouters } from '@/routes/shop'
 import { deliveryRouters } from '@/routes/delivery'
 import App from '@/pages/admin/index'
 import { driverRouters } from '@/routes/userdriver'
+import { trackingRouters } from '@/routes/tracking'
 
 export const defaultRouters = {
   path: '/admin',
@@ -21,6 +22,7 @@ export const defaultRouters = {
   },
   children: [
     dashboardRoutes,
+    trackingRouters,
     packageRouters,
     deliveryRouters,
     driverRouters,

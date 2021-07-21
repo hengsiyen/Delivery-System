@@ -1,8 +1,5 @@
 <template>
   <div class="row">
-    <div class="col-md-12">
-      <XAlert />
-    </div>
     <template v-if="can([$Permissions.backend.dashboard.show])">
       <div class="col-md-3">
         <XSmallBox
@@ -61,13 +58,12 @@
 
 <script>
 
-import XAlert from '@/components/Widgets/XAlert'
 import XSmallBox from '@/components/Widgets/XSmallBox'
 import XBox from '@/components/Widgets/XBox'
 
 export default {
   name: 'Dashboard',
-  components: { XBox, XSmallBox, XAlert },
+  components: { XBox, XSmallBox },
   head () {
     return {
       title: this.$t('menu.dashboard'),

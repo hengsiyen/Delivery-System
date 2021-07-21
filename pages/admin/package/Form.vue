@@ -374,6 +374,7 @@ export default {
   },
   created () {
     if (this.oldData) {
+      this.id = this.oldData._id
       this.customer_name = this.oldData.customer_name
       this.customer_phone = this.oldData.customer_phone
       this.customer_address = this.oldData.customer_address
@@ -432,6 +433,9 @@ export default {
     storeOrEdit () {
       this.validate = null
       const formData = new FormData()
+      if (this.id) {
+        formData.append('id', this.id)
+      }
       if (this.shop) {
         formData.append('shop_id', this.shop._id)
       }

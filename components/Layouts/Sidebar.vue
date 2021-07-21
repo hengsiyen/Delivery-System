@@ -85,6 +85,13 @@ export default {
           permissions: [this.$Permissions.backend.manage]
         },
         {
+          label: this.$t('menu.tracking'),
+          route: { name: 'list-tracking', groups: 'tracking' },
+          icon: 'nav-icon fas fa-search-location',
+          children: null,
+          permissions: [this.$Permissions.backend.tracking.manage]
+        },
+        {
           label: this.$t('menu.package'),
           route: { name: 'list-package', groups: 'package' },
           icon: 'nav-icon fa fa-cube',

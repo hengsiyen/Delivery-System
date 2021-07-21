@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card position-relative">
     <div class="card-body">
       <div class="row h-100">
         <div class="col-xl-6 h-100 border-right">
@@ -219,6 +219,9 @@
       </div>
     </div>
     <DriverModal ref="driverModal" />
+    <!--    <div v-if="show_message" class="position-absolute w-100">-->
+    <!--      <XAlert :summary="show_message['message_' + $i18n.locale]" />-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -240,7 +243,8 @@ export default {
       search_package: null,
       page: 1,
       packageInfiniteId: +new Date(),
-      search_type: 'shop'
+      search_type: 'shop',
+      show_message: null
     }
   },
   computed: {
@@ -329,9 +333,15 @@ export default {
         driver_id: this.selected_driver._id,
         packeges: this.selected_packages
       }).then((res) => {
-        console.log(res)
+        this.show_message = res.data.message
+        if (this.show_message) {
+          this.$toastr('success', this.show_message['message_' + this.$i18n.locale], this.$t('label.assign_package'))
+        }
+        this.$store.dispatch('delivery/setDriver', null)
         this.selected_packages = []
         this.sp_ids = []
+      }).catch((error) => {
+        this.onResponseError(error)
       })
     },
     removePackage (item) {

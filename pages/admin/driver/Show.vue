@@ -83,7 +83,9 @@
                   </dt>
                   <dd class="col-sm-7">
                     <span class="d-block">{{ collect_money_riel }} KHR</span>
-                    <span class="d-block"><small>( {{ parseFloat(collect_money_dollar).toFixed(2) }} USD )</small></span>
+                    <span class="d-block"><small>( {{
+                      parseFloat(collect_money_dollar).toFixed(2)
+                    }} USD )</small></span>
                   </dd>
                 </dl>
               </div>
@@ -154,120 +156,146 @@
               <template v-else>
                 <template v-if="package_data">
                   <div class="h-100 overflow-auto pl-5 pr-4">
-                    <dl v-if="package_data.shop" class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('menu.shop') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        <NuxtLink :to="{name: 'show-shop', params: {id: package_data.shop._id}}">
-                          {{ package_data.shop.name_en }}
-                        </NuxtLink>
-                      </dd>
-                    </dl>
-                    <dl class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.code') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.code }}
-                      </dd>
-                    </dl>
-                    <dl class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.customer_name') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.customer_name }}
-                      </dd>
-                    </dl>
-                    <dl class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.customer_phone') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.customer_phone }}
-                      </dd>
-                    </dl>
-                    <dl class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.customer_address') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.customer_address }}
-                      </dd>
-                    </dl>
-                    <dl class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.price') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.price }}
-                        {{ package_data.currency ? package_data.currency.code : 'USD' }}
-                      </dd>
-                    </dl>
-                    <dl class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.status') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        <span
-                          class="badge text-capitalize"
-                          :class="package_data.is_paid ? 'badge-success' : 'badge-danger'"
-                          style="padding: 6px 10px; font-size: 13px;"
-                        >
-                          {{ package_data.is_paid ? $t('label.payment_with_order') : $t('label.payment_on_delivery') }}
-                        </span>
-                      </dd>
-                    </dl>
-                    <dl v-if="package_data.payment_type" class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('menu.payment_type') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.payment_type['name_' + $i18n.locale] }}
-                      </dd>
-                    </dl>
-                    <dl class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('menu.package_type') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.package_type ? package_data.package_type['name_' + $i18n.locale] : 'Package' }}
-                      </dd>
-                    </dl>
-                    <dl v-if="package_data.partner_company" class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.third_party_company') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.partner_company.name_en }} ( {{ package_data.partner_company.phone }} )
-                      </dd>
-                    </dl>
-                    <dl class="row">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.note') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ package_data.note }}
-                      </dd>
-                    </dl>
-                    <div><h5>Package History</h5></div>
-                    <dl class="row bg-light rounded p-3 border-bottom-0">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('table.createdAt') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ $moment(package_data.created_at).format('LLLL') }}
-                      </dd>
-                    </dl>
-                    <dl v-if="package_data.assigned_at" class="row bg-light rounded p-3 border-bottom-0">
-                      <dt class="col-sm-3 text-capitalize text-truncate">
-                        {{ $t('label.assigned_at') }}
-                      </dt>
-                      <dd class="col-sm-9">
-                        {{ $moment(package_data.assigned_at).format('LLLL') }}
-                      </dd>
-                    </dl>
+                    <div class="mb-3">
+                      <div class="form-group">
+                        <h5>Package Info</h5>
+                      </div>
+                      <dl v-if="package_data.shop" class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('menu.shop') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          <NuxtLink :to="{name: 'show-shop', params: {id: package_data.shop._id}}">
+                            {{ package_data.shop.name_en }}
+                          </NuxtLink>
+                        </dd>
+                      </dl>
+                      <dl class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('label.code') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          {{ package_data.code }}
+                        </dd>
+                      </dl>
+                      <dl class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('label.customer_name') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          {{ package_data.customer_name }}
+                        </dd>
+                      </dl>
+                      <dl class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('label.customer_phone') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          {{ package_data.customer_phone }}
+                        </dd>
+                      </dl>
+                      <dl class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('label.customer_address') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          {{ package_data.customer_address }}
+                        </dd>
+                      </dl>
+                      <dl class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('label.price') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          {{ package_data.price }}
+                          {{ package_data.currency ? package_data.currency.code : 'USD' }}
+                        </dd>
+                      </dl>
+                      <dl class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('label.status') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          <span
+                            class="badge text-capitalize"
+                            :class="package_data.is_paid ? 'badge-success' : 'badge-danger'"
+                            style="padding: 6px 10px; font-size: 13px;"
+                          >
+                            {{ package_data.is_paid ? $t('label.payment_with_order') : $t('label.payment_on_delivery') }}
+                          </span>
+                        </dd>
+                      </dl>
+                      <dl v-if="package_data.payment_type" class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('menu.payment_type') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          {{ package_data.payment_type['name_' + $i18n.locale] }}
+                        </dd>
+                      </dl>
+                      <dl class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('menu.package_type') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          {{
+                            package_data.package_type ? package_data.package_type['name_' + $i18n.locale] : 'Package'
+                          }}
+                        </dd>
+                      </dl>
+                      <dl v-if="package_data.partner_company" class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('label.third_party_company') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          <div>
+                            {{ package_data.partner_company.name_en }}
+                          </div>
+                          <small class="text-muted">{{ package_data.partner_company.phone }}</small>
+                        </dd>
+                      </dl>
+                      <dl class="row">
+                        <dt class="col-lg-4 text-capitalize text-truncate">
+                          {{ $t('label.note') }}
+                        </dt>
+                        <dd class="col-lg-8">
+                          {{ package_data.note }}
+                        </dd>
+                      </dl>
+                    </div>
+                    <template v-if="package_data.package_transitions && package_data.package_transitions.length">
+                      <div class="mb-3">
+                        <div class="form-group">
+                          <h5>Package History</h5>
+                        </div>
+                        <div class="package_transition">
+                          <div class="timeline">
+                            <template v-for="(item, key) in package_data.package_transitions">
+                              <div :key="key">
+                                <i class="fas" :class="statusIcon(item)" />
+                                <div class="timeline-item">
+                                  <span class="time text-muted"><i class="fas fa-clock" /> {{
+                                    $moment(item.created_at).format('llll')
+                                  }}</span>
+                                  <h3 class="timeline-header border-bottom-0">
+                                    <strong>{{ checkStatus(item.status) }}</strong>
+                                  </h3>
+                                  <div class="timeline-body">
+                                    <p v-if="item.user" class="mb-1">
+                                      <i class="fas fa-user mr-2" />{{ item.user.full_name }}
+                                    </p>
+                                    {{ item.description['message_' + $i18n.locale] }}
+                                  </div>
+                                </div>
+                              </div>
+                            </template>
+                            <div>
+                              <i class="fas fa-clock bg-gray" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
                   </div>
                 </template>
                 <template v-else>
@@ -353,6 +381,7 @@ export default {
 dl.row {
   border-bottom: 1px solid #dee2e6;
 }
+
 .user_role span {
   & i {
     margin-right: 8px;

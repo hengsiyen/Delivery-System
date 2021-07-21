@@ -1,12 +1,14 @@
 {
     "btn": {
         "add_new": "បន្ថែមថ្មី",
+        "advanced_filters": "តម្រងកម្រិតខ្ពស់",
         "cancel": "បោះបង់",
         "disable": " បិទដំណើរការ",
         "enable": "បើកដំណើរការ",
         "is_paid_no": "មិនទាន់បង់",
         "is_paid_yes": "បង់រួច",
         "ok": "រួចរាល់",
+        "reset": "កំណត់ឡើងវិញ",
         "save": "រក្សាទុក",
         "update": "ធ្វើបច្ចុប្បន្នភាព"
     },
@@ -38,7 +40,9 @@
         "add_new": "បន្ថែមថ្មី",
         "additionalPermissions": "សិទ្ធិបន្ថែម",
         "address": "អាសយដ្ឋាន",
+        "all": "ទាំងអស់",
         "amount": "ចំនួន",
+        "assign_package": "បែងចែកកញ្ចប់អីវ៉ាន់",
         "assign_to_driver": "ប្រគល់ឱ្យអ្នកបើកបរ",
         "assigned_at": "បែងចែកនៅ",
         "avatar": "រូបតំណាង",
@@ -100,6 +104,7 @@
         "password": "ពាក្យសំងាត់",
         "passwordConfirmation": "ការបញ្ជាក់ពាក្យសម្ងាត់",
         "payment_on_delivery": "បង់ប្រាក់ពេលទទួលទំនិញ",
+        "payment_status": "ស្ថានភាពការទូទាត់ប្រាក់",
         "payment_with_order": "បង់ប្រាក់ពេលបញ្ជាទិញ",
         "permissions": "សិទ្ធិ",
         "phone": "ទូរស័ព្ឌ",
@@ -168,6 +173,7 @@
         "settings": "ការកំណត់",
         "shop": "ហាង",
         "system": "ប្រព័ន្ធ",
+        "tracking": "ការ​តាមដាន",
         "user": "បញ្ជីអ្នកប្រើប្រាស់",
         "village": "ភូមិ"
     },
@@ -237,10 +243,12 @@
     "table": {
         "action": "ប្រតិបត្តិការ",
         "amount": "ចំនួន",
+        "assignedAt": "បែងចែកនៅ",
         "code": "កូដ",
         "confirmed": "បានបញ្ជាក់",
         "createdAt": "បានបង្កើតនៅ",
         "email": "អ៊ីមែល",
+        "finishedAt": "បញ្ចប់នៅ",
         "gender": "ភេទ",
         "guard": "ច្រក",
         "name": "ឈ្មោះ",

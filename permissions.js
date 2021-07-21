@@ -48,6 +48,14 @@ const Permissions = {
       show: 'show-package',
       delete: 'delete-package'
     },
+    tracking: {
+      name: {
+        en: 'Tracking',
+        km: 'ការតាមដាន'
+      },
+      manage: 'manage-racking',
+      list: 'list-racking'
+    },
     driver: {
       name: {
         en: 'Driver',

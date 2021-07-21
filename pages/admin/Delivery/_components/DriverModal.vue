@@ -147,7 +147,8 @@ export default {
         dcid: this.dcid,
         search_query: this.search,
         page: this.page,
-        number_per_page: this.number_per_page
+        number_per_page: this.number_per_page,
+        on_delivery: false
       }).then(({ data }) => {
         if (!(this.page > data.total_pages)) {
           this.page += 1

@@ -8,7 +8,7 @@
     >
       ×
     </button>
-    <h4><i class="icon fa fa-info" /> {{ title }}</h4>
+    <h4><i class="icon" :class="icon" /> {{ title }}</h4>
     {{ summary }}
   </div>
 </template>
@@ -17,6 +17,10 @@
 export default {
   name: 'XAlert',
   props: {
+    icon: {
+      type: String,
+      default: 'fa fa-info'
+    },
     variant: {
       type: String,
       default: 'info'

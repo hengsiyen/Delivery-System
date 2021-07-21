@@ -1,12 +1,14 @@
 {
     "btn": {
         "add_new": "Add New",
+        "advanced_filters": "Advanced Filters",
         "cancel": "Cancel",
         "disable": "Disable",
         "enable": "Enable",
         "is_paid_no": "No",
         "is_paid_yes": "Yes",
         "ok": "Okay",
+        "reset": "Reset",
         "save": "Save",
         "update": "Update"
     },
@@ -38,7 +40,9 @@
         "add_new": "Add New",
         "additionalPermissions": "Additional permissions",
         "address": "Address",
+        "all": "All",
         "amount": "Amount",
+        "assign_package": "Assign Package",
         "assign_to_driver": "Assign to Driver",
         "assigned_at": "Assigned at",
         "avatar": "Avatar",
@@ -100,6 +104,7 @@
         "password": "Password",
         "passwordConfirmation": "Password confirmation",
         "payment_on_delivery": "Payment on delivery",
+        "payment_status": "Payment status",
         "payment_with_order": "Payment with order",
         "permissions": "Permissions",
         "phone": "Phone",
@@ -168,6 +173,7 @@
         "settings": "Settings",
         "shop": "Shop",
         "system": "System",
+        "tracking": "Tracking",
         "user": "User",
         "village": "Village"
     },
@@ -237,10 +243,12 @@
     "table": {
         "action": "Action",
         "amount": "Amount",
+        "assignedAt": "Assigned at",
         "code": "Code",
         "confirmed": "Confirmed",
         "createdAt": "Created at",
         "email": "Email",
+        "finishedAt": "Finished at",
         "gender": "Gender",
         "guard": "Guard",
         "name": "Name",

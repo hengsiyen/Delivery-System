@@ -19,15 +19,9 @@ import Sidebar from '@/components/Layouts/Sidebar'
 import Header from '@/components/Layouts/Header'
 import Footer from '@/components/Layouts/Footer'
 import { mapGetters } from 'vuex'
-import Permissions from '~/permissions'
 import helpers from '~/plugins/helpers'
 
 Vue.use(helpers)
-
-Vue.prototype.$base_api = process.env.VUE_APP_API
-Vue.prototype.$token = process.env.VUE_APP_TOKEN
-Vue.prototype.$Permissions = Permissions
-Vue.prototype.$env = process.env
 
 export default {
   name: 'Admin',

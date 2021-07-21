@@ -102,3 +102,26 @@ body {
     margin-right: 0;
   }
 }
+
+.bg-teal {
+  background-color: var(--teal);
+}
+
+.mx-datepicker {
+  display: block;
+  width: 100%;
+}
+
+.mx-calendar-content .cell {
+  color: var(--dark);
+  &.today {
+    color: var(--primary);
+  }
+}
+
+.mx-btn-text,
+.mx-calendar-content .cell,
+.mx-table th,
+.today {
+  font-weight: 700;
+}

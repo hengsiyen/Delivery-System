@@ -1,7 +1,15 @@
 import { mapGetters, mapState } from 'vuex'
+import { datePickerLocale } from '@/mixins/datePickerLocale'
+import Permissions from '../permissions'
 
 const helpers = {
   install (Vue, options) {
+    Vue.prototype.$Permissions = Permissions
+    Vue.prototype.$datepickerLocale = datePickerLocale
+    Vue.prototype.$base_api = process.env.VUE_APP_API
+    Vue.prototype.$token = process.env.VUE_APP_TOKEN
+    Vue.prototype.$env = process.env
+
     Vue.mixin({
       data () {
         return {
@@ -307,6 +315,102 @@ const helpers = {
             return string.replace('storage', 'media/' + type)
           }
           return null
+        },
+        historyIcon (item) {
+          let type = null
+          if (item && item.type) {
+            type = item.type
+          }
+          switch (type) {
+            case 'create':
+              return 'fa-cube bg-green'
+            case 'edit':
+              return 'fa-edit bg-blue'
+            case 'delete':
+              return 'fa-trash-alt bg-red'
+            default:
+              return 'fa-ellipsis-h bg-gray'
+          }
+        },
+
+        statusIcon (item) {
+          let status = null
+          if (item && item.status) {
+            status = item.status
+          }
+          switch (status) {
+            case 'new_package':
+              return 'fa-cube bg-teal'
+            case 'assigned':
+              return 'fa-user-check bg-info'
+            case 'delivery':
+              return 'fa-motorcycle bg-blue'
+            case 'success':
+              return 'fa-check bg-green'
+            case 'failed':
+              return 'fa-exclamation bg-yellow'
+            case 'cancel':
+              return 'fa-times bg-red'
+            case 'return':
+              return 'fa-undo-alt  fa-flip-horizontal bg-dark'
+            default:
+              return 'fa-ellipsis-h bg-gray'
+          }
+        },
+        handleNewLine (str) {
+          return str.replace(/(\\r)*\\n/g, '<br>')
+        },
+        checkStatus (status) {
+          let st = {
+            en: '',
+            km: ''
+          }
+          switch (status) {
+            case 'new_package':
+              st = {
+                en: 'New Package',
+                km: 'កញ្ចប់អីវ៉ាន់ថ្មី'
+              }
+              break
+            case 'assigned':
+              st = {
+                en: 'Assigned Package',
+                km: 'បានបែងចែកកញ្ចប់អីវ៉ាន់'
+              }
+              break
+            case 'delivery':
+              st = {
+                en: 'Delivering',
+                km: 'កំពុងដឹកជញ្ជូន'
+              }
+              break
+            case 'success':
+              st = {
+                en: 'Delivered Package',
+                km: 'បានប្រគល់ជូនកញ្ចប់អីវ៉ាន់'
+              }
+              break
+            case 'failed':
+              st = {
+                en: 'Delivery Failed',
+                km: 'ការដឹកជញ្ជូនបរាជ័យ'
+              }
+              break
+            case 'cancel':
+              st = {
+                en: 'Cancel Package',
+                km: 'បោះបង់កញ្ចប់អីវ៉ាន់'
+              }
+              break
+            case 'return':
+              st = {
+                en: 'Return to Shop',
+                km: 'បញ្ជូនទៅហាងវិញ'
+              }
+              break
+          }
+
+          return st[this.$i18n.locale]
         }
       }
     })

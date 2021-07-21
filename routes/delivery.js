@@ -25,7 +25,7 @@ export const deliveryRouters = {
           },
           {
             name_en: 'Assign Package',
-            name_km: 'ចាត់ចែងកញ្ចប់'
+            name_km: 'បែងចែកកញ្ចប់អីវ៉ាន់'
           }
         ]
       }
