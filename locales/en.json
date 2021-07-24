@@ -2,14 +2,21 @@
     "btn": {
         "add_new": "Add New",
         "advanced_filters": "Advanced Filters",
+        "assign": "Assign",
         "cancel": "Cancel",
+        "complete": "Complete",
+        "delay": "Delay",
         "disable": "Disable",
+        "edit": "Edit",
         "enable": "Enable",
         "is_paid_no": "No",
         "is_paid_yes": "Yes",
+        "next": "Next",
         "ok": "Okay",
+        "prev": "Previous",
         "reset": "Reset",
         "save": "Save",
+        "submit": "Submit",
         "update": "Update"
     },
     "button": {
@@ -42,6 +49,7 @@
         "address": "Address",
         "all": "All",
         "amount": "Amount",
+        "assign_driver": "Assign driver",
         "assign_package": "Assign Package",
         "assign_to_driver": "Assign to Driver",
         "assigned_at": "Assigned at",
@@ -78,6 +86,7 @@
         "forget_password": "Forget password?",
         "gender": "Gender",
         "here": "Here",
+        "hide_package_transitions": "Hide package transitions",
         "homeNumber": "Home number",
         "home_number": "Home number",
         "is_paid": "The package is already paid?",
@@ -100,10 +109,11 @@
         "online": "Online",
         "owner_name": "Owner name",
         "package_for_deliver": "Package for Delivery",
+        "package_history": "Package history",
         "packages_total": "Packages Total",
         "password": "Password",
         "passwordConfirmation": "Password confirmation",
-        "payment_on_delivery": "Payment on delivery",
+        "payment_on_delivery": "Cash on delivery",
         "payment_status": "Payment status",
         "payment_with_order": "Payment with order",
         "permissions": "Permissions",
@@ -147,6 +157,8 @@
         "uploadShopOwner": "Upload Shop Owner Avatar",
         "uploadYourAvatar": "Upload your avatar",
         "username": "Username",
+        "view": "View",
+        "view_package_transitions": "View package transitions",
         "village": "Village"
     },
     "menu": {
@@ -184,7 +196,8 @@
         "owner_name": "Enter the owner name",
         "phone_number": "Enter the phone number",
         "shop_name": "Enter the shop name",
-        "street_number": "Enter the street number"
+        "street_number": "Enter the street number",
+        "what_the_reason": "What is the reason for cancel?"
     },
     "placeholder": {
         "email": "Please input E-mail",

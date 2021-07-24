@@ -33,6 +33,7 @@ export default {
     { src: '~/plugins/vue-toastr.js', mode: 'client' },
     { src: '~/plugins/vue2-datepicker.js', mode: 'client' },
     { src: '~/plugins/vue-loading.js', mode: 'client' },
+    { src: '~/plugins/vue-paginate.js', mode: 'client' },
     { src: '~/plugins/x-backend.js', mode: 'client' },
     { src: '~/plugins/x-chart.js', mode: 'client', ssr: false },
     { src: '~/plugins/vue-mask.js', mode: 'client', ssr: false },

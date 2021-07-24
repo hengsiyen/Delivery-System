@@ -116,6 +116,9 @@ body {
   color: var(--dark);
   &.today {
     color: var(--primary);
+    &.active {
+      color: white;
+    }
   }
 }
 
@@ -125,3 +128,31 @@ body {
 .today {
   font-weight: 700;
 }
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  & .btn {
+    border: 1px solid lightgray;
+    color: var(--dark);
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: white;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+  }
+
+  & input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+

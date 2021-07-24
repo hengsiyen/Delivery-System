@@ -64,3 +64,7 @@ a.nav-link:hover {
 .modal-min-height {
   min-height: calc(100% - 24rem);
 }
+
+.dropdown-no-icon.dropdown-toggle::after {
+  content: unset;
+}

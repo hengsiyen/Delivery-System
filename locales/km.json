@@ -2,14 +2,21 @@
     "btn": {
         "add_new": "បន្ថែមថ្មី",
         "advanced_filters": "តម្រងកម្រិតខ្ពស់",
+        "assign": "បែងចែក",
         "cancel": "បោះបង់",
+        "complete": "បញ្ចប់",
+        "delay": "ពន្យាពេល",
         "disable": " បិទដំណើរការ",
+        "edit": "កែសម្រួល",
         "enable": "បើកដំណើរការ",
         "is_paid_no": "មិនទាន់បង់",
         "is_paid_yes": "បង់រួច",
+        "next": "បន្ទាប់",
         "ok": "រួចរាល់",
+        "prev": "មុន",
         "reset": "កំណត់ឡើងវិញ",
         "save": "រក្សាទុក",
+        "submit": "ដាក់ស្នើ",
         "update": "ធ្វើបច្ចុប្បន្នភាព"
     },
     "button": {
@@ -42,6 +49,7 @@
         "address": "អាសយដ្ឋាន",
         "all": "ទាំងអស់",
         "amount": "ចំនួន",
+        "assign_driver": "ចាត់តាំងអ្នកបើកបរ",
         "assign_package": "បែងចែកកញ្ចប់អីវ៉ាន់",
         "assign_to_driver": "ប្រគល់ឱ្យអ្នកបើកបរ",
         "assigned_at": "បែងចែកនៅ",
@@ -78,6 +86,7 @@
         "forget_password": "ភ្លេចពាក្យសម្ងាត់ឬ?",
         "gender": "ភេទ",
         "here": "ទីនេះ",
+        "hide_package_transitions": "លាក់ដំណើរផ្លាស់ប្តូរកញ្ចប់អីវា៉ន់",
         "homeNumber": "លេខផ្ទះ",
         "home_number": "លេខផ្ទះ",
         "is_paid": "តើកញ្ចប់អីវ៉ាន់ បានប្រាក់បង់រួចហើយ?",
@@ -100,6 +109,7 @@
         "online": "កំពុងដំណើរការ",
         "owner_name": "ឈ្មោះម្ចាស់ហាង",
         "package_for_deliver": "កញ្ចប់សម្រាប់ចែកចាយ",
+        "package_history": "ប្រវត្តិកញ្ចប់អីវ៉ាន់",
         "packages_total": "ចំនួនកញ្ចប់សរុប",
         "password": "ពាក្យសំងាត់",
         "passwordConfirmation": "ការបញ្ជាក់ពាក្យសម្ងាត់",
@@ -147,6 +157,8 @@
         "uploadShopOwner": "រើសរូបតំណាងម្ចាស់ហាង",
         "uploadYourAvatar": "ជ្រើសរើសរូបតំណាងថ្មី",
         "username": "ឈ្មោះ​អ្នកប្រើប្រាស់",
+        "view": "មើល",
+        "view_package_transitions": "មើលដំណើរផ្លាស់ប្តូរកញ្ចប់អីវា៉ន់",
         "village": "ភូមិ"
     },
     "menu": {
@@ -184,7 +196,8 @@
         "owner_name": "បញ្ជូលឈ្មោះម្ចាស់ហាង",
         "phone_number": "បញ្ជូលលេខទូរស័ព្ទ",
         "shop_name": "បញ្ជូលឈ្មោះហាង",
-        "street_number": "បញ្ចូលលេខផ្លូវ"
+        "street_number": "បញ្ចូលលេខផ្លូវ",
+        "what_the_reason": "តើមានមូលហេតុអ្វីដែលត្រូវលុបចោល?"
     },
     "placeholder": {
         "email": "សូមបញ្ចូលអ៊ីម៉ែល",

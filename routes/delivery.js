@@ -1,6 +1,6 @@
 import Permissions from '@/permissions'
-import index from '@/pages/admin/Delivery/Index'
-import assign from '@/pages/admin/Delivery/Assign'
+import index from '@/pages/admin/delivery/Index'
+import assign from '@/pages/admin/delivery/Assign'
 
 export const deliveryRouters = {
   path: 'delivery',

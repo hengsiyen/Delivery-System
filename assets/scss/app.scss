@@ -6,11 +6,12 @@
 @import "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css";
 @import 'node_modules/vue2-datepicker/index.css';
 
+@import "fonts";
 @import "plugins";
 @import "components";
 
 @import "utils";
-@import "fonts";
 @import "typography";
 @import "pages";
+@import "icon";
 @import "global";

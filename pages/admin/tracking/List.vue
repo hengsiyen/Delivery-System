@@ -1,23 +1,22 @@
 <template>
   <div class="col-lg-12">
-    <div class="form-inline mb-4">
-      <div class="form-group row w-100">
-        <div class="input-group col-lg-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text bg-white border-right-0">
-              <i class="fas fa-search" />
-            </span>
-          </div>
-          <input
-            v-model="search_query"
-            :placeholder="$t('label.search') + '...'"
-            class="form-control mr-2"
-            type="search"
-            @change="refreshDatatable"
-          >
+    <div class="form-group row mb-3">
+      <div class="input-group input-group-lg col-lg-10">
+        <input
+          v-model="search_query"
+          :placeholder="$t('label.search') + '...'"
+          class="form-control"
+          type="search"
+        >
+        <div class="input-group-append">
+          <span class="input-group-text bg-white border-left-0">
+            <i class="fas fa-search" />
+          </span>
         </div>
+      </div>
+      <div class="col-lg-2">
         <button
-          class="btn btn-primary"
+          class="btn btn-primary btn-lg btn-block"
           type="button"
           data-toggle="collapse"
           data-target="#advancedFilter"
@@ -192,7 +191,7 @@
           </div>
         </div>
         <div class="w-100 text-right">
-          <button class="btn btn-default">
+          <button class="btn btn-default" @click="clearFilter">
             <strong>
               <i class="fas fa-eraser mr-2" />
               {{ $t('btn.reset') }}
@@ -201,7 +200,7 @@
         </div>
       </div>
     </div>
-    <div class="w-100 d-flex align-items-center filter-items">
+    <div class="w-100 d-flex align-items-center filter-items flex-wrap">
       <div v-if="search_query" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.search') }}: {{ search_query }}
         <button class="btn btn-default btn-xs" @click="search_query= null">
@@ -257,27 +256,152 @@
         </button>
       </div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <Datatable
-          ref="oTable"
-          :columns="columns"
-          :is-watch-params="true"
-          :params="params"
-          table-id="package-table"
-          url="api/backend/package/datatable"
-        />
+    <template v-if="onloading">
+      <div class="onloading">
+        <i class="fas fa-circle-notch fa-spin" />
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <div class="row">
+        <div class="package_items col-12">
+          <template v-if="list_packages && list_packages.length">
+            <template v-for="(item, key) in list_packages">
+              <div :key="key" class="package_item">
+                <div class="col-lg-4">
+                  <div class="package_item-block">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-user mr-2" />
+                    </div>
+                    <div class="package_item-label text-truncate">
+                      {{ item.customer_name }}
+                    </div>
+                  </div>
+                  <div class="package_item-block">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-phone mr-2" />
+                    </div>
+                    <div class="package_item-label text-truncate">
+                      {{ item.customer_phone }}
+                    </div>
+                  </div>
+                  <div class="package_item-block">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-sticky-note mr-2" />
+                    </div>
+                    <div class="package_item-label text-truncate">
+                      {{ checkStatus(item.final_status) }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="package_item-block">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-store mr-2" />
+                    </div>
+                    <div class="package_item-label text-truncate">
+                      {{ item.shop ? item.shop.name_en : '' }}
+                    </div>
+                  </div>
+                  <div class="package_item-block">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-map-marker-alt mr-2" />
+                    </div>
+                    <div class="package_item-label text-truncate">
+                      {{ item.customer_address }}
+                    </div>
+                  </div>
+                  <div class="package_item-block">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-calendar-alt mr-2" />
+                    </div>
+                    <div v-if="item.request_delivery_at" class="package_item-label text-truncate">
+                      {{ $moment(item.request_delivery_at).format('lll') }}
+                    </div>
+                    <div v-else class="package_item-label text-truncate">
+                      {{ $moment(item.created_at).format('lll') }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 package_item-block-action text-right">
+                  <div class="package_item-block-btn">
+                    <NuxtLink
+                      class="btn btn-default btn-sm btn-block"
+                      :to="{name: 'show-package', params:{id: item._id}}"
+                    >
+                      <i class="fas fa-eye mr-2" />
+                      <strong>{{ $t('label.view') }}</strong>
+                    </NuxtLink>
+                  </div>
+                  <div class="package_item-block-btn">
+                    <button class="btn btn-default btn-sm btn-block">
+                      <i class="fas fa-edit mr-2" />
+                      <strong>{{ $t('btn.edit') }}</strong>
+                    </button>
+                  </div>
+                  <div class="package_item-block-btn">
+                    <div class="dropdown">
+                      <button
+                        id="dropdownMenuButton"
+                        class="btn btn-default btn-sm btn-block dropdown-toggle dropdown-no-icon"
+                        type="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v mr-2" />
+                        <strong>Other</strong>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </template>
+          <template v-else>
+            <div class="package_item align-items-center w-100 justify-content-center">
+              {{ $t('label.no_result_found') }}
+            </div>
+          </template>
+        </div>
+      </div>
+      <div v-if="list_packages && list_packages.length > 1" class="row">
+        <div class="col-12">
+          <paginate
+            v-model="page"
+            :page-count="total_pages"
+            :page-range="3"
+            :margin-pages="2"
+            :click-handler="getTrackingPackageList"
+            :prev-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.prev')}</span>`"
+            :next-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.next')}</span>`"
+            :container-class="'pagination justify-content-end mt-3'"
+            :page-class="'page-item outline-none ml-0 mr-1 mx-sm-1 text-bold'"
+            :prev-class="'page-item outline-none ml-0 mr-1 mx-sm-1'"
+            :next-class="'page-item outline-none ml-0 mr-1 mx-sm-1'"
+            :page-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+            :prev-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+            :next-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+          />
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 <script>
-import Datatable from '@/components/Datatable'
+import { mapGetters } from 'vuex'
+import { debounce } from 'debounce'
 
 export default {
   name: 'TrackingList',
-  components: { Datatable },
   computed: {
+    ...mapGetters({
+      number_per_page: 'delivery_company/number_per_page'
+    }),
     params () {
       // eslint-disable-next-line camelcase
       let createdAt = null
@@ -305,52 +429,40 @@ export default {
         search_query: this.search_query
       }
     },
-    columns () {
-      return [
-        {
-          data: 'shop',
-          name: 'shop',
-          title: this.$t('label.shop'),
-          render: (data, type, row) => {
-            if (data) {
-              return data.name_en
-            } else {
-              return '-'
-            }
-          }
-        },
-        { data: 'package', name: 'package', title: this.$t('menu.package'), width: '35%' },
-        { data: 'status', name: 'status', title: this.$t('label.status') },
-        {
-          data: 'created_at',
-          name: 'created_at',
-          searchable: false,
-          title: this.$t('table.createdAt'),
-          render: (data, type, row) => {
-            return this.getDateFormat(data)
-          }
-        },
-        {
-          data: 'actions',
-          name: 'actions',
-          searchable: false,
-          orderable: false,
-          title: this.$t('label.action')
-        }
-      ]
-    },
     datePickerLang () {
       return this.$datepickerLocale[this.$i18n.locale].lang
     }
   },
+  watch: {
+    params () {
+      this.refreshDatatable()
+    },
+    search_query (val) {
+      this.onloading = true
+      if (!this.awaitingSearch) {
+        if (this.time_out) {
+          clearTimeout(this.time_out)
+        }
+        this.time_out = setTimeout(() => {
+          this.getTrackingPackageList(1)
+          this.awaitingSearch = false
+        }, 1000)
+      }
+      this.awaitingSearch = true
+    }
+  },
   data () {
     return {
+      onloading: true,
       package_statuses: [],
       shops: [],
       drivers: [],
       payment_statuses: [],
       partner_companies: [],
+      list_packages: [],
 
+      page: 1,
+      total_pages: 0,
       date_format: 'DD/MM/YYYY',
       search_query: null,
       status: null,
@@ -365,21 +477,29 @@ export default {
   },
   mounted () {
     this.getFetchData()
-    this.loadAction()
+    this.getTrackingPackageList(1)
   },
   methods: {
     refreshDatatable () {
-      this.$refs.oTable.draw(true)
+      this.onloading = true
+      setTimeout(() => {
+        this.getTrackingPackageList(1)
+      }, 500)
     },
     clearFilter () {
+      this.search_query = null
       this.status = null
-      this.shop_id = null
-      this.driver_id = null
       this.is_paid = null
+      this.shop_id = null
+      this.shop = null
+      this.driver_id = null
+      this.driver = null
       this.partner_company_id = null
+      this.partner_company = null
       this.created_at = new Date()
       this.assigned_at = null
       this.finished_at = null
+      this.refreshDatatable()
     },
     getFetchData () {
       this.$axios.get(this.$base_api + '/api/backend/fetch-data/data-for-tracking')
@@ -394,58 +514,25 @@ export default {
           this.onResponseError(error)
         })
     },
-    loadAction () {
-      const self = this
-      this.clearEventHandler([
-        '.btn-show',
-        '.btn-edit'
-      ])
-      $(function () {
-        $(document).on('click', '.btn-show', function () {
-          self.routerPush({
-            name: 'show-package',
-            params: {
-              id: $(this).attr('data-id')
-            }
-          })
-        })
-        $(document).on('click', '.btn-edit', function () {
-          self.routerPush({
-            name: 'edit-package',
-            params: {
-              id: $(this).attr('data-id')
-            }
-          })
-        })
-        $(document).on('click', '.btn-delete', function () {
-          self.deleteRecord(
-            $(this).attr('data-id'),
-            self.$t('label.package'),
-            '/api/backend/package/delete'
-          )
-        })
-      })
-    },
-    deleteRecord (id, title, api) {
-      console.log(id)
-      const self = this
-      this.onConfirm({
-        title,
-        text: self.$t('label.swal.desc'),
-        confirmButtonText: self.$t('label.swal.yes'),
-        confirmButtonColor: '#ed524f',
-        cancelButtonColor: '#a0a0a0'
-      }).then(() => {
-        self.$isLoading(true)
-        this.$axios.post(this.$base_api + api, {
-          id
-        }).then(() => {
-          self.$refs.oTable.draw()
+    getTrackingPackageList: debounce(function (page = null) {
+      if (page) {
+        this.page = page
+      }
+      this.$axios.post(this.$base_api + '/api/backend/tracking/list',
+        Object.assign({
+          page: this.page,
+          number_per_page: this.number_per_page,
+          ...this.params
+        }, this.params))
+        .then((res) => {
+          this.total_pages = res.data.total_pages
+          this.list_packages = res.data.data
+        }).catch((error) => {
+          this.onResponseError(error)
         }).finally(() => {
-          self.$isLoading(false)
+          this.onloading = false
         })
-      })
-    }
+    }, 500)
   }
 }
 </script>
@@ -454,6 +541,40 @@ export default {
 .search {
   width: 25%;
 }
+
+.package_item {
+  background-color: white;
+  border-radius: 0.25rem;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  display: flex;
+  &-block {
+    display: flex;
+    align-items: center;
+    margin: 8px;
+    padding: 2px;
+    &-icon {
+      width: 25px;
+      margin-right: 8px;
+      text-align: center;
+    }
+    &-action {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      flex-direction: column;
+    }
+    &-btn {
+      width: 120px;
+      margin-bottom: 8px;
+      &:last-child{
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
 .filter-items {
   & .shadow-item {
     display: flex;

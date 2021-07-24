@@ -177,7 +177,7 @@ const helpers = {
         // Convert text area content to HTML text
         getTextareaHtml (content) {
           if (!content) {
-            return this.$t('label.na')
+            return null
           }
           return content
             .replace(/&/g, '&amp;')
@@ -368,7 +368,7 @@ const helpers = {
           switch (status) {
             case 'new_package':
               st = {
-                en: 'New Package',
+                en: 'Received from shop',
                 km: 'កញ្ចប់អីវ៉ាន់ថ្មី'
               }
               break
@@ -386,8 +386,8 @@ const helpers = {
               break
             case 'success':
               st = {
-                en: 'Delivered Package',
-                km: 'បានប្រគល់ជូនកញ្ចប់អីវ៉ាន់'
+                en: 'Delivered',
+                km: 'ការដឹកជញ្ជូនរួចរាល់'
               }
               break
             case 'failed':

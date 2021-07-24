@@ -157,7 +157,7 @@
                   </label>
                   <div class="input-group" :class="{'is-invalid': checkValidate('amount')}">
                     <select
-                      v-if="package_types && package_types"
+                      v-if="package_types"
                       id="package_type"
                       v-model="package_type"
                       name="package_type"
@@ -219,7 +219,7 @@
                       </button>
                     </div>
                     <select
-                      v-if="payment_types && payment_types && is_paid"
+                      v-if="payment_types && is_paid"
                       id="payment_type"
                       v-model="payment_type"
                       name="package_type"
@@ -309,8 +309,22 @@
       </div>
     </div>
     <!-- Modal -->
-    <ShopModal ref="shopModal" />
-    <ThirdPartyCompanyModal ref="thirdPartyCompanyModal" />
+    <div
+      id="thirdPartyCompanyModal"
+      class="modal fade"
+      data-backdrop="static"
+      tabindex="-1"
+    >
+      <ThirdPartyCompanyModal ref="thirdPartyCompanyModal" />
+    </div>
+    <div
+      id="shopModal"
+      class="modal fade"
+      tabindex="-1"
+      data-backdrop="static"
+    >
+      <ShopModal ref="shopModal" />
+    </div>
   </div>
 </template>
 
