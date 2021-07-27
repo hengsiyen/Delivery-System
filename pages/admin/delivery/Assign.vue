@@ -46,32 +46,88 @@
                   class="package__item"
                   @click="selectPackage(item)"
                 >
-                  <template v-if="item.media">
-                    <div>sdfsf</div>
-                  </template>
-                  <template v-else>
-                    <div class="package__item-image">
-                      <img src="/img/package.png" alt="" width="100%">
+                  <div :key="key" class="list_item">
+                    <div class="col-md-2 col-lg-2">
+                      <template v-if="item.media">
+                        <div>sdfsf</div>
+                      </template>
+                      <template v-else>
+                        <div class="package__item-image">
+                          <img src="/img/package.png" alt="" width="100%">
+                        </div>
+                      </template>
                     </div>
-                  </template>
-                  <div class="package__item-content">
-                    <p><strong>{{ item.code }}</strong></p>
-                    <p v-if="item.shop">
-                      <i class="fas fa-store mr-2" /> {{ item.shop.name_en }}
-                    </p>
-                    <p><i class="fas fa-user mr-2" /> {{ item.customer_name }}</p>
-                    <p><i class="fas fa-phone fa-rotate-90 mr-2" /> {{ item.customer_phone }}</p>
-                    <p><i class="fas fa-map-marker-alt mr-2" /> {{ item.customer_address }}</p>
-                    <p v-if="item.partner_company">
-                      <i class="fas fa-truck mr-2" />{{ item.partner_company.name_en }}
-                    </p>
-                    <div class="package__item-badge">
-                      <label v-if=" item.payment_type" class="badge badge-success">
-                        {{ item.payment_type['name_' + $i18n.locale] }}
-                      </label>
-                      <label class="badge badge-primary">
-                        {{ item.price }} {{ item.currency ? item.currency.symbol : '$' }}
-                      </label>
+                    <div class="col-md-5 col-lg-5">
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-user mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.customer_name }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-phone mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.customer_phone }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-dollar-sign mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.price | numFormat(item.currency && item.currency.code === 'KHR' ? num_format_km : num_format_en ) }}
+                          {{ item.currency ? item.currency.code : null }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-sticky-note mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ checkStatus(item.final_status) }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-5 col-lg-5">
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-store mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.shop ? item.shop.name_en : '' }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-map-marker-alt mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.customer_address }}
+                        </div>
+                      </div>
+                      <div v-if="item.partner_company" class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-truck mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.partner_company.name_en }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-calendar-alt mr-2" />
+                        </div>
+                        <div v-if="item.request_delivery_at" class="package_item-label text-truncate">
+                          {{ $moment(item.request_delivery_at).format('lll') }}
+                        </div>
+                        <div v-else class="package_item-label text-truncate">
+                          {{ $moment(item.created_at).format('lll') }}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -124,36 +180,60 @@
               <div
                 v-for="(item, key) in selected_packages"
                 :key="key"
-                class="package__item"
-                style="padding-top: 35px"
+                class="list_item position-relative"
+                style="padding: 35px 8px 8px 8px;"
               >
-                <template v-if="item.media">
-                  <div>sdfsf</div>
-                </template>
-                <template v-else>
-                  <div class="package__item-image d-flex align-items-center">
-                    <img src="/img/package.png" alt="" width="100%">
+                <div class="col-md-2 col-lg-2">
+                  <template v-if="item.media">
+                    <div>sdfsf</div>
+                  </template>
+                  <template v-else>
+                    <div class="package__item-image">
+                      <img src="/img/package.png" alt="" width="100%">
+                    </div>
+                  </template>
+                </div>
+                <div class="col-md-5 col-lg-5">
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-store mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ item.shop ? item.shop.name_en : '' }}
+                    </div>
                   </div>
-                </template>
-                <div class="package__item-content package__selected d-flex justify-content-center flex-column">
-                  <p><strong>{{ item.code }}</strong></p>
-                  <p><i class="fas fa-map-marker-alt mr-2" /> {{ item.customer_address }}</p>
-                  <p v-if="item.partner_company">
-                    <i class="fas fa-truck mr-2" />{{ item.partner_company.name_en }}
-                  </p>
-                  <div class="package__item-badge position-relative pt-1">
-                    <label v-if=" item.payment_type" class="mb-0 badge badge-success">
-                      {{ item.payment_type['name_' + $i18n.locale] }}
-                    </label>
-                    <label class="mb-0 badge badge-primary">
-                      {{ item.price }} {{ item.currency ? item.currency.symbol : '$' }}
-                    </label>
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-map-marker-alt mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ item.customer_address }}
+                    </div>
+                  </div>
+                  <div v-if="item.partner_company" class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-truck mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ item.partner_company.name_en }}
+                    </div>
+                  </div>
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-calendar-alt mr-2" />
+                    </div>
+                    <div v-if="item.request_delivery_at" class="package_item-label text-truncate">
+                      {{ $moment(item.request_delivery_at).format('lll') }}
+                    </div>
+                    <div v-else class="package_item-label text-truncate">
+                      {{ $moment(item.created_at).format('lll') }}
+                    </div>
                   </div>
                 </div>
-                <div class="package__item-form d-flex justify-content-center flex-column">
+                <div class="col-md-5 col-lg-5">
                   <div class="form-group">
                     <label class="mb-0 font-s-14"> {{ $t('label.delivery_charge') }}</label>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group">
                       <input
                         id="price"
                         v-model="item.delivery_charge"
@@ -178,7 +258,7 @@
                   </div>
                   <div v-if="item.partner_company" class="form-group">
                     <label class="mb-0 font-s-14"> {{ $t('label.extra_charge') }}</label>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group">
                       <input
                         id="extra_charge"
                         v-model="item.extra_charge"
@@ -203,7 +283,7 @@
                   </div>
                 </div>
                 <div class="position-absolute btn-remove">
-                  <button class="btn" @click="removePackage(item)">
+                  <button class="btn btn-light btn-sm" @click="removePackage(item)">
                     <i class="fas fa-times" />
                   </button>
                 </div>
@@ -257,7 +337,9 @@ export default {
       number_per_page: 'delivery_company/number_per_page',
       currencies: 'delivery_company/currencies',
       dcid: 'delivery_company/dcid',
-      user: 'user/getUser'
+      user: 'user/getUser',
+      num_format_en: 'delivery_company/num_format_en',
+      num_format_km: 'delivery_company/num_format_km'
     })
   },
   watch: {
@@ -358,9 +440,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../../../assets/scss/components/list_item";
 .btn-remove {
   top: 8px;
-  right: 15px;
+  right: 8px;
 }
 
 .card-body {
@@ -380,74 +463,5 @@ export default {
 .package__items {
   overflow-x: hidden;
   overflow-y: auto;
-}
-
-.package__item {
-  user-select: none;
-  width: 100%;
-  padding: 15px;
-  background-color: var(--light);
-  border-radius: 0.2rem;
-  margin-bottom: 15px;
-  display: flex;
-  position: relative;
-
-  &:hover {
-    cursor: pointer;
-    background-color: darken(#F8F9FAFF, 3%);
-  }
-
-  &-image {
-    width: 95px;
-  }
-
-  &-content {
-    width: calc(100% - 95px);
-    padding-left: 25px;
-    padding-right: 15px;
-    position: relative;
-
-    &.package__selected {
-      width: calc(60% - 95px);
-    }
-
-    & p {
-      margin-bottom: 0;
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    & .package__item-badge {
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-
-      & label {
-        border-radius: 0;
-        padding: 4px 8px;
-
-        &:first-child {
-          border-bottom-left-radius: 0.25rem;
-          border-top-left-radius: 0.25rem;
-        }
-
-        &:last-child {
-          border-bottom-right-radius: 0.25rem;
-          border-top-right-radius: 0.25rem;
-        }
-      }
-    }
-  }
-
-  &-form {
-    width: 35%;
-    margin-left: auto;
-
-    & .form-group:last-child {
-      margin-bottom: 0;
-    }
-  }
 }
 </style>

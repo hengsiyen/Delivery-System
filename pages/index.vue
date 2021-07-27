@@ -128,7 +128,7 @@ export default {
             const token = result.access_token
             const refresh = result.refresh_token
             const deliveryCompany = result.delivery_company
-
+            console.log(deliveryCompany)
             self.$cookies.set(process.env.VUE_APP_TOKEN, token)
             self.$cookies.set(process.env.VUE_APP_REFRESH_TOKEN, refresh)
 
@@ -142,10 +142,13 @@ export default {
               }
             })
 
-            if (deliveryCompany.length) {
-              self.$cookies.set('dc', JSON.stringify(deliveryCompany[0]))
-              this.$store.dispatch('delivery_company/setDeliveryCompany', deliveryCompany[0])
+            if (deliveryCompany) {
+              self.$cookies.set('dc', JSON.stringify(deliveryCompany))
+              self.$cookies.set('dc_exchange', JSON.stringify(deliveryCompany.exchange_rate_enabled))
+              this.$store.dispatch('delivery_company/setDeliveryCompany', deliveryCompany)
+              this.$store.dispatch('delivery/setExchangeRate', deliveryCompany.exchange_rate_enabled)
             }
+            self.getCurrency()
             self.$store.dispatch('user/setUserRolesPermissions', result)
 
             self.$router.push({
@@ -154,8 +157,11 @@ export default {
           }
         })
         .catch((error) => {
+          console.log(error.response)
           if (error.response.status === 422) {
             self.validations = error.response.data.errors
+          } else if (error.response.status === 500) {
+            this.onResponseError(error)
           } else {
             this.isLoginFail = true
             const message = error.response.data.message
@@ -166,15 +172,16 @@ export default {
           this.$isLoading(false)
         })
     },
-    // getDeliveryCompany (id) {
-    //   this.$axios.post(this.$base_api + '/api/backend/delivery-company/get-delivery-company-by-user', {
-    //     user_id: id
-    //   }).then((res) => {
-    //     if (res.data.data) {
-    //       this.$store.dispatch('shop/setShop', res.data.data)
-    //     }
-    //   })
-    // },
+    getCurrency () {
+      this.$axios.post(this.$base_api + '/api/backend/currency/get-options')
+        .then((res) => {
+          this.$cookies.set('dc_currencies', JSON.stringify(res.data.data))
+          this.$store.dispatch('delivery_company/setCurrency', res.data.data)
+        })
+        .catch((error) => {
+          this.onResponseError(error)
+        })
+    },
     onPressEnter (e) {
       if (e.code === 'Enter') {
         this.onLogin()

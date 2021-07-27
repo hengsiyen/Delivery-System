@@ -129,25 +129,29 @@
                     v-for="(item, key) in shops"
                     :key="key"
                     class="col-lg-6"
+                    @click="selectShop(item)"
                   >
-                    <div class="driver__item d-flex">
-                      <div class="driver__image" style="width: 75px;">
-                        <template v-if="item.avatar">
+                    <div
+                      class="modal__item d-flex"
+                      :class="{'active': shop && shop._id === item._id}"
+                    >
+                      <div class="modal__image" style="width: 75px;">
+                        <template v-if="item.logo">
                           <img
-                            :src="`${baseUrl}/${item.avatar}`"
+                            :src="`${baseUrl}/${item.logo}`"
                             class="img-thumbnail"
                             alt="User Image"
                           >
                         </template>
                         <template v-else>
                           <img
-                            :src="avatar"
+                            :src="shop_img"
                             class="img-thumbnail"
                             alt="User Image"
                           >
                         </template>
                       </div>
-                      <div class="driver__info">
+                      <div class="modal__info">
                         <label class="d-block mb-0"><strong>{{ item.name_en }}</strong></label>
                         <label class="d-block mb-0"><strong>{{ item.phone }}</strong></label>
                       </div>
@@ -167,37 +171,6 @@
                 <div slot="no-results" />
               </infinite-loading>
             </div>
-            <!--            <div class="shop__items">-->
-            <!--&lt;!&ndash;              <template v-if="shops && shops.length">&ndash;&gt;-->
-            <!--&lt;!&ndash;                <div&ndash;&gt;-->
-            <!--&lt;!&ndash;                  v-for="(item, key) in shops"&ndash;&gt;-->
-            <!--&lt;!&ndash;                  :key="key"&ndash;&gt;-->
-            <!--&lt;!&ndash;                  class="shop__item"&ndash;&gt;-->
-            <!--&lt;!&ndash;                  @click="selectShop(item)"&ndash;&gt;-->
-            <!--&lt;!&ndash;                >&ndash;&gt;-->
-            <!--&lt;!&ndash;                  <i class="fas fa-chevron-right icon-left" />&ndash;&gt;-->
-            <!--&lt;!&ndash;                  <div>&ndash;&gt;-->
-            <!--&lt;!&ndash;                    {{ item.name_en }}&ndash;&gt;-->
-            <!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-            <!--&lt;!&ndash;                  <template v-if="shop && (shop._id === item._id)">&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <span class="fa-stack position-absolute icon-right" style="vertical-align: top;">&ndash;&gt;-->
-            <!--&lt;!&ndash;                      <i class="far fa-circle fa-stack-2x" />&ndash;&gt;-->
-            <!--&lt;!&ndash;                      <i class="fas fa-circle fa-stack-1x" />&ndash;&gt;-->
-            <!--&lt;!&ndash;                    </span>&ndash;&gt;-->
-            <!--&lt;!&ndash;                  </template>&ndash;&gt;-->
-            <!--&lt;!&ndash;                  <template v-else>&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <i class="far fa-circle position-absolute icon-right" />&ndash;&gt;-->
-            <!--&lt;!&ndash;                  </template>&ndash;&gt;-->
-            <!--&lt;!&ndash;                </div>&ndash;&gt;-->
-            <!--&lt;!&ndash;              </template>&ndash;&gt;-->
-            <!--&lt;!&ndash;              <template v-else>&ndash;&gt;-->
-            <!--&lt;!&ndash;                <NoResult />&ndash;&gt;-->
-            <!--&lt;!&ndash;              </template>&ndash;&gt;-->
-            <!--              <infinite-loading spinner="spiral" :identifier="shopInfiniteId" @infinite="getShops">-->
-            <!--                <div slot="no-more" />-->
-            <!--                <div slot="no-results" />-->
-            <!--              </infinite-loading>-->
-            <!--            </div>-->
           </template>
         </template>
       </div>
@@ -221,7 +194,7 @@
             <i class="fas fa-times-circle mr-2" />
             <strong>{{ $t('btn.cancel') }}</strong>
           </button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="confirmModel">
             <i class="fas fa-check-circle mr-2" />
             <strong> {{ $t('btn.ok') }}</strong>
           </button>
@@ -362,13 +335,16 @@ export default {
       }
       this.cancelCreateShop()
     },
+    confirmModel () {
+      this.$emit('confirmModel')
+    },
     cancelCreateShop () {
       this.create_shop = false
-      // this.shop_name = null
-      // this.owner_name = null
-      // this.shop_phone = null
-      // this.shop_email = null
-      // this.search_shop = null
+      this.shop_name = null
+      this.owner_name = null
+      this.shop_phone = null
+      this.shop_email = null
+      this.search_shop = null
     },
     selectShop (shop) {
       this.$store.dispatch('package/setShop', shop)
@@ -378,70 +354,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.shop__items {
-  height: calc(100% - 3.5rem);
-  overflow-y: auto;
-}
+@import "../../../../assets/scss/components/modal_item";
 
-.shop__search {
-  & .form-control {
-    width: 80%;
-  }
-
-  & .btn {
-    width: 19%;
-    margin-left: auto;
-  }
-}
-
-.shop__item {
-  padding: 15px 30px 15px 40px;
-  border-top: 1px solid #e9ecef;
-  border-bottom: 1px solid #e9ecef;
-  position: relative;
-
-  &:hover,
-  &:focus,
-  &:active {
-    cursor: pointer;
-    background-color: #f8f8f8;
-  }
-
-  & i.icon-left {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translate(0, -50%);
-    font-size: 11px;
-  }
-
-  & span.icon-right,
-  & i.icon-right {
-    right: 10px;
-    top: 50%;
-    transform: translate(0, -50%);
-  }
-
-  & i.icon-right {
-    font-size: 16px;
-  }
-
-  & span.icon-right {
-    font-size: 8px;
-    color: var(--primary)
-  }
-}
-
-.shop__onloading {
-  width: 100%;
-  min-height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  & i {
-    font-size: 35px;
-    color: var(--primary);
-  }
-}
 </style>

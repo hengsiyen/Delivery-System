@@ -76,6 +76,9 @@ export default {
           this.$router.push({ path: '/' })
           this.$cookies.remove(process.env.VUE_APP_TOKEN)
           this.$cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
+          this.$cookies.remove('dc')
+          this.$cookies.remove('dc_exchange')
+          this.$cookies.remove('dc_currencies')
           this.$isLoading(false)
         })
     }

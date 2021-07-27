@@ -5,7 +5,6 @@
     :class="{ 'menu-open menu-is-opening': opened }"
   >
     <a
-      href="#"
       class="nav-link"
       :class="{'active': allGroups.includes($route.meta.groups)}"
     >

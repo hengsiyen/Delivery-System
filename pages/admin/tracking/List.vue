@@ -538,10 +538,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.search {
-  width: 25%;
-}
-
 .package_item {
   background-color: white;
   border-radius: 0.25rem;
@@ -595,5 +591,4 @@ export default {
     }
   }
 }
-
 </style>

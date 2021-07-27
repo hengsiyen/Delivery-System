@@ -1,140 +1,260 @@
 <template>
-  <div class="card">
-    <div class="card-header with-border">
-      <h3 class="card-title">
-        {{ $t('text.list') }}
-      </h3>
-      <div class="card-tools">
-        <ButtonAddNew link-to="create-shop" />
+  <div class="col-lg-12">
+    <div class="form-group row mb-3">
+      <div class="input-group input-group-lg col-lg-8">
+        <input
+          v-model="search_query"
+          :placeholder="$t('label.search') + '...'"
+          class="form-control"
+          type="search"
+        >
+        <div class="input-group-append">
+          <span class="input-group-text bg-white border-left-0">
+            <i class="fas fa-search" />
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <button
+          class="btn btn-primary btn-lg btn-block"
+          type="button"
+          data-toggle="collapse"
+          data-target="#advancedFilter"
+          aria-expanded="false"
+          aria-controls="advancedFilter"
+        >
+          <strong><i class="fas fa-filter mr-2" /> {{ $t('btn.advanced_filters') }}</strong>
+        </button>
+      </div>
+      <div class="col-lg-2">
+        <ButtonAddNew
+          :link-to="'create-shop'"
+          :custom-class="'btn btn-success btn-lg btn-block text-capitalize'"
+        />
       </div>
     </div>
-    <div class="card-body">
-      <Datatable
-        ref="oTable"
-        :columns="columns"
-        :params="params"
-        table-id="shop-table"
-        url="api/backend/shop/datatable"
-      />
-    </div>
+    <template v-if="onloading">
+      <div class="onloading">
+        <i class="fas fa-circle-notch fa-spin" />
+      </div>
+    </template>
+    <template v-else>
+      <div class="row">
+        <div class="list_items col-12">
+          <template v-if="list_shops && list_shops.length">
+            <template v-for="(item, key) in list_shops">
+              <div :key="key" class="list_item">
+                <div class="col-md-2 col-lg-2 col-xl-1">
+                  <template v-if="item.logo">
+                    <img :src="getSrc(item.logo)" alt="" class="img-thumbnail">
+                  </template>
+                  <template v-else>
+                    <img :src="shop_img" alt="" class="img-thumbnail">
+                  </template>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-5">
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-store mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ item.name_en }}
+                    </div>
+                  </div>
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-phone mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ item.phone }}
+                    </div>
+                  </div>
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-sticky-note mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      <span v-if="item.enabled" class="text-green text-bold">{{ $t('label.enabled') }}</span>
+                      <span v-else class="text-red text-bold">{{ $t('label.disbled') }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-5">
+
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-user mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ item.owner_name }}
+                    </div>
+                  </div>
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-map-marker-alt mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ item['address_' + $i18n.locale] }}
+                    </div>
+                  </div>
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-calendar-alt mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ $moment(item.created_at).format('lll') }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-xl-1 list_item-block-action">
+                  <div class="list_item-block-btn">
+                    <NuxtLink
+                      class="btn btn-default btn-sm btn-block"
+                      :to="{name: 'show-shop', params:{id: item._id}}"
+                    >
+                      <i class="fas fa-eye mr-2" />
+                      <strong>{{ $t('label.view') }}</strong>
+                    </NuxtLink>
+                  </div>
+                  <div class="list_item-block-btn">
+                    <button class="btn btn-default btn-sm btn-block">
+                      <i class="fas fa-edit mr-2" />
+                      <strong>{{ $t('btn.edit') }}</strong>
+                    </button>
+                  </div>
+                  <div class="list_item-block-btn">
+                    <div class="dropdown">
+                      <button
+                        id="dropdownMenuButton"
+                        class="btn btn-default btn-sm btn-block dropdown-toggle dropdown-no-icon"
+                        type="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v mr-2" />
+                        <strong>Other</strong>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </template>
+          <template v-else>
+            <div class="list_item align-items-center w-100 justify-content-center">
+              {{ $t('label.no_result_found') }}
+            </div>
+          </template>
+        </div>
+      </div>
+      <div v-if="list_shops && list_shops.length > 1" class="row">
+        <div class="col-12">
+          <paginate
+            v-model="page"
+            :page-count="total_pages"
+            :page-range="3"
+            :margin-pages="2"
+            :click-handler="getShopList"
+            :prev-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.prev')}</span>`"
+            :next-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.next')}</span>`"
+            :container-class="'pagination justify-content-end mt-3'"
+            :page-class="'page-item outline-none ml-0 mr-1 mx-sm-1 text-bold'"
+            :prev-class="'page-item outline-none ml-0 mr-1 mx-sm-1'"
+            :next-class="'page-item outline-none ml-0 mr-1 mx-sm-1'"
+            :page-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+            :prev-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+            :next-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+          />
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 <script>
-import Datatable from '@/components/Datatable'
+import { debounce } from 'debounce'
 import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ShopList',
-  components: { ButtonAddNew, Datatable },
+  components: { ButtonAddNew },
   computed: {
+    ...mapGetters({
+      dcid: 'delivery_company/dcid'
+    }),
     params () {
       return {
-        lang: this.$i18n.locale
+        lang: this.$i18n.locale,
+        search_query: this.search_query,
+        dcid: this.dcid
       }
+    }
+  },
+  watch: {
+    params () {
+      this.refreshDatatable()
     },
-    columns () {
-      return [
-        { data: 'name_en', name: 'name_en', title: this.$t('label.shop_name') },
-        { data: 'owner_name', name: 'owner_name', title: this.$t('label.owner_name') },
-        { data: 'phone', name: 'phone', title: this.$t('label.phone') },
-        { data: 'email', name: 'email', title: this.$t('label.email') },
-        {
-          data: 'province',
-          name: 'province',
-          title: this.$t('label.province'),
-          render: (data, type, row) => {
-            if (data) {
-              return data['name_' + this.$i18n.locale]
-            } else {
-              return '-'
-            }
-          }
-        },
-        {
-          data: 'created_at',
-          name: 'created_at',
-          searchable: false,
-          title: this.$t('table.createdAt'),
-          render: (data, type, row) => {
-            return this.getDateFormat(data)
-          }
-        },
-        {
-          data: 'enabled',
-          name: 'enabled',
-          searchable: false,
-          orderable: false,
-          title: this.$t('label.enabled')
-        },
-        {
-          data: 'actions',
-          name: 'actions',
-          searchable: false,
-          orderable: false,
-          title: this.$t('label.action')
+    search_query (val) {
+      this.onloading = true
+      if (!this.awaitingSearch) {
+        if (this.time_out) {
+          clearTimeout(this.time_out)
         }
-      ]
+        this.time_out = setTimeout(() => {
+          this.getShopList(1)
+          this.awaitingSearch = false
+        }, 1000)
+      }
+      this.awaitingSearch = true
+    }
+  },
+  data () {
+    return {
+      onloading: true,
+      list_shops: [],
+      page: 1,
+      total_pages: 0,
+      search_query: null
     }
   },
   mounted () {
-    this.loadAction()
+    this.getShopList(1)
   },
   methods: {
-    loadAction () {
-      const self = this
-      this.clearEventHandler([
-        '.btn-show',
-        '.btn-edit'
-      ])
-      $(function () {
-        $(document).on('click', '.btn-show', function () {
-          self.routerPush({
-            name: 'show-shop',
-            params: {
-              id: $(this).attr('data-id')
-            }
-          })
-        })
-        $(document).on('click', '.btn-edit', function () {
-          self.routerPush({
-            name: 'edit-shop',
-            params: {
-              id: $(this).attr('data-id')
-            }
-          })
-        })
-        $(document).on('click', '.btn-delete', function () {
-          self.deleteRecord(
-            $(this).attr('data-id'),
-            self.$t('label.delete_shop'),
-            '/api/backend/shop/delete'
-          )
-        })
-      })
+    refreshDatatable () {
+      this.onloading = true
+      setTimeout(() => {
+        this.getShopList(1)
+      }, 500)
     },
-    deleteRecord (id, title, api) {
-      console.log(id)
-      const self = this
-      this.onConfirm({
-        title,
-        text: self.$t('label.swal.desc'),
-        confirmButtonText: self.$t('label.swal.yes'),
-        confirmButtonColor: '#ed524f',
-        cancelButtonColor: '#a0a0a0'
-      }).then(() => {
-        self.$isLoading(true)
-        this.$axios.post(this.$base_api + api, {
-          id
-        }).then(() => {
-          self.$refs.oTable.draw()
+    getShopList: debounce(function (page = null) {
+      if (page) {
+        this.page = page
+      }
+      this.$axios.post(this.$base_api + '/api/backend/shop/list',
+        Object.assign({
+          page: this.page,
+          number_per_page: this.number_per_page,
+          ...this.params
+        }, this.params))
+        .then((res) => {
+          this.total_pages = res.data.total_pages
+          this.list_shops = res.data.data
+        }).catch((error) => {
+          this.onResponseError(error)
         }).finally(() => {
-          self.$isLoading(false)
+          this.onloading = false
         })
-      })
-    }
+    }, 500)
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+@import "../../../assets/scss/components/_list_item.scss";
 </style>

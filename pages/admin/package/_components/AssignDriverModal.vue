@@ -94,7 +94,10 @@
                     class="col-lg-6"
                     @click="selectDriver(item)"
                   >
-                    <div class="driver__item">
+                    <div
+                      class="driver__item"
+                      :class="{'bg-primary text-white': selected_driver && selected_driver._id === item._id}"
+                    >
                       <div class="driver__image">
                         <template v-if="item.avatar">
                           <img
@@ -115,18 +118,6 @@
                         <label class="d-block mb-0"><strong>{{ item.full_name }}</strong></label>
                         <label class="d-block mb-0"><strong>{{ item.phone }}</strong></label>
                       </div>
-                      <template v-if="selected_driver && selected_driver._id === item._id">
-                        <span
-                          class="fa-stack position-absolute icon-right"
-                          style="vertical-align: top;"
-                        >
-                          <i class="far fa-circle fa-stack-2x" />
-                          <i class="fas fa-circle fa-stack-1x" />
-                        </span>
-                      </template>
-                      <template v-else>
-                        <i class="far fa-circle position-absolute icon-right" />
-                      </template>
                     </div>
                   </div>
                 </div>
@@ -301,6 +292,7 @@ export default {
 }
 
 .driver__item {
+  user-select: none;
   background-color: #f8f8f8;
   border-radius: 0.25rem;
   display: flex;

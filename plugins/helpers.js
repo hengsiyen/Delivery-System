@@ -17,7 +17,8 @@ const helpers = {
             process.env.VUE_APP_ROLE_ADMIN,
             'admin'
           ],
-          avatar: '/img/svgs/avatar.svg',
+          avatar: '/img/avatar.png',
+          shop_img: '/img/shop.png',
           appName: process.env.VUE_APP_NAME
         }
       },
@@ -63,14 +64,23 @@ const helpers = {
             case 'USD':
               switch (to) {
                 case 'KHR':
-                  return value * parseFloat(this.dc_exchange_rate.value)
+                  if (this.dc_exchange_rate) {
+                    return value * parseFloat(this.dc_exchange_rate.value)
+                  } else {
+                    return value * 4100
+                  }
               }
             // eslint-disable-next-line no-fallthrough
             case 'KHR':
               switch (to) {
                 case 'USD':
                   // eslint-disable-next-line no-case-declarations
-                  const result = value / parseFloat(this.dc_exchange_rate.value)
+                  let result = 0
+                  if (this.dc_exchange_rate) {
+                    result = value / parseFloat(this.dc_exchange_rate.value)
+                  } else {
+                    result = value / 4100
+                  }
                   if (this.countDecimals(result)) {
                     return parseFloat(result) + 0.005
                   } else {

@@ -17,7 +17,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group d-flex shop__search">
+        <div class="form-group d-flex driver__search">
           <input
             v-model="search"
             type="search"
@@ -26,7 +26,7 @@
           >
         </div>
         <template v-if="onloading">
-          <div class="shop__onloading">
+          <div class="driver__onloading">
             <i class="fas fa-circle-notch fa-spin" />
           </div>
         </template>
@@ -40,39 +40,30 @@
                   class="col-lg-6"
                   @click="selectDriver(item)"
                 >
-                  <div class="driver__item">
-                    <div class="driver__image">
+                  <div
+                    class="modal__item"
+                    :class="{'active': selected_driver && selected_driver._id === item._id}"
+                  >
+                    <div class="modal__image">
                       <template v-if="item.avatar">
                         <img
                           :src="`${baseUrl}/${item.avatar}`"
-                          class="img-thumbnail"
+                          class="img-thumbnail rounded-circle"
                           alt="User Image"
                         >
                       </template>
                       <template v-else>
                         <img
                           :src="avatar"
-                          class="img-thumbnail"
+                          class="img-thumbnail rounded-circle"
                           alt="User Image"
                         >
                       </template>
                     </div>
-                    <div class="driver__info">
+                    <div class="modal__info">
                       <label class="d-block mb-0"><strong>{{ item.full_name }}</strong></label>
                       <label class="d-block mb-0"><strong>{{ item.phone }}</strong></label>
                     </div>
-                    <template v-if="selected_driver && selected_driver._id === item._id">
-                      <span
-                        class="fa-stack position-absolute icon-right"
-                        style="vertical-align: top;"
-                      >
-                        <i class="far fa-circle fa-stack-2x" />
-                        <i class="fas fa-circle fa-stack-1x" />
-                      </span>
-                    </template>
-                    <template v-else>
-                      <i class="far fa-circle position-absolute icon-right" />
-                    </template>
                   </div>
                 </div>
               </div>
@@ -193,86 +184,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.shop__search {
-  & .form-control {
-    width: 100%;
-  }
-  & .btn {
-    width: 19%;
-    margin-left: auto;
-  }
-}
+@import "../../../../assets/scss/components/modal_item";
 
-.driver__items {
-  height: calc(100% - 3.5rem);
-  overflow-y: auto;
-  padding: 0 7.5px;
-}
-
-.driver__item {
-  background-color: #f8f8f8;
-  border-radius: 0.25rem;
-  display: flex;
-  position: relative;
-  margin: 8px 0;
-  padding: 15px;
-  color: var(--dark);
-  width: 100%;
-  cursor: pointer;
-
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: #e6e6e6;
-  }
-
-  & .driver__image {
-    width: 75px;
-  }
-
-  & .driver__info {
-    width: calc(100% - 75px);
-    padding: 8px 16px;
-    & label {
-      cursor: pointer;
-    }
-  }
-
-  & i.icon-left {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translate(0, -50%);
-    font-size: 11px;
-  }
-
-  & span.icon-right,
-  & i.icon-right {
-    right: 10px;
-    top: 50%;
-    transform: translate(0, -50%);
-  }
-
-  & i.icon-right {
-    font-size: 16px;
-  }
-
-  & span.icon-right {
-    font-size: 8px;
-    color: var(--primary)
-  }
-}
-
-.shop__onloading {
-  width: 100%;
-  min-height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  & i {
-    font-size: 35px;
-    color: var(--primary);
-  }
-}
 </style>

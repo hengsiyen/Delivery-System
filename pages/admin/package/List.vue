@@ -1,7 +1,7 @@
 <template>
   <div class="col-lg-12">
     <div class="form-group row mb-3">
-      <div class="input-group input-group-lg col-lg-10">
+      <div class="input-group input-group-lg col-lg-8">
         <input
           v-model="search_query"
           :placeholder="$t('label.search') + '...'"
@@ -25,6 +25,12 @@
         >
           <strong><i class="fas fa-filter mr-2" /> {{ $t('btn.advanced_filters') }}</strong>
         </button>
+      </div>
+      <div class="col-lg-2">
+        <ButtonAddNew
+          :link-to="'create-package'"
+          :custom-class="'btn btn-success btn-lg btn-block text-capitalize'"
+        />
       </div>
     </div>
     <div id="advancedFilter" class="collapse">
@@ -342,9 +348,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import { debounce } from 'debounce'
+import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
 
 export default {
   name: 'TrackingList',
+  components: { ButtonAddNew },
   computed: {
     ...mapGetters({
       number_per_page: 'delivery_company/number_per_page'

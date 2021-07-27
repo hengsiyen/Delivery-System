@@ -51,275 +51,368 @@
                     </div>
                   </template>
                   <div class="row">
-                    <div class="col-lg-6 pr-4">
-                      <div class="form-group">
-                        <label>{{ $t('label.customer_name') }}</label>
-                        <template v-if="edit_cn">
-                          <input
-                            id="customer_name"
-                            v-model="customer_name"
-                            name="customer_name"
-                            class="form-control"
-                            :placeholder="$t('pla.customer_name')"
-                          >
-                          <PackageFormItemButton
-                            :disabled-button="checkDataChange(customer_name, old_cn)"
-                            @onClickCancel="cancelCn"
-                            @onClickSave="edit_cn = false"
-                          />
-                        </template>
-                        <template v-else>
-                          <PackageFormItem
-                            :data-label="customer_name"
-                            icon="fas fa-user"
-                            @onClickEdit="edit_cn = true"
-                          />
-                        </template>
-                      </div>
-                      <div class="form-group">
-                        <label>{{ $t('label.customer_phone') }}</label>
-                        <template v-if="edit_cp">
-                          <input
-                            id="customer_phone"
-                            v-model="customer_phone"
-                            v-mask="'### ### ####'"
-                            name="customer_phone"
-                            class="form-control"
-                            :placeholder="$t('pla.customer_phone')"
-                          >
-                          <PackageFormItemButton
-                            :disabled-button="checkDataChange(customer_phone, old_cp)"
-                            @onClickCancel="cancelCp"
-                            @onClickSave="edit_cp = false"
-                          />
-                        </template>
-                        <template v-else>
-                          <PackageFormItem
-                            :data-label="customer_phone"
-                            icon="fas fa-phone"
-                            @onClickEdit="edit_cp = true"
-                          />
-                        </template>
-                      </div>
-                      <div class="form-group">
-                        <label>{{ $t('label.customer_address') }}</label>
-                        <template v-if="edit_ca">
-                          <input
-                            id="customer_address"
-                            v-model="customer_address"
-                            name="customer_address"
-                            class="form-control"
-                            :placeholder="$t('pla.customer_address')"
-                          >
-                          <PackageFormItemButton
-                            :disabled-button="checkDataChange(customer_address, old_ca)"
-                            @onClickCancel="cancelCa"
-                            @onClickSave="edit_ca = false"
-                          />
-                        </template>
-                        <template v-else>
-                          <PackageFormItem
-                            :data-label="customer_address"
-                            icon="fas fa-map-marker-alt"
-                            @onClickEdit="edit_ca = true"
-                          />
-                        </template>
-                      </div>
-                      <div class="form-group">
-                        <label>{{ $t('label.price') }}</label>
-                        <template v-if="edit_price">
-                          <div class="input-group">
-                            <input
-                              id="price"
-                              v-model="price"
-                              name="price"
-                              type="number"
-                              class="form-control"
-                              :placeholder="$t('pla.price')"
-                              aria-describedby="button-price"
-                            >
-                            <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
-                              <button
-                                v-for="(item, key) in currencies"
-                                :key="key"
-                                class="btn"
-                                type="button"
-                                :class="currency && item._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                                @click="currency = item"
+                    <div class="col-lg-8 pr-4">
+                      <template>
+                        <div v-if="edit_cn" class="row">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>{{ $t('label.customer_name') }}</label>
+                              <input
+                                id="customer_name"
+                                v-model="customer_name"
+                                name="customer_name"
+                                class="form-control"
+                                :placeholder="$t('pla.customer_name')"
                               >
-                                {{ item.code }}
-                              </button>
                             </div>
                           </div>
-                          <PackageFormItemButton
-                            :disabled-button="checkDataChange(price, old_price) && checkDataChange(currency._id, old_currency._id)"
-                            @onClickCancel="cancelPrice"
-                            @onClickSave="edit_price = false"
-                          />
-                        </template>
-                        <template v-else>
-                          <PackageFormItem
-                            :data-label="currency ? price + ' ' + currency.code : price"
-                            icon="fas fa-money"
-                            @onClickEdit="edit_price = true"
-                          />
-                        </template>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label class="required">{{ $t('label.customer_phone') }}</label>
+                              <input
+                                id="customer_phone"
+                                v-model="customer_phone"
+                                v-mask="'### ### ####'"
+                                name="customer_phone"
+                                class="form-control mb-3"
+                                :placeholder="$t('pla.customer_phone')"
+                                :class="{'is-invalid': checkValidate('customer_phone')}"
+                              >
+                              <div v-if="checkValidate('customer_phone')" class="invalid-feedback">
+                                {{ validate.customer_phone[0] }}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <div class="form-group">
+                              <label class="required">{{ $t('label.customer_address') }}</label>
+                              <input
+                                id="customer_address"
+                                v-model="customer_address"
+                                name="customer_address"
+                                class="form-control mb-3"
+                                :placeholder="$t('pla.customer_address')"
+                                :class="{'is-invalid': checkValidate('customer_address')}"
+                              >
+                              <div v-if="checkValidate('customer_address')" class="invalid-feedback">
+                                {{ validate.customer_address[0] }}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <PackageFormItemButton
+                              :disabled-button="checkDataChange(customer_name, old_cn) && checkDataChange(customer_phone, old_cp) && checkDataChange(customer_address, old_ca)"
+                              @onClickCancel="cancelCn"
+                              @onClickSave="editPackage('customer_info')"
+                            />
+                          </div>
+                        </div>
+                        <div v-else>
+                          <div class="form-group show-with-border">
+                            <label>{{ $t('label.customer_info') }}</label>
+                            <div class="d-flex align-items-center justify-content-between">
+                              <div class="d-flex align-items-center">
+                                <div class="package_form-customer-img">
+                                  <img :src="avatar" class="img-thumbnail">
+                                </div>
+                                <div class="package_form-item-content">
+                                  <div class="package_form-item-content-label w-100 text-truncate">
+                                    <label class="mb-0">{{ customer_name }}</label>
+                                  </div>
+                                  <div>
+                                    <small class="text-muted">
+                                      <span class="d-block">{{ customer_phone }}</span>
+                                      <span class="d-block">{{ customer_address }}</span>
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                v-if="!(edit_price && edit_cn && edit_cn && edit_cp)"
+                                class="package_form-item-edit text-right"
+                              >
+                                <button class="btn btn-light pr-0" @click="edit_cn = true">
+                                  <i class="fas fa-edit mr-2" />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+
+                      <template>
+                        <div v-if="edit_price" class="row">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>{{ $t('label.price') }}</label>
+                              <div class="input-group">
+                                <div
+                                  v-if="currencies && currencies.length"
+                                  id="button-price"
+                                  class="input-group-prepend"
+                                >
+                                  <button
+                                    v-for="(item, key) in currencies"
+                                    :key="key"
+                                    class="btn"
+                                    type="button"
+                                    :class="currency && item._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                                    @click="currency = item"
+                                  >
+                                    {{ item.code }}
+                                  </button>
+                                </div>
+                                <input
+                                  id="price"
+                                  v-model="price"
+                                  name="price"
+                                  type="number"
+                                  class="form-control"
+                                  :placeholder="$t('pla.price')"
+                                  aria-describedby="button-price"
+                                  :class="{'is-invalid': checkValidate('price')}"
+                                >
+                                <div v-if="checkValidate('price')" class="invalid-feedback">
+                                  {{ validate.price[0] }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>{{ $t('menu.payment_type') }}</label>
+                              <div class="input-group">
+                                <div :class="is_paid ? 'input-group-prepend' : 'btn-group' ">
+                                  <button
+                                    class="btn"
+                                    :class="!is_paid ? 'btn-primary' : 'input-group-text'"
+                                    @click="paymentOnDelivery"
+                                  >
+                                    {{ $t('btn.is_paid_no') }}
+                                  </button>
+                                  <button
+                                    class="btn"
+                                    :class="is_paid ? 'btn-primary' : 'input-group-text'"
+                                    @click="is_paid = true"
+                                  >
+                                    {{ $t('btn.is_paid_yes') }}
+                                  </button>
+                                </div>
+                                <select
+                                  v-if="payment_types && is_paid"
+                                  id="payment_type"
+                                  v-model="payment_type"
+                                  name="package_type"
+                                  class="custom-select"
+                                >
+                                  <option :value="null" selected hidden>
+                                    {{ $t('label.select_one_option') }} ...
+                                  </option>
+                                  <template v-for="(item, key) in payment_types">
+                                    <option :key="key" :value="item">
+                                      {{ item['name_' + $i18n.locale] }}
+                                    </option>
+                                  </template>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <PackageFormItemButton
+                              :disabled-button="checkDataChange(price, old_price) && checkDataChange(currency._id, old_currency._id) && checkIsPaidUpdate"
+                              @onClickCancel="cancelPrice"
+                              @onClickSave="editPackage('payment')"
+                            />
+                          </div>
+                        </div>
+                        <div v-else>
+                          <div class="form-group show-with-border">
+                            <label class="customer-mb-12">{{ $t('label.payment') }}</label>
+                            <div class="d-flex align-items-center justify-content-between">
+                              <div class="d-flex align-items-center">
+                                <div class="package_form-item-content">
+                                  <div class="package_form-item-content-label w-100 text-truncate">
+                                    <i class="fas fa-money mr-2" />
+                                    <label>{{ currency ? price + ' ' + currency.code : price }}</label>
+                                  </div>
+                                  <div class="package_form-item-content-label w-100 text-truncate">
+                                    <i class="fas fa-cash-register mr-2" />
+                                    <label>{{ displayIsPaidLabel }}</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="package_form-item-edit text-right">
+                                <button class="btn btn-light pr-0" @click="edit_price = true">
+                                  <i class="fas fa-edit mr-2" />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+
+                      <template>
+                        <div v-if="edit_note" class="row">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>{{ $t('menu.package_type') }}</label>
+                              <select
+                                v-if="payment_types"
+                                id="package_type"
+                                v-model="package_type"
+                                name="package_type"
+                                class="custom-select"
+                              >
+                                <option :value="null" selected hidden>
+                                  {{ $t('label.select_one_option') }} ...
+                                </option>
+                                <template v-for="(item, key) in package_types">
+                                  <option :key="key" :value="item">
+                                    {{ item['name_' + $i18n.locale] }}
+                                  </option>
+                                </template>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label class="text-capitalize">{{ $t('label.delivery_date') }}</label>
+                              <date-picker
+                                v-model="request_delivery_at"
+                                type="datetime"
+                                :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
+                                :show-second="false"
+                                :placeholder="$t('string.select_range_date')"
+                                :lang="datePickerLang"
+                                :format="'DD/MM/YYYY hh:mm:ss A'"
+                                input-class="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <div class="form-group">
+                              <label>{{ $t('label.note') }}</label>
+                              <textarea
+                                id="note"
+                                v-model="note"
+                                rows="3"
+                                name="note"
+                                class="form-control"
+                                :placeholder="$t('pla.note')"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <PackageFormItemButton
+                              :disabled-button="checkDataChange(note, old_note) && checkDataChange(request_delivery_at, old_rda) && checkDataChange(package_type ? package_type._id : null, old_pt ? old_pt._id : null)"
+                              @onClickCancel="cancelNote"
+                              @onClickSave="editPackage('remark')"
+                            />
+                          </div>
+                        </div>
+                        <div v-else>
+                          <div class="form-group show-with-border">
+                            <label class="customer-mb-12">{{ $t('label.payment') }}</label>
+                            <div class="d-flex align-items-center justify-content-between">
+                              <div class="d-flex align-items-center">
+                                <div class="package_form-item-content">
+                                  <div v-if="package_type" class="package_form-item-content-label w-100 text-truncate">
+                                    <i class="fas fa-cube mr-2" />
+                                    <label>{{ package_type['name_' + $i18n.locale] }}</label>
+                                  </div>
+                                  <div
+                                    v-if="request_delivery_at"
+                                    class="package_form-item-content-label w-100 text-truncate"
+                                  >
+                                    <i class="fas fa-sticky-note mr-2" />
+                                    <label>{{ $moment(request_delivery_at).format('DD/MM/YYYY hh:mm:ss A') }}</label>
+                                  </div>
+                                  <div v-if="note" class="package_form-item-content-label w-100 text-truncate">
+                                    <i class="fas fa-sticky-note mr-2" />
+                                    <label>{{ note }}</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="package_form-item-edit text-right">
+                                <button class="btn btn-light pr-0" @click="edit_note = true">
+                                  <i class="fas fa-edit mr-2" />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+
+                      <div class="form-group show-with-border">
+                        <label>{{ $t('label.shop') }}</label>
+                        <div v-if="shop" class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex align-items-center">
+                            <div class="package_form-customer-img">
+                              <template v-if="shop.logo">
+                                <img :src="getSrc(shop.logo)" class="img-thumbnail">
+                              </template>
+                              <template v-else>
+                                <img :src="shop_img" class="img-thumbnail">
+                              </template>
+                            </div>
+                            <div class="package_form-item-content">
+                              <div class="package_form-item-content-label w-100 text-truncate">
+                                <NuxtLink :to="{name: 'show-shop', params: {id: shop._id}}" class="mb-0 text-bold">
+                                  {{ shop.name_en }}
+                                </NuxtLink>
+                              </div>
+                              <div>
+                                <small class="text-muted">
+                                  <span class="d-block">{{ shop.phone }}</span>
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="package_form-item-edit text-right">
+                            <button class="btn btn-light pr-0" @click="openShopModal">
+                              <i class="fas fa-edit mr-2" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <div class="form-group">
-                        <label>{{ $t('label.note') }}</label>
-                        <template v-if="edit_note">
-                          <textarea
-                            id="note"
-                            v-model="note"
-                            rows="3"
-                            name="note"
-                            class="form-control"
-                            :placeholder="$t('pla.note')"
-                          />
-                          <PackageFormItemButton
-                            :disabled-button="checkDataChange(note, old_note)"
-                            @onClickCancel="cancelNote"
-                            @onClickSave="edit_note = false"
-                          />
-                        </template>
-                        <template v-else>
-                          <PackageFormItem
-                            :data-label="note"
-                            icon="fas fa-map-marker-alt"
-                            @onClickEdit="edit_note = true"
-                          />
-                        </template>
+
+                      <div class="form-group show-with-border">
+                        <label>{{ $t('label.delivery_with_other_company') }}</label>
+                        <div v-if="third_party" class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex align-items-center">
+                            <div class="package_form-customer-img">
+                              <img :src="shop_img" class="img-thumbnail">
+                            </div>
+                            <div class="package_form-item-content">
+                              <div class="package_form-item-content-label w-100 text-truncate">
+                                <label class="mb-0">
+                                  {{ third_party.name_en }}
+                                </label>
+                              </div>
+                              <div>
+                                <small class="text-muted">
+                                  <span class="d-block">{{ third_party.phone }}</span>
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="package_form-item-edit text-right">
+                            <button class="btn btn-light pr-0" @click="openThirdPartyModal">
+                              <i class="fas fa-edit mr-2" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6 pl-4">
+                    <div class="col-lg-4 pl-4">
                       <div class="form-group">
-                        <label>{{ $t('label.shop') }}</label>
-                        <PackageFormItem
-                          :data-label-link="{name: 'show-shop', params: {id: shop ? shop._id : null}}"
-                          :is-link="true"
-                          :data-label="shop ? shop.name_en : ''"
-                          icon="fas fa-store"
-                          @onClickEdit="openShopModal"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label>{{ $t('menu.package_type') }}</label>
-                        <template v-if="edit_pt">
-                          <select
-                            v-if="payment_types"
-                            id="package_type"
-                            v-model="package_type"
-                            name="package_type"
-                            class="custom-select"
-                          >
-                            <option :value="null" selected hidden>
-                              {{ $t('label.select_one_option') }} ...
-                            </option>
-                            <template v-for="(item, key) in package_types">
-                              <option :key="key" :value="item">
-                                {{ item['name_' + $i18n.locale] }}
-                              </option>
-                            </template>
-                          </select>
-                          <PackageFormItemButton
-                            :disabled-button="checkDataChange(package_type ? package_type._id : null, old_pt ? old_pt._id : null)"
-                            @onClickCancel="cancelPt"
-                            @onClickSave="edit_pt = false"
-                          />
-                        </template>
-                        <template v-else>
-                          <PackageFormItem
-                            :data-label="package_type ? package_type['name_' + $i18n.locale] : ''"
-                            icon="fas fa-user"
-                            @onClickEdit="edit_pt = true"
-                          />
-                        </template>
-                      </div>
-                      <div class="form-group">
-                        <label>{{ $t('label.delivery_at') }}</label>
-                        <template v-if="edit_dd">
-                          <date-picker
-                            v-model="request_delivery_at"
-                            type="datetime"
-                            :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
-                            :show-second="false"
-                            :placeholder="$t('string.select_range_date')"
-                            :lang="datePickerLang"
-                            :format="'DD/MM/YYYY hh:mm:ss A'"
-                            input-class="form-control"
-                          />
-                          <PackageFormItemButton
-                            :disabled-button="checkDataChange(request_delivery_at, old_rda)"
-                            @onClickCancel="cancelDD"
-                            @onClickSave="edit_dd = false"
-                          />
-                        </template>
-                        <template v-else>
-                          <PackageFormItem
-                            :data-label="request_delivery_at ? $moment(request_delivery_at).format('DD/MM/YYYY hh:mm:ss A') : null"
-                            icon="fas fa-calendar"
-                            @onClickEdit="edit_dd = true"
-                          />
-                        </template>
-                      </div>
-                      <div class="form-group">
-                        <label>{{ $t('menu.payment_type') }}</label>
-                        <template v-if="edit_pyt">
-                          <div class="input-group">
-                            <div :class="is_paid ? 'input-group-prepend' : 'btn-group' ">
-                              <button
-                                class="btn"
-                                :class="!is_paid ? 'btn-primary' : 'input-group-text'"
-                                @click="paymentOnDelivery"
-                              >
-                                {{ $t('btn.is_paid_no') }}
-                              </button>
-                              <button
-                                class="btn"
-                                :class="is_paid ? 'btn-primary' : 'input-group-text'"
-                                @click="is_paid = true"
-                              >
-                                {{ $t('btn.is_paid_yes') }}
-                              </button>
-                            </div>
-                            <select
-                              v-if="payment_types && is_paid"
-                              id="payment_type"
-                              v-model="payment_type"
-                              name="package_type"
-                              class="custom-select"
-                            >
-                              <option :value="null" selected hidden>
-                                {{ $t('label.select_one_option') }} ...
-                              </option>
-                              <template v-for="(item, key) in payment_types">
-                                <option :key="key" :value="item">
-                                  {{ item['name_' + $i18n.locale] }}
-                                </option>
-                              </template>
-                            </select>
-                          </div>
-                          <PackageFormItemButton
-                            :disabled-button="checkIsPaidUpdate"
-                            @onClickCancel="cancelPyt"
-                            @onClickSave="edit_pyt = false"
-                          />
-                        </template>
-                        <template v-else>
-                          <PackageFormItem
-                            :data-label="displayIsPaidLabel"
-                            icon="fas fa-cash-register"
-                            @onClickEdit="edit_pyt = true"
-                          />
-                        </template>
-                      </div>
-                      <div class="form-group">
-                        <label>{{ $t('label.delivery_with_other_company') }}</label>
-                        <PackageFormItem
-                          :data-label="third_party ? third_party.name_en : ''"
-                          icon="fas fa-truck"
-                          @onClickEdit="openThirdPartyModal"
-                        />
+                        <label>Package Image</label>
+                        <div class="mx-auto" style="width: 100%">
+                          <img src="/img/package.png" alt="" class="img-thumbnail">
+                          <button class="btn btn-primary btn-block mt-3">
+                            Upload Package Image
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -380,6 +473,19 @@
     </div>
     <PackageHistoryModal :package-history="package_data.package_histories" />
     <div
+      id="shopModal"
+      class="modal fade"
+      tabindex="-1"
+      data-backdrop="static"
+    >
+      <ShopModal
+        ref="shopModal"
+        :close-with-emit="true"
+        @closeModel="cancelShop"
+        @confirmModel="editPackage('shop')"
+      />
+    </div>
+    <div
       id="thirdPartyCompanyModal"
       class="modal fade"
       data-backdrop="static"
@@ -390,14 +496,6 @@
         :close-with-emit="true"
         @closeModel="cancelThirdParty"
       />
-    </div>
-    <div
-      id="shopModal"
-      class="modal fade"
-      tabindex="-1"
-      data-backdrop="static"
-    >
-      <ShopModal ref="shopModal" :close-with-emit="true" @closeModel="cancelShop" />
     </div>
     <div
       id="completePackageModal"
@@ -438,7 +536,6 @@
 import { mapGetters } from 'vuex'
 import ButtonBack from '@/components/UiElements/ButtonBack'
 import PackageHistoryModal from '@/pages/admin/package/_components/PackageHistoryModal'
-import PackageFormItem from '@/pages/admin/package/_components/PackageFormItem'
 import PackageFormItemButton from '@/pages/admin/package/_components/PackageFormItemButton'
 import ShopModal from '@/pages/admin/package/_components/ShopModal'
 import ThirdPartyCompanyModal from '@/pages/admin/package/_components/ThirdPartyCompanyModal'
@@ -457,7 +554,6 @@ export default {
     ThirdPartyCompanyModal,
     ShopModal,
     PackageFormItemButton,
-    PackageFormItem,
     PackageHistoryModal,
     ButtonBack
   },
@@ -480,34 +576,7 @@ export default {
     }
   },
   created () {
-    if (this.package_data) {
-      this.customer_name = this.package_data.customer_name
-      this.old_cn = this.customer_name
-      this.customer_phone = this.package_data.customer_phone
-      this.old_cp = this.customer_phone
-      this.customer_address = this.package_data.customer_address
-      this.old_ca = this.customer_address
-      this.note = this.package_data.note
-      this.old_note = this.note
-      this.$store.dispatch('package/setShop', this.package_data.shop)
-      this.old_shop = this.package_data.shop
-      this.price = this.package_data.price
-      this.old_price = this.price
-      this.currency = this.package_data.currency
-      this.old_currency = this.currency
-      this.package_type = this.package_data.package_type
-      this.old_pt = this.package_type
-      if (this.package_data.request_delivery_at) {
-        this.request_delivery_at.startDate = this.$moment(this.package_data.request_delivery_at).format('DD/MM/YYYY')
-        this.old_rda = this.request_delivery_at
-      }
-      this.is_paid = this.package_data.is_paid
-      this.old_ip = this.is_paid
-      this.payment_type = this.package_data.payment_type
-      this.old_pyt = this.payment_type
-      this.$store.dispatch('package/setThirdParty', this.package_data.partner_company)
-      this.old_third_party = this.package_data.partner_company
-    }
+    this.setDataPackage()
   },
   computed: {
     ...mapGetters({
@@ -520,8 +589,12 @@ export default {
     checkIsPaidUpdate () {
       let pyid = null
       let oldpyid = null
-      if (this.payment_type) { pyid = this.payment_type._id }
-      if (this.old_pyt) { oldpyid = this.old_pyt._id }
+      if (this.payment_type) {
+        pyid = this.payment_type._id
+      }
+      if (this.old_pyt) {
+        oldpyid = this.old_pyt._id
+      }
       return this.checkDataChange(pyid, oldpyid) && this.checkDataChange(this.is_paid, this.old_ip)
     },
     displayIsPaidLabel () {
@@ -540,6 +613,7 @@ export default {
   },
   data () {
     return {
+      validate: null,
       currencies: [],
       package_types: [],
       payment_types: [],
@@ -547,13 +621,8 @@ export default {
       toggle_timline: false,
       edit_cn: false,
       edit_cp: false,
-      edit_ca: false,
       edit_price: false,
       edit_note: false,
-
-      edit_pt: false,
-      edit_pyt: false,
-      edit_dd: false,
 
       old_cn: null,
       old_cp: null,
@@ -581,6 +650,12 @@ export default {
     }
   },
   methods: {
+    checkValidate (key) {
+      if (key) {
+        return this.validate && this.validate.hasOwnProperty(key)
+      }
+      return false
+    },
     paymentOnDelivery () {
       this.is_paid = false
       this.payment_type = null
@@ -625,7 +700,11 @@ export default {
         if (this.package_data) {
           if (!this.package_data.delivery_charge_currency) {
             const c = this.currencies.find((item) => {
-              if (item.code === 'USD') { return item } else { return null }
+              if (item.code === 'USD') {
+                return item
+              } else {
+                return null
+              }
             })
             this.$set(this.package_data, 'delivery_charge_currency', c)
           }
@@ -638,19 +717,9 @@ export default {
     },
     cancelCn () {
       this.customer_name = this.old_cn
-      this.edit_cn = false
-    },
-    cancelCp () {
       this.customer_phone = this.old_cp
-      this.edit_cp = false
-    },
-    cancelCa () {
       this.customer_address = this.old_ca
-      this.edit_ca = false
-    },
-    cancelNote () {
-      this.note = this.old_note
-      this.edit_note = false
+      this.edit_cn = false
     },
     cancelShop () {
       this.$store.dispatch('package/setShop', this.old_shop)
@@ -658,23 +727,97 @@ export default {
     cancelPrice () {
       this.price = this.old_price
       this.currency = this.old_currency
-      this.edit_price = false
-    },
-    cancelPt () {
-      this.package_type = this.old_pt
-      this.edit_pt = false
-    },
-    cancelDD () {
-      this.request_delivery_at.startDate = this.old_rda
-      this.edit_dd = false
-    },
-    cancelPyt () {
       this.is_paid = this.old_ip
       this.payment_type = this.old_pyt
-      this.edit_pyt = false
+      this.edit_price = false
+    },
+    cancelNote () {
+      this.package_type = this.old_pt
+      this.request_delivery_at = this.old_rda
+      this.note = this.old_note
+      this.edit_note = false
     },
     cancelThirdParty () {
       this.$store.dispatch('package/setThirdParty', this.old_third_party)
+    },
+
+    editPackage (editForm = null, editFormType = 'edit') {
+      this.validate = null
+      const data = {
+        id: this.$route.params.id,
+        edit_form: editForm,
+        edit_form_type: editFormType
+      }
+      switch (editForm) {
+        case 'customer_info':
+          data.customer_name = this.customer_name
+          data.customer_phone = this.customer_phone
+          data.customer_address = this.customer_address
+          break
+        case 'payment':
+          data.price = this.price
+          data.is_paid = this.is_paid
+          if (this.payment_type) { data.payment_type_id = this.payment_type._id }
+          if (this.currency) { data.currency_id = this.currency._id }
+          break
+        case 'remark':
+          data.note = this.note
+          if (this.package_type) { data.package_type_id = this.package_type._id }
+          if (this.request_delivery_at) {
+            data.request_delivery_at = this.$moment(this.request_delivery_at).format('YYYY-MM-DD HH:mm:ss')
+          }
+          break
+        case 'shop':
+          if (this.shop) { data.shop_id = this.shop._id }
+          break
+      }
+      this.$axios.post(this.$base_api + '/api/backend/package/edit', data)
+        .then((res) => {
+          this.package_data = res.data.data
+          this.resetValue()
+          this.setDataPackage()
+        }).catch((error) => {
+          if (error.response.status === 422) {
+            this.validate = error.response.data.errors
+            console.log(this.validate = error.response.data.errors)
+          }
+        })
+    },
+    resetValue () {
+      this.edit_cn = false
+      this.edit_cp = false
+      this.edit_price = false
+      this.edit_note = false
+    },
+    setDataPackage () {
+      if (this.package_data) {
+        this.customer_name = this.package_data.customer_name
+        this.old_cn = this.customer_name
+        this.customer_phone = this.package_data.customer_phone
+        this.old_cp = this.customer_phone
+        this.customer_address = this.package_data.customer_address
+        this.old_ca = this.customer_address
+        this.note = this.package_data.note
+        this.old_note = this.note
+        this.$store.dispatch('package/setShop', this.package_data.shop)
+        this.old_shop = this.package_data.shop
+        this.price = this.package_data.price
+        this.old_price = this.price
+        this.currency = this.package_data.currency
+        this.old_currency = this.currency
+        this.package_type = this.package_data.package_type
+        this.old_pt = this.package_type
+        if (this.package_data.request_delivery_at) {
+          this.request_delivery_at.startDate = this.$moment(this.package_data.request_delivery_at).format('DD/MM/YYYY')
+          this.old_rda = this.request_delivery_at
+        }
+        this.is_paid = this.package_data.is_paid
+        this.old_ip = this.is_paid
+        this.payment_type = this.package_data.payment_type
+        this.old_pyt = this.payment_type
+        this.$store.dispatch('package/setThirdParty', this.package_data.partner_company)
+        this.old_third_party = this.package_data.partner_company
+      }
     }
   }
 }
@@ -695,15 +838,31 @@ export default {
 .package__content {
   width: 75%;
 }
+
 .package__active {
   width: 12%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   margin-left: auto;
+
   & button {
     margin-bottom: 8px;
   }
+}
+
+.package_form-customer-img {
+  width: 65px;
+  margin-right: 15px;
+}
+
+.show-with-border {
+  border-bottom: 2px solid lightgray;
+  padding-bottom: 8px;
+}
+
+.customer-mb-12 {
+  margin-bottom: 12px;
 }
 
 </style>

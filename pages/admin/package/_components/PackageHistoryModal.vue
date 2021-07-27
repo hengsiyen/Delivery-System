@@ -40,7 +40,7 @@
                             {{ $t('label.price') }}: {{ item.data.price }}
                           </p>
                           <hr v-if="item.description[$i18n.locale]" class="my-2">
-                          <div v-html="getTextareaHtml(item.description[$i18n.locale])" />
+                          <div v-html="handleNewLine(item.description[$i18n.locale])" />
                         </div>
                       </div>
                     </div>
@@ -55,10 +55,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">
-            Save changes
+            {{ $t('btn.close') }}
           </button>
         </div>
       </div>

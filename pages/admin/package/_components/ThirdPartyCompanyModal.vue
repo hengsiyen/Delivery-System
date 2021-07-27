@@ -81,29 +81,47 @@
           <template v-else>
             <div class="third_party_company__items">
               <template v-if="third_parties && third_parties.length">
-                <div
-                  v-for="(item, key) in third_parties"
-                  :key="key"
-                  class="third_party_company__item"
-                  @click="selectThirdParty(item)"
-                >
-                  <i class="fas fa-chevron-right icon-left" />
-                  <div>
-                    {{ item.name_en }}
+                <div class="row">
+                  <div
+                    v-for="(item, key) in third_parties"
+                    :key="key"
+                    class="col-lg-6"
+                    @click="selectThirdParty(item)"
+                  >
+                    <div
+                      class="modal__item d-flex"
+                      :class="{'active': third_party && third_party._id === item._id}"
+                    >
+                      <div class="modal__image" style="width: 75px;">
+                        <template v-if="item.logo">
+                          <img
+                            :src="`${baseUrl}/${item.logo}`"
+                            class="img-thumbnail"
+                            alt="User Image"
+                          >
+                        </template>
+                        <template v-else>
+                          <img
+                            :src="shop_img"
+                            class="img-thumbnail"
+                            alt="User Image"
+                          >
+                        </template>
+                      </div>
+                      <div class="modal__info">
+                        <label class="d-block mb-0"><strong>{{ item.name_en }}</strong></label>
+                        <label class="d-block mb-0"><strong>{{ item.phone }}</strong></label>
+                      </div>
+                    </div>
                   </div>
-                  <template v-if="third_party && third_party._id === item._id">
-                    <span class="fa-stack position-absolute icon-right" style="vertical-align: top;">
-                      <i class="far fa-circle fa-stack-2x" />
-                      <i class="fas fa-circle fa-stack-1x" />
-                    </span>
-                  </template>
-                  <template v-else>
-                    <i class="far fa-circle position-absolute icon-right" />
-                  </template>
                 </div>
               </template>
               <template v-else>
-                <NoResult />
+                <div class="row">
+                  <div class="col-12">
+                    <NoResult />
+                  </div>
+                </div>
               </template>
               <infinite-loading spinner="spiral" :identifier="pcInfiniteId" @infinite="getThirdParties">
                 <div slot="no-more" />
@@ -280,67 +298,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.third_party_company__items {
-  height: calc(100% - 3.5rem);
-  overflow-y: auto;
-}
-.third_party_company__search {
-  & .form-control {
-    width: 80%;
-  }
-
-  & .btn {
-    width: 19%;
-    margin-left: auto;
-  }
-}
-
-.third_party_company__item {
-  padding: 15px 30px 15px 40px;
-  border-top: 1px solid #e9ecef;
-  border-bottom: 1px solid #e9ecef;
-  position: relative;
-
-  &:hover,
-  &:focus,
-  &:active {
-    cursor: pointer;
-    background-color: #f8f8f8;
-  }
-
-  & i.icon-left {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translate(0, -50%);
-    font-size: 11px;
-  }
-
-  & span.icon-right,
-  & i.icon-right {
-    right: 10px;
-    top: 50%;
-    transform: translate(0, -50%);
-  }
-  & i.icon-right {
-    font-size: 16px;
-  }
-
-  & span.icon-right {
-    font-size: 8px;
-    color: var(--primary)
-  }
-}
-
-.third_party_company__onloading {
-  width: 100%;
-  min-height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  & i {
-    font-size: 35px;
-    color: var(--primary);
-  }
-}
+@import "../../../../assets/scss/components/modal_item";
 </style>

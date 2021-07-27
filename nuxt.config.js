@@ -36,6 +36,7 @@ export default {
     { src: '~/plugins/vue-paginate.js', mode: 'client' },
     { src: '~/plugins/x-backend.js', mode: 'client' },
     { src: '~/plugins/x-chart.js', mode: 'client', ssr: false },
+    { src: '~/plugins/vue-number-format.js', mode: 'client', ssr: false },
     { src: '~/plugins/vue-mask.js', mode: 'client', ssr: false },
     { src: '~/plugins/vue-infinite-loading.js', mode: 'client', ssr: false },
     { src: '~/plugins/vue-crop-avatar.js', mode: 'client' }

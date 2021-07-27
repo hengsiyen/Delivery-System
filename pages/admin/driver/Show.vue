@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-lg-4 col-xl-3">
+    <div class="col-lg-3 col-xl-2">
       <div class="card">
         <div class="card-header with-border">
           <h3 class="card-title text-capitalize">
@@ -12,7 +12,7 @@
             <div class="row mb-4">
               <div class="col-12">
                 <div class="form-group mb-0">
-                  <div style="width: 70%;" class="mx-auto mb-4">
+                  <div style="width: 100%;" class="mx-auto mb-4">
                     <template v-if="driver_data.avatar">
                       <img :src="baseUrl + '/' + driver_data.avatar" alt="" class="img-thumbnail">
                     </template>
@@ -22,79 +22,30 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12">
-                <dl v-if="driver_data.full_name" class="row">
-                  <dt class="col-sm-5 text-capitalize text-truncate">
-                    {{ $t('label.name') }}
-                  </dt>
-                  <dd class="col-sm-7">
-                    {{ driver_data.full_name }}
-                  </dd>
-                </dl>
-                <dl v-if="driver_data.phone" class="row">
-                  <dt class="col-sm-5 text-capitalize text-truncate">
-                    {{ $t('label.phone') }}
-                  </dt>
-                  <dd class="col-sm-7">
-                    {{ driver_data.phone }}
-                  </dd>
-                </dl>
-                <dl v-if="driver_data.gender" class="row">
-                  <dt class="col-sm-5 text-capitalize text-truncate">
-                    {{ $t('label.gender') }}
-                  </dt>
-                  <dd class="col-sm-7">
-                    {{ driver_data.gender['name_' + $i18n.locale] }}
-                  </dd>
-                </dl>
-                <dl v-if="driver_data.roles" class="row">
-                  <dt class="col-sm-5 text-capitalize text-truncate">
-                    {{ $t('label.role') }}
-                  </dt>
-                  <dd class="col-sm-7 user_role">
-                    <span v-for="(item, key) in driver_data.roles" :key="key" class="d-block">
-                      <i class="fas fa-flag" />
-                      {{ item['display_name_' + $i18n.locale] }}
-                    </span>
-                  </dd>
-                </dl>
+              <div class="col-12 driver-item">
+                <i class="fas fa-user mr-2" />
+                {{ driver_data.full_name }}
               </div>
-              <div class="col-12">
-                <dl v-if="driver_data.packages" class="row">
-                  <dt class="col-sm-5 text-capitalize text-truncate">
-                    {{ $t('label.delivery_packages') }}
-                  </dt>
-                  <dd class="col-sm-7">
-                    {{ driver_data.packages.length }}
-                  </dd>
-                </dl>
-                <dl class="row">
-                  <dt class="col-sm-5 text-capitalize text-truncate">
-                    {{ $t('label.total_price') }}
-                  </dt>
-                  <dd class="col-sm-7">
-                    <span class="d-block">{{ total_riel }} KHR</span>
-                    <span class="d-block"><small>( {{ parseFloat(total_dollar).toFixed(2) }} USD )</small></span>
-                  </dd>
-                </dl>
-                <dl class="row">
-                  <dt class="col-sm-5 text-capitalize text-truncate">
-                    {{ $t('label.collect_money_total') }}
-                  </dt>
-                  <dd class="col-sm-7">
-                    <span class="d-block">{{ collect_money_riel }} KHR</span>
-                    <span class="d-block"><small>( {{
-                      parseFloat(collect_money_dollar).toFixed(2)
-                    }} USD )</small></span>
-                  </dd>
-                </dl>
+              <div class="col-12 driver-item">
+                <i class="fas fa-phone fa-flip-horizontal mr-2" />
+                {{ driver_data.phone }}
+              </div>
+              <div v-if="driver_data.gender" class="col-12 driver-item">
+                <i class="fas mr-2" :class=" 'fa-' + driver_data.gender['name_en'].lowercase()" />
+                {{ driver_data.gender['name_' + $i18n.locale] }}
+              </div>
+              <div class="col-12 driver-item user_role">
+                <span v-for="(item, key) in driver_data.roles" :key="key" class="d-block">
+                  <i class="fas fa-flag mr-2" />
+                  {{ item['display_name_' + $i18n.locale] }}
+                </span>
               </div>
             </div>
           </template>
         </div>
       </div>
     </div>
-    <div class="col-lg-8 col-xl-9">
+    <div class="col-lg-9 col-xl-10">
       <div class="card">
         <div class="card-header with-border">
           <h3 class="card-title text-capitalize">
@@ -105,201 +56,140 @@
           </div>
         </div>
         <div class="card-body package__delivery">
-          <div v-if="driver_data && driver_data.packages.length" class="row package__delivery-content">
-            <div class="col-lg-12 col-xl-6 border-right">
-              <div>
-                <template v-if="driver_data.packages && driver_data.packages.length">
-                  <div
-                    v-for="(item, key) in driver_data.packages"
-                    :key="key"
-                    class="package__item"
-                    @click="selectPackage(item)"
-                  >
-                    <template v-if="item.media">
-                      <div>sdfsf</div>
-                    </template>
-                    <template v-else>
-                      <div class="package__item-image">
-                        <img src="/img/package.png" alt="" width="100%">
-                      </div>
-                    </template>
-                    <div class="package__item-content">
-                      <p><strong>{{ item.code }}</strong></p>
-                      <p v-if="item.shop">
-                        <i class="fas fa-store mr-2" /> {{ item.shop.name_en }}
-                      </p>
-                      <p><i class="fas fa-user mr-2" /> {{ item.customer_name }}</p>
-                      <p><i class="fas fa-phone fa-rotate-90 mr-2" /> {{ item.customer_phone }}</p>
-                      <p><i class="fas fa-map-marker-alt mr-2" /> {{ item.customer_address }}</p>
-                      <p v-if="item.partner_company">
-                        <i class="fas fa-truck mr-2" />{{ item.partner_company.name_en }}
-                      </p>
-                      <div class="package__item-badge">
-                        <label v-if=" item.payment_type" class="badge badge-success">
-                          {{ item.payment_type['name_' + $i18n.locale] }}
-                        </label>
-                        <label class="badge badge-primary">
-                          {{ item.price }} {{ item.currency ? item.currency.symbol : '$' }}
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </template>
-              </div>
+          <div class="row">
+            <dl v-if="driver_data.packages" class="row col-12 col-lg-6">
+              <dt class="col-sm-5 text-capitalize text-truncate">
+                {{ $t('label.delivery_packages') }}
+              </dt>
+              <dd class="col-sm-7 text-bold">
+                {{ driver_data.packages.length }}
+              </dd>
+            </dl>
+            <div class="col-12 col-lg-6 text-right">
+              <button class="btn btn-primary btn-sm">
+                <strong>Confirm Delivery</strong>
+              </button>
             </div>
-            <div class="col-lg-12 col-xl-6 h-100">
-              <template v-if="pLoading">
-                <div class="onloading">
-                  <i class="fas fa-circle-notch fa-spin" />
-                </div>
-              </template>
-              <template v-else>
-                <template v-if="package_data">
-                  <div class="h-100 overflow-auto pl-5 pr-4">
-                    <div class="mb-3">
-                      <div class="form-group">
-                        <h5>Package Info</h5>
-                      </div>
-                      <dl v-if="package_data.shop" class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('menu.shop') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          <NuxtLink :to="{name: 'show-shop', params: {id: package_data.shop._id}}">
-                            {{ package_data.shop.name_en }}
-                          </NuxtLink>
-                        </dd>
-                      </dl>
-                      <dl class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('label.code') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          {{ package_data.code }}
-                        </dd>
-                      </dl>
-                      <dl class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('label.customer_name') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          {{ package_data.customer_name }}
-                        </dd>
-                      </dl>
-                      <dl class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('label.customer_phone') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          {{ package_data.customer_phone }}
-                        </dd>
-                      </dl>
-                      <dl class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('label.customer_address') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          {{ package_data.customer_address }}
-                        </dd>
-                      </dl>
-                      <dl class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('label.price') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          {{ package_data.price }}
-                          {{ package_data.currency ? package_data.currency.code : 'USD' }}
-                        </dd>
-                      </dl>
-                      <dl class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('label.status') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          <span
-                            class="badge text-capitalize"
-                            :class="package_data.is_paid ? 'badge-success' : 'badge-danger'"
-                            style="padding: 6px 10px; font-size: 13px;"
-                          >
-                            {{ package_data.is_paid ? $t('label.payment_with_order') : $t('label.payment_on_delivery') }}
-                          </span>
-                        </dd>
-                      </dl>
-                      <dl v-if="package_data.payment_type" class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('menu.payment_type') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          {{ package_data.payment_type['name_' + $i18n.locale] }}
-                        </dd>
-                      </dl>
-                      <dl class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('menu.package_type') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          {{
-                            package_data.package_type ? package_data.package_type['name_' + $i18n.locale] : 'Package'
-                          }}
-                        </dd>
-                      </dl>
-                      <dl v-if="package_data.partner_company" class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('label.third_party_company') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          <div>
-                            {{ package_data.partner_company.name_en }}
-                          </div>
-                          <small class="text-muted">{{ package_data.partner_company.phone }}</small>
-                        </dd>
-                      </dl>
-                      <dl class="row">
-                        <dt class="col-lg-4 text-capitalize text-truncate">
-                          {{ $t('label.note') }}
-                        </dt>
-                        <dd class="col-lg-8">
-                          {{ package_data.note }}
-                        </dd>
-                      </dl>
+          </div>
+          <div class="row">
+            <dl class="row col-12 col-lg-6">
+              <dt class="col-sm-5 text-capitalize text-truncate">
+                {{ $t('label.total_price') }}
+              </dt>
+              <dd class="col-sm-7">
+                <span class="d-block">{{ total_riel | numFormat(num_format_km) }} KHR</span>
+                <span class="d-block"><small>( {{ total_dollar | numFormat(num_format_en) }} USD )</small></span>
+              </dd>
+            </dl>
+            <dl class="row col-12 col-lg-6">
+              <dt class="col-sm-5 text-capitalize text-truncate">
+                {{ $t('label.collect_money_total') }}
+              </dt>
+              <dd class="col-sm-7">
+                <span class="d-block">{{ collect_money_riel | numFormat(num_format_km) }} KHR</span>
+                <span class="d-block"><small>( {{ collect_money_dollar | numFormat(num_format_en) }} USD )</small></span>
+              </dd>
+            </dl>
+          </div>
+          <div v-if="driver_data && driver_data.packages.length" class="row package__delivery-content">
+            <div class="col-lg-12">
+              <template v-if="driver_data.packages && driver_data.packages.length">
+                <template v-for="(item, key) in driver_data.packages">
+                  <div :key="key" class="list_item">
+                    <div class="col-md-2 col-lg-2">
+                      <template v-if="item.media">
+                        <div>sdfsf</div>
+                      </template>
+                      <template v-else>
+                        <div class="package__item-image">
+                          <img src="/img/package.png" alt="" width="100%">
+                        </div>
+                      </template>
                     </div>
-                    <template v-if="package_data.package_transitions && package_data.package_transitions.length">
-                      <div class="mb-3">
-                        <div class="form-group">
-                          <h5>Package History</h5>
+                    <div class="col-md-4 col-lg-4">
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-user mr-2" />
                         </div>
-                        <div class="package_transition">
-                          <div class="timeline">
-                            <template v-for="(item, key) in package_data.package_transitions">
-                              <div :key="key">
-                                <i class="fas" :class="statusIcon(item)" />
-                                <div class="timeline-item">
-                                  <span class="time text-muted"><i class="fas fa-clock" /> {{
-                                    $moment(item.created_at).format('llll')
-                                  }}</span>
-                                  <h3 class="timeline-header border-bottom-0">
-                                    <strong>{{ checkStatus(item.status) }}</strong>
-                                  </h3>
-                                  <div class="timeline-body">
-                                    <p v-if="item.user" class="mb-1">
-                                      <i class="fas fa-user mr-2" />{{ item.user.full_name }}
-                                    </p>
-                                    {{ item.description['message_' + $i18n.locale] }}
-                                  </div>
-                                </div>
-                              </div>
-                            </template>
-                            <div>
-                              <i class="fas fa-clock bg-gray" />
-                            </div>
-                          </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.customer_name }}
                         </div>
                       </div>
-                    </template>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-phone mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.customer_phone }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-dollar-sign mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.price | numFormat(item.currency && item.currency.code === 'KHR' ? num_format_km : num_format_en ) }}
+                          {{ item.currency ? item.currency.code : null }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-sticky-note mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ checkStatus(item.final_status) }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-store mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.shop ? item.shop.name_en : '' }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-map-marker-alt mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.customer_address }}
+                        </div>
+                      </div>
+                      <div v-if="item.partner_company" class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-truck mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.partner_company.name_en }}
+                        </div>
+                      </div>
+                      <div class="list_item-block">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-calendar-alt mr-2" />
+                        </div>
+                        <div v-if="item.request_delivery_at" class="package_item-label text-truncate">
+                          {{ $moment(item.request_delivery_at).format('lll') }}
+                        </div>
+                        <div v-else class="package_item-label text-truncate">
+                          {{ $moment(item.created_at).format('lll') }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 list_item-block-action">
+                      <div class="list_item-block-btn">
+                        <NuxtLink
+                          class="btn btn-default btn-sm btn-block"
+                          :to="{name: 'show-package', params:{id: item._id}}"
+                        >
+                          <i class="fas fa-eye mr-2" />
+                          <strong>{{ $t('label.view') }}</strong>
+                        </NuxtLink>
+                      </div>
+                    </div>
                   </div>
-                </template>
-                <template v-else>
-                  <NoResult />
                 </template>
               </template>
             </div>
@@ -312,11 +202,17 @@
 
 <script>
 import ButtonBack from '@/components/UiElements/ButtonBack'
-import NoResult from '@/components/NoResult'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'DriverShow',
-  components: { NoResult, ButtonBack },
+  components: { ButtonBack },
+  computed: {
+    ...mapGetters({
+      num_format_en: 'delivery_company/num_format_en',
+      num_format_km: 'delivery_company/num_format_km'
+    })
+  },
   asyncData (ctx) {
     if (ctx.route.params.id) {
       return ctx.$axios
@@ -361,6 +257,7 @@ export default {
         const packages = this.driver_data.packages
         packages.forEach((item) => {
           let currency = null
+          console.log('asdadsa')
           if (item.currency) {
             currency = item.currency
             this.total_riel += this.exchangeMoney(currency.code, 'KHR', item.price)
@@ -378,94 +275,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-dl.row {
-  border-bottom: 1px solid #dee2e6;
+@import "../../../assets/scss/components/list_item";
+.package__item-image {
+  width: 80%;
 }
 
-.user_role span {
+.driver-item {
+  margin-bottom: 8px;
+  border-bottom: 2px solid lightgray;
+  padding: 0 0 8px;
   & i {
-    margin-right: 8px;
-  }
-
-  &:last-child {
-    margin-right: 0;
-  }
-}
-
-.package__item {
-  user-select: none;
-  width: 100%;
-  padding: 15px;
-  background-color: var(--light);
-  border-radius: 0.2rem;
-  margin-bottom: 15px;
-  display: flex;
-  position: relative;
-
-  &:hover {
-    cursor: pointer;
-    background-color: darken(#F8F9FAFF, 3%);
-  }
-
-  &-image {
-    width: 95px;
-  }
-
-  &-content {
-    width: calc(100% - 95px);
-    padding-left: 25px;
-    padding-right: 15px;
-    position: relative;
-
-    &.package__selected {
-      width: calc(60% - 95px);
-    }
-
-    & p {
-      margin-bottom: 0;
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    & .package__item-badge {
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-
-      & label {
-        border-radius: 0;
-        padding: 4px 8px;
-
-        &:first-child {
-          border-bottom-left-radius: 0.25rem;
-          border-top-left-radius: 0.25rem;
-        }
-
-        &:last-child {
-          border-bottom-right-radius: 0.25rem;
-          border-top-right-radius: 0.25rem;
-        }
-      }
-    }
-  }
-
-  &-form {
-    width: 35%;
-    margin-left: auto;
-
-    & .form-group:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-.package__delivery {
-  height: calc(100vh - 260px);
-
-  &-content {
-    height: 100%;
+    width: 25px;
+    text-align: center;
   }
 }
 </style>
