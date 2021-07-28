@@ -67,8 +67,13 @@
                     <div class="list_item-block-icon">
                       <i class="fas fa-sticky-note mr-2" />
                     </div>
-                    <div class="list_item-label text-truncate">
-                      {{ item.on_delivery ? 'On delivery' : 'Free' }}
+                    <div  class="list_item-status text-truncate" :class="item.on_delivery ? 'bg-red' : 'bg-green'">
+                      <template v-if="item.on_delivery">
+                        <label class="mb-0">{{ $t('label.on_delivery') }}</label>
+                      </template>
+                      <template v-else>
+                        <label class="mb-0">{{ $t('label.free') }}</label>
+                      </template>
                     </div>
                   </div>
                 </div>

@@ -87,7 +87,7 @@
                         <div class="list_item-block-icon">
                           <i class="fas fa-sticky-note mr-2" />
                         </div>
-                        <div class="list_item-label text-truncate">
+                        <div class="list_item-status text-truncate" :class="colorStatus(item.final_status)">
                           {{ checkStatus(item.final_status) }}
                         </div>
                       </div>

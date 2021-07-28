@@ -156,7 +156,12 @@
             <i class="fas fa-times-circle mr-2" />
             <strong>{{ $t('btn.cancel') }}</strong>
           </button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            @click="confirmModel"
+          >
             <i class="fas fa-check-circle mr-2" />
             <strong>{{ $t('btn.ok') }}</strong>
           </button>
@@ -283,6 +288,9 @@ export default {
         this.$store.dispatch('package/setThirdParty', null)
       }
       this.cancelCreateThirdParty()
+    },
+    confirmModel () {
+      this.$emit('confirmModel')
     },
     cancelCreateThirdParty () {
       this.create_form = false

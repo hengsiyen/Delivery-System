@@ -3,9 +3,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 id="completePackageModalLabel" class="modal-title">
-          <i class="fas fa-map-marker-alt mr-2" /> Delay Delivery
+          <i class="fas fa-map-marker-alt mr-2" /> {{ $t('label.cancel_delivery') }}
         </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          ref="close"
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -20,7 +26,11 @@
                 :placeholder="$t('pla.what_the_reason')"
                 cols="30"
                 rows="5"
+                :class="{'is-invalid': checkValidate('reason')}"
               />
+              <div v-if="checkValidate('reason')" class="invalid-feedback">
+                {{ validate.reason[0] }}
+              </div>
             </div>
           </div>
           <template v-if="reasons">
@@ -47,6 +57,7 @@
           class="btn btn-primary"
           :class="{'disabled': !reason}"
           :disabled="!reason"
+          @click="submit"
         >
           <i class="fas fa-check-circle mr-2" />
           <strong>{{ $t('btn.submit') }}</strong>
@@ -59,9 +70,16 @@
 <script>
 export default {
   name: 'CancelPackageModal',
+  props: {
+    packageId: {
+      type: String,
+      default: null
+    }
+  },
   data () {
     return {
       reason: null,
+      validate: null,
       reasons: [
         {
           _id: '35134534534',
@@ -87,8 +105,51 @@ export default {
     }
   },
   methods: {
+    checkValidate (key) {
+      if (key) {
+        return this.validate && this.validate.hasOwnProperty(key)
+      }
+      return false
+    },
+    submit () {
+      this.onConfirm({
+        title: this.$t('label.cancel_delivery'),
+        text: this.$t('label.cancel_delivery_sub'),
+        cancelButtonColor: '#3a7afe',
+        confirmButtonColor: '#ed524f',
+        cancelButtonText: this.$t('button.cancel'),
+        confirmButtonText: this.$t('string.ok')
+      }).then((accept) => {
+        if (accept) {
+          this.validate = null
+          const data = new FormData()
+          data.append('edit_form', 'cancel')
+          data.append('edit_form_type', 'edit')
+          if (this.packageId) {
+            data.append('id', this.packageId)
+          }
+          if (this.reason) {
+            data.append('reason', this.reason)
+          }
+          this.$axios.post(this.$base_api + '/api/backend/package/edit', data)
+            .then((res) => {
+              this.$toastr('success', this.$t('message.package_cancel'), this.$t('label.cancel_delivery'))
+              this.cancelPackage()
+              this.$emit('onSubmit', res.data.data)
+              this.$refs.close.click()
+            }).catch((error) => {
+              if (error.response.status === 422) {
+                this.validate = error.response.data.errors
+              } else {
+                this.onResponseError(error)
+              }
+            })
+        }
+      })
+    },
     cancelPackage () {
       this.reason = null
+      this.validate = null
     }
   }
 }

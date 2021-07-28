@@ -7,48 +7,58 @@
           {{ $t('label.assign_driver') }}
         </h5>
         <button
+          ref="close"
           type="button"
           class="close"
           data-dismiss="modal"
           aria-label="Close"
-          @click="selectDriver(null)"
+          @click="cancelAssignDriver"
         >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div>
-          <div class="form-group">
-            <label> {{ $t('label.delivery_charge') }}</label>
-            <div class="input-group">
-              <input
-                id="price"
-                v-model="packageData.delivery_charge"
-                name="price"
-                type="number"
-                class="form-control"
-                :placeholder="$t('label.delivery_charge')"
+        <div class="form-group">
+          <label> {{ $t('label.delivery_charge') }}</label>
+          <div class="input-group" :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}">
+            <input
+              id="price"
+              v-model="delivery_charge"
+              name="price"
+              type="number"
+              class="form-control"
+              :placeholder="$t('label.delivery_charge')"
+              :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}"
+            >
+            <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
+              <button
+                v-for="(currency, sub_key) in currencies"
+                :key="sub_key"
+                class="btn"
+                type="button"
+                :class="delivery_charge_currency && delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                @click="delivery_charge_currency = currency"
               >
-              <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
-                <button
-                  v-for="(currency, sub_key) in currencies"
-                  :key="sub_key"
-                  class="btn"
-                  type="button"
-                  :class="packageData.delivery_charge_currency && packageData.delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                  @click="packageData.delivery_charge_currency = currency"
-                >
-                  {{ currency.code }}
-                </button>
-              </div>
+                {{ currency.code }}
+              </button>
             </div>
           </div>
+          <div v-if="checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')" class="invalid-feedback">
+            <template v-if="checkValidate('delivery_charge') ">
+              {{ validate.delivery_charge[0] }}
+            </template>
+            <template v-if="checkValidate('delivery_charge_currency') ">
+              {{ validate.delivery_charge_currency[0] }}
+            </template>
+          </div>
+        </div>
+        <template v-if="packageData && packageData.partner_company">
           <div class="form-group">
             <label> {{ $t('label.extra_charge') }}</label>
             <div class="input-group">
               <input
                 id="extra_charge"
-                v-model="packageData.extra_charge"
+                v-model="extra_charge"
                 name="price"
                 type="number"
                 class="form-control"
@@ -60,89 +70,92 @@
                   :key="sub_key"
                   class="btn"
                   type="button"
-                  :class="packageData.extra_charge_currency && packageData.extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                  @click="packageData.extra_charge_currency = currency"
+                  :class="extra_charge_currency && extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                  @click="extra_charge_currency = currency"
                 >
                   {{ currency.code }}
                 </button>
               </div>
             </div>
           </div>
+        </template>
+        <div class="form-group shop__search">
+          <label>{{ $t('label.selectDriver') }}</label>
+          <input
+            v-model="search"
+            type="search"
+            class="form-control"
+            :placeholder="$t('label.search') + '...'"
+          >
         </div>
-        <div>
-          <div class="form-group shop__search">
-            <label>{{ $t('label.selectDriver') }}</label>
-            <input
-              v-model="search"
-              type="search"
-              class="form-control"
-              :placeholder="$t('label.search') + '...'"
-            >
+        <div v-if="checkValidate('driver_id')" class="form-group">
+          <div class="d-flex align-items-center justify-content-center bg-red py-1 rounded text-capitalize">
+            {{ $t('message.select_driver') }}
           </div>
-          <template v-if="onloading">
-            <div class="shop__onloading">
-              <i class="fas fa-circle-notch fa-spin" />
-            </div>
-          </template>
-          <template v-else>
-            <div class="driver__items">
-              <template v-if="list_drivers && list_drivers.length">
-                <div class="row">
+        </div>
+        <template v-if="onloading">
+          <div class="shop__onloading">
+            <i class="fas fa-circle-notch fa-spin" />
+          </div>
+        </template>
+        <template v-else>
+          <div class="driver__items">
+            <template v-if="list_drivers && list_drivers.length">
+              <div class="row">
+                <div
+                  v-for="(item, key) in list_drivers"
+                  :key="key"
+                  class="col-lg-6"
+                  @click="selectDriver(item)"
+                >
                   <div
-                    v-for="(item, key) in list_drivers"
-                    :key="key"
-                    class="col-lg-6"
-                    @click="selectDriver(item)"
+                    class="driver__item"
+                    :class="{'bg-primary text-white': selected_driver && selected_driver._id === item._id}"
                   >
-                    <div
-                      class="driver__item"
-                      :class="{'bg-primary text-white': selected_driver && selected_driver._id === item._id}"
-                    >
-                      <div class="driver__image">
-                        <template v-if="item.avatar">
-                          <img
-                            :src="`${baseUrl}/${item.avatar}`"
-                            class="img-thumbnail rounded-circle"
-                            alt="User Image"
-                          >
-                        </template>
-                        <template v-else>
-                          <img
-                            :src="avatar"
-                            class="img-thumbnail rounded-circle"
-                            alt="User Image"
-                          >
-                        </template>
-                      </div>
-                      <div class="driver__info">
-                        <label class="d-block mb-0"><strong>{{ item.full_name }}</strong></label>
-                        <label class="d-block mb-0"><strong>{{ item.phone }}</strong></label>
-                      </div>
+                    <div class="driver__image">
+                      <template v-if="item.avatar">
+                        <img
+                          :src="`${baseUrl}/${item.avatar}`"
+                          class="img-thumbnail rounded-circle"
+                          alt="User Image"
+                        >
+                      </template>
+                      <template v-else>
+                        <img
+                          :src="avatar"
+                          class="img-thumbnail rounded-circle"
+                          alt="User Image"
+                        >
+                      </template>
+                    </div>
+                    <div class="driver__info">
+                      <label class="d-block mb-0"><strong>{{ item.full_name }}</strong></label>
+                      <label class="d-block mb-0"><strong>{{ item.phone }}</strong></label>
                     </div>
                   </div>
                 </div>
-              </template>
-              <template v-else>
-                <div class="row">
-                  <div class="col-12">
-                    <NoResult />
-                  </div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="row">
+                <div class="col-12">
+                  <NoResult />
                 </div>
-              </template>
-              <infinite-loading spinner="spiral" :identifier="driverInfiniteId" @infinite="getDrivers">
-                <div slot="no-more" />
-                <div slot="no-results" />
-              </infinite-loading>
-            </div>
-          </template>
-        </div>
+              </div>
+            </template>
+            <infinite-loading spinner="spiral" :identifier="driverInfiniteId" @infinite="getDrivers">
+              <div slot="no-more" />
+              <div slot="no-results" />
+            </infinite-loading>
+          </div>
+        </template>
       </div>
       <div class="modal-footer">
         <button
           type="button"
           class="btn btn-light"
           data-dismiss="modal"
-          @click="selectDriver(null)"
+          @click="cancelAssignDriver"
         >
           <i class="fas fa-times-circle mr-2" />
           <strong>{{ $t('btn.cancel') }}</strong>
@@ -150,8 +163,6 @@
         <button
           type="button"
           class="btn btn-primary"
-          :class="{'disabled': !selected_driver}"
-          :disabled="!selected_driver"
           @click="assignDriver"
         >
           <i class="fas fa-check-circle mr-2" />
@@ -190,7 +201,12 @@ export default {
       search: null,
       page: 1,
       driverInfiniteId: +new Date(),
-      onloading: false
+      onloading: false,
+      validate: null,
+      delivery_charge: null,
+      delivery_charge_currency: null,
+      extra_charge: null,
+      extra_charge_currency: null
     }
   },
   computed: {
@@ -201,8 +217,8 @@ export default {
     }),
     confirmMessage () {
       return {
-        en: '<div>Do you want to assign this package to driver</div> <div><b>"' + this.selected_driver.full_name + '"</b> ?</div>',
-        km: '<div>តើអ្នកចង់ផ្តល់កញ្ចប់អីវ៉ាន់នេះដល់អ្នកបើកបរ</div> <div><b>"' + this.selected_driver.full_name + '"</b> ?</div>'
+        en: '<div style="line-height: 1.5">Do you want to assign this package to driver</div> <div><b>"' + this.selected_driver.full_name + '"</b> ?</div>',
+        km: '<div style="line-height: 2">តើអ្នកចង់ផ្តល់កញ្ចប់អីវ៉ាន់នេះដល់អ្នកបើកបរ</div> <div><b>"' + this.selected_driver.full_name + '"</b> ?</div>'
       }
     }
   },
@@ -221,7 +237,14 @@ export default {
       this.awaitingSearch = true
     }
   },
+
   methods: {
+    checkValidate (key) {
+      if (key) {
+        return this.validate && this.validate.hasOwnProperty(key)
+      }
+      return false
+    },
     searchDriver (page = null, onloading = false) {
       this.$store.dispatch('delivery/setDriver', null)
       if (onloading) { this.onloading = true }
@@ -232,6 +255,15 @@ export default {
       this.list_drivers = []
       this.driverInfiniteId += 1
       this.getDrivers()
+    },
+    setDefaultCurrency (currencies = []) {
+      if (currencies && currencies.length) {
+        console.log('adas')
+        this.delivery_charge_currency = currencies[0]
+        if (this.packageData && this.packageData.partner_company) {
+          this.extra_charge_currency = currencies[0]
+        }
+      }
     },
     getDrivers: debounce(function ($state) {
       this.$axios.post(this.$base_api + '/api/backend/user/list-driver', {
@@ -258,17 +290,58 @@ export default {
       this.$store.dispatch('delivery/setDriver', driver)
     },
     assignDriver () {
-      this.onConfirm({
-        icon: 'warning',
-        title: this.$t('label.assign_driver'),
-        html: this.confirmMessage[this.$i18n.locale],
-        confirmButtonText: this.$t('string.ok'),
-        cancelButtonText: this.$t('string.cancel')
-      }).then((accept) => {
-        if (accept) {
-          $('#driverModal').modal('hide')
+      if (this.selected_driver) {
+        this.onConfirm({
+          icon: 'warning',
+          title: this.$t('label.assign_driver'),
+          html: this.confirmMessage[this.$i18n.locale],
+          confirmButtonText: this.$t('string.ok'),
+          cancelButtonText: this.$t('string.cancel')
+        }).then((accept) => {
+          if (accept) {
+            const data = {
+              edit_form: 'assign',
+              edit_form_type: 'edit'
+            }
+            if (this.packageData) {
+              data.id = this.packageData._id
+            }
+            if (this.selected_driver) {
+              data.driver_id = this.selected_driver._id
+            }
+            data.delivery_charge = this.delivery_charge
+            data.delivery_charge_currency = this.delivery_charge_currency
+            data.extra_charge = this.extra_charge
+            data.extra_charge_currency = this.extra_charge_currency
+            this.$axios.post(this.$base_api + '/api/backend/package/edit', data)
+              .then((res) => {
+                this.$toastr('success', this.$t('message.package_assign'), this.$t('label.assign_driver'))
+                this.cancelAssignDriver()
+                this.$emit('onSubmit', res.data.data)
+                this.$refs.close.click()
+              }).catch((error) => {
+                if (error.response.status === 422) {
+                  this.validate = error.response.data.errors
+                } else {
+                  this.onResponseError(error)
+                }
+              })
+          }
+        })
+      } else {
+        this.validate = {
+          driver_id: ['the driver id field is required']
         }
-      })
+      }
+    },
+    cancelAssignDriver () {
+      this.validate = null
+      this.search = null
+      this.delivery_charge = null
+      this.delivery_charge_currency = null
+      this.extra_charge = null
+      this.extra_charge_currency = null
+      this.$store.dispatch('delivery/setDriver', null)
     }
   }
 }

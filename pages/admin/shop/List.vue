@@ -73,9 +73,9 @@
                     <div class="list_item-block-icon">
                       <i class="fas fa-sticky-note mr-2" />
                     </div>
-                    <div class="list_item-label text-truncate">
-                      <span v-if="item.enabled" class="text-green text-bold">{{ $t('label.enabled') }}</span>
-                      <span v-else class="text-red text-bold">{{ $t('label.disbled') }}</span>
+                    <div class="list_item-status text-truncate" :class="item.enabled ? 'bg-green' : 'bg-red'">
+                      <span v-if="item.enabled">{{ $t('label.enabled') }}</span>
+                      <span v-else>{{ $t('label.disbled') }}</span>
                     </div>
                   </div>
                 </div>

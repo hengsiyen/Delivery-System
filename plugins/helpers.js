@@ -357,12 +357,12 @@ const helpers = {
               return 'fa-motorcycle bg-blue'
             case 'success':
               return 'fa-check bg-green'
-            case 'failed':
-              return 'fa-exclamation bg-yellow'
+            case 'delay':
+              return 'fa-hourglass-half bg-yellow'
             case 'cancel':
               return 'fa-times bg-red'
             case 'return':
-              return 'fa-undo-alt  fa-flip-horizontal bg-dark'
+              return 'fa-undo-alt fa-flip-horizontal bg-dark'
             default:
               return 'fa-ellipsis-h bg-gray'
           }
@@ -400,10 +400,10 @@ const helpers = {
                 km: 'ការដឹកជញ្ជូនរួចរាល់'
               }
               break
-            case 'failed':
+            case 'delay':
               st = {
-                en: 'Delivery Failed',
-                km: 'ការដឹកជញ្ជូនបរាជ័យ'
+                en: 'Delivery Delay',
+                km: 'ការពន្យាពេលដឹកជញ្ជូន'
               }
               break
             case 'cancel':
@@ -421,6 +421,29 @@ const helpers = {
           }
 
           return st[this.$i18n.locale]
+        },
+        colorStatus (status) {
+          switch (status) {
+            case 'new_package':
+              return 'bg-teal'
+            case 'assigned':
+              return 'bg-info'
+            case 'delivery':
+              return 'bg-blue'
+            case 'success':
+              return 'bg-green'
+            case 'delay':
+              return 'bg-yellow'
+            case 'cancel':
+              return 'bg-red'
+            case 'return':
+              return 'bg-dark'
+            default:
+              return 'bg-gray'
+          }
+        },
+        notBeforeToday (date) {
+          return date < new Date(new Date().setHours(0, 0, 0, 0))
         }
       }
     })

@@ -172,12 +172,6 @@
           <i class="fa fa-times" />
         </button>
       </div>
-      <div v-if="driver" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
-        {{ $t('menu.driver') }}: {{ driver.full_name }}
-        <button class="btn btn-default btn-xs" @click="driver = null">
-          <i class="fa fa-times" />
-        </button>
-      </div>
       <div v-if="is_paid" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.payment_status') }}: {{ is_paid['name_' + $i18n.locale] }}
         <button class="btn btn-default btn-xs" @click="is_paid = true">
@@ -194,18 +188,6 @@
         {{ $t('table.createdAt') }}: {{ $moment(created_at).format(date_format) }}
         <button class="btn btn-default btn-xs" @click="created_at = null">
           <i class="fa fa-times" />
-        </button>
-      </div>
-      <div v-if="assigned_at" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
-        {{ $t('table.assignedAt') }}: {{ $moment(assigned_at).format(date_format) }}
-        <button class="btn btn-default btn-xs" @click="assigned_at = null">
-          <i class="fa fa-times ml-2" />
-        </button>
-      </div>
-      <div v-if="finished_at" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
-        {{ $t('table.finishedAt') }}: {{ $moment(finished_at).format(date_format) }}
-        <button class="btn btn-default btn-xs">
-          <i class="fa fa-times ml-2" @click="finished_at = null" />
         </button>
       </div>
     </div>
@@ -241,7 +223,7 @@
                     <div class="package_item-block-icon">
                       <i class="fas fa-sticky-note mr-2" />
                     </div>
-                    <div class="package_item-label text-truncate">
+                    <div class="package_item-status text-truncate" :class="colorStatus(item.final_status)">
                       {{ checkStatus(item.final_status) }}
                     </div>
                   </div>
@@ -407,6 +389,7 @@ export default {
 
       page: 1,
       total_pages: 0,
+      date_format: 'DD/MM/YYYY',
       search_query: null,
       status: null,
       shop: null,
@@ -435,8 +418,6 @@ export default {
       this.partner_company_id = null
       this.partner_company = null
       this.created_at = new Date()
-      this.assigned_at = null
-      this.finished_at = null
       this.refreshDatatable()
     },
     getFetchData () {
@@ -475,61 +456,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../../../assets/scss/components/list_item";
 .search {
   width: 25%;
-}
-
-.package_item {
-  background-color: white;
-  border-radius: 0.25rem;
-  padding: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #ced4da;
-  display: flex;
-  &-block {
-    display: flex;
-    align-items: center;
-    margin: 8px;
-    padding: 2px;
-    &-icon {
-      width: 25px;
-      margin-right: 8px;
-      text-align: center;
-    }
-    &-action {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      flex-direction: column;
-    }
-    &-btn {
-      width: 120px;
-      margin-bottom: 8px;
-      &:last-child{
-        margin-bottom: 0;
-      }
-    }
-  }
-}
-
-.filter-items {
-  & .shadow-item {
-    display: flex;
-    align-items: center;
-    margin-right: 8px;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.13), 0 1px 3px rgba(0, 0, 0, 0.20);
-    &:last-child{
-      margin-right: 0;
-    }
-
-    & .btn {
-      background-color: white;
-      margin-left: 8px;
-      border: 0;
-      &:hover {
-        background-color: #e9ecef;
-      }
-    }
-  }
 }
 </style>

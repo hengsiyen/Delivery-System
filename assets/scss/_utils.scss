@@ -68,3 +68,18 @@ a.nav-link:hover {
 .dropdown-no-icon.dropdown-toggle::after {
   content: unset;
 }
+
+.has-bg {
+  & .nav-item {
+    margin-right: 8px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+    & .nav-link {
+      background-color: var(--light);
+      &.active {
+        background-color: var(--primary);
+      }
+  }
+}

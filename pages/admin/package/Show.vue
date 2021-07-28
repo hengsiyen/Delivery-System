@@ -32,7 +32,7 @@
                               <div class="text-dark">
                                 <strong>{{ checkStatus(item.status) }}</strong>
                               </div>
-                              <div><small>{{ item.description['message_' + $i18n.locale] }}</small></div>
+                              <div><small>{{ item.description[ $i18n.locale] }}</small></div>
                               <div><small>{{ $moment(item.created_at).format('llll') }}</small></div>
                             </div>
                           </div>
@@ -312,7 +312,7 @@
                         </div>
                         <div v-else>
                           <div class="form-group show-with-border">
-                            <label class="customer-mb-12">{{ $t('label.payment') }}</label>
+                            <label class="customer-mb-12">{{ $t('label.remark') }}</label>
                             <div class="d-flex align-items-center justify-content-between">
                               <div class="d-flex align-items-center">
                                 <div class="package_form-item-content">
@@ -324,7 +324,7 @@
                                     v-if="request_delivery_at"
                                     class="package_form-item-content-label w-100 text-truncate"
                                   >
-                                    <i class="fas fa-sticky-note mr-2" />
+                                    <i class="far fa-calendar-check mr-2" />
                                     <label>{{ $moment(request_delivery_at).format('DD/MM/YYYY hh:mm:ss A') }}</label>
                                   </div>
                                   <div v-if="note" class="package_form-item-content-label w-100 text-truncate">
@@ -400,7 +400,15 @@
                             <button class="btn btn-light pr-0" @click="openThirdPartyModal">
                               <i class="fas fa-edit mr-2" />
                             </button>
+                            <button class="btn btn-light pr-0 text-red" @click="removeThirdParty">
+                              <i class="fas fa-trash-alt mr-2" />
+                            </button>
                           </div>
+                        </div>
+                        <div v-else>
+                          <button class="btn btn-link btn-sm" @click="openThirdPartyModal">
+                            <i class="fas fa-plus-circle mr-2" /> Add Delivery with Other Company
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -427,43 +435,51 @@
                     <i class="fas fa-history mr-2" />
                     <strong>{{ $t('label.package_history') }}</strong>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-default btn-block text-green"
-                    data-toggle="modal"
-                    data-target="#completePackageModal"
-                  >
-                    <i class="fas fa-map-marker-alt mr-2" />
-                    <strong>{{ $t('btn.complete') }}</strong>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-default btn-block"
-                    data-toggle="modal"
-                    data-target="#driverModal"
-                    @click="openDriverModal"
-                  >
-                    <i class="fas fa-user-plus mr-2" />
-                    <strong>{{ $t('btn.assign') }}</strong>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-default btn-block"
-                    data-toggle="modal"
-                    data-target="#delayModal"
-                  >
-                    <i class="fas fa-truck mr-2" />
-                    <strong>{{ $t('btn.delay') }}</strong>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-default btn-block text-red"
-                    data-toggle="modal"
-                    data-target="#cancelModal"
-                  >
-                    <i class="far fa-times-circle mr-2" />
-                    <strong>{{ $t('btn.cancel') }}</strong>
-                  </button>
+                  <template v-if="showBtnCancel">
+                    <button
+                      type="button"
+                      class="btn btn-default btn-block text-green"
+                      data-toggle="modal"
+                      data-target="#completePackageModal"
+                    >
+                      <i class="fas fa-map-marker-alt mr-2" />
+                      <strong>{{ $t('btn.complete') }}</strong>
+                    </button>
+                  </template>
+                  <template v-if="showBtnAssign && !package_data.driver_id">
+                    <button
+                      type="button"
+                      class="btn btn-default btn-block"
+                      data-toggle="modal"
+                      data-target="#driverModal"
+                      @click="openDriverModal"
+                    >
+                      <i class="fas fa-user-plus mr-2" />
+                      <strong>{{ $t('btn.assign') }}</strong>
+                    </button>
+                  </template>
+                  <template v-if="showBtnDelay">
+                    <button
+                      type="button"
+                      class="btn btn-default btn-block"
+                      data-toggle="modal"
+                      data-target="#delayModal"
+                    >
+                      <i class="fas fa-truck mr-2" />
+                      <strong>{{ $t('btn.delay') }}</strong>
+                    </button>
+                    <template v-if="showBtnCancel">
+                      <button
+                        type="button"
+                        class="btn btn-default btn-block text-red"
+                        data-toggle="modal"
+                        data-target="#cancelModal"
+                      >
+                        <i class="far fa-times-circle mr-2" />
+                        <strong>{{ $t('btn.cancel') }}</strong>
+                      </button>
+                    </template>
+                  </template>
                 </div>
               </div>
             </div>
@@ -495,6 +511,7 @@
         ref="thirdPartyCompanyModal"
         :close-with-emit="true"
         @closeModel="cancelThirdParty"
+        @confirmModel="editPackage('delivery_partner')"
       />
     </div>
     <div
@@ -503,7 +520,11 @@
       tabindex="-1"
       data-backdrop="static"
     >
-      <CompletePackageModel :payment-types="payment_types" :package-id="$route.params.id" />
+      <CompletePackageModel
+        :payment-types="payment_types"
+        :package-id="$route.params.id"
+        @onSubmit="getDataFromChild"
+      />
     </div>
     <div
       id="driverModal"
@@ -511,7 +532,12 @@
       tabindex="-1"
       data-backdrop="static"
     >
-      <AssignDriverModal ref="driverModal" :package-data="package_data" :currencies="currencies" />
+      <AssignDriverModal
+        ref="driverModal"
+        :package-data="package_data"
+        :currencies="currencies"
+        @onSubmit="getDataFromChild"
+      />
     </div>
     <div
       id="delayModal"
@@ -519,7 +545,11 @@
       tabindex="-1"
       data-backdrop="static"
     >
-      <DelayPackageModal ref="delayPackageModal" :package-data="package_data" />
+      <DelayPackageModal
+        ref="delayPackageModal"
+        :package-data="package_data"
+        @onSubmit="getDataFromChild"
+      />
     </div>
     <div
       id="cancelModal"
@@ -527,7 +557,11 @@
       tabindex="-1"
       data-backdrop="static"
     >
-      <CancelPackageModal ref="cancelPackageModal" />
+      <CancelPackageModal
+        ref="cancelPackageModal"
+        :package-id="$route.params.id"
+        @onSubmit="getDataFromChild"
+      />
     </div>
   </div>
 </template>
@@ -606,6 +640,39 @@ export default {
         return a + ' ( ' + b + ')'
       }
       return a
+    },
+    showBtnAssign () {
+      const hiddenStatus = [
+        'assigned',
+        'delivery',
+        'success',
+        'return'
+      ]
+      if (this.package_data) {
+        return !hiddenStatus.includes(this.package_data.final_status)
+      }
+      return true
+    },
+    showBtnDelay () {
+      const hiddenStatus = [
+        'success',
+        'return'
+      ]
+      if (this.package_data) {
+        return !hiddenStatus.includes(this.package_data.final_status)
+      }
+      return true
+    },
+    showBtnCancel () {
+      const hiddenStatus = [
+        'success',
+        'cancel',
+        'return'
+      ]
+      if (this.package_data) {
+        return !hiddenStatus.includes(this.package_data.final_status)
+      }
+      return true
     }
   },
   mounted () {
@@ -697,18 +764,7 @@ export default {
     },
     openDriverModal () {
       if (this.$refs.driverModal) {
-        if (this.package_data) {
-          if (!this.package_data.delivery_charge_currency) {
-            const c = this.currencies.find((item) => {
-              if (item.code === 'USD') {
-                return item
-              } else {
-                return null
-              }
-            })
-            this.$set(this.package_data, 'delivery_charge_currency', c)
-          }
-        }
+        this.$refs.driverModal.setDefaultCurrency(this.currencies)
         this.$refs.driverModal.searchDriver(1, true)
       }
     },
@@ -770,6 +826,14 @@ export default {
         case 'shop':
           if (this.shop) { data.shop_id = this.shop._id }
           break
+        case 'delivery_partner':
+          if (editFormType === 'remove') {
+            this.$store.dispatch('package/setThirdParty', null)
+            data.third_party_company_id = null
+          } else if (editFormType === 'edit' && this.third_party) {
+            data.third_party_company_id = this.third_party._id
+          }
+          break
       }
       this.$axios.post(this.$base_api + '/api/backend/package/edit', data)
         .then((res) => {
@@ -782,6 +846,21 @@ export default {
             console.log(this.validate = error.response.data.errors)
           }
         })
+    },
+    removeThirdParty () {
+      this.onConfirm({
+        icon: 'warning',
+        title: this.$t('label.remove_partner_company'),
+        text: this.$t('label.remove_third_party'),
+        cancelButtonColor: '#aaa',
+        confirmButtonColor: '#ed524f',
+        confirmButtonText: this.$t('string.ok'),
+        cancelButtonText: this.$t('string.cancel')
+      }).then((accept) => {
+        if (accept) {
+          this.editPackage('delivery_partner', 'remove')
+        }
+      })
     },
     resetValue () {
       this.edit_cn = false
@@ -808,7 +887,7 @@ export default {
         this.package_type = this.package_data.package_type
         this.old_pt = this.package_type
         if (this.package_data.request_delivery_at) {
-          this.request_delivery_at.startDate = this.$moment(this.package_data.request_delivery_at).format('DD/MM/YYYY')
+          this.request_delivery_at = this.$moment(this.package_data.request_delivery_at).format('DD/MM/YYYY')
           this.old_rda = this.request_delivery_at
         }
         this.is_paid = this.package_data.is_paid
@@ -817,6 +896,12 @@ export default {
         this.old_pyt = this.payment_type
         this.$store.dispatch('package/setThirdParty', this.package_data.partner_company)
         this.old_third_party = this.package_data.partner_company
+      }
+    },
+    getDataFromChild (value) {
+      if (value) {
+        this.package_data = value
+        this.setDataPackage()
       }
     }
   }
@@ -865,4 +950,8 @@ export default {
   margin-bottom: 12px;
 }
 
+.package_form-item-content-label i {
+  width: 25px;
+  padding-left: 2px;
+}
 </style>

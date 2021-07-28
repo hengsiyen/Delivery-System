@@ -154,5 +154,16 @@ body {
   }
 }
 
+.comma {
+  &:after {
+    content: ', ';
+    margin-right: 8px;
+  }
+  &:last-child:after {
+    content: none;
+    margin-right: 0;
+  }
+}
+
 
 
