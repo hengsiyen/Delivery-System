@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "DistrictShow"
+  name: 'DistrictShow'
 }
 </script>
 

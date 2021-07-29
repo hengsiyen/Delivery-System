@@ -28,10 +28,15 @@ const helpers = {
           userPermissions: state => state.user.data ? state.user.data.permissions : null
         }),
         ...mapGetters({
-          dc_exchange_rate: 'delivery_company/dc_exchange_rate'
+          dc_exchange_rate: 'delivery_company/dc_exchange_rate',
+          numFormatKm: 'delivery_company/num_format_km',
+          numFormatEn: 'delivery_company/num_format_en'
         }),
         baseUrl () {
           return process.env.VUE_APP_API
+        },
+        datePickerLang () {
+          return this.$datepickerLocale[this.$i18n.locale].lang
         }
       },
       methods: {
@@ -394,6 +399,12 @@ const helpers = {
                 km: 'កំពុងដឹកជញ្ជូន'
               }
               break
+            case 'reject':
+              st = {
+                en: 'Reject Package',
+                km: 'បដិសេធកញ្ចប់អីវ៉ាន់'
+              }
+              break
             case 'success':
               st = {
                 en: 'Delivered',
@@ -430,6 +441,8 @@ const helpers = {
               return 'bg-info'
             case 'delivery':
               return 'bg-blue'
+            case 'reject':
+              return 'bg-orange'
             case 'success':
               return 'bg-green'
             case 'delay':
@@ -444,6 +457,16 @@ const helpers = {
         },
         notBeforeToday (date) {
           return date < new Date(new Date().setHours(0, 0, 0, 0))
+        },
+        checkFormatCurrency (currency) {
+          if (currency) {
+            if (currency.code === 'KHR') {
+              return this.numFormatKm
+            } else {
+              return this.numFormatEn
+            }
+          }
+          return '0,0.00'
         }
       }
     })

@@ -6,7 +6,9 @@ export const state = () => ({
   number_per_page: 30,
   num_format_km: '0,0',
   num_format_en: '0,0.00',
-  currencies: []
+  currencies: [],
+  payment_types: [],
+  package_types: []
 })
 
 export const getters = {

@@ -67,7 +67,7 @@
                     <div class="list_item-block-icon">
                       <i class="fas fa-sticky-note mr-2" />
                     </div>
-                    <div  class="list_item-status text-truncate" :class="item.on_delivery ? 'bg-red' : 'bg-green'">
+                    <div class="list_item-status text-truncate" :class="item.on_delivery ? 'bg-red' : 'bg-green'">
                       <template v-if="item.on_delivery">
                         <label class="mb-0">{{ $t('label.on_delivery') }}</label>
                       </template>
@@ -114,32 +114,32 @@
                       <strong>{{ $t('label.view') }}</strong>
                     </NuxtLink>
                   </div>
-                  <div class="list_item-block-btn">
-                    <button class="btn btn-default btn-sm btn-block">
-                      <i class="fas fa-edit mr-2" />
-                      <strong>{{ $t('btn.edit') }}</strong>
-                    </button>
-                  </div>
-                  <div class="list_item-block-btn">
-                    <div class="dropdown">
-                      <button
-                        id="dropdownMenuButton"
-                        class="btn btn-default btn-sm btn-block dropdown-toggle dropdown-no-icon"
-                        type="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-ellipsis-v mr-2" />
-                        <strong>Other</strong>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                      </div>
-                    </div>
-                  </div>
+                  <!--                  <div class="list_item-block-btn">-->
+                  <!--                    <button class="btn btn-default btn-sm btn-block">-->
+                  <!--                      <i class="fas fa-edit mr-2" />-->
+                  <!--                      <strong>{{ $t('btn.edit') }}</strong>-->
+                  <!--                    </button>-->
+                  <!--                  </div>-->
+                  <!--                  <div class="list_item-block-btn">-->
+                  <!--                    <div class="dropdown">-->
+                  <!--                      <button-->
+                  <!--                        id="dropdownMenuButton"-->
+                  <!--                        class="btn btn-default btn-sm btn-block dropdown-toggle dropdown-no-icon"-->
+                  <!--                        type="button"-->
+                  <!--                        data-toggle="dropdown"-->
+                  <!--                        aria-haspopup="true"-->
+                  <!--                        aria-expanded="false"-->
+                  <!--                      >-->
+                  <!--                        <i class="fas fa-ellipsis-v mr-2" />-->
+                  <!--                        <strong>Other</strong>-->
+                  <!--                      </button>-->
+                  <!--                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">-->
+                  <!--                        <a class="dropdown-item" href="#">Action</a>-->
+                  <!--                        <a class="dropdown-item" href="#">Another action</a>-->
+                  <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+                  <!--                      </div>-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
                 </div>
               </div>
             </template>

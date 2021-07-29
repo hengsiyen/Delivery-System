@@ -446,7 +446,7 @@
                       <strong>{{ $t('btn.complete') }}</strong>
                     </button>
                   </template>
-                  <template v-if="showBtnAssign && !package_data.driver_id">
+                  <template v-if="showBtnAssign">
                     <button
                       type="button"
                       class="btn btn-default btn-block"
@@ -455,7 +455,7 @@
                       @click="openDriverModal"
                     >
                       <i class="fas fa-user-plus mr-2" />
-                      <strong>{{ $t('btn.assign') }}</strong>
+                      <strong>{{ package_data.driver_id ? $t('btn.change_driver') : $t('btn.assign') }}</strong>
                     </button>
                   </template>
                   <template v-if="showBtnDelay">
@@ -617,9 +617,6 @@ export default {
       shop: 'package/shop',
       third_party: 'package/third_party'
     }),
-    datePickerLang () {
-      return this.$datepickerLocale[this.$i18n.locale].lang
-    },
     checkIsPaidUpdate () {
       let pyid = null
       let oldpyid = null
@@ -643,7 +640,6 @@ export default {
     },
     showBtnAssign () {
       const hiddenStatus = [
-        'assigned',
         'delivery',
         'success',
         'return'
@@ -764,8 +760,17 @@ export default {
     },
     openDriverModal () {
       if (this.$refs.driverModal) {
-        this.$refs.driverModal.setDefaultCurrency(this.currencies)
-        this.$refs.driverModal.searchDriver(1, true)
+        if (this.package_data.driver_id && this.package_data.delivery_charge) {
+          this.$set(this.package_data, 'edit_deliver_charge', false)
+          this.$set(this.package_data, 'edit_extra_charge', false)
+          this.$refs.driverModal.setDataDeliveryCharge(this.package_data)
+        } else {
+          this.$refs.driverModal.setDefaultCurrency(this.currencies)
+        }
+        this.$refs.driverModal.searchDriver(1, true, true)
+        if (this.package_data.driver) {
+          this.$store.dispatch('delivery/setDriver', this.package_data.driver)
+        }
       }
     },
     checkDataChange (newData, oldData) {

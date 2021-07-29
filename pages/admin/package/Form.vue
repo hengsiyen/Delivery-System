@@ -182,15 +182,16 @@
                     {{ $t('label.delivery_at') }}
                   </label>
                   <div class="w-100">
-                    <DateRangePicker
-                      ref="picker"
-                      v-model="dateRange"
-                      :ranges="false"
-                      opens="center"
-                      class="w-100"
-                      single-date-picker="sigle"
-                      :auto-apply="true"
-                      :locale-data="{ firstDay: 1, format: 'dd-mm-yyyy HH:mm:ss' }"
+                    <date-picker
+                      v-model="request_delivery_at"
+                      type="datetime"
+                      :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
+                      :show-second="false"
+                      :placeholder="$t('string.select_range_date')"
+                      :lang="datePickerLang"
+                      :format="'DD/MM/YYYY hh:mm:ss A'"
+                      input-class="form-control"
+                      :disabled-date="notBeforeToday"
                     />
                   </div>
                 </div>
@@ -331,13 +332,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import ButtonBack from '@/components/UiElements/ButtonBack'
-import DateRangePicker from 'vue2-daterange-picker'
 import ShopModal from '@/pages/admin/package/_components/ShopModal'
 import ThirdPartyCompanyModal from '@/pages/admin/package/_components/ThirdPartyCompanyModal'
 
 export default {
   name: 'PackageForm',
-  components: { ThirdPartyCompanyModal, ShopModal, ButtonBack, DateRangePicker },
+  components: { ThirdPartyCompanyModal, ShopModal, ButtonBack },
   props: {
     title: {
       type: String,
@@ -372,12 +372,8 @@ export default {
       package_type: null,
       is_paid: false,
       payment_type: null,
-      delivery_at: null,
       note: null,
-
-      dateRange: {
-        startDate: null
-      }
+      request_delivery_at: new Date()
     }
   },
   computed: {
@@ -398,7 +394,9 @@ export default {
       this.payment_type = this.oldData.payment_type
       this.is_paid = this.oldData.is_paid
       this.note = this.oldData.note
-      this.dateRange.startDate = this.$moment(this.oldData.created_at)
+      if (this.oldData.request_delivery_at) {
+        this.request_delivery_at = this.$moment(this.oldData.request_delivery_at)
+      }
     }
   },
   mounted () {
@@ -474,8 +472,8 @@ export default {
       if (this.payment_type) {
         formData.append('payment_type_id', this.payment_type._id)
       }
-      if (this.delivery_at) {
-        formData.append('delivery_at', this.delivery_at)
+      if (this.request_delivery_at) {
+        formData.append('request_delivery_at', this.$moment(this.request_delivery_at).format('YYYY-MM-DD hh:mm:ss'))
       }
       if (this.third_party) {
         formData.append('third_party_company_id', this.third_party._id)

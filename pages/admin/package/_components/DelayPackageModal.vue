@@ -91,9 +91,6 @@ export default {
     }
   },
   computed: {
-    datePickerLang () {
-      return this.$datepickerLocale[this.$i18n.locale].lang
-    },
     delayDeliverySub () {
       const m = {
         en: '',

@@ -79,7 +79,7 @@
                           <i class="fas fa-dollar-sign mr-2" />
                         </div>
                         <div class="list_item-label text-truncate">
-                          {{ item.price | numFormat(item.currency && item.currency.code === 'KHR' ? num_format_km : num_format_en ) }}
+                          {{ item.price | numFormat(checkFormatCurrency(item.currency)) }}
                           {{ item.currency ? item.currency.code : null }}
                         </div>
                       </div>
@@ -233,53 +233,79 @@
                 <div class="col-md-5 col-lg-5">
                   <div class="form-group">
                     <label class="mb-0 font-s-14"> {{ $t('label.delivery_charge') }}</label>
-                    <div class="input-group">
-                      <input
-                        id="price"
-                        v-model="item.delivery_charge"
-                        name="price"
-                        type="number"
-                        class="form-control"
-                        :placeholder="$t('label.delivery_charge')"
-                      >
-                      <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
-                        <button
-                          v-for="(currency, sub_key) in currencies"
-                          :key="sub_key"
-                          class="btn"
-                          type="button"
-                          :class="item.delivery_charge_currency && item.delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                          @click="item.delivery_charge_currency = currency"
+                    <template v-if="isAssignedPackage(item) || item.edit_deliver_charge">
+                      <div class="input-group">
+                        <input
+                          id="price"
+                          v-model="item.delivery_charge"
+                          name="price"
+                          type="number"
+                          class="form-control"
+                          :placeholder="$t('label.delivery_charge')"
                         >
-                          {{ currency.code }}
+                        <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
+                          <button
+                            v-for="(currency, sub_key) in currencies"
+                            :key="sub_key"
+                            class="btn"
+                            type="button"
+                            :class="item.delivery_charge_currency && item.delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                            @click="item.delivery_charge_currency = currency"
+                          >
+                            {{ currency.code }}
+                          </button>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div class="d-flex align-items-center justify-content-between">
+                        <p class="mb-0">
+                          {{ item.delivery_charge | numFormat(checkFormatCurrency(item.delivery_charge_currency)) }}
+                          {{ item.delivery_charge_currency ? item.delivery_charge_currency.code : '' }}
+                        </p>
+                        <button class="btn btn-default btn-sm" @click="item.edit_deliver_charge = true">
+                          <i class="fas fa-edit" />
                         </button>
                       </div>
-                    </div>
+                    </template>
                   </div>
                   <div v-if="item.partner_company" class="form-group">
                     <label class="mb-0 font-s-14"> {{ $t('label.extra_charge') }}</label>
-                    <div class="input-group">
-                      <input
-                        id="extra_charge"
-                        v-model="item.extra_charge"
-                        name="price"
-                        type="number"
-                        class="form-control"
-                        :placeholder="$t('label.extra_charge')"
-                      >
-                      <div v-if="currencies && currencies.length" class="input-group-append">
-                        <button
-                          v-for="(currency, sub_key) in currencies"
-                          :key="sub_key"
-                          class="btn"
-                          type="button"
-                          :class="item.extra_charge_currency && item.extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                          @click="item.extra_charge_currency = currency"
+                    <template v-if="isAssignedPackage(item) || item.edit_extra_charge">
+                      <div class="input-group">
+                        <input
+                          id="extra_charge"
+                          v-model="item.extra_charge"
+                          name="price"
+                          type="number"
+                          class="form-control"
+                          :placeholder="$t('label.extra_charge')"
                         >
-                          {{ currency.code }}
+                        <div v-if="currencies && currencies.length" class="input-group-append">
+                          <button
+                            v-for="(currency, sub_key) in currencies"
+                            :key="sub_key"
+                            class="btn"
+                            type="button"
+                            :class="item.extra_charge_currency && item.extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                            @click="item.extra_charge_currency = currency"
+                          >
+                            {{ currency.code }}
+                          </button>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div class="d-flex align-items-center justify-content-between">
+                        <p class="mb-0">
+                          {{ item.extra_charge | numFormat(checkFormatCurrency(item.extra_charge_currency)) }}
+                          {{ item.extra_charge_currency ? item.extra_charge_currency.code : '' }}
+                        </p>
+                        <button class="btn btn-default btn-sm" @click="item.edit_deliver_charge = true">
+                          <i class="fas fa-edit" />
                         </button>
                       </div>
-                    </div>
+                    </template>
                   </div>
                 </div>
                 <div class="position-absolute btn-remove">
@@ -392,18 +418,25 @@ export default {
         this.onloading = false
       })
     }, 500),
-
     setDriver (driver) {
       this.$store.dispatch('delivery/setDriver', driver)
     },
+    isAssignedPackage (item) {
+      return !(item.final_status === 'cancel' || item.final_status === 'reject')
+    },
     selectPackage (item) {
-      this.$set(item, 'assigned_id', this.user._id)
-      this.$set(item, 'assigned_at', this.$moment().format('YYYY-MM-DD hh:mm:ss'))
-      this.$set(item, 'delivery_charge', 0)
-      this.$set(item, 'extra_charge', 0)
-      if (this.currencies && this.currencies.length) {
-        this.$set(item, 'delivery_charge_currency', this.currencies[0])
-        this.$set(item, 'extra_charge_currency', this.currencies[0])
+      if (this.isAssignedPackage(item)) {
+        this.$set(item, 'assigned_id', this.user._id)
+        this.$set(item, 'assigned_at', this.$moment().format('YYYY-MM-DD hh:mm:ss'))
+        this.$set(item, 'delivery_charge', 0)
+        this.$set(item, 'extra_charge', 0)
+        if (this.currencies && this.currencies.length) {
+          this.$set(item, 'delivery_charge_currency', this.currencies[0])
+          this.$set(item, 'extra_charge_currency', this.currencies[0])
+        }
+      } else {
+        this.$set(item, 'edit_deliver_charge', false)
+        this.$set(item, 'edit_extra_charge', false)
       }
       this.selected_packages.push(item)
       this.sp_ids.push(item._id)
@@ -431,6 +464,8 @@ export default {
       })
     },
     removePackage (item) {
+      this.$set(item, 'edit_deliver_charge', false)
+      this.$set(item, 'edit_extra_charge', false)
       this.selected_packages.splice(this.selected_packages.indexOf(item), 1)
       this.sp_ids.splice(this.sp_ids.indexOf(item._id), 1)
       this.list_packages.push(item)

@@ -39,6 +39,12 @@
                           <p class="mb-1">
                             {{ $t('label.price') }}: {{ item.data.price }}
                           </p>
+                          <p v-if="item.data.delivery_charge" class="mb-1">
+                            {{ $t('label.delivery_charge') }}: {{ item.data.delivery_charge }}
+                          </p>
+                          <p v-if="item.data.extra_charge" class="mb-1">
+                            {{ $t('label.extra_charge') }}: {{ item.data.extra_charge }}
+                          </p>
                           <hr v-if="item.description[$i18n.locale]" class="my-2">
                           <div v-html="handleNewLine(item.description[$i18n.locale])" />
                         </div>

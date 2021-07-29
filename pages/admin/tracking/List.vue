@@ -208,7 +208,7 @@
         </button>
       </div>
       <div v-if="status" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
-        {{ $t('label.status') }}: {{ status['name_' +$i18n.locale] }}
+        {{ $t('label.status') }}: {{ status['name_' + $i18n.locale] }}
         <button class="btn btn-default btn-xs" @click="status = null">
           <i class="fa fa-times" />
         </button>
@@ -227,7 +227,7 @@
       </div>
       <div v-if="is_paid" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.payment_status') }}: {{ is_paid['name_' + $i18n.locale] }}
-        <button class="btn btn-default btn-xs" @click="is_paid = true">
+        <button class="btn btn-default btn-xs" @click="is_paid = null">
           <i class="fa fa-times" />
         </button>
       </div>
@@ -292,6 +292,15 @@
                       {{ checkStatus(item.final_status) }}
                     </div>
                   </div>
+                  <div v-if="item.delivery_charge" class="package_item-block">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-donate mr-2" />
+                    </div>
+                    <div class="package_item-label text-truncate">
+                      {{ item.delivery_charge | numFormat(checkFormatCurrency(item.delivery_charge_currency)) }}
+                      {{ item.delivery_charge_currency ? item.delivery_charge_currency.code : '' }}
+                    </div>
+                  </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="package_item-block">
@@ -321,6 +330,14 @@
                       {{ $moment(item.created_at).format('lll') }}
                     </div>
                   </div>
+                  <div v-if="item.driver" class="package_item-block">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-motorcycle mr-2" />
+                    </div>
+                    <div class="package_item-label text-truncate">
+                      {{ item.driver.full_name }}
+                    </div>
+                  </div>
                 </div>
                 <div class="col-lg-4 package_item-block-action text-right">
                   <div class="package_item-block-btn">
@@ -333,31 +350,50 @@
                     </NuxtLink>
                   </div>
                   <div class="package_item-block-btn">
-                    <button class="btn btn-default btn-sm btn-block">
-                      <i class="fas fa-edit mr-2" />
-                      <strong>{{ $t('btn.edit') }}</strong>
+                    <button
+                      type="button"
+                      class="btn btn-default btn-block"
+                      data-toggle="modal"
+                      :data-target="'#driverModal' + item._id"
+                      @click="openDriverModal(item)"
+                    >
+                      <i class="fas fa-user-plus mr-2" />
+                      <strong>{{ item.driver_id ? $t('btn.change_driver') : $t('btn.assign') }}</strong>
                     </button>
-                  </div>
-                  <div class="package_item-block-btn">
-                    <div class="dropdown">
-                      <button
-                        id="dropdownMenuButton"
-                        class="btn btn-default btn-sm btn-block dropdown-toggle dropdown-no-icon"
-                        type="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-ellipsis-v mr-2" />
-                        <strong>Other</strong>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                      </div>
+                    <div
+                      :id="'driverModal' + item._id"
+                      class="modal fade"
+                      tabindex="-1"
+                      data-backdrop="static"
+                    >
+                      <AssignDriverModal
+                        :ref="'driverModal' + item._id"
+                        :package-data="item"
+                        :currencies="currencies"
+                        @onSubmit="refreshDatatable"
+                      />
                     </div>
                   </div>
+                  <!--                  <div class="package_item-block-btn">-->
+                  <!--                    <div class="dropdown">-->
+                  <!--                      <button-->
+                  <!--                        id="dropdownMenuButton"-->
+                  <!--                        class="btn btn-default btn-sm btn-block dropdown-toggle dropdown-no-icon"-->
+                  <!--                        type="button"-->
+                  <!--                        data-toggle="dropdown"-->
+                  <!--                        aria-haspopup="true"-->
+                  <!--                        aria-expanded="false"-->
+                  <!--                      >-->
+                  <!--                        <i class="fas fa-ellipsis-v mr-2" />-->
+                  <!--                        <strong>Other</strong>-->
+                  <!--                      </button>-->
+                  <!--                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">-->
+                  <!--                        <a class="dropdown-item" href="#">Action</a>-->
+                  <!--                        <a class="dropdown-item" href="#">Another action</a>-->
+                  <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+                  <!--                      </div>-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
                 </div>
               </div>
             </template>
@@ -395,12 +431,15 @@
 <script>
 import { mapGetters } from 'vuex'
 import { debounce } from 'debounce'
+import AssignDriverModal from '@/pages/admin/package/_components/AssignDriverModal'
 
 export default {
   name: 'TrackingList',
+  components: { AssignDriverModal },
   computed: {
     ...mapGetters({
-      number_per_page: 'delivery_company/number_per_page'
+      number_per_page: 'delivery_company/number_per_page',
+      currencies: 'delivery_company/currencies'
     }),
     params () {
       // eslint-disable-next-line camelcase
@@ -428,9 +467,6 @@ export default {
         finished_at: finishedAt,
         search_query: this.search_query
       }
-    },
-    datePickerLang () {
-      return this.$datepickerLocale[this.$i18n.locale].lang
     }
   },
   watch: {
@@ -480,6 +516,21 @@ export default {
     this.getTrackingPackageList(1)
   },
   methods: {
+    openDriverModal (item = null) {
+      if (this.$refs['driverModal' + item._id]) {
+        if (item && item.driver_id && item.delivery_charge) {
+          this.$set(item, 'edit_deliver_charge', false)
+          this.$set(item, 'edit_extra_charge', false)
+          this.$refs['driverModal' + item._id][0].setDataDeliveryCharge(item)
+        } else {
+          this.$refs['driverModal' + item._id][0].setDefaultCurrency(this.currencies)
+        }
+        this.$refs['driverModal' + item._id][0].searchDriver(1, true, true)
+        if (item.driver) {
+          this.$store.dispatch('delivery/setDriver', item.driver)
+        }
+      }
+    },
     refreshDatatable () {
       this.onloading = true
       setTimeout(() => {

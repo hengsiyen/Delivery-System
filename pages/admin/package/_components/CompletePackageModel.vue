@@ -107,11 +107,6 @@
 <script>
 export default {
   name: 'CompletePackageModel',
-  computed: {
-    datePickerLang () {
-      return this.$datepickerLocale[this.$i18n.locale].lang
-    }
-  },
   props: {
     paymentTypes: {
       type: Array,

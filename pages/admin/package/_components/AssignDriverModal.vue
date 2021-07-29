@@ -4,7 +4,12 @@
       <div class="modal-header">
         <h5 id="staticBackdropLabel" class="modal-title text-capitalize">
           <i class="fas fa-user-plus mr-2" />
-          {{ $t('label.assign_driver') }}
+          <template v-if="packageData.driver_id">
+            {{ $t('btn.change_driver') }}
+          </template>
+          <template v-else>
+            {{ $t('label.assign_driver') }}
+          </template>
         </h5>
         <button
           ref="close"
@@ -19,68 +24,94 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label> {{ $t('label.delivery_charge') }}</label>
-          <div class="input-group" :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}">
-            <input
-              id="price"
-              v-model="delivery_charge"
-              name="price"
-              type="number"
-              class="form-control"
-              :placeholder="$t('label.delivery_charge')"
-              :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}"
-            >
-            <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
-              <button
-                v-for="(currency, sub_key) in currencies"
-                :key="sub_key"
-                class="btn"
-                type="button"
-                :class="delivery_charge_currency && delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                @click="delivery_charge_currency = currency"
-              >
-                {{ currency.code }}
-              </button>
-            </div>
-          </div>
-          <div v-if="checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')" class="invalid-feedback">
-            <template v-if="checkValidate('delivery_charge') ">
-              {{ validate.delivery_charge[0] }}
-            </template>
-            <template v-if="checkValidate('delivery_charge_currency') ">
-              {{ validate.delivery_charge_currency[0] }}
-            </template>
-          </div>
-        </div>
-        <template v-if="packageData && packageData.partner_company">
-          <div class="form-group">
-            <label> {{ $t('label.extra_charge') }}</label>
-            <div class="input-group">
+          <label class="w-100 text-left"> {{ $t('label.delivery_charge') }}</label>
+          <template v-if="!(packageData.delivery_charge && packageData.driver_id) || packageData.edit_deliver_charge">
+            <div class="input-group" :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}">
               <input
-                id="extra_charge"
-                v-model="extra_charge"
+                id="price"
+                v-model="delivery_charge"
                 name="price"
                 type="number"
                 class="form-control"
-                :placeholder="$t('label.extra_charge')"
+                :placeholder="$t('label.delivery_charge')"
+                :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}"
               >
-              <div v-if="currencies && currencies.length" class="input-group-append">
+              <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
                 <button
                   v-for="(currency, sub_key) in currencies"
                   :key="sub_key"
                   class="btn"
                   type="button"
-                  :class="extra_charge_currency && extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                  @click="extra_charge_currency = currency"
+                  :class="delivery_charge_currency && delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                  @click="delivery_charge_currency = currency"
                 >
                   {{ currency.code }}
                 </button>
               </div>
             </div>
+            <div v-if="checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')" class="invalid-feedback">
+              <template v-if="checkValidate('delivery_charge') ">
+                {{ validate.delivery_charge[0] }}
+              </template>
+              <template v-if="checkValidate('delivery_charge_currency') ">
+                {{ validate.delivery_charge_currency[0] }}
+              </template>
+            </div>
+          </template>
+          <template v-else>
+            <div class="d-flex align-items-center justify-content-between">
+              <p class="mb-0">
+                {{ packageData.delivery_charge | numFormat(checkFormatCurrency(packageData.delivery_charge_currency)) }}
+                {{ packageData.delivery_charge_currency ? packageData.delivery_charge_currency.code : '' }}
+              </p>
+              <button class="btn btn-default btn-sm" @click="packageData.edit_deliver_charge = true">
+                <i class="fas fa-edit" />
+              </button>
+            </div>
+          </template>
+        </div>
+        <template v-if="packageData && packageData.partner_company">
+          <div class="form-group">
+            <label class="w-100 text-left"> {{ $t('label.extra_charge') }}</label>
+            <template v-if="!(packageData.extra_charge && packageData.driver_id) || packageData.edit_extra_charge">
+              <div class="input-group">
+                <input
+                  id="extra_charge"
+                  v-model="extra_charge"
+                  name="price"
+                  type="number"
+                  class="form-control"
+                  :placeholder="$t('label.extra_charge')"
+                >
+                <div v-if="currencies && currencies.length" class="input-group-append">
+                  <button
+                    v-for="(currency, sub_key) in currencies"
+                    :key="sub_key"
+                    class="btn"
+                    type="button"
+                    :class="extra_charge_currency && extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                    @click="extra_charge_currency = currency"
+                  >
+                    {{ currency.code }}
+                  </button>
+                </div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="d-flex align-items-center justify-content-between">
+                <p class="mb-0">
+                  {{ packageData.extra_charge | numFormat(checkFormatCurrency(packageData.extra_charge_currency)) }}
+                  {{ packageData.extra_charge_currency ? packageData.extra_charge_currency.code : '' }}
+                </p>
+                <button class="btn btn-default btn-sm" @click="packageData.edit_extra_charge = true">
+                  <i class="fas fa-edit" />
+                </button>
+              </div>
+            </template>
           </div>
         </template>
         <div class="form-group shop__search">
-          <label>{{ $t('label.selectDriver') }}</label>
+          <label class="w-100 text-left">{{ $t('label.selectDriver') }}</label>
           <input
             v-model="search"
             type="search"
@@ -160,14 +191,26 @@
           <i class="fas fa-times-circle mr-2" />
           <strong>{{ $t('btn.cancel') }}</strong>
         </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          @click="assignDriver"
-        >
-          <i class="fas fa-check-circle mr-2" />
-          <strong>{{ $t('btn.assign') }}</strong>
-        </button>
+        <template v-if="packageData.driver_id">
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="assignDriver('change_driver')"
+          >
+            <i class="fas fa-check-circle mr-2" />
+            <strong>{{ $t('btn.update') }}</strong>
+          </button>
+        </template>
+        <template v-else>
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="assignDriver"
+          >
+            <i class="fas fa-check-circle mr-2" />
+            <strong>{{ $t('btn.assign') }}</strong>
+          </button>
+        </template>
       </div>
     </div>
   </div>
@@ -213,7 +256,9 @@ export default {
     ...mapGetters({
       selected_driver: 'delivery/select_driver',
       dcid: 'delivery_company/dcid',
-      number_per_page: 'delivery_company/number_per_page'
+      number_per_page: 'delivery_company/number_per_page',
+      num_format_km: 'delivery_company/num_format_km',
+      num_format_en: 'delivery_company/num_format_en'
     }),
     confirmMessage () {
       return {
@@ -245,8 +290,20 @@ export default {
       }
       return false
     },
-    searchDriver (page = null, onloading = false) {
-      this.$store.dispatch('delivery/setDriver', null)
+    setDataDeliveryCharge (pac = null) {
+      if (pac) {
+        this.delivery_charge = pac.delivery_charge
+        this.delivery_charge_currency = pac.delivery_charge_currency
+        if (pac.partner_company) {
+          this.extra_charge = pac.extra_charge
+          this.extra_charge_currency = pac.extra_charge_currency
+        }
+      }
+    },
+    searchDriver (page = null, onloading = false, keepDriver = false) {
+      if (!keepDriver) {
+        this.$store.dispatch('delivery/setDriver', null)
+      }
       if (onloading) { this.onloading = true }
       this.page = 1
       if (page) {
@@ -258,7 +315,6 @@ export default {
     },
     setDefaultCurrency (currencies = []) {
       if (currencies && currencies.length) {
-        console.log('adas')
         this.delivery_charge_currency = currencies[0]
         if (this.packageData && this.packageData.partner_company) {
           this.extra_charge_currency = currencies[0]
@@ -289,7 +345,7 @@ export default {
     selectDriver (driver) {
       this.$store.dispatch('delivery/setDriver', driver)
     },
-    assignDriver () {
+    assignDriver (editFormType = 'edit') {
       if (this.selected_driver) {
         this.onConfirm({
           icon: 'warning',
@@ -301,7 +357,7 @@ export default {
           if (accept) {
             const data = {
               edit_form: 'assign',
-              edit_form_type: 'edit'
+              edit_form_type: editFormType
             }
             if (this.packageData) {
               data.id = this.packageData._id

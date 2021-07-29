@@ -107,6 +107,14 @@ body {
   background-color: var(--teal);
 }
 
+.bg-orange {
+  background-color: var(--orange);
+}
+
+.bg-orange, .bg-orange>a {
+  color: white !important;
+}
+
 .mx-datepicker {
   display: block;
   width: 100%;

@@ -102,6 +102,21 @@
                 </li>
                 <li class="nav-item" role="presentation">
                   <a
+                    id="tabs-reject"
+                    class="nav-link d-flex justify-content-between align-items-center"
+                    href="#list-package_reject"
+                    role="tab"
+                    data-toggle="pill"
+                    aria-controls="pills-package_reject"
+                  >
+                    <strong>{{ $t('label.rejected_packages') }}</strong>
+                    <span v-if="driver_data.reject_packages" class="badge badge-primary badge-pill ml-3">
+                      {{ driver_data.reject_packages.length }}
+                    </span>
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a
                     id="tabs-profile-list"
                     class="nav-link d-flex justify-content-between align-items-center"
                     href="#list-package_delay"
@@ -156,11 +171,35 @@
                         @click="acceptDelivery"
                       >
                         <i class="fas fa-check-circle mr-2" />
-                        <strong>{{ $t('btn.accept_delivery') }}</strong>
+                        <strong>{{ $t('btn.accept_all_packages') }}</strong>
+                      </button>
+                      <button
+                        v-if="driver_data.have_assign_package"
+                        class="btn btn-danger btn-sm"
+                        @click="rejectDelivery"
+                      >
+                        <i class="fas fa-times-circle mr-2" />
+                        <strong>{{ $t('btn.reject_all_packages') }}</strong>
                       </button>
                     </div>
                     <div class="col-lg-12">
-                      <DriverPackageList :list-packages="driver_data.packages_in_hand" />
+                      <DriverPackageList
+                        :list-packages="driver_data.packages_in_hand"
+                        :show-accept-botton="true"
+                        :show-reject-button="true"
+                        :show-cancel-button="true"
+                        :show-complete-button="true"
+                        @onClickAccept="acceptByEachPackage"
+                        @onClickReject="rejectByEachPackage"
+                        @refreshData="refreshDriverData"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div id="list-package_reject" class="tab-pane fade" role="tabpanel" aria-labelledby="list-profile-tab">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <DriverPackageList :list-packages="driver_data.reject_packages" />
                     </div>
                   </div>
                 </div>
@@ -191,7 +230,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -249,11 +287,10 @@ export default {
       }, 1500)
     },
     calculatePrice () {
-      if (this.driver_data.packages && this.driver_data.packages.length > 0) {
-        const packages = this.driver_data.packages
+      if (this.driver_data.packages_in_hand && this.driver_data.packages_in_hand.length > 0) {
+        const packages = this.driver_data.packages_in_hand
         packages.forEach((item) => {
           let currency = null
-          console.log('asdadsa')
           if (item.currency) {
             currency = item.currency
             this.total_riel += this.exchangeMoney(currency.code, 'KHR', item.price)
@@ -266,23 +303,59 @@ export default {
         })
       }
     },
-    acceptDelivery () {
+    acceptByEachPackage (item) {
+      if (item) {
+        this.acceptDelivery(event, item._id)
+      }
+    },
+    acceptDelivery (event, packageId = null) {
       this.onConfirm({
         icon: 'warning',
         title: this.$t('menu.delivery'),
-        text: this.$t('label.start_delivery'),
+        text: packageId ? this.$t('label.start_delivery') : this.$t('label.accept_all_packages'),
         confirmButtonText: this.$t('string.ok'),
         cancelButtonText: this.$t('string.cancel')
       }).then((accept) => {
         if (accept) {
           this.$axios.post(this.$base_api + '/api/backend/driver/accept-delivery', {
-            id: this.$route.params.id
+            id: this.$route.params.id,
+            package_id: packageId
           }).then((res) => {
             this.driver_data = res.data.data
           }).catch((error) => {
             this.onResponseError(error)
           })
         }
+      })
+    },
+    rejectByEachPackage (item) {
+      this.rejectDelivery(event, item._id)
+    },
+    rejectDelivery (event, packageId = null) {
+      this.onConfirm({
+        icon: 'warning',
+        title: this.$t('menu.delivery'),
+        text: packageId ? this.$t('label.reject_package') : this.$t('label.reject_all_packages'),
+        cancelButtonColor: '#3a7afe',
+        confirmButtonColor: '#ed524f',
+        confirmButtonText: this.$t('string.ok'),
+        cancelButtonText: this.$t('string.cancel')
+      }).then((accept) => {
+        this.$axios.post(this.$base_api + '/api/backend/driver/reject-delivery', {
+          id: this.$route.params.id,
+          package_id: packageId
+        }).then((res) => {
+          this.driver_data = res.data.data
+        }).catch((error) => {
+          this.onResponseError(error)
+        })
+      })
+    },
+    refreshDriverData () {
+      this.$axios.post(this.$base_api + '/api/backend/driver/show', {
+        id: this.$route.params.id
+      }).then((res) => {
+        this.driver_data = res.data.data
       })
     }
   }
@@ -300,5 +373,12 @@ export default {
     width: 25px;
     text-align: center;
   }
+}
+
+.checkbox-xl .custom-control-label::before,
+.checkbox-xl .custom-control-label::after {
+  top: 1.2rem;
+  width: 1.85rem;
+  height: 1.85rem;
 }
 </style>
