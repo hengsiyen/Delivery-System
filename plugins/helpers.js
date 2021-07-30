@@ -358,6 +358,8 @@ const helpers = {
               return 'fa-cube bg-teal'
             case 'assigned':
               return 'fa-user-check bg-info'
+            case 'reject':
+              return 'fa-user-times'
             case 'delivery':
               return 'fa-motorcycle bg-blue'
             case 'success':
@@ -401,8 +403,8 @@ const helpers = {
               break
             case 'reject':
               st = {
-                en: 'Reject Package',
-                km: 'បដិសេធកញ្ចប់អីវ៉ាន់'
+                en: 'Rejected Package',
+                km: 'កញ្ចប់ដែលបានបដិសេធ'
               }
               break
             case 'success':
@@ -457,6 +459,9 @@ const helpers = {
         },
         notBeforeToday (date) {
           return date < new Date(new Date().setHours(0, 0, 0, 0))
+        },
+        notAfterToday (date) {
+          return date > new Date(new Date().setHours(0, 0, 0, 0))
         },
         checkFormatCurrency (currency) {
           if (currency) {

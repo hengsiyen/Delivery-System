@@ -37,7 +37,7 @@ export default {
       currencies: 'delivery_company/currencies'
     })
   },
-  mounted () {
+  created () {
     if (!this.delivery_company) {
       const deliveryCompany = this.$cookies.get('dc')
       this.$store.dispatch('delivery_company/setDeliveryCompany', deliveryCompany)
