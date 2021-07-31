@@ -19,7 +19,7 @@
         </div>
         <div class="card-body shop-card_body">
           <div v-if="shop" class="row">
-            <div class="col-lg-8 shop_package-report">
+            <div class="col-lg-8 col-xl-9 shop_package-report">
               <div class="row mb-3">
                 <div class="col-lg-12">
                   <div class="form-inline justify-content-center">
@@ -34,6 +34,7 @@
                         input-class="form-control w-100"
                         :disabled-date="notAfterToday"
                         :clearable="false"
+                        @input="setDate('other')"
                       />
                     </div>
                     <div class="form-group mr-3">
@@ -70,7 +71,7 @@
                         v-model="status"
                         name="status"
                         class="custom-select"
-                        @change="getShopReport(1)"
+                        @change="refreshData"
                       >
                         <option :value="null">
                           {{ $t('label.all') }}
@@ -94,15 +95,15 @@
                   </div>
                 </div>
               </div>
-              <div class="row mb-3">
-                <div class="col-lg-3">
+              <div class="row">
+                <div class="col-lg-6 col-xl-3">
                   <ShopCard
                     :title="$t('label.new_packages')"
                     :card-value="count_new_packages"
                     icon-class="bg-teal"
                   />
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6 col-xl-3">
                   <ShopCard
                     :title="$t('label.assigned_packages')"
                     :card-value="count_assigned_packages"
@@ -110,7 +111,7 @@
                     icon-class="bg-info"
                   />
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6 col-xl-3">
                   <ShopCard
                     :title="$t('label.reject_packages')"
                     :card-value="count_reject_packages"
@@ -118,7 +119,7 @@
                     icon-class="bg-orange"
                   />
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6 col-xl-3">
                   <ShopCard
                     :title="$t('label.delivery_package')"
                     :card-value="count_delivery_packages"
@@ -127,8 +128,8 @@
                   />
                 </div>
               </div>
-              <div class="row mb-3">
-                <div class="col-lg-3">
+              <div class="row">
+                <div class="col-lg-6 col-xl-3">
                   <ShopCard
                     :title="$t('label.delay_package')"
                     :card-value="count_delay_packages"
@@ -136,7 +137,7 @@
                     icon="fas fa-hourglass-half"
                   />
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6 col-xl-3">
                   <ShopCard
                     :title="$t('label.complete_package')"
                     :card-value="count_complete_packages"
@@ -144,7 +145,7 @@
                     icon="fas fa-check"
                   />
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6 col-xl-3">
                   <ShopCard
                     :title="$t('label.cancel_package')"
                     :card-value="count_cancel_packages"
@@ -152,7 +153,7 @@
                     icon="fas fa-times"
                   />
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6 col-xl-3">
                   <ShopCard
                     :title="$t('label.return_package')"
                     :card-value="count_return_packages"
@@ -178,14 +179,14 @@
                   </template>
                   <template v-else>
                     <ShopPackageList :list-packages="packages" />
-                    <div v-if="packages && packages.length > 1" class="row">
+                    <div v-if="packages && total_pages > 1" class="row">
                       <div class="col-12">
                         <paginate
                           v-model="page"
                           :page-count="total_pages"
                           :page-range="3"
                           :margin-pages="2"
-                          :click-handler="getTrackingPackageList"
+                          :click-handler="getShopReport"
                           :prev-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.prev')}</span>`"
                           :next-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.next')}</span>`"
                           :container-class="'pagination justify-content-end mt-3'"
@@ -202,7 +203,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 shop-info-block">
+            <div class="col-lg-4 col-xl-3 shop-info-block">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="shop-image-logo">
@@ -370,21 +371,24 @@ export default {
             this.$moment()._d,
             this.$moment()._d
           ]
-          this.refreshData(1)
+          this.refreshData()
           break
         case 'week':
           this.filter_date = [
             this.$moment().startOf('week')._d,
             this.$moment()._d
           ]
-          this.refreshData(1)
+          this.refreshData()
           break
         case 'month':
           this.filter_date = [
             this.$moment().startOf('month')._d,
             this.$moment()._d
           ]
-          this.refreshData(1)
+          this.refreshData()
+          break
+        default:
+          this.refreshData()
           break
       }
     },

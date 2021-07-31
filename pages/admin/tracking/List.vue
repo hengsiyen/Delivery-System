@@ -405,7 +405,7 @@
           </template>
         </div>
       </div>
-      <div v-if="list_packages && list_packages.length > 1" class="row">
+      <div v-if="list_packages && total_pages > 1" class="row">
         <div class="col-12">
           <paginate
             v-model="page"
@@ -506,7 +506,7 @@ export default {
       driver: null,
       is_paid: null,
       partner_company: null,
-      created_at: new Date(),
+      created_at: null,
       assigned_at: null,
       finished_at: null
     }
@@ -547,7 +547,7 @@ export default {
       this.driver = null
       this.partner_company_id = null
       this.partner_company = null
-      this.created_at = new Date()
+      this.created_at = null
       this.assigned_at = null
       this.finished_at = null
       this.refreshDatatable()

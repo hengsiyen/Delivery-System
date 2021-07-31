@@ -318,7 +318,7 @@
           </template>
         </div>
       </div>
-      <div v-if="list_packages && list_packages.length > 1" class="row">
+      <div v-if="list_packages && total_pages > 1" class="row">
         <div class="col-12">
           <paginate
             v-model="page"

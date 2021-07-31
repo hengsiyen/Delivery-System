@@ -48,6 +48,8 @@ export default {
   border-radius: 0.25rem;
   box-shadow: 0 4px 6px 1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   padding: 20px;
+  background: white;
+  margin-bottom: 1rem;
   & .shop-card-header {
     display: flex;
     width: 100%;

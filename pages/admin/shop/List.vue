@@ -33,6 +33,80 @@
         />
       </div>
     </div>
+    <div id="advancedFilter" class="collapse">
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-xl-4">
+            <div class="form-group">
+              <label>
+                {{ $t('label.status') }}
+              </label>
+              <select
+                id="status"
+                v-model="is_enable"
+                name="status"
+                class="custom-select"
+                @change="refreshDatatable"
+              >
+                <option :value="null">
+                  {{ $t('label.all') }}
+                </option>
+                <template v-if="statuses && statuses.length">
+                  <option v-for="(item, key) in statuses" :key="key" :value="item">
+                    {{ item['name_' + $i18n.locale] }}
+                  </option>
+                </template>
+              </select>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="form-group">
+              <label>{{ $t('table.createdAt') }}</label>
+              <date-picker
+                v-model="created_at"
+                :placeholder="$t('string.select_range_date')"
+                :lang="datePickerLang"
+                :format="date_format"
+                input-class="form-control"
+                @input="refreshDatatable"
+                @clear="refreshDatatable"
+              />
+            </div>
+          </div>
+          <div class="col-xl-4 d-flex align-items-lg-end justify-content-end">
+            <div class="form-group">
+              <label />
+              <button class="btn btn-default" @click="clearFilter">
+                <strong>
+                  <i class="fas fa-eraser mr-2" />
+                  {{ $t('btn.reset') }}
+                </strong>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 d-flex align-items-center filter-items flex-wrap">
+      <div v-if="search_query" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
+        {{ $t('label.search') }}: {{ search_query }}
+        <button class="btn btn-default btn-xs" @click="search_query= null">
+          <i class="fa fa-times" />
+        </button>
+      </div>
+      <div v-if="is_enable" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
+        {{ $t('label.status') }}: {{ is_enable['name_' + $i18n.locale] }}
+        <button class="btn btn-default btn-xs" @click="is_enable = null">
+          <i class="fa fa-times" />
+        </button>
+      </div>
+      <div v-if="created_at" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
+        {{ $t('table.createdAt') }}: {{ $moment(created_at).format(date_format) }}
+        <button class="btn btn-default btn-xs" @click="created_at = null">
+          <i class="fa fa-times" />
+        </button>
+      </div>
+    </div>
     <template v-if="onloading">
       <div class="onloading">
         <i class="fas fa-circle-notch fa-spin" />
@@ -155,7 +229,7 @@
           </template>
         </div>
       </div>
-      <div v-if="list_shops && list_shops.length > 1" class="row">
+      <div v-if="list_shops && total_pages > 1" class="row">
         <div class="col-12">
           <paginate
             v-model="page"
@@ -190,10 +264,16 @@ export default {
       dcid: 'delivery_company/dcid'
     }),
     params () {
+      let createdAt = null
+      if (this.created_at) {
+        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
+      }
       return {
         lang: this.$i18n.locale,
-        search_query: this.search_query,
-        dcid: this.dcid
+        dcid: this.dcid,
+        search: this.search_query,
+        is_enable: this.is_enable ? this.is_enable.value : null,
+        created_at: createdAt
       }
     }
   },
@@ -221,13 +301,26 @@ export default {
       list_shops: [],
       page: 1,
       total_pages: 0,
-      search_query: null
+      date_format: 'DD/MM/YYYY',
+      search_query: null,
+      is_enable: null,
+      created_at: null,
+      statuses: [
+        { value: true, name_en: 'Enabled', name_km: 'បើកដំណើរការ' },
+        { value: false, name_en: 'Disabled', name_km: 'បិទដំណើរការ' }
+      ]
     }
   },
   mounted () {
     this.getShopList(1)
   },
   methods: {
+    clearFilter () {
+      this.search_query = null
+      this.is_enable = null
+      this.created_at = null
+      this.refreshDatatable()
+    },
     refreshDatatable () {
       this.onloading = true
       setTimeout(() => {
