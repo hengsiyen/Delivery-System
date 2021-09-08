@@ -267,7 +267,6 @@ export default {
           phone: this.phone
         })
         .then((res) => {
-          console.log(res.data.data)
           this.$store.dispatch('package/setThirdParty', {
             _id: res.data.data._id,
             name_en: res.data.data.name_en

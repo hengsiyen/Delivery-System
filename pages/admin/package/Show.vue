@@ -24,7 +24,7 @@
                 <div class="package__content">
                   <template v-if="package_data.package_transitions && package_data.package_transitions.length">
                     <div class="package_transition mb-4">
-                      <div class="timeline" :class="toggle_timline ? 'show-timeline' : 'hide-timeline'">
+                      <div class="timeline" :class="toggle_timeline ? 'show-timeline' : 'hide-timeline'">
                         <template v-for="(item, key) in package_data.package_transitions">
                           <div :key="key">
                             <i class="fas" :class="statusIcon(item)" />
@@ -32,7 +32,7 @@
                               <div class="text-dark">
                                 <strong>{{ checkStatus(item.status) }}</strong>
                               </div>
-                              <div><small>{{ item.description[ $i18n.locale] }}</small></div>
+                              <div><small>{{ item.description[$i18n.locale] }}</small></div>
                               <div><small>{{ $moment(item.created_at).format('llll') }}</small></div>
                             </div>
                           </div>
@@ -42,9 +42,9 @@
                         </div>
                       </div>
                       <div>
-                        <button class="btn btn-default" @click="toggle_timline = !toggle_timline">
-                          <i class="mr-2 fas" :class="toggle_timline ? 'fa-chevron-up' : 'fa-chevron-down'" />
-                          <strong v-if="toggle_timline">{{ $t('label.view_package_transitions') }}</strong>
+                        <button class="btn btn-default" @click="toggle_timeline = !toggle_timeline">
+                          <i class="mr-2 fas" :class="toggle_timeline ? 'fa-chevron-up' : 'fa-chevron-down'" />
+                          <strong v-if="toggle_timeline">{{ $t('label.view_package_transitions') }}</strong>
                           <strong v-else>{{ $t('label.hide_package_transitions') }}</strong>
                         </button>
                       </div>
@@ -279,6 +279,7 @@
                               <label class="text-capitalize">{{ $t('label.delivery_date') }}</label>
                               <date-picker
                                 v-model="request_delivery_at"
+                                value-type="format"
                                 type="datetime"
                                 :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
                                 :show-second="false"
@@ -325,7 +326,7 @@
                                     class="package_form-item-content-label w-100 text-truncate"
                                   >
                                     <i class="far fa-calendar-check mr-2" />
-                                    <label>{{ $moment(request_delivery_at).format('DD/MM/YYYY hh:mm:ss A') }}</label>
+                                    <label>{{ request_delivery_at }}</label>
                                   </div>
                                   <div v-if="note" class="package_form-item-content-label w-100 text-truncate">
                                     <i class="fas fa-sticky-note mr-2" />
@@ -446,7 +447,7 @@
                       <strong>{{ $t('btn.complete') }}</strong>
                     </button>
                   </template>
-                  <template v-if="showBtnAssign">
+                  <template v-if="showButtonAssign">
                     <button
                       type="button"
                       class="btn btn-default btn-block"
@@ -455,7 +456,9 @@
                       @click="openDriverModal"
                     >
                       <i class="fas fa-user-plus mr-2" />
-                      <strong>{{ package_data.driver_id ? $t('btn.change_driver') : $t('btn.assign') }}</strong>
+                      <strong>
+                        {{ package_data && package_data.driver_id ? $t('btn.change_driver') : $t('btn.assign') }}
+                      </strong>
                     </button>
                   </template>
                   <template v-if="showBtnDelay">
@@ -478,6 +481,15 @@
                         <i class="far fa-times-circle mr-2" />
                         <strong>{{ $t('btn.cancel') }}</strong>
                       </button>
+                      <button
+                        type="button"
+                        class="btn btn-default btn-block text-red"
+                        data-toggle="modal"
+                        data-target="#returnModal"
+                      >
+                        <i class="fas fa-share fa-flip-vertical mr-2" />
+                        <strong>{{ $t('btn.return') }}</strong>
+                      </button>
                     </template>
                   </template>
                 </div>
@@ -487,7 +499,7 @@
         </div>
       </div>
     </div>
-    <PackageHistoryModal :package-history="package_data.package_histories" />
+    <PackageHistoryModal :package-history="package_data ? package_data.package_histories : []" />
     <div
       id="shopModal"
       class="modal fade"
@@ -563,6 +575,18 @@
         @onSubmit="getDataFromChild"
       />
     </div>
+    <div
+      id="returnModal"
+      class="modal fade"
+      data-backdrop="static"
+      tabindex="-1"
+    >
+      <ReturnPackageModal
+        ref="returnPackageModal"
+        :package-id="$route.params.id"
+        @onSubmit="getDataFromChild"
+      />
+    </div>
   </div>
 </template>
 
@@ -577,10 +601,12 @@ import CompletePackageModel from '@/pages/admin/package/_components/CompletePack
 import AssignDriverModal from '@/pages/admin/package/_components/AssignDriverModal'
 import DelayPackageModal from '@/pages/admin/package/_components/DelayPackageModal'
 import CancelPackageModal from '@/pages/admin/package/_components/CancelPackageModal'
+import ReturnPackageModal from '@/pages/admin/package/_components/ReturnPackageModal'
 
 export default {
   name: 'PackageShow',
   components: {
+    ReturnPackageModal,
     CancelPackageModal,
     DelayPackageModal,
     AssignDriverModal,
@@ -590,24 +616,6 @@ export default {
     PackageFormItemButton,
     PackageHistoryModal,
     ButtonBack
-  },
-  asyncData (ctx) {
-    if (ctx.route.params.id) {
-      return ctx.$axios
-        .post(ctx.env.VUE_APP_API + '/api/backend/package/show', {
-          id: ctx.route.params.id
-        })
-        .then((res) => {
-          const result = res.data.data
-          return {
-            package_data: result
-          }
-        })
-    } else {
-      return {
-        package_data: null
-      }
-    }
   },
   created () {
     this.setDataPackage()
@@ -638,7 +646,7 @@ export default {
       }
       return a
     },
-    showBtnAssign () {
+    showButtonAssign () {
       const hiddenStatus = [
         'delivery',
         'success',
@@ -672,16 +680,18 @@ export default {
     }
   },
   mounted () {
+    this.getPackageData()
     this.getFetchData()
   },
   data () {
     return {
+      package_data: null,
       validate: null,
       currencies: [],
       package_types: [],
       payment_types: [],
 
-      toggle_timline: false,
+      toggle_timeline: false,
       edit_cn: false,
       edit_cp: false,
       edit_price: false,
@@ -713,6 +723,18 @@ export default {
     }
   },
   methods: {
+    getPackageData () {
+      this.$axios
+        .post(this.$base_api + '/api/backend/package/show', {
+          id: this.$route.params.id
+        })
+        .then((res) => {
+          this.package_data = res.data.data
+          this.setDataPackage()
+        }).catch((error) => {
+          this.onResponseError(error)
+        })
+    },
     checkValidate (key) {
       if (key) {
         return this.validate && this.validate.hasOwnProperty(key)
@@ -760,7 +782,7 @@ export default {
     },
     openDriverModal () {
       if (this.$refs.driverModal) {
-        if (this.package_data.driver_id && this.package_data.delivery_charge) {
+        if (this.package_data && this.package_data.driver_id && this.package_data.delivery_charge) {
           this.$set(this.package_data, 'edit_deliver_charge', false)
           this.$set(this.package_data, 'edit_extra_charge', false)
           this.$refs.driverModal.setDataDeliveryCharge(this.package_data)
@@ -818,18 +840,26 @@ export default {
         case 'payment':
           data.price = this.price
           data.is_paid = this.is_paid
-          if (this.payment_type) { data.payment_type_id = this.payment_type._id }
-          if (this.currency) { data.currency_id = this.currency._id }
+          if (this.payment_type) {
+            data.payment_type_id = this.payment_type._id
+          }
+          if (this.currency) {
+            data.currency_id = this.currency._id
+          }
           break
         case 'remark':
           data.note = this.note
-          if (this.package_type) { data.package_type_id = this.package_type._id }
+          if (this.package_type) {
+            data.package_type_id = this.package_type._id
+          }
           if (this.request_delivery_at) {
             data.request_delivery_at = this.$moment(this.request_delivery_at).format('YYYY-MM-DD HH:mm:ss')
           }
           break
         case 'shop':
-          if (this.shop) { data.shop_id = this.shop._id }
+          if (this.shop) {
+            data.shop_id = this.shop._id
+          }
           break
         case 'delivery_partner':
           if (editFormType === 'remove') {
@@ -848,7 +878,6 @@ export default {
         }).catch((error) => {
           if (error.response.status === 422) {
             this.validate = error.response.data.errors
-            console.log(this.validate = error.response.data.errors)
           }
         })
     },
@@ -892,7 +921,7 @@ export default {
         this.package_type = this.package_data.package_type
         this.old_pt = this.package_type
         if (this.package_data.request_delivery_at) {
-          this.request_delivery_at = this.$moment(this.package_data.request_delivery_at).format('DD/MM/YYYY')
+          this.request_delivery_at = this.$moment(this.package_data.request_delivery_at).format('DD/MM/YYYY hh:mm:ss A')
           this.old_rda = this.request_delivery_at
         }
         this.is_paid = this.package_data.is_paid

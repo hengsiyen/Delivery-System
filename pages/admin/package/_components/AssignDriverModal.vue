@@ -1,6 +1,6 @@
 <template>
   <div class="modal-dialog modal-dialog-scrollable modal-min-height modal-lg">
-    <div class="modal-content">
+    <div v-if="packageData" class="modal-content">
       <div class="modal-header">
         <h5 id="staticBackdropLabel" class="modal-title text-capitalize">
           <i class="fas fa-user-plus mr-2" />

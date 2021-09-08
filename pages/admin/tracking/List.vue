@@ -342,38 +342,40 @@
                 <div class="col-lg-4 package_item-block-action text-right">
                   <div class="package_item-block-btn">
                     <NuxtLink
-                      class="btn btn-default btn-sm btn-block"
+                      class="btn btn-default btn-block btn-sm"
                       :to="{name: 'show-package', params:{id: item._id}}"
                     >
                       <i class="fas fa-eye mr-2" />
                       <strong>{{ $t('label.view') }}</strong>
                     </NuxtLink>
                   </div>
-                  <div class="package_item-block-btn">
-                    <button
-                      type="button"
-                      class="btn btn-default btn-block"
-                      data-toggle="modal"
-                      :data-target="'#driverModal' + item._id"
-                      @click="openDriverModal(item)"
-                    >
-                      <i class="fas fa-user-plus mr-2" />
-                      <strong>{{ item.driver_id ? $t('btn.change_driver') : $t('btn.assign') }}</strong>
-                    </button>
-                    <div
-                      :id="'driverModal' + item._id"
-                      class="modal fade"
-                      tabindex="-1"
-                      data-backdrop="static"
-                    >
-                      <AssignDriverModal
-                        :ref="'driverModal' + item._id"
-                        :package-data="item"
-                        :currencies="currencies"
-                        @onSubmit="refreshDatatable"
-                      />
+                  <template v-if="showBtnAssign(item)">
+                    <div class="package_item-block-btn">
+                      <button
+                        type="button"
+                        class="btn btn-default btn-block btn-sm"
+                        data-toggle="modal"
+                        :data-target="'#driverModal' + item._id"
+                        @click="openDriverModal(item)"
+                      >
+                        <i class="fas fa-user-plus mr-2" />
+                        <strong>{{ item.driver_id ? $t('btn.change_driver') : $t('btn.assign') }}</strong>
+                      </button>
+                      <div
+                        :id="'driverModal' + item._id"
+                        class="modal fade"
+                        tabindex="-1"
+                        data-backdrop="static"
+                      >
+                        <AssignDriverModal
+                          :ref="'driverModal' + item._id"
+                          :package-data="item"
+                          :currencies="currencies"
+                          @onSubmit="refreshDatatable"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  </template>
                   <!--                  <div class="package_item-block-btn">-->
                   <!--                    <div class="dropdown">-->
                   <!--                      <button-->

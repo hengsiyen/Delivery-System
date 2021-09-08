@@ -11,6 +11,7 @@ import { deliveryRouters } from '@/routes/delivery'
 import App from '@/pages/admin/index'
 import { driverRouters } from '@/routes/userdriver'
 import { trackingRouters } from '@/routes/tracking'
+import { invoiceRouters } from '@/routes/invoice'
 
 export const defaultRouters = {
   path: '/admin',
@@ -27,6 +28,7 @@ export const defaultRouters = {
     deliveryRouters,
     driverRouters,
     shopRouters,
+    invoiceRouters,
     accountRouters,
     settingRouters,
     administrationRouters,

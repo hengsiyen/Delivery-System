@@ -28,7 +28,7 @@
       </div>
       <div class="col-lg-2">
         <ButtonAddNew
-          :link-to="'create-shop'"
+          :link-to="'create-invoice'"
           :custom-class="'btn btn-success btn-lg btn-block text-capitalize'"
         />
       </div>
@@ -43,16 +43,16 @@
               </label>
               <select
                 id="status"
-                v-model="is_enable"
+                v-model="is_paid"
                 name="status"
                 class="custom-select"
-                @change="refreshDatatable"
+                @change="refreshData"
               >
                 <option :value="null">
                   {{ $t('label.all') }}
                 </option>
-                <template v-if="statuses && statuses.length">
-                  <option v-for="(item, key) in statuses" :key="key" :value="item">
+                <template v-if="paid_status && paid_status.length">
+                  <option v-for="(item, key) in paid_status" :key="key" :value="item">
                     {{ item['name_' + $i18n.locale] }}
                   </option>
                 </template>
@@ -68,8 +68,8 @@
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"
-                @input="refreshDatatable"
-                @clear="refreshDatatable"
+                @input="refreshData"
+                @clear="refreshData"
               />
             </div>
           </div>
@@ -94,8 +94,8 @@
           <i class="fa fa-times" />
         </button>
       </div>
-      <div v-if="is_enable" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
-        {{ $t('label.status') }}: {{ is_enable['name_' + $i18n.locale] }}
+      <div v-if="is_paid" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
+        {{ $t('label.status') }}: {{ is_paid['name_' + $i18n.locale] }}
         <button class="btn btn-default btn-xs" @click="is_enable = null">
           <i class="fa fa-times" />
         </button>
@@ -115,12 +115,12 @@
     <template v-else>
       <div class="row">
         <div class="list_items col-12">
-          <template v-if="list_shops && list_shops.length">
-            <template v-for="(item, key) in list_shops">
+          <template v-if="invoices && invoices.length">
+            <template v-for="(item, key) in invoices">
               <div :key="key" class="list_item">
                 <div class="col-md-2 col-lg-2 col-xl-1">
-                  <template v-if="item.logo">
-                    <img :src="getSrc(item.logo)" alt="" class="img-thumbnail">
+                  <template v-if="item.shop && item.shop.logo">
+                    <img :src="getSrc(item.shop.logo)" alt="" class="img-thumbnail">
                   </template>
                   <template v-else>
                     <img :src="shop_img" alt="" class="img-thumbnail">
@@ -131,43 +131,48 @@
                     <div class="list_item-block-icon">
                       <i class="fas fa-store mr-2" />
                     </div>
-                    <div class="list_item-label text-truncate">
-                      {{ item.name_en }}
+                    <div v-if="item.shop" class="list_item-label text-truncate">
+                      {{ item.shop.name_en }}
                     </div>
                   </div>
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
                       <i class="fas fa-phone mr-2" />
                     </div>
-                    <div class="list_item-label text-truncate">
-                      {{ item.phone }}
+                    <div v-if="item.shop" class="list_item-label text-truncate">
+                      {{ item.shop.phone }}
                     </div>
                   </div>
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
                       <i class="fas fa-sticky-note mr-2" />
                     </div>
-                    <div class="list_item-status text-truncate" :class="item.enabled ? 'bg-green' : 'bg-red'">
-                      <span v-if="item.enabled">{{ $t('label.enabled') }}</span>
-                      <span v-else>{{ $t('label.disbled') }}</span>
+                    <div class="list_item-status text-truncate" :class="item.is_paid ? 'bg-green' : 'bg-red'">
+                      <span v-if="item.is_paid">{{ $t('label.paid') }}</span>
+                      <span v-else>{{ $t('label.not_pay_yet') }}</span>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-5">
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
-                      <i class="fas fa-user mr-2" />
+                      <i class="fas fa-hashtag mr-2" />
                     </div>
                     <div class="list_item-label text-truncate">
-                      {{ item.owner_name }}
+                      {{ item.code }}
                     </div>
                   </div>
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
-                      <i class="fas fa-map-marker-alt mr-2" />
+                      <i class="fas fa-donate mr-2" />
                     </div>
                     <div class="list_item-label text-truncate">
-                      {{ item['address_' + $i18n.locale] }}
+                      <strong>
+                        {{ item.total_price_riel | numFormat(numFormatKm) }} KHR
+                      </strong>
+                      <small>
+                        ( <strong>{{ item.total_price_dollar | numFormat(numFormatEn) }} USD</strong> )
+                      </small>
                     </div>
                   </div>
                   <div class="list_item-block">
@@ -183,7 +188,7 @@
                   <div class="list_item-block-btn">
                     <NuxtLink
                       class="btn btn-default btn-sm btn-block"
-                      :to="{name: 'show-shop', params:{id: item._id}}"
+                      :to="{name: 'show-invoice', params:{id: item._id}}"
                     >
                       <i class="fas fa-eye mr-2" />
                       <strong>{{ $t('label.view') }}</strong>
@@ -191,7 +196,7 @@
                   </div>
                   <div class="list_item-block-btn">
                     <NuxtLink
-                      :to="{name: 'edit-shop', params: {id: item._id}}"
+                      :to="{name: 'edit-invoice', params: {id: item._id}}"
                       class="btn btn-default btn-sm btn-block"
                     >
                       <i class="fas fa-edit mr-2" />
@@ -209,14 +214,14 @@
           </template>
         </div>
       </div>
-      <div v-if="list_shops && total_pages > 1" class="row">
+      <div v-if="invoices && total_pages > 1" class="row">
         <div class="col-12">
           <paginate
             v-model="page"
             :page-count="total_pages"
             :page-range="3"
             :margin-pages="2"
-            :click-handler="getShopList"
+            :click-handler="getInvoiceList"
             :prev-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.prev')}</span>`"
             :next-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.next')}</span>`"
             :container-class="'pagination justify-content-end mt-3'"
@@ -232,15 +237,34 @@
     </template>
   </div>
 </template>
+
 <script>
+import { mapGetters } from 'vuex'
 import { debounce } from 'debounce'
 import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
-import { mapGetters } from 'vuex'
+
 export default {
-  name: 'ShopList',
+  name: 'List',
   components: { ButtonAddNew },
+  data () {
+    return {
+      onloading: false,
+      invoices: [],
+      page: 1,
+      total_pages: 0,
+      date_format: 'DD/MM/YYYY',
+      search_query: null,
+      is_paid: null,
+      created_at: null,
+      paid_status: [
+        { name_en: 'Paid', name_km: 'បង់ប្រាក់ហើយ', value: true },
+        { name_en: 'Not pay yet', name_km: 'មិនទាន់បង់ប្រាក់', value: false }
+      ]
+    }
+  },
   computed: {
     ...mapGetters({
+      number_per_page: 'delivery_company/number_per_page',
       dcid: 'delivery_company/dcid'
     }),
     params () {
@@ -251,15 +275,15 @@ export default {
       return {
         lang: this.$i18n.locale,
         dcid: this.dcid,
-        search: this.search_query,
-        is_enable: this.is_enable ? this.is_enable.value : null,
+        search_query: this.search_query,
+        is_paid: this.is_paid ? this.is_paid.value : null,
         created_at: createdAt
       }
     }
   },
   watch: {
     params () {
-      this.refreshDatatable()
+      this.refreshData()
     },
     search_query (val) {
       this.onloading = true
@@ -268,50 +292,34 @@ export default {
           clearTimeout(this.time_out)
         }
         this.time_out = setTimeout(() => {
-          this.getShopList(1)
+          this.getInvoiceList(1)
           this.awaitingSearch = false
         }, 1000)
       }
       this.awaitingSearch = true
     }
   },
-  data () {
-    return {
-      onloading: true,
-      list_shops: [],
-      page: 1,
-      total_pages: 0,
-      date_format: 'DD/MM/YYYY',
-      search_query: null,
-      is_enable: null,
-      created_at: null,
-      statuses: [
-        { value: true, name_en: 'Enabled', name_km: 'បើកដំណើរការ' },
-        { value: false, name_en: 'Disabled', name_km: 'បិទដំណើរការ' }
-      ]
-    }
-  },
   mounted () {
-    this.getShopList(1)
+    this.refreshData()
   },
   methods: {
     clearFilter () {
       this.search_query = null
-      this.is_enable = null
+      this.is_paid = null
       this.created_at = null
-      this.refreshDatatable()
+      this.refreshData()
     },
-    refreshDatatable () {
+    refreshData () {
       this.onloading = true
       setTimeout(() => {
-        this.getShopList(1)
+        this.getInvoiceList(1)
       }, 500)
     },
-    getShopList: debounce(function (page = null) {
+    getInvoiceList: debounce(function (page = 1) {
       if (page) {
         this.page = page
       }
-      this.$axios.post(this.$base_api + '/api/backend/shop/list',
+      this.$axios.post(this.$base_api + '/api/backend/invoice/list',
         Object.assign({
           page: this.page,
           number_per_page: this.number_per_page,
@@ -319,7 +327,7 @@ export default {
         }, this.params))
         .then((res) => {
           this.total_pages = res.data.total_pages
-          this.list_shops = res.data.data
+          this.invoices = res.data.data
         }).catch((error) => {
           this.onResponseError(error)
         }).finally(() => {

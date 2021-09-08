@@ -13,6 +13,16 @@
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
+        <NuxtLink
+          :to="{name: 'mobile-package-create'}"
+          class="nav-link"
+          href="#"
+          role="button"
+        >
+          <i class="fas fa-cube" />
+        </NuxtLink>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search" />
         </a>
@@ -60,17 +70,17 @@
           <i class="fas fa-power-off" />
         </a>
       </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          data-widget="control-sidebar"
-          data-slide="true"
-          href="#"
-          role="button"
-        >
-          <i class="fas fa-th-large" />
-        </a>
-      </li>
+<!--      <li class="nav-item">-->
+<!--        <a-->
+<!--          class="nav-link"-->
+<!--          data-widget="control-sidebar"-->
+<!--          data-slide="true"-->
+<!--          href="#"-->
+<!--          role="button"-->
+<!--        >-->
+<!--          <i class="fas fa-th-large" />-->
+<!--        </a>-->
+<!--      </li>-->
     </ul>
   </nav>
 </template>
@@ -100,6 +110,11 @@ export default {
               this.$router.push({ path: '/' })
               this.$cookies.remove(process.env.VUE_APP_TOKEN)
               this.$cookies.remove(process.env.VUE_APP_REFRESH_TOKEN)
+              localStorage.removeItem('dc')
+              localStorage.clear()
+              this.$cookies.remove('dc_currency')
+              this.$cookies.remove('dc_exchange')
+              this.$cookies.remove('currencies')
               this.$isLoading(false)
             })
         }

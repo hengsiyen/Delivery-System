@@ -283,16 +283,18 @@
                       <i class="fas fa-eye mr-2" />
                       <strong>{{ $t('label.view') }}</strong>
                     </NuxtLink>
-                    <button
-                      type="button"
-                      class="btn btn-default btn-block"
-                      data-toggle="modal"
-                      :data-target="'#driverModal' + item._id"
-                      @click="openDriverModal(item)"
-                    >
-                      <i class="fas fa-user-plus mr-2" />
-                      <strong>{{ item.driver_id ? $t('btn.change_driver') : $t('btn.assign') }}</strong>
-                    </button>
+                    <template v-if="showBtnAssign(item)">
+                      <button
+                        type="button"
+                        class="btn btn-default btn-sm btn-block"
+                        data-toggle="modal"
+                        :data-target="'#driverModal' + item._id"
+                        @click="openDriverModal(item)"
+                      >
+                        <i class="fas fa-user-plus mr-2" />
+                        <strong>{{ item.driver_id ? $t('btn.change_driver') : $t('btn.assign') }}</strong>
+                      </button>
+                    </template>
                     <div
                       :id="'driverModal' + item._id"
                       class="modal fade"

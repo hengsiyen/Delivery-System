@@ -116,24 +116,22 @@ export default {
   },
   methods: {
     onLogin (e) {
-      const self = this
-      self.isLoginFail = false
-      self.messageLoginFail = ''
-      self.validations = {}
-      self.$isLoading(true)
-      self.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/login', self.credentials)
+      this.isLoginFail = false
+      this.messageLoginFail = ''
+      this.validations = {}
+      this.$isLoading(true)
+      this.$axios.post(process.env.VUE_APP_API + '/api/auth/backend/login', this.credentials)
         .then(({ data }) => {
           if (data) {
             const result = data.data
             const token = result.access_token
             const refresh = result.refresh_token
             const deliveryCompany = result.delivery_company
-            console.log(deliveryCompany)
-            self.$cookies.set(process.env.VUE_APP_TOKEN, token)
-            self.$cookies.set(process.env.VUE_APP_REFRESH_TOKEN, refresh)
+            this.$cookies.set(process.env.VUE_APP_TOKEN, token)
+            this.$cookies.set(process.env.VUE_APP_REFRESH_TOKEN, refresh)
 
-            self.$axios.setHeader('Authorization', 'Bearer ' + token)
-            self.$axios.setHeader('Accept', 'application/json')
+            this.$axios.setHeader('Authorization', 'Bearer ' + token)
+            this.$axios.setHeader('Accept', 'application/json')
 
             $.ajaxSetup({
               headers: {
@@ -143,23 +141,25 @@ export default {
             })
 
             if (deliveryCompany) {
-              self.$cookies.set('dc', JSON.stringify(deliveryCompany))
-              self.$cookies.set('dc_exchange', JSON.stringify(deliveryCompany.exchange_rate_enabled))
-              this.$store.dispatch('delivery_company/setDeliveryCompany', deliveryCompany)
-              this.$store.dispatch('delivery/setExchangeRate', deliveryCompany.exchange_rate_enabled)
-            }
-            self.getCurrency()
-            self.$store.dispatch('user/setUserRolesPermissions', result)
+              localStorage.setItem('dc', JSON.stringify(deliveryCompany))
+              this.$cookies.set('dc_currency', JSON.stringify(deliveryCompany.currency))
+              this.$cookies.set('dc_exchange', JSON.stringify(deliveryCompany.exchange_rate_enabled))
 
-            self.$router.push({
+              this.$store.dispatch('delivery_company/setDeliveryCompany', deliveryCompany)
+              this.$store.dispatch('delivery_company/setCurrency', deliveryCompany.currency)
+              this.$store.dispatch('delivery_company/setExchangeRate', deliveryCompany.exchange_rate_enabled)
+            }
+            this.getCurrency()
+            this.$store.dispatch('user/setUserRolesPermissions', result)
+
+            this.$router.push({
               name: 'admin'
             })
           }
         })
         .catch((error) => {
-          console.log(error.response)
           if (error.response.status === 422) {
-            self.validations = error.response.data.errors
+            this.validations = error.response.data.errors
           } else if (error.response.status === 500) {
             this.onResponseError(error)
           } else {
@@ -175,8 +175,8 @@ export default {
     getCurrency () {
       this.$axios.post(this.$base_api + '/api/backend/currency/get-options')
         .then((res) => {
-          this.$cookies.set('dc_currencies', JSON.stringify(res.data.data))
-          this.$store.dispatch('delivery_company/setCurrency', res.data.data)
+          this.$cookies.set('currencies', JSON.stringify(res.data.data))
+          this.$store.dispatch('delivery_company/setCurrencies', res.data.data)
         })
         .catch((error) => {
           this.onResponseError(error)

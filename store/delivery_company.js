@@ -6,6 +6,7 @@ export const state = () => ({
   number_per_page: 30,
   num_format_km: '0,0',
   num_format_en: '0,0.00',
+  currency: null,
   currencies: [],
   payment_types: [],
   package_types: []
@@ -23,7 +24,10 @@ export const getters = {
   number_per_page: state => state.number_per_page,
   num_format_km: state => state.num_format_km,
   num_format_en: state => state.num_format_en,
-  currencies: state => state.currencies
+  currencies: state => state.currencies,
+  currency: state => state.currency,
+  payment_types: state => state.payment_types,
+  package_types: state => state.package_types
 }
 
 export const mutations = {
@@ -33,8 +37,11 @@ export const mutations = {
   setExchangeRate (state, data) {
     Vue.set(state, 'exchange', data)
   },
-  setCurrency (state, data) {
+  setCurrencies (state, data) {
     Vue.set(state, 'currencies', data)
+  },
+  setCurrency (state, data) {
+    Vue.set(state, 'currency', data)
   }
 }
 
@@ -44,6 +51,9 @@ export const actions = {
   },
   setExchangeRate ({ commit, state }, data) {
     commit('setExchangeRate', data)
+  },
+  setCurrencies ({ commit, state }, data) {
+    commit('setCurrencies', data)
   },
   setCurrency ({ commit, state }, data) {
     commit('setCurrency', data)

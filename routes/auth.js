@@ -1,5 +1,5 @@
-import Auth from '~/layouts/auth'
-import Login from '~/pages/index'
+import Auth from '@/layouts/auth'
+import Login from '@/pages/index'
 
 export const authRouters = {
   path: '/',

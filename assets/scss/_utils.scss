@@ -83,3 +83,15 @@ a.nav-link:hover {
       }
   }
 }
+
+label.text-normal {
+  font-weight: 500 !important;
+}
+
+.border-2 {
+  border-width: 2px !important;
+}
+
+.table .thead-dark th {
+  background-color: var(--dark);
+}

@@ -120,6 +120,13 @@ export default {
           permissions: [this.$Permissions.backend.shop.manage]
         },
         {
+          label: this.$t('menu.invoice'),
+          route: { name: 'list-invoice', groups: 'invoice' },
+          icon: 'nav-icon fas fa-address-book',
+          children: null,
+          permissions: [this.$Permissions.backend.invoice.manage]
+        },
+        {
           label: this.$t('menu.system'),
           route: null,
           icon: null,

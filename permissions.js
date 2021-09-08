@@ -48,6 +48,18 @@ const Permissions = {
       show: 'show-package',
       delete: 'delete-package'
     },
+    invoice: {
+      name: {
+        en: 'Invoice',
+        km: 'វិក្កយបត្រ'
+      },
+      manage: 'manage-invoice',
+      list: 'list-invoice',
+      create: 'create-invoice',
+      edit: 'edit-invoice',
+      show: 'show-invoice',
+      delete: 'delete-invoice'
+    },
     tracking: {
       name: {
         en: 'Tracking',

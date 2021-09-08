@@ -1,0 +1,17 @@
+.reason__item {
+  background-color: #f8f8f8;
+  border-radius: 0.25rem;
+  display: flex;
+  position: relative;
+  margin: 8px 0;
+  padding: 15px;
+  color: var(--dark);
+  font-weight: 700;
+  width: 100%;
+  cursor: pointer;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: #e6e6e6;
+  }
+}

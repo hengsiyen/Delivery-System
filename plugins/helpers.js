@@ -58,6 +58,19 @@ const helpers = {
             return this.getSrc(media)
           }
         },
+        moneyEquivalent (currency, value) {
+          const result = this.exchangeMoney(currency, currency === 'USD' ? 'KHR' : 'USD', value)
+          return parseFloat(result)
+        },
+        oppositeCurrency (currency) {
+          if (currency) {
+            if (currency.code === 'USD') {
+              return 'KHR'
+            }
+            return 'USD'
+          }
+          return 'USD'
+        },
         exchangeMoney (from, to, value) {
           if (value === '' || value === 0 || value === null) {
             value = 0
@@ -86,11 +99,7 @@ const helpers = {
                   } else {
                     result = value / 4100
                   }
-                  if (this.countDecimals(result)) {
-                    return parseFloat(result) + 0.005
-                  } else {
-                    return parseFloat(result)
-                  }
+                  return parseFloat(result)
               }
           }
         },
@@ -244,7 +253,6 @@ const helpers = {
                   this.$toastr('error', error.response.statusText, this.$t('string.error'))
                 }
               } catch (e) {
-                console.log('got error')
                 this.$toastr('error', this.$t('string.somethingWentWrong'), this.$t('string.error'))
               }
             }
@@ -472,6 +480,15 @@ const helpers = {
             }
           }
           return '0,0.00'
+        },
+        precise (num) {
+          const floatingPointCount = 10
+          const digit = ('' + num).split('.')[0].length
+          return parseFloat(Number.parseFloat(num).toPrecision(digit + floatingPointCount))
+        },
+        showBtnAssign (item) {
+          const status = ['assigned', 'reject', 'delay', 'cancel']
+          return status.includes(item.final_status)
         }
       }
     })

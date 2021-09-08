@@ -34,22 +34,30 @@ export default {
     ...mapGetters({
       delivery_company: 'delivery_company/delivery_company',
       exchange: 'delivery_company/dc_exchange_rate',
-      currencies: 'delivery_company/currencies'
+      currencies: 'delivery_company/currencies',
+      currency: 'delivery_company/currency'
     })
   },
-  created () {
+  beforeMount () {
     if (!this.delivery_company) {
-      const deliveryCompany = this.$cookies.get('dc')
-      this.$store.dispatch('delivery_company/setDeliveryCompany', deliveryCompany)
+      const deliveryCompany = localStorage.getItem('dc')
+      this.$store.dispatch('delivery_company/setDeliveryCompany', JSON.parse(deliveryCompany))
+    }
+    if (!this.currency) {
+      const currency = this.$cookies.get('dc_currency')
+      this.$store.dispatch('delivery_company/setCurrency', currency)
     }
     if (!this.exchange) {
       const exchange = this.$cookies.get('dc_exchange')
       this.$store.dispatch('delivery_company/setExchangeRate', exchange)
     }
     if (!(this.currencies && this.currencies.length)) {
-      const currencies = this.$cookies.get('dc_currencies')
-      this.$store.dispatch('delivery_company/setCurrency', currencies)
+      const currencies = this.$cookies.get('currencies')
+      this.$store.dispatch('delivery_company/setCurrencies', currencies)
     }
+  },
+  mounted () {
+    $('[data-widget="treeview"]').Treeview('init')
   }
 }
 </script>
