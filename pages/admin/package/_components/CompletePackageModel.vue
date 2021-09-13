@@ -27,7 +27,7 @@
             type="datetime"
             :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
             :show-second="false"
-            :placeholder="$t('string.select_range_date')"
+            :placeholder="$t('string.select_date')"
             :lang="datePickerLang"
             :format="'DD/MM/YYYY hh:mm:ss A'"
             input-class="form-control"

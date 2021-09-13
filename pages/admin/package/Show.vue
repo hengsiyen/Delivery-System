@@ -168,7 +168,7 @@
                                   name="price"
                                   type="number"
                                   class="form-control"
-                                  :placeholder="$t('pla.price')"
+                                  :placeholder="$t('pla.package_price')"
                                   aria-describedby="button-price"
                                   :class="{'is-invalid': checkValidate('price')}"
                                 >
@@ -180,7 +180,7 @@
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label>{{ $t('menu.payment_type') }}</label>
+                              <label>{{ $t('label.is_paid') }}</label>
                               <div class="input-group">
                                 <div :class="is_paid ? 'input-group-prepend' : 'btn-group' ">
                                   <button
@@ -232,7 +232,7 @@
                               <div class="d-flex align-items-center">
                                 <div class="package_form-item-content">
                                   <div class="package_form-item-content-label w-100 text-truncate">
-                                    <i class="fas fa-money mr-2" />
+                                    <i class="fas fa-money-bill mr-2" />
                                     <label>{{ currency ? price + ' ' + currency.code : price }}</label>
                                   </div>
                                   <div class="package_form-item-content-label w-100 text-truncate">
@@ -283,9 +283,9 @@
                                 type="datetime"
                                 :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
                                 :show-second="false"
-                                :placeholder="$t('string.select_range_date')"
+                                :placeholder="$t('string.select_date')"
                                 :lang="datePickerLang"
-                                :format="'DD/MM/YYYY hh:mm:ss A'"
+                                :format="show_date_format"
                                 input-class="form-control"
                               />
                             </div>
@@ -413,14 +413,62 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-4 pl-4">
+                    <div class="offset-lg-1 col-lg-3 pl-4">
                       <div class="form-group">
                         <label>Package Image</label>
                         <div class="mx-auto" style="width: 100%">
-                          <img src="/img/package.png" alt="" class="img-thumbnail">
-                          <button class="btn btn-primary btn-block mt-3">
-                            Upload Package Image
-                          </button>
+                          <template v-if="preview_img">
+                            <img :src="preview_img" alt="" class="img-thumbnail w-100">
+                          </template>
+                          <template v-else>
+                            <img :src="package_img" alt="" class="img-thumbnail">
+                          </template>
+                          <template v-if="image">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <button
+                                  class="btn btn-default mt-3 btn-block"
+                                  :class="{'disabled': onUpload}"
+                                  :disabled="onUpload"
+                                  @click="resetImage"
+                                >
+                                  <i class="far fa-times-circle mr-2" />
+                                  <strong>{{ $t('btn.cancel') }}</strong>
+                                </button>
+                              </div>
+                              <div class="col-lg-6">
+                                <button
+                                  class="btn btn-primary mt-3 btn-block"
+                                  :class="{'disabled': onUpload}"
+                                  :disabled="onUpload"
+                                  @click="uploadImage"
+                                >
+                                  <template v-if="onUpload">
+                                    <i class="fas fa-circle-notch fa-spin mr-2" />
+                                  </template>
+                                  <template v-else>
+                                    <i class="fas fa-save mr-2" />
+                                  </template>
+                                  <strong>{{ $t('btn.save') }}</strong>
+                                </button>
+                              </div>
+                            </div>
+                          </template>
+                          <template v-else>
+                            <button class="btn btn-primary btn-block mt-3 btn-upload-image">
+                              <i class="fas fa-edit mr-2" />
+                              <strong>
+                                {{ $t('label.edit_image') }}
+                              </strong>
+                              <input
+                                ref="getPackageImg"
+                                type="file"
+                                name="file"
+                                accept="image/*"
+                                @change="getPackageImg"
+                              >
+                            </button>
+                          </template>
                         </div>
                       </div>
                     </div>
@@ -679,12 +727,9 @@ export default {
       return true
     }
   },
-  mounted () {
-    this.getPackageData()
-    this.getFetchData()
-  },
   data () {
     return {
+      show_date_format: 'DD/MM/YYYY hh:mm A',
       package_data: null,
       validate: null,
       currencies: [],
@@ -719,8 +764,16 @@ export default {
       package_type: null,
       request_delivery_at: null,
       payment_type: null,
-      is_paid: false
+      is_paid: false,
+
+      preview_img: null,
+      image: null,
+      onUpload: false
     }
+  },
+  mounted () {
+    this.getFetchData()
+    this.getPackageData()
   },
   methods: {
     getPackageData () {
@@ -761,7 +814,7 @@ export default {
               return null
             })
           }
-          if (this.package_types.length) {
+          if (!this.package_type && this.package_types.length) {
             this.package_type = this.package_types[0]
           }
         }).catch((error) => {
@@ -826,47 +879,47 @@ export default {
 
     editPackage (editForm = null, editFormType = 'edit') {
       this.validate = null
-      const data = {
-        id: this.$route.params.id,
-        edit_form: editForm,
-        edit_form_type: editFormType
-      }
+      const data = new FormData()
+      data.append('id', this.$route.params.id)
+      data.append('edit_form', editForm)
+      data.append('edit_form_type', editFormType)
+
       switch (editForm) {
         case 'customer_info':
-          data.customer_name = this.customer_name
-          data.customer_phone = this.customer_phone
-          data.customer_address = this.customer_address
+          data.append('customer_name', this.customer_name)
+          data.append('customer_phone', this.customer_phone)
+          data.append('customer_address', this.customer_address)
           break
         case 'payment':
-          data.price = this.price
-          data.is_paid = this.is_paid
+          data.append('price', this.price)
+          data.append('is_paid', this.is_paid)
           if (this.payment_type) {
-            data.payment_type_id = this.payment_type._id
+            data.append('payment_type_id', this.payment_type._id)
           }
           if (this.currency) {
-            data.currency_id = this.currency._id
+            data.append('currency_id', this.currency._id)
           }
           break
         case 'remark':
-          data.note = this.note
+          data.append('note', this.note)
           if (this.package_type) {
-            data.package_type_id = this.package_type._id
+            data.append('package_type_id', this.package_type._id)
           }
           if (this.request_delivery_at) {
-            data.request_delivery_at = this.$moment(this.request_delivery_at).format('YYYY-MM-DD HH:mm:ss')
+            data.append('request_delivery_at', this.$moment(this.request_delivery_at, this.show_date_format).format('YYYY-MM-DD hh:mm A'))
           }
           break
         case 'shop':
           if (this.shop) {
-            data.shop_id = this.shop._id
+            data.append('shop_id', this.shop._id)
           }
           break
         case 'delivery_partner':
           if (editFormType === 'remove') {
             this.$store.dispatch('package/setThirdParty', null)
-            data.third_party_company_id = null
+            data.append('third_party_company_id', null)
           } else if (editFormType === 'edit' && this.third_party) {
-            data.third_party_company_id = this.third_party._id
+            data.append('third_party_company_id', this.third_party._id)
           }
           break
       }
@@ -878,6 +931,8 @@ export default {
         }).catch((error) => {
           if (error.response.status === 422) {
             this.validate = error.response.data.errors
+          } else {
+            this.onResponseError(error)
           }
         })
     },
@@ -921,7 +976,7 @@ export default {
         this.package_type = this.package_data.package_type
         this.old_pt = this.package_type
         if (this.package_data.request_delivery_at) {
-          this.request_delivery_at = this.$moment(this.package_data.request_delivery_at).format('DD/MM/YYYY hh:mm:ss A')
+          this.request_delivery_at = this.$moment(this.package_data.request_delivery_at).format(this.show_date_format)
           this.old_rda = this.request_delivery_at
         }
         this.is_paid = this.package_data.is_paid
@@ -930,6 +985,9 @@ export default {
         this.old_pyt = this.payment_type
         this.$store.dispatch('package/setThirdParty', this.package_data.partner_company)
         this.old_third_party = this.package_data.partner_company
+        if (this.package_data.media) {
+          this.preview_img = this.$base_api + '/' + this.package_data.media.src
+        }
       }
     },
     getDataFromChild (value) {
@@ -937,6 +995,41 @@ export default {
         this.package_data = value
         this.setDataPackage()
       }
+    },
+    getPackageImg (event) {
+      const file = event.target.files[0]
+      this.image = file
+      this.preview_img = URL.createObjectURL(file)
+    },
+    resetImage () {
+      this.image = null
+      if (this.package_data && this.package_data.media) {
+        this.preview_img = this.$base_api + '/' + this.package_data.media.src
+      } else {
+        this.preview_img = null
+      }
+    },
+    uploadImage () {
+      this.onUpload = true
+      setTimeout(() => {
+        const data = new FormData()
+        data.append('id', this.$route.params.id)
+        if (this.image) {
+          data.append('image', this.image)
+        }
+        this.$axios.post(this.$base_api + '/api/backend/package/upload-package-image', data)
+          .then((res) => {
+            this.package_data = res.data.data
+            this.resetImage()
+            this.resetValue()
+            this.setDataPackage()
+            this.$toastr('success', this.$t('string.uploadImageMessage'), this.$t('label.uploadImage'))
+          }).catch((error) => {
+            this.onResponseError(error)
+          }).finally(() => {
+            this.onUpload = false
+          })
+      }, 1000)
     }
   }
 }
@@ -987,5 +1080,20 @@ export default {
 .package_form-item-content-label i {
   width: 25px;
   padding-left: 2px;
+}
+
+.btn-upload-image {
+  position: relative;
+  overflow: hidden;
+
+  & input {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

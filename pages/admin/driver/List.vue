@@ -58,7 +58,7 @@
               <label>{{ $t('table.createdAt') }}</label>
               <date-picker
                 v-model="created_at"
-                :placeholder="$t('string.select_range_date')"
+                :placeholder="$t('string.select_date')"
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"

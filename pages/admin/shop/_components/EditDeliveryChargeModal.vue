@@ -49,7 +49,7 @@
                 <div class="d-flex align-items-center">
                   <div class="package_form-item-content">
                     <div class="package_form-item-content-label w-100 text-truncate">
-                      <i class="fas fa-money mr-2" />
+                      <i class="fas fa-money-bill mr-2" />
                       <label>{{ packageData.currency ? packageData.price + ' ' + packageData.currency.code : packageData.price }}</label>
                     </div>
                     <div class="package_form-item-content-label w-100 text-truncate">

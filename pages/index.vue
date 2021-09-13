@@ -114,6 +114,16 @@ export default {
       config: process.env
     }
   },
+  beforeCreate () {
+    const token = this.$cookies.get(process.env.VUE_APP_TOKEN)
+    if (token) {
+      // eslint-disable-next-line handle-callback-err
+      this.$router.push({ name: 'admin' }).catch((error) => {})
+    }
+  },
+  mounted () {
+    window.addEventListener('keypress', this.onPressEnter)
+  },
   methods: {
     onLogin (e) {
       this.isLoginFail = false
@@ -139,7 +149,9 @@ export default {
                 Authorization: `Bearer ${token}`
               }
             })
-
+            if (result.user && result.user.roles) {
+              this.$cookies.set('roles', JSON.stringify(result.user.roles))
+            }
             if (deliveryCompany) {
               localStorage.setItem('dc', JSON.stringify(deliveryCompany))
               this.$cookies.set('dc_currency', JSON.stringify(deliveryCompany.currency))
@@ -151,10 +163,7 @@ export default {
             }
             this.getCurrency()
             this.$store.dispatch('user/setUserRolesPermissions', result)
-
-            this.$router.push({
-              name: 'admin'
-            })
+            this.$router.push({ name: 'admin' })
           }
         })
         .catch((error) => {
@@ -187,16 +196,6 @@ export default {
         this.onLogin()
       }
     }
-  },
-  beforeCreate () {
-    const token = this.$cookies.get(process.env.VUE_APP_TOKEN)
-    if (token) {
-      // eslint-disable-next-line handle-callback-err
-      this.$router.push({ name: 'admin' }).catch((error) => {})
-    }
-  },
-  mounted () {
-    window.addEventListener('keypress', this.onPressEnter)
   },
   destroyed () {
     window.removeEventListener('keypress', this.onPressEnter)

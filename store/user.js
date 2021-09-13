@@ -3,6 +3,7 @@ import Vue from 'vue'
 // eslint-disable-next-line no-console
 export const state = () => ({
   data: null,
+  display_roles: [],
   administrators: [
     'administrator',
     'admin'
@@ -34,6 +35,10 @@ export const getters = {
       return state.data.roles
     }
     return []
+  },
+
+  getDisplayRoles: (state) => {
+    return state.display_roles
   }
 }
 
@@ -81,6 +86,10 @@ export const mutations = {
     if (state.data && state.data.avatar) {
       state.data.avatar = avatar
     }
+  },
+
+  setDisplayRoles (state, roles) {
+    state.display_roles = roles
   }
 }
 
@@ -107,6 +116,10 @@ export const actions = {
 
   setAvatar ({ commit }, avatar) {
     commit('setAvatar', avatar)
+  },
+
+  setDisplayRoles ({ commit, state }, data) {
+    commit('setDisplayRoles', data)
   }
 }
 

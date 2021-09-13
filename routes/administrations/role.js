@@ -26,8 +26,12 @@ export const roleRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'Role List',
-            name_km: 'បញ្ជីតួនាទី'
+            name_en: 'Role',
+            name_km: 'តួនាទី'
+          },
+          {
+            name_en: 'Role',
+            name_km: 'បញ្ជី'
           }
         ]
       }
@@ -45,13 +49,13 @@ export const roleRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'Role List',
-            name_km: 'បញ្ជីតួនាទី',
+            name_en: 'Role',
+            name_km: 'តួនាទី',
             route: { name: 'list-role' }
           },
           {
-            name_en: 'Create Role',
-            name_km: 'បង្កើតតួនាទី'
+            name_en: 'Add New',
+            name_km: 'បន្ថែមថ្មី'
           }
         ]
       }
@@ -69,13 +73,13 @@ export const roleRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'Role List',
-            name_km: 'បញ្ជីតួនាទី',
+            name_en: 'Role',
+            name_km: 'តួនាទី',
             route: { name: 'list-role' }
           },
           {
-            name_en: 'Role Detail',
-            name_km: 'លម្អីតព័ត៌មានតួនាទី'
+            name_en: 'Show',
+            name_km: 'បង្ហាញ'
           }
         ]
       }
@@ -93,13 +97,13 @@ export const roleRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'Role List',
-            name_km: 'បញ្ជីតួនាទី',
+            name_en: 'Role',
+            name_km: 'តួនាទី',
             route: { name: 'list-role' }
           },
           {
-            name_en: 'Edit Role',
-            name_km: 'កែប្រែព័ត៌មានតួនាទី'
+            name_en: 'Edit',
+            name_km: 'កែសម្រួល'
           }
         ]
       }

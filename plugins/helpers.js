@@ -19,6 +19,7 @@ const helpers = {
           ],
           avatar: '/img/avatar.png',
           shop_img: '/img/shop.png',
+          package_img: '/img/package.png',
           appName: process.env.VUE_APP_NAME
         }
       },
@@ -282,7 +283,9 @@ const helpers = {
             .then(async ({ data }) => {
               if (data.data) {
                 const result = data.data
-
+                if (result.user && result.user.roles) {
+                  this.$cookies.set('roles', JSON.stringify(result.user.roles))
+                }
                 await self.$store.dispatch('user/setUserRolesPermissions', result)
               }
             }).catch(async (error) => {

@@ -8,7 +8,7 @@
               v-model="filter_date"
               type="date"
               :range="true"
-              :placeholder="$t('string.select_range_date')"
+              :placeholder="$t('string.select_date')"
               :lang="datePickerLang"
               :format="'DD/MM/YYYY'"
               input-class="form-control w-100"

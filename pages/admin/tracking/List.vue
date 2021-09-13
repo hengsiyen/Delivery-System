@@ -152,7 +152,7 @@
               <label>{{ $t('table.createdAt') }}</label>
               <date-picker
                 v-model="created_at"
-                :placeholder="$t('string.select_range_date')"
+                :placeholder="$t('string.select_date')"
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"
@@ -166,7 +166,7 @@
               <label>{{ $t('table.assignedAt') }}</label>
               <date-picker
                 v-model="assigned_at"
-                :placeholder="$t('string.select_range_date')"
+                :placeholder="$t('string.select_date')"
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"
@@ -180,7 +180,7 @@
               <label>{{ $t('table.finishedAt') }}</label>
               <date-picker
                 v-model="finished_at"
-                :placeholder="$t('string.select_range_date')"
+                :placeholder="$t('string.select_date')"
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"

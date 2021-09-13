@@ -28,8 +28,12 @@ export const userRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'User List',
-            name_km: 'បញ្ជីអ្នកប្រើប្រាស់'
+            name_en: 'User',
+            name_km: 'អ្នកប្រើប្រាស់'
+          },
+          {
+            name_en: 'List',
+            name_km: 'បញ្ជី'
           }
         ]
       }
@@ -47,13 +51,13 @@ export const userRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'User List',
-            name_km: 'បញ្ជីអ្នកប្រើប្រាស់',
+            name_en: 'User',
+            name_km: 'អ្នកប្រើប្រាស់',
             route: { name: 'list-user' }
           },
           {
-            name_en: 'Create User',
-            name_km: 'បង្កើតអ្នកប្រើប្រាស់ថ្មី'
+            name_en: 'Add New',
+            name_km: 'បន្ថែមថ្មី'
           }
         ]
       }
@@ -71,13 +75,13 @@ export const userRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'User List',
-            name_km: 'បញ្ជីអ្នកប្រើប្រាស់',
+            name_en: 'User',
+            name_km: 'អ្នកប្រើប្រាស់',
             route: { name: 'list-user' }
           },
           {
-            name_en: 'Edit User',
-            name_km: 'កែប្រែព័ត៌មានអ្នកប្រើប្រាស់'
+            name_en: 'Edit',
+            name_km: 'កែសម្រួល'
           }
         ]
       }
@@ -95,13 +99,13 @@ export const userRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'User List',
-            name_km: 'បញ្ជីអ្នកប្រើប្រាស់',
+            name_en: 'User',
+            name_km: 'អ្នកប្រើប្រាស់',
             route: { name: 'list-user' }
           },
           {
-            name_en: 'Use Detail',
-            name_km: 'បង្ហាញព័ត៌មានអ្នកប្រើប្រាស់'
+            name_en: 'Show',
+            name_km: 'បង្ហាញ'
           }
         ]
       }
@@ -119,13 +123,13 @@ export const userRouters = {
             name_km: 'រដ្ឋបាល'
           },
           {
-            name_en: 'User List',
-            name_km: 'បញ្ជីអ្នកប្រើប្រាស់',
+            name_en: 'User',
+            name_km: 'អ្នកប្រើប្រាស់',
             route: { name: 'list-user' }
           },
           {
-            name_en: 'Reset User Password',
-            name_km: 'កំណត់ពាក្យសម្ងាត់របស់អ្នកប្រើប្រាស់ឡើងវិញ'
+            name_en: 'Reset Password',
+            name_km: 'កំណត់ពាក្យសម្ងាត់ឡើងវិញ'
           }
         ]
       }

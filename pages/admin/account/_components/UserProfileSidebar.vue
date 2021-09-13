@@ -1,77 +1,109 @@
 <template>
   <div v-if="user">
-    <div class="card card-widget widget-user">
-      <div class="widget-user-header bg-info">
-        <h3 class="widget-user-username">
-          {{ user.first_name }} {{ user.last_name }}
-        </h3>
-        <h5 class="widget-user-desc">
-          Web Developer
-        </h5>
-      </div>
-      <div class="widget-user-image">
-        <img
-          class="img-circle elevation-2"
-          :src="userAvatar"
-          alt="User Avatar"
-        >
-      </div>
-      <div class="card-footer">
-        <div class="row">
-          <div class="col-sm-4 border-right">
-            <div class="description-block">
-              <h5 class="description-header">
-                3,200
-              </h5>
-              <span class="description-text">SALES</span>
-            </div>
-          </div>
-          <div class="col-sm-4 border-right">
-            <div class="description-block">
-              <h5 class="description-header">
-                13,000
-              </h5>
-              <span class="description-text">FOLLOWERS</span>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="description-block">
-              <h5 class="description-header">
-                35
-              </h5>
-              <span class="description-text">PRODUCTS</span>
-            </div>
-          </div>
+    <div class="card">
+      <div class="card-body box-profile">
+        <div class="text-center d-flex flex-column">
+          <img
+            class="profile-user-img img-fluid img-circle border-1"
+            :src="userAvatar"
+            alt="User profile picture"
+          >
+          <a class="btn btn-link text-dark text-bold my-3" @click="toggleShow">
+            <i class="fas fa-camera mr-2" />
+            {{ $t('label.uploadYourAvatar') }}
+          </a>
+        </div>
+        <div>
+          <h3 class="profile-username text-center font-weight-bold">{{ user.full_name }}</h3>
+          <p class="text-muted text-center">{{ user.email }}</p>
         </div>
       </div>
     </div>
+    <vue-crop-avatar
+      v-model="show"
+      field="avatar"
+      :width="100"
+      :lang-type="langType"
+      :height="100"
+      :url="`${apiUrl}/api/auth/backend/change-avatar`"
+      :params="params"
+      :headers="headers"
+      img-format="png"
+      @crop-success="cropSuccess"
+      @crop-upload-success="cropUploadSuccess"
+      @crop-upload-fail="cropUploadFail"
+    />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'UserProfileSidebar',
   data () {
     return {
-      apiUrl: process.env.VUE_APP_API
+      apiUrl: process.env.VUE_APP_API,
+      show: false,
+      params: {
+        user_id: null,
+        name: 'avatar'
+      },
+      imgDataUrl: '',
+      img: '/img/flags/km.png',
+      headers: {
+        Authorization: `Bearer ${this.$cookies.get(process.env.VUE_APP_TOKEN)}`,
+        Accept: 'application/json'
+      }
     }
   },
   computed: {
     ...mapState({
       user: state => state.user.data
     }),
+    langType () {
+      return this.$i18n.locale
+    },
     userAvatar () {
       if (this.user.avatar) {
         return `${this.apiUrl}/${this.user.avatar}`
       }
       return this.avatar
     }
+  },
+  methods: {
+    ...mapActions([
+      'setUser'
+    ]),
+    toggleShow () {
+      this.show = !this.show
+    },
+    cropSuccess (imgDataUrl, field) {
+    },
+    cropUploadSuccess (jsonData, field) {
+      this.$store.dispatch('user/setUser', { user: jsonData.data })
+      this.imgDataUrl = this.apiUrl + '/' + jsonData.data.avatar
+    },
+    cropUploadFail (status, field) {
+    }
   }
 }
 </script>
 
 <style scoped>
+.change-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+}
 
+.container-avatar {
+  width: 300px;
+  height: 300px;
+  border: 1px solid #f1f1f1;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
 </style>

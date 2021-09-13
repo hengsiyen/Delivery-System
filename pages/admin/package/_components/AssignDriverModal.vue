@@ -24,7 +24,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label class="w-100 text-left"> {{ $t('label.delivery_charge') }}</label>
+          <label class="w-100 text-left required"> {{ $t('label.delivery_charge') }}</label>
           <template v-if="!(packageData.delivery_charge && packageData.driver_id) || packageData.edit_deliver_charge">
             <div class="input-group" :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}">
               <input
@@ -111,7 +111,7 @@
           </div>
         </template>
         <div class="form-group shop__search">
-          <label class="w-100 text-left">{{ $t('label.selectDriver') }}</label>
+          <label class="w-100 text-left required">{{ $t('label.selectDriver') }}</label>
           <input
             v-model="search"
             type="search"

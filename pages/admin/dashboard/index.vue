@@ -84,42 +84,41 @@
           />
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-7">
-              <XBox title="Monthly Report">
-                <x-chart-line />
-              </XBox>
-            </div>
-            <div class="col-md-5">
-              <XBox title="Users and Collaborations">
-                <x-chart-doughnut />
-              </XBox>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <XBox title="Analytic">
-            <x-chart-bar />
-          </XBox>
-        </div>
-      </div>
+      <!--      <div class="row">-->
+      <!--        <div class="col-md-12">-->
+      <!--          <div class="row">-->
+      <!--            <div class="col-md-7">-->
+      <!--              <XBox title="Monthly Report">-->
+      <!--                <x-chart-line />-->
+      <!--              </XBox>-->
+      <!--            </div>-->
+      <!--            <div class="col-md-5">-->
+      <!--              <XBox title="Users and Collaborations">-->
+      <!--                <x-chart-doughnut />-->
+      <!--              </XBox>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      <div class="row">-->
+      <!--        <div class="col-md-12">-->
+      <!--          <XBox title="Analytic">-->
+      <!--            <x-chart-bar />-->
+      <!--          </XBox>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </template>
   </div>
 </template>
 
 <script>
 
-import XBox from '@/components/Widgets/XBox'
 import { mapGetters } from 'vuex'
 import ShopCard from '@/pages/admin/shop/_components/ShopCard'
 
 export default {
   name: 'Dashboard',
-  components: { ShopCard, XBox },
+  components: { ShopCard },
   head () {
     return {
       title: this.$t('menu.dashboard'),

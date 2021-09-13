@@ -1,21 +1,7 @@
 <template>
   <div v-if="user" class="table-responsive">
-    <div class="mb-20 float-right">
-      <template v-if="isUpdating">
-        <button
-          class="btn btn-default"
-          @click="switchUpdateMode(false)"
-        >
-          {{ $t('button.cancel') }}
-        </button>
-        <button
-          class="btn btn-info"
-          @click="updateProfile"
-        >
-          {{ $t('button.save') }}
-        </button>
-      </template>
-      <template v-else>
+    <div class="mb-20 text-right">
+      <template v-if="!isUpdating">
         <button
           class="btn btn-primary"
           @click="switchUpdateMode(true)"
@@ -27,12 +13,12 @@
     <table class="table table-bordered table-striped">
       <tbody>
         <tr>
-          <th>{{ $t('fields.firstName') }}</th>
+          <th class="required">
+            {{ $t('fields.firstName') }}
+          </th>
           <template v-if="isUpdating">
             <td>
-              <div
-                class="form-group no-margin"
-              >
+              <div class="form-group no-margin">
                 <input
                   v-model="userForm.first_name"
                   type="text"
@@ -51,12 +37,12 @@
           </template>
         </tr>
         <tr>
-          <th>{{ $t('fields.lastName') }}</th>
+          <th class="required">
+            {{ $t('fields.lastName') }}
+          </th>
           <template v-if="isUpdating">
             <td>
-              <div
-                class="form-group no-margin"
-              >
+              <div class="form-group no-margin">
                 <input
                   v-model="userForm.last_name"
                   :class="{'is-invalid': validations.last_name}"
@@ -75,12 +61,12 @@
           </template>
         </tr>
         <tr>
-          <th>{{ $t('fields.email') }}</th>
+          <th class="required">
+            {{ $t('fields.email') }}
+          </th>
           <template v-if="isUpdating">
             <td>
-              <div
-                class="form-group no-margin"
-              >
+              <div class="form-group no-margin">
                 <input
                   v-model="userForm.email"
                   type="email"
@@ -99,9 +85,7 @@
           <th>{{ $t('fields.gender') }}</th>
           <template v-if="isUpdating">
             <td>
-              <div
-                class="form-group no-margin"
-              >
+              <div class="form-group no-margin">
                 <select
                   v-model="userForm.gender_id"
                   :class="{'is-invalid': validations.gender_id}"
@@ -110,12 +94,13 @@
                   <option selected disabled :value="null">
                     {{ $t('string.selectGender') }}
                   </option>
-                  <option :value="1">
-                    {{ $t('label.male') }}
-                  </option>
-                  <option :value="2">
-                    {{ $t('label.female') }}
-                  </option>
+                  <template v-if="genders && genders.length > 0">
+                    <template v-for="item in genders">
+                      <option :key="item._id" :value="item._id">
+                        {{ item['name_' + $i18n.locale] }}
+                      </option>
+                    </template>
+                  </template>
                 </select>
                 <template v-if="validations.gender_id">
                   <FiledIsRequired />
@@ -125,9 +110,19 @@
           </template>
           <template v-else>
             <td>
-              {{ user.gender ? user.gender['name_' + $i18n.locale] : 'N/A' }}
+              {{ user.gender ? user.gender['name_' + $i18n.locale] : '-' }}
             </td>
           </template>
+        </tr>
+        <tr>
+          <th>{{ $t('menu.role') }}</th>
+          <td>
+            <ul v-if="display_roles && display_roles.length > 0" class="mb-0 pl-3">
+              <li v-for="(item, key) in display_roles" :key="key">
+                {{ item['display_name_' + $i18n.locale] }}
+              </li>
+            </ul>
+          </td>
         </tr>
         <template v-if="!isUpdating">
           <tr>
@@ -141,11 +136,26 @@
         </template>
       </tbody>
     </table>
+    <div class="text-right">
+      <template v-if="isUpdating">
+        <button
+          class="btn btn-default"
+          @click="switchUpdateMode(false)"
+        >
+          <i class="far fa-times-circle mr-2" />
+          <strong>{{ $t('button.cancel') }}</strong>
+        </button>
+        <button class="btn btn-success" @click="updateProfile">
+          <i class="fas fa-save mr-2" />
+          <strong>{{ $t('button.save') }}</strong>
+        </button>
+      </template>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import FiledIsRequired from '@/components/FiledIsRequired'
 
 export default {
@@ -155,13 +165,20 @@ export default {
     return {
       isUpdating: false,
       userForm: null,
-      validations: {}
+      validations: {},
+      genders: []
     }
   },
   computed: {
     ...mapState({
       user: state => state.user.data
+    }),
+    ...mapGetters({
+      display_roles: 'user/getDisplayRoles'
     })
+  },
+  mounted () {
+    this.getGenders()
   },
   methods: {
     switchUpdateMode (isUpdating) {
@@ -196,6 +213,12 @@ export default {
         })
         .finally(() => {
           this.$isLoading(false)
+        })
+    },
+    getGenders () {
+      this.$axios.get(this.$base_api + '/api/backend/gender/get-options')
+        .then((res) => {
+          this.genders = res.data.data
         })
     }
   }

@@ -133,7 +133,7 @@
               <label>{{ $t('table.createdAt') }}</label>
               <date-picker
                 v-model="created_at"
-                :placeholder="$t('string.select_range_date')"
+                :placeholder="$t('string.select_date')"
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"
@@ -202,7 +202,15 @@
           <template v-if="list_packages && list_packages.length">
             <template v-for="(item, key) in list_packages">
               <div :key="key" class="package_item">
-                <div class="col-lg-4">
+                <div class="col-md-2 col-lg-2 col-xl-1">
+                  <template v-if="item.media">
+                    <img :src="getSrc(item.media.src)" alt="" class="img-thumbnail">
+                  </template>
+                  <template v-else>
+                    <img :src="package_img" alt="" class="img-thumbnail">
+                  </template>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-5">
                   <div class="package_item-block">
                     <div class="package_item-block-icon">
                       <i class="fas fa-user mr-2" />
@@ -237,7 +245,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-lg-4 col-xl-4">
                   <div class="package_item-block">
                     <div class="package_item-block-icon">
                       <i class="fas fa-store mr-2" />
@@ -274,7 +282,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-4 package_item-block-action text-right">
+                <div class="col-md-2 col-lg-2 col-xl-2 package_item-block-action text-right">
                   <div class="package_item-block-btn">
                     <NuxtLink
                       class="btn btn-default btn-sm btn-block"

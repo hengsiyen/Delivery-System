@@ -19,7 +19,7 @@ import Sidebar from '@/components/Layouts/Sidebar'
 import Header from '@/components/Layouts/Header'
 import Footer from '@/components/Layouts/Footer'
 import { mapGetters } from 'vuex'
-import helpers from '~/plugins/helpers'
+import helpers from '@/plugins/helpers'
 
 Vue.use(helpers)
 
@@ -35,7 +35,8 @@ export default {
       delivery_company: 'delivery_company/delivery_company',
       exchange: 'delivery_company/dc_exchange_rate',
       currencies: 'delivery_company/currencies',
-      currency: 'delivery_company/currency'
+      currency: 'delivery_company/currency',
+      display_roles: 'user/getDisplayRoles'
     })
   },
   beforeMount () {
@@ -51,14 +52,18 @@ export default {
       const exchange = this.$cookies.get('dc_exchange')
       this.$store.dispatch('delivery_company/setExchangeRate', exchange)
     }
-    if (!(this.currencies && this.currencies.length)) {
+    if (!(this.currencies && this.currencies.length === 0)) {
       const currencies = this.$cookies.get('currencies')
       this.$store.dispatch('delivery_company/setCurrencies', currencies)
     }
-  },
-  mounted () {
-    $('[data-widget="treeview"]').Treeview('init')
+    if (this.display_roles && this.display_roles.length === 0) {
+      const displayRoles = this.$cookies.get('roles')
+      this.$store.dispatch('user/setDisplayRoles', displayRoles)
+    }
   }
+  // mounted () {
+  //   $('[data-widget="treeview"]').Treeview('init')
+  // }
 }
 </script>
 
