@@ -4,16 +4,12 @@
       <div class="col-lg-8">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label
-              class="required"
-              :class="{'text-red': checkValidate('shop_id')}"
-            >
-              {{ $t('label.shop') }}
-            </label>
-            <!-- Button trigger modal -->
             <template v-if="shop">
               <div class="shop__selected">
-                <label>{{ shop.name_en }}</label>
+                <div>
+                  <i class="fas fa-store mr-2" />
+                  <label>{{ shop.name_en }}</label>
+                </div>
                 <button class="btn" @click="setShop(null)">
                   <i class="fas fa-times" />
                 </button>
@@ -37,114 +33,102 @@
             </template>
           </div>
           <div class="form-group col-md-6">
-            <label
-              for="customer_name"
-              :class="{'text-red': checkValidate('customer_name')}"
-            >
-              {{ $t('label.customer_name') }}
-            </label>
-            <input
-              id="customer_name"
-              v-model="customer_name"
-              name="customer_name"
-              class="form-control"
-              :placeholder="$t('pla.customer_name')"
-              :class="{'is-invalid': checkValidate('customer_name')}"
-            >
-
-            <div v-if="checkValidate('customer_name')" class="invalid-feedback">
-              {{ validate.shop_id[0] }}
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <label
-              for="customer_phone"
-              class="required"
-              :class="{'text-red': checkValidate('customer_phone')}"
-            >
-              {{ $t('label.customer_phone') }}
-            </label>
-            <input
-              id="customer_phone"
-              v-model="customer_phone"
-              v-mask="'### ### ####'"
-              name="customer_phone"
-              class="form-control"
-              :placeholder="$t('pla.customer_phone')"
-              :class="{'is-invalid': checkValidate('customer_phone')}"
-            >
-
-            <div v-if="checkValidate('customer_phone')" class="invalid-feedback">
-              {{ validate.customer_phone[0] }}
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <label
-              for="customer_address"
-              class="required"
-              :class="{'text-red': checkValidate('customer_address')}"
-            >
-              {{ $t('label.customer_address') }}
-            </label>
-            <input
-              id="customer_address"
-              v-model="customer_address"
-              name="customer_address"
-              class="form-control"
-              :placeholder="$t('pla.customer_address')"
-              :class="{'is-invalid': checkValidate('customer_address')}"
-            >
-
-            <div v-if="checkValidate('customer_address')" class="invalid-feedback">
-              {{ validate.customer_address[0] }}
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <label
-              for="price"
-              class="required"
-              :class="{'text-red': checkValidate('price')}"
-            >
-              {{ $t('label.price') }}
-            </label>
             <div
               class="input-group"
-              :class="{'is-invalid': checkValidate('price')}"
+              :class="{'has-validation': checkValidate('customer_name')}"
             >
+              <div class="input-group-prepend">
+                <span id="inputGroup-sizing-lg" class="input-group-text">
+                  <i class="fas fa-user" />
+                </span>
+              </div>
+              <input
+                id="customer_name"
+                v-model="customer_name"
+                name="customer_name"
+                class="form-control"
+                :placeholder="$t('pla.customer_name')"
+                :class="{'is-invalid': checkValidate('customer_name')}"
+              >
+              <div v-if="checkValidate('customer_name')" class="invalid-feedback">
+                {{ validate.customer_name[0] }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <div class="input-group" :class="{'has-validation': checkValidate('customer_phone')}">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-phone" /></span>
+              </div>
+              <input
+                id="customer_phone"
+                v-model="customer_phone"
+                v-mask="'### ### ####'"
+                name="customer_phone"
+                class="form-control"
+                :placeholder="$t('pla.customer_phone')"
+                :class="{'is-invalid': checkValidate('customer_phone')}"
+              >
+              <div v-if="checkValidate('customer_phone')" class="invalid-feedback">
+                {{ validate.customer_phone[0] }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <div class="input-group" :class="{'has-validation': checkValidate('customer_address')}">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-map-marker-alt" /></span>
+              </div>
+              <input
+                id="customer_address"
+                v-model="customer_address"
+                name="customer_address"
+                class="form-control"
+                :placeholder="$t('pla.customer_address')"
+                :class="{'is-invalid': checkValidate('customer_address')}"
+              >
+
+              <div v-if="checkValidate('customer_address')" class="invalid-feedback">
+                {{ validate.customer_address[0] }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <div class="input-group" :class="{'has-validation': checkValidate('price')}">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-dollar-sign" />
+                </span>
+              </div>
               <input
                 id="price"
                 v-model="price"
                 name="price"
                 type="number"
-                class="form-control"
+                class="form-control price-width z-2"
                 :class="{'is-invalid': checkValidate('price')}"
                 :placeholder="$t('pla.price')"
                 aria-describedby="button-price"
               >
-              <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
-                <button
-                  v-for="(item, key) in currencies"
-                  :key="key"
-                  class="btn"
-                  type="button"
-                  :class="currency && item._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                  @click="currency = item"
-                >
-                  {{ item.code }}
-                </button>
+              <template v-if="currencies && currencies.length">
+                <select v-model="currency" name="currency" class="form-control currency-width">
+                  <option v-for="(item, key) in currencies" :key="key" :value="item">
+                    {{ item.code }}
+                  </option>
+                </select>
+              </template>
+              <div v-if="checkValidate('price')" class="invalid-feedback">
+                {{ validate.price[0] }}
               </div>
-            </div>
-            <div v-if="checkValidate('price')" class="invalid-feedback">
-              {{ validate.price[0] }}
             </div>
           </div>
           <div class="form-group col-md-6">
-            <label
-              :class="{'text-red': checkValidate('amount')}"
-            >
-              {{ $t('menu.package_type') }}
-            </label>
-            <div class="input-group" :class="{'is-invalid': checkValidate('amount')}">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-cube" />
+                </span>
+              </div>
               <select
                 v-if="package_types"
                 id="package_type"
@@ -162,15 +146,14 @@
                 </template>
               </select>
             </div>
-            <div v-if="checkValidate('amount')" class="invalid-feedback">
-              {{ validate.amount[0] }}
-            </div>
           </div>
           <div class="form-group col-md-6">
-            <label>
-              {{ $t('label.delivery_at') }}
-            </label>
-            <div class="w-100">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-motorcycle" />
+                </span>
+              </div>
               <date-picker
                 v-model="request_delivery_at"
                 type="datetime"
@@ -184,15 +167,22 @@
               />
             </div>
           </div>
+          <div class="form-group col-md-12">
+            <textarea
+              id="note"
+              v-model="note"
+              class="form-control overflow-auto"
+              rows="3"
+              :placeholder="$t('pla.note') + ' ...'"
+              style="max-height: 120px"
+            />
+          </div>
           <div class="form-group col-md-6">
-            <label
-              for="payment_type"
-              :class="{'text-red': checkValidate('payment_type')}"
-            >
-              {{ $t('label.is_paid') }}
-            </label>
-            <div class="input-group">
-              <div :class="is_paid ? 'input-group-prepend' : 'btn-group' ">
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <label class="mb-0">{{ $t('label.is_paid') }}</label>
+              </div>
+              <div class="btn-group  btn-group-sm">
                 <button
                   class="btn"
                   :class="!is_paid ? 'btn-primary' : 'input-group-text'"
@@ -208,12 +198,14 @@
                   {{ $t('btn.is_paid_yes') }}
                 </button>
               </div>
+            </div>
+            <div class="input-group">
               <select
                 v-if="payment_types && is_paid"
                 id="payment_type"
                 v-model="payment_type"
                 name="package_type"
-                class="custom-select"
+                class="custom-select mt-3"
               >
                 <option :value="null" selected hidden>
                   {{ $t('label.select_one_option') }} ...
@@ -224,17 +216,16 @@
                   </option>
                 </template>
               </select>
-              <div v-if="checkValidate('price')" class="invalid-feedback">
-                {{ validate.price[0] }}
-              </div>
             </div>
           </div>
           <div class="form-group col-md-6">
-            <label>{{ $t('label.delivery_with_other_company') }}</label>
             <!-- Button trigger modal -->
             <template v-if="third_party">
               <div class="shop__selected">
-                <label>{{ third_party.name_en }}</label>
+                <div>
+                  <i class="fas fa-store mr-2" />
+                  <label>{{ third_party.name_en }}</label>
+                </div>
                 <button class="btn" @click="setThirdParty(null)">
                   <i class="fas fa-times" />
                 </button>
@@ -249,51 +240,48 @@
                   data-target="#thirdPartyCompanyModal"
                   @click="openThirdPartyModal"
                 >
-                  <strong>{{ $t('label.select_third_party_company') }}</strong>
+                  <strong>{{ $t('label.delivery_with_other_company') }}</strong>
                 </button>
               </div>
             </template>
           </div>
-          <div class="form-group col-md-12">
-            <label for="note">
-              {{ $t('label.note') }}
-            </label>
-            <textarea
-              id="note"
-              v-model="note"
-              class="form-control overflow-auto"
-              rows="10"
-              :placeholder="$t('pla.note') + ' ...'"
-              style="max-height: 120px"
-            />
-          </div>
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="form-group text-center">
-          <label>Package Image</label>
-          <div class="mx-auto" style="width: 250px">
-            <img src="/img/package.png" alt="" class="img-thumbnail">
-            <button class="btn btn-primary btn-block mt-3">
-              Upload Package Image
-            </button>
+        <div class="form-group">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <label class="mb-0">Package Image</label>
+            </div>
+            <div>
+              <button class="btn btn-primary btn-sm">
+                Insert Image
+              </button>
+            </div>
           </div>
+        </div>
+        <div class="form-group mx-auto w-75">
+          <img src="/img/package.png" alt="" class="img-thumbnail">
         </div>
       </div>
     </div>
-    <div class="card-footer text-right">
-      <button class="btn btn-light" @click="$router.back()">
-        <i class="fas fa-times mr-2" />
-        <strong>{{ $t('btn.cancel') }}</strong>
-      </button>
-      <button
-        class="btn"
-        :class="isEdit ? 'btn-primary' : 'btn-success'"
-        @click="storeOrEdit"
-      >
-        <i class="fas fa-save mr-2" />
-        <strong>{{ isEdit ? $t('btn.update') : $t('btn.save') }}</strong>
-      </button>
+    <div class="d-flex align-items-center text-right py-4">
+      <div class="w-50 pr-1">
+        <button class="btn btn-light btn-block" @click="$router.back()">
+          <i class="fas fa-times mr-2" />
+          <strong>{{ $t('btn.cancel') }}</strong>
+        </button>
+      </div>
+      <div class="w-50 pl-1">
+        <button
+          class="btn btn-block"
+          :class="isEdit ? 'btn-primary' : 'btn-success'"
+          @click="storeOrEdit"
+        >
+          <i class="fas fa-save mr-2" />
+          <strong>{{ isEdit ? $t('btn.update') : $t('btn.save') }}</strong>
+        </button>
+      </div>
     </div>
     <div
       id="thirdPartyCompanyModal"
@@ -470,14 +458,42 @@ export default {
       this.$axios
         .post(this.$base_api + '/api/backend/package/store-or-edit', formData)
         .then((res) => {
-          this.$router.push({ name: 'list-package' })
-        }).catch((error) => {
+          this.$swal({
+            icon: 'info',
+            title: this.$t('string.createPackage'),
+            text: this.$t('string.createOtherPackage'),
+            showCancelButton: true,
+            confirmButtonText: this.$t('string.yes'),
+            cancelButtonText: this.$t('string.cancel')
+          }).then(() => {
+            this.customer_name = null
+            this.customer_phone = null
+            this.customer_address = null
+            this.price = null
+            this.package_type = null
+            this.is_paid = false
+            this.payment_type = null
+            this.note = null
+            this.request_delivery_at = new Date()
+          }, (dismiss) => {
+            if (!(dismiss === 'cancel')) {
+              throw dismiss
+            } else {
+              this.$router.push({ name: 'mobile-shop-list' })
+            }
+          }).catch(function (err) {
+            console.error(err)
+            throw err
+          })
+        })
+        .catch((error) => {
           if (error.response.status === 422) {
             this.validate = error.response.data.errors
           } else {
             this.onResponseError(error)
           }
         })
+      window.scrollTo(0, 0)
     },
     setShop (shop) {
       this.$store.dispatch('package/setShop', shop)
@@ -489,7 +505,31 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.price-width {
+  width: calc(100% - 200px) !important;
+}
+
+.currency-width {
+  width: 200px
+}
+
+.z-2 {
+  z-index: 2;
+}
+
+.input-group-text i {
+  width: 15px;
+}
+
+.input-group .mx-datepicker {
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
 .shop__selected {
   display: flex;
   align-items: center;

@@ -16,6 +16,7 @@
         "disable": "Disable",
         "edit": "Edit",
         "enable": "Enable",
+        "filter": "Filter",
         "is_paid_no": "No",
         "is_paid_yes": "Yes",
         "next": "Next",
@@ -298,6 +299,8 @@
         "confirm_logout": "Confirm Logout",
         "copyright": "Copyright",
         "createNewRole": "Create new role",
+        "createOtherPackage": "Do you want to create other packages?",
+        "createPackage": "Create Package",
         "dashboard": "Dashboard",
         "delete": "Delete",
         "developedBy": "Developed by",
@@ -357,7 +360,6 @@
         "list": "List"
     },
     "validation": {
-        "field_is_required": "The filed is required.",
-        "filed_is_required": "The filed is required"
+        "field_is_required": "The field is required."
     }
 }

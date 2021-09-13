@@ -16,6 +16,7 @@
         "disable": " បិទដំណើរការ",
         "edit": "កែសម្រួល",
         "enable": "បើកដំណើរការ",
+        "filter": "តម្រង",
         "is_paid_no": "មិនទាន់បង់",
         "is_paid_yes": "បង់រួច",
         "next": "បន្ទាប់",
@@ -298,6 +299,8 @@
         "confirm_logout": "បញ្ជាក់ការចាកចេញ",
         "copyright": "រក្សាសិទ្ធិចម្លង",
         "createNewRole": "បង្កើតតួនាទី",
+        "createOtherPackage": "តើអ្នកចង់បង្កើតកញ្ចប់ផ្សេងទៀតទេ?",
+        "createPackage": "បង្កើតកញ្ចប់",
         "dashboard": "ផ្ទាំងគ្រប់គ្រង",
         "delete": "Delete",
         "developedBy": "អភិវឌ្ឍន៏ដោយ",
@@ -357,6 +360,6 @@
         "list": "បញ្ជី"
     },
     "validation": {
-        "filed_is_required": "សូមបញ្ជូលតម្លៃនៃប្រអប់ខាងលើនេះ។"
+        "field_is_required": "សូមបញ្ជូលតម្លៃនៃប្រអប់ខាងលើនេះ។"
     }
 }

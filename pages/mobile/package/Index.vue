@@ -26,7 +26,7 @@ export default {
 .mobile-container {
   padding: .5rem .5rem;
   & .container-header {
-    padding: 1rem 0 1.5rem;
+    padding: 0 0 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;

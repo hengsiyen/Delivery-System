@@ -104,7 +104,7 @@
           </div>
         </template>
         <template v-else>
-          <div class="form-group d-flex shop__search">
+          <div class="form-group shop__search">
             <input
               v-model="search_shop"
               type="search"

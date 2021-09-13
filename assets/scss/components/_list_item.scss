@@ -110,3 +110,10 @@
 //    }
 //  }
 //}
+
+@media screen and (max-width: 768px) {
+  .package_item,
+  .list_item {
+    display: block;
+  }
+}

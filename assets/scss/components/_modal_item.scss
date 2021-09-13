@@ -12,6 +12,7 @@
 
 .third_party_company__search,
 .shop__search {
+  display: flex;
   & .form-control {
     width: 80%;
   }
@@ -119,5 +120,34 @@
   & i {
     font-size: 35px;
     color: var(--primary);
+  }
+}
+
+@media screen and (max-width: 576px){
+  .third_party_company__search,
+  .shop__search {
+    display: block;
+    & .form-control {
+      width: 100%;
+    }
+
+    & .btn {
+      margin-top: 0.75rem;
+      width: 100%;
+      display: block;
+    }
+  }
+
+  .third_party_company__items,
+  .shop__items,
+  .driver__items {
+    height: calc(100% - 6.5rem);
+    padding: 0;
+    & .row {
+      margin: 0;
+      & .col-lg-6 {
+        padding: 0;
+      }
+    }
   }
 }

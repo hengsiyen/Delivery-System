@@ -173,5 +173,20 @@ body {
   }
 }
 
+.input-group .mx-datepicker .mx-input-wrapper input.form-control {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
 
 
+@media screen and (max-width: 991.98px) {
+  .elevation-4 {
+    box-shadow: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .swal2-content {
+    padding: 0 !important;
+  }
+}

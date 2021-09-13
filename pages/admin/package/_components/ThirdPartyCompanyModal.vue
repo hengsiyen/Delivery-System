@@ -61,7 +61,7 @@
           </div>
         </template>
         <template v-else>
-          <div class="form-group d-flex third_party_company__search">
+          <div class="form-group third_party_company__search">
             <input
               v-model="t_search_query"
               type="search"

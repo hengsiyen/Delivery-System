@@ -14,7 +14,7 @@
       <!-- Navbar Search -->
       <li class="nav-item">
         <NuxtLink
-          :to="{name: 'mobile-package-create'}"
+          :to="{name: 'mobile-shop-list'}"
           class="nav-link"
           href="#"
           role="button"
