@@ -67,6 +67,8 @@
                     {{ validate.shop_id[0] }}
                   </div>
                 </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-md-6">
                   <label
                     for="customer_phone"
@@ -110,6 +112,8 @@
                     {{ validate.customer_address[0] }}
                   </div>
                 </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-md-6">
                   <label
                     for="price"
@@ -177,24 +181,8 @@
                     {{ validate.amount[0] }}
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>
-                    {{ $t('label.delivery_at') }}
-                  </label>
-                  <div class="w-100">
-                    <date-picker
-                      v-model="request_delivery_at"
-                      type="datetime"
-                      :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
-                      :show-second="false"
-                      :placeholder="$t('string.select_date')"
-                      :lang="datePickerLang"
-                      :format="'DD/MM/YYYY hh:mm:ss A'"
-                      input-class="form-control"
-                      :disabled-date="notBeforeToday"
-                    />
-                  </div>
-                </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-md-6">
                   <label
                     for="payment_type"
@@ -241,6 +229,27 @@
                   </div>
                 </div>
                 <div class="form-group col-md-6">
+                  <label>
+                    {{ $t('label.delivery_at') }}
+                  </label>
+                  <div class="w-100">
+                    <date-picker
+                      v-model="request_delivery_at"
+                      type="datetime"
+                      value-type="format"
+                      :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
+                      :show-second="false"
+                      :placeholder="$t('string.select_date')"
+                      :lang="datePickerLang"
+                      :format="date_format"
+                      input-class="form-control"
+                      :disabled-date="notBeforeToday"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
                   <label>{{ $t('label.delivery_with_other_company') }}</label>
                   <!-- Button trigger modal -->
                   <template v-if="third_party">
@@ -265,6 +274,8 @@
                     </div>
                   </template>
                 </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="note">
                     {{ $t('label.note') }}
@@ -280,15 +291,72 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4">
+            <div class="offset-lg-1 col-lg-3">
               <div class="form-group text-center">
-                <label>Package Image</label>
-                <div class="mx-auto" style="width: 250px">
-                  <img src="/img/package.png" alt="" class="img-thumbnail">
-                  <button class="btn btn-primary btn-block mt-3">
-                    Upload Package Image
-                  </button>
-                </div>
+                <label>{{ $t('label.package_image') }}</label>
+                <template v-if="selected_image">
+                  <div :style="`width: ${croppie_size}px`">
+                    <vue-croppie
+                      ref="croppieRef"
+                      :enable-orientation="true"
+                      :boundary="{ width: croppie_size, height: croppie_size}"
+                      :enable-resize="false"
+                      :viewport="{ width: 295, height: 295, type: 'square' }"
+                      @result="result"
+                    />
+                    <button class="btn btn-primary btn-upload-image">
+                      <i class="fas fa-link" />
+                      <input
+                        ref="getPackageImg"
+                        type="file"
+                        name="file"
+                        accept="image/*"
+                        @change="getPackageImg"
+                      >
+                    </button>
+                    <!-- Rotate angle is Number -->
+                    <button class="btn btn-light" @click="rotate(-90)">
+                      <i class="fas fa-undo-alt" />
+                    </button>
+                    <button class="btn btn-light" @click="rotate(90)">
+                      <i class="fas fa-redo-alt" />
+                    </button>
+                    <button class="btn btn-light" @click="removePackageImg">
+                      <i class="fas fa-times" />
+                    </button>
+                  </div>
+                </template>
+                <template v-else>
+                  <div
+                    :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
+                    class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
+                  >
+                    <template v-if="isEdit && oldData && oldData.media">
+                      <img :src="`${base_api}/${oldData.media.src}`" class="img-thumbnail">
+                    </template>
+                    <template v-else>
+                      <div class="text-gray">
+                        <i class="fas fa-upload fa-2x" />
+                        <p class="mt-2">
+                          {{ $t('label.click_here_to_browse_image') }}
+                        </p>
+                      </div>
+                    </template>
+                    <input
+                      ref="getPackageImg"
+                      type="file"
+                      name="file"
+                      accept="image/*"
+                      class="cursor-pointer"
+                      @change="getPackageImg"
+                    >
+                  </div>
+                </template>
+                <template v-if="isEdit && oldData && oldData.media && !selected_image">
+                  <p class="mt-2">
+                    {{ $t('label.tap_on_image_to_edit') }}
+                  </p>
+                </template>
               </div>
             </div>
           </div>
@@ -373,14 +441,22 @@ export default {
       is_paid: false,
       payment_type: null,
       note: null,
-      request_delivery_at: new Date()
+      date_format: 'DD/MM/YYYY hh:mm A',
+      request_delivery_at: this.$moment().format('DD/MM/YYYY hh:mm A'),
+
+      croppie_size: 300,
+      cropped: null,
+      selected_image: null
     }
   },
   computed: {
     ...mapGetters('package', {
       shop: 'shop',
       third_party: 'third_party'
-    })
+    }),
+    langType () {
+      return this.$i18n.locale
+    }
   },
   created () {
     if (this.oldData) {
@@ -395,7 +471,7 @@ export default {
       this.is_paid = this.oldData.is_paid
       this.note = this.oldData.note
       if (this.oldData.request_delivery_at) {
-        this.request_delivery_at = this.$moment(this.oldData.request_delivery_at)
+        this.request_delivery_at = this.$moment(this.oldData.request_delivery_at).format(this.date_format)
       }
     }
   },
@@ -425,7 +501,7 @@ export default {
               return null
             })
           }
-          if (this.package_types.length) {
+          if (this.package_type === null && this.package_types.length) {
             this.package_type = this.package_types[0]
           }
         }).catch((error) => {
@@ -444,61 +520,101 @@ export default {
     },
     storeOrEdit () {
       this.validate = null
-      const formData = new FormData()
-      if (this.id) {
-        formData.append('id', this.id)
-      }
-      if (this.shop) {
-        formData.append('shop_id', this.shop._id)
-      }
-      if (this.customer_name) {
-        formData.append('customer_name', this.customer_name)
-      }
-      if (this.customer_phone) {
-        formData.append('customer_phone', this.customer_phone)
-      }
-      if (this.customer_address) {
-        formData.append('customer_address', this.customer_address)
-      }
-      if (this.price) {
-        formData.append('price', this.price)
-      }
-      if (this.currency) {
-        formData.append('currency_id', this.currency._id)
-      }
-      if (this.package_type) {
-        formData.append('package_type_id', this.package_type._id)
-      }
-      if (this.payment_type) {
-        formData.append('payment_type_id', this.payment_type._id)
-      }
-      if (this.request_delivery_at) {
-        formData.append('request_delivery_at', this.$moment(this.request_delivery_at).format('YYYY-MM-DD hh:mm:ss'))
-      }
-      if (this.third_party) {
-        formData.append('third_party_company_id', this.third_party._id)
-      }
-      if (this.note) {
-        formData.append('note', this.note)
-      }
-      formData.append('is_paid', this.is_paid)
-      this.$axios
-        .post(this.$base_api + '/api/backend/package/store-or-edit', formData)
-        .then((res) => {
-          this.$router.push({ name: 'list-package' })
-        }).catch((error) => {
-          if (error.response.status === 422) {
-            this.validate = error.response.data.errors
-          } else {
-            this.onResponseError(error)
-          }
-        })
+      this.crop()
+      setTimeout(() => {
+        const formData = new FormData()
+        if (this.id) {
+          formData.append('id', this.id)
+        }
+        if (this.shop) {
+          formData.append('shop_id', this.shop._id)
+        }
+        if (this.customer_name) {
+          formData.append('customer_name', this.customer_name)
+        }
+        if (this.customer_phone) {
+          formData.append('customer_phone', this.customer_phone)
+        }
+        if (this.customer_address) {
+          formData.append('customer_address', this.customer_address)
+        }
+        if (this.price) {
+          formData.append('price', this.price)
+        }
+        if (this.currency) {
+          formData.append('currency_id', this.currency._id)
+        }
+        if (this.package_type) {
+          formData.append('package_type_id', this.package_type._id)
+        }
+        if (this.payment_type) {
+          formData.append('payment_type_id', this.payment_type._id)
+        }
+        if (this.request_delivery_at) {
+          formData.append('request_delivery_at', this.$moment(this.request_delivery_at, this.date_format).format('YYYY-MM-DD hh:mm:ss'))
+        }
+        if (this.third_party) {
+          formData.append('third_party_company_id', this.third_party._id)
+        }
+        if (this.note) {
+          formData.append('note', this.note)
+        }
+        if (this.cropped) {
+          formData.append('image', this.cropped)
+        }
+        formData.append('is_paid', this.is_paid)
+        this.$axios
+          .post(this.$base_api + '/api/backend/package/store-or-edit', formData)
+          .then((res) => {
+            this.$router.push({ name: 'list-package' })
+          }).catch((error) => {
+            if (error.response.status === 422) {
+              this.validate = error.response.data.errors
+            } else {
+              this.onResponseError(error)
+            }
+          })
+      }, 1000)
     },
     setShop (shop) {
       this.$store.dispatch('package/setShop', shop)
     },
     setThirdParty (item) {
       this.$store.dispatch('package/setThirdParty', item)
+    },
+    getPackageImg (event) {
+      const self = this
+      const file = event.target.files[0]
+      const reader = new FileReader()
+      this.selected_image = file
+      reader.onload = function (e) {
+        if (self.$refs.croppieRef) {
+          self.$refs.croppieRef.bind({
+            url: e.target.result
+          })
+        }
+      }
+      reader.readAsDataURL(file)
+    },
+    crop () {
+      const options = {
+        format: 'png',
+        circle: false
+      }
+      this.$refs.croppieRef.result(options, (output) => {
+        this.cropped = output
+      })
+    },
+    result (output) {
+      this.cropped = output
+    },
+    rotate (rotationAngle) {
+      this.$refs.croppieRef.rotate(rotationAngle)
+    },
+    removePackageImg () {
+      this.cropped = null
+      this.selected_image = null
+      this.$refs.croppieRef.refresh()
     }
   }
 }

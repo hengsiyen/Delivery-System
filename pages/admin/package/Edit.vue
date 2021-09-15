@@ -30,6 +30,10 @@ export default {
           return {
             oldDataPackage: result
           }
+        }).catch(() => {
+          return {
+            oldDataPackage: null
+          }
         })
     } else {
       return {

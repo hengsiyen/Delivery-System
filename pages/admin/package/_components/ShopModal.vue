@@ -274,7 +274,7 @@ export default {
     },
     getShops: debounce(function ($state) {
       this.$axios.post(this.$base_api + '/api/backend/shop/list', {
-        search_query: this.search_shop,
+        search: this.search_shop,
         number_per_page: this.number_per_page,
         dcid: this.dcid,
         page: this.page

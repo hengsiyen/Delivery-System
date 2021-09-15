@@ -224,15 +224,15 @@
                       <i class="fas fa-phone mr-2" />
                     </div>
                     <div class="package_item-label text-truncate">
-                      {{ item.customer_phone }}
+                      <label class="mb-0">{{ item.customer_phone }}</label>
                     </div>
                   </div>
                   <div class="package_item-block">
                     <div class="package_item-block-icon">
-                      <i class="fas fa-sticky-note mr-2" />
+                      <i class="fas fa-map-marker-alt mr-2" />
                     </div>
-                    <div class="package_item-status text-truncate" :class="colorStatus(item.final_status)">
-                      {{ checkStatus(item.final_status) }}
+                    <div class="package_item-label text-truncate">
+                      {{ item.customer_address }}
                     </div>
                   </div>
                   <div v-if="item.delivery_charge" class="package_item-block">
@@ -246,6 +246,14 @@
                   </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4">
+                  <div class="package_item-block" v-if="item.code">
+                    <div class="package_item-block-icon">
+                      <i class="fas fa-qrcode mr-2"></i>
+                    </div>
+                    <div class="package_item-label text-truncate">
+                      <label class="mb-0">{{ item.code }}</label>
+                    </div>
+                  </div>
                   <div class="package_item-block">
                     <div class="package_item-block-icon">
                       <i class="fas fa-store mr-2" />
@@ -254,12 +262,12 @@
                       {{ item.shop ? item.shop.name_en : '' }}
                     </div>
                   </div>
-                  <div class="package_item-block">
+                  <div v-if="item.driver" class="package_item-block">
                     <div class="package_item-block-icon">
-                      <i class="fas fa-map-marker-alt mr-2" />
+                      <i class="fas fa-motorcycle mr-2" />
                     </div>
                     <div class="package_item-label text-truncate">
-                      {{ item.customer_address }}
+                      {{ item.driver.full_name }}
                     </div>
                   </div>
                   <div class="package_item-block">
@@ -272,13 +280,8 @@
                     <div v-else class="package_item-label text-truncate">
                       {{ $moment(item.created_at).format('lll') }}
                     </div>
-                  </div>
-                  <div v-if="item.driver" class="package_item-block">
-                    <div class="package_item-block-icon">
-                      <i class="fas fa-motorcycle mr-2" />
-                    </div>
-                    <div class="package_item-label text-truncate">
-                      {{ item.driver.full_name }}
+                    <div class="package_item-status text-truncate ml-3" :class="colorStatus(item.final_status)">
+                      {{ checkStatus(item.final_status) }}
                     </div>
                   </div>
                 </div>

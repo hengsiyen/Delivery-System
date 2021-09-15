@@ -39,7 +39,8 @@ export default {
     { src: '~/plugins/vue-number-format.js', mode: 'client' },
     { src: '~/plugins/vue-mask.js', mode: 'client', ssr: false },
     { src: '~/plugins/vue-infinite-loading.js', mode: 'client', ssr: false },
-    { src: '~/plugins/vue-crop-avatar.js', mode: 'client' }
+    { src: '~/plugins/vue-crop-avatar.js', mode: 'client' },
+    { src: '~/plugins/vue-croppie.js', mode: 'client', ssr: false }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

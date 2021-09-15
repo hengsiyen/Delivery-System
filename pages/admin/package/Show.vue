@@ -408,68 +408,106 @@
                         </div>
                         <div v-else>
                           <button class="btn btn-link btn-sm" @click="openThirdPartyModal">
-                            <i class="fas fa-plus-circle mr-2" /> Add Delivery with Other Company
+                            <i class="fas fa-plus-circle mr-2" />
+                            {{ $t('label.select_third_party_company') }}
                           </button>
                         </div>
                       </div>
                     </div>
-                    <div class="offset-lg-1 col-lg-3 pl-4">
-                      <div class="form-group">
-                        <label>Package Image</label>
-                        <div class="mx-auto" style="width: 100%">
-                          <template v-if="preview_img">
-                            <img :src="preview_img" alt="" class="img-thumbnail w-100">
-                          </template>
-                          <template v-else>
-                            <img :src="package_img" alt="" class="img-thumbnail">
-                          </template>
-                          <template v-if="image">
-                            <div class="row">
-                              <div class="col-lg-6">
-                                <button
-                                  class="btn btn-default mt-3 btn-block"
-                                  :class="{'disabled': onUpload}"
-                                  :disabled="onUpload"
-                                  @click="resetImage"
-                                >
-                                  <i class="far fa-times-circle mr-2" />
-                                  <strong>{{ $t('btn.cancel') }}</strong>
-                                </button>
-                              </div>
-                              <div class="col-lg-6">
-                                <button
-                                  class="btn btn-primary mt-3 btn-block"
-                                  :class="{'disabled': onUpload}"
-                                  :disabled="onUpload"
-                                  @click="uploadImage"
-                                >
-                                  <template v-if="onUpload">
-                                    <i class="fas fa-circle-notch fa-spin mr-2" />
-                                  </template>
-                                  <template v-else>
-                                    <i class="fas fa-save mr-2" />
-                                  </template>
-                                  <strong>{{ $t('btn.save') }}</strong>
-                                </button>
-                              </div>
-                            </div>
-                          </template>
-                          <template v-else>
-                            <button class="btn btn-primary btn-block mt-3 btn-upload-image">
-                              <i class="fas fa-edit mr-2" />
-                              <strong>
-                                {{ $t('label.edit_image') }}
-                              </strong>
-                              <input
-                                ref="getPackageImg"
-                                type="file"
-                                name="file"
-                                accept="image/*"
-                                @change="getPackageImg"
-                              >
+                    <div class="col-lg-4">
+                      <div class="form-group text-center">
+                        <label>{{ $t('label.package_image') }}</label>
+                        <template v-if="selected_image">
+                          <div class="mx-auto" :style="`width: ${croppie_size}px`">
+                            <vue-croppie
+                              ref="croppieRef"
+                              :enable-orientation="true"
+                              :boundary="{ width: croppie_size, height: croppie_size}"
+                              :enable-resize="false"
+                              :viewport="{ width: 295, height: 295, type: 'square' }"
+                              @result="result"
+                            />
+                            <button
+                              class="btn btn-light"
+                              :class="{'disabled': onUpload}"
+                              :disabled="onUpload"
+                              @click="removePackageImg"
+                            >
+                              <i class="fas fa-times" />
                             </button>
-                          </template>
-                        </div>
+                            <!-- Rotate angle is Number -->
+                            <button
+                              class="btn btn-light"
+                              :class="{'disabled': onUpload}"
+                              :disabled="onUpload"
+                              @click="rotate(-90)"
+                            >
+                              <i class="fas fa-undo-alt" />
+                            </button>
+                            <button
+                              class="btn btn-light"
+                              :class="{'disabled': onUpload}"
+                              :disabled="onUpload"
+                              @click="rotate(90)"
+                            >
+                              <i class="fas fa-redo-alt" />
+                            </button>
+                            <button
+                              class="btn btn-primary btn-upload-image"
+                              :class="{'disabled': onUpload}"
+                              :disabled="onUpload"
+                            >
+                              <i class="fas fa-link" />
+                              <template v-if="!onUpload">
+                                <input ref="getPackageImg" type="file" name="file" accept="image/*" @change="getPackageImg">
+                              </template>
+                            </button>
+                            <button
+                              class="btn btn-success"
+                              :class="{'disabled': onUpload}"
+                              :disabled="onUpload"
+                              @click="uploadImage"
+                            >
+                              <template v-if="onUpload">
+                                <i class="fas fa-circle-notch fa-spin" />
+                              </template>
+                              <template v-else>
+                                <i class="fas fa-save" />
+                              </template>
+                            </button>
+                          </div>
+                        </template>
+                        <template v-else>
+                          <div
+                            :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
+                            class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
+                          >
+                            <template v-if="package_data && package_data.media">
+                              <img :src="`${$base_api}/${package_data.media.src}`" class="img-thumbnail">
+                            </template>
+                            <template v-else>
+                              <div class="text-gray">
+                                <i class="fas fa-upload fa-2x" />
+                                <p class="mt-2">
+                                  {{ $t('label.click_here_to_browse_image') }}
+                                </p>
+                              </div>
+                            </template>
+                            <input
+                              ref="getPackageImg"
+                              type="file"
+                              name="file"
+                              accept="image/*"
+                              class="cursor-pointer"
+                              @change="getPackageImg"
+                            >
+                          </div>
+                        </template>
+                        <template v-if="package_data && package_data.media && !selected_image">
+                          <p class="mt-2">
+                            {{ $t('label.tap_on_image_to_edit') }}
+                          </p>
+                        </template>
                       </div>
                     </div>
                   </div>
@@ -766,8 +804,9 @@ export default {
       payment_type: null,
       is_paid: false,
 
-      preview_img: null,
-      image: null,
+      croppie_size: 300,
+      cropped: null,
+      selected_image: null,
       onUpload: false
     }
   },
@@ -996,31 +1035,19 @@ export default {
         this.setDataPackage()
       }
     },
-    getPackageImg (event) {
-      const file = event.target.files[0]
-      this.image = file
-      this.preview_img = URL.createObjectURL(file)
-    },
-    resetImage () {
-      this.image = null
-      if (this.package_data && this.package_data.media) {
-        this.preview_img = this.$base_api + '/' + this.package_data.media.src
-      } else {
-        this.preview_img = null
-      }
-    },
     uploadImage () {
       this.onUpload = true
+      this.crop()
       setTimeout(() => {
         const data = new FormData()
         data.append('id', this.$route.params.id)
-        if (this.image) {
-          data.append('image', this.image)
+        if (this.cropped) {
+          data.append('image', this.cropped)
         }
         this.$axios.post(this.$base_api + '/api/backend/package/upload-package-image', data)
           .then((res) => {
             this.package_data = res.data.data
-            this.resetImage()
+            this.removePackageImg()
             this.resetValue()
             this.setDataPackage()
             this.$toastr('success', this.$t('string.uploadImageMessage'), this.$t('label.uploadImage'))
@@ -1030,6 +1057,40 @@ export default {
             this.onUpload = false
           })
       }, 1000)
+    },
+    getPackageImg (event) {
+      const self = this
+      const file = event.target.files[0]
+      const reader = new FileReader()
+      this.selected_image = file
+      reader.onload = function (e) {
+        if (self.$refs.croppieRef) {
+          self.$refs.croppieRef.bind({
+            url: e.target.result
+          })
+        }
+      }
+      reader.readAsDataURL(file)
+    },
+    crop () {
+      const options = {
+        format: 'png',
+        circle: false
+      }
+      this.$refs.croppieRef.result(options, (output) => {
+        this.cropped = output
+      })
+    },
+    result (output) {
+      this.cropped = output
+    },
+    rotate (rotationAngle) {
+      this.$refs.croppieRef.rotate(rotationAngle)
+    },
+    removePackageImg () {
+      this.cropped = null
+      this.selected_image = null
+      this.$refs.croppieRef.refresh()
     }
   }
 }
@@ -1082,18 +1143,4 @@ export default {
   padding-left: 2px;
 }
 
-.btn-upload-image {
-  position: relative;
-  overflow: hidden;
-
-  & input {
-    position: absolute;
-    font-size: 50px;
-    opacity: 0;
-    right: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
 </style>
