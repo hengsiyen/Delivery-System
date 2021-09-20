@@ -74,24 +74,24 @@
                   <button class="btn btn-primary capitalize btn-lg slide my-3 btn-block mr-1" @click="onLogin">
                     <strong>{{ $t('btn.signIn') }}</strong>
                   </button>
-<!--                  <a href="#" class="btn btn-outline-secondary capitalize bnt-lg slide my-3 btn-block">
+                  <!--                  <a href="#" class="btn btn-outline-secondary capitalize bnt-lg slide my-3 btn-block">
                     <strong>{{ $t('btn.signUp') }}</strong>
                   </a>-->
                 </div>
               </div>
             </div>
           </div>
-<!--          <div class="col-lg-6 px-md-0">-->
-<!--            <div class="asr-form-create">-->
-<!--              <div class="row">-->
-<!--                <div class="col-12">-->
-<!--                  <div class="form-group mb-0">-->
-<!--                    <label class="font-s-22">{{ $t('label.signInOrRegisterWith') }}</label>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+          <!--          <div class="col-lg-6 px-md-0">-->
+          <!--            <div class="asr-form-create">-->
+          <!--              <div class="row">-->
+          <!--                <div class="col-12">-->
+          <!--                  <div class="form-group mb-0">-->
+          <!--                    <label class="font-s-22">{{ $t('label.signInOrRegisterWith') }}</label>-->
+          <!--                  </div>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
           <div class="col-lg-12 mt-4">
             <p class="text-center mb-0">
               <a href="/">Asorasoft.com</a> © 2021. {{ $t('string.right_reserved') }}
