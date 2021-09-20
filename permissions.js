@@ -92,7 +92,11 @@ const Permissions = {
           km: 'ភេទ'
         },
         manage: 'manage-gender',
-        list: 'list-gender'
+        list: 'list-gender',
+        create: 'create-gender',
+        edit: 'edit-gender',
+        show: 'show-gender',
+        delete: 'delete-gender'
       },
       packageType: {
         name: {

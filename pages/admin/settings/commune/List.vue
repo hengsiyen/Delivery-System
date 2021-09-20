@@ -43,14 +43,14 @@ export default {
           render: (data, type, row) => {
             return this.getDateFormat(data)
           }
-        },
-        {
-          data: 'actions',
-          name: 'actions',
-          searchable: false,
-          orderable: false,
-          title: this.$t('label.action')
         }
+        // {
+        //   data: 'actions',
+        //   name: 'actions',
+        //   searchable: false,
+        //   orderable: false,
+        //   title: this.$t('label.action')
+        // }
       ]
     }
   },

@@ -92,8 +92,9 @@ export default {
     reinitialise () {
       try {
         this.oTable.destroy()
-        this.oTable = null
+        // this.oTable = null
         this.oTable = this.datatable()
+        this.draw()
         // eslint-disable-next-line no-empty
       } catch (error) {}
     },

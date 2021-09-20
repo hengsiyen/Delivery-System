@@ -34,7 +34,12 @@ export default {
   computed: {
     params () {
       return {
-        lang: this.$i18n.locale
+        lang: this.$i18n.locale,
+        toggle_on: this.$t('label.enable'),
+        toggle_off: this.$t('label.disable'),
+        show: this.$t('label.show'),
+        edit: this.$t('label.edit'),
+        delete: this.$t('label.delete')
       }
     },
     columns () {
@@ -69,17 +74,84 @@ export default {
       const self = this
       this.clearEventHandler([
         '.btn-show',
-        '.btn-edit'
+        '.btn-edit',
+        '.btn-toggle',
+        '.btn-delete'
       ])
       $(function () {
         $(document).on('click', '.btn-show', function () {
           self.routerPush({
             name: 'show-payment-type',
             params: {
-              uuid: $(this).attr('data-id')
+              id: $(this).attr('data-id')
             }
           })
         })
+        $(document).on('click', '.btn-edit', function () {
+          self.routerPush({
+            name: 'edit-payment-type',
+            params: {
+              id: $(this).attr('data-id')
+            }
+          })
+        })
+        $(document).on('click', '.btn-toggle', function () {
+          self.toggleRecode($(this).attr('data-id'))
+        })
+        $(document).on('click', '.btn-delete', function () {
+          self.deleteRecord($(this).attr('data-id'))
+        })
+      })
+    },
+    toggleRecode (id) {
+      this.$isLoading(true)
+      this.$axios.post(this.$base_api + '/api/backend/payment-type/toggle', { id })
+        .then((res) => {
+          if (this.$refs.oTable) {
+            this.$refs.oTable.reinitialise()
+          }
+        }).catch((error) => {
+          this.onResponseError(error)
+        }).finally(() => {
+          this.$isLoading(false)
+        })
+    },
+    deleteRecord (id) {
+      this.$swal({
+        html: `<label class="mb-3 font-s-20">${this.$t('swal.delete_payment_type')}</label>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        confirmButtonText: this.$t('swal.yes_delete_it'),
+        cancelButtonText: this.$t('swal.no_cancel')
+      }).then((result) => {
+        if (result.value) {
+          this.$axios.post(this.$base_api + '/api/backend/payment-type/delete', { id })
+            .then((res) => {
+              if (this.$refs.oTable) {
+                this.$refs.oTable.reinitialise()
+              }
+              this.$swal({
+                position: 'center',
+                html: `<label class="mb-3 font-s-20">${this.$t('swal.payment_type_deleted')}</label>`,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            }).catch((error) => {
+              this.onResponseError(error)
+            }).finally(() => {
+              this.$isLoading(false)
+            })
+        }
+      }, (dismiss) => {
+        console.log(dismiss)
+        if (!(dismiss === 'cancel')) {
+          throw dismiss
+        }
+      }).catch(function (err) {
+        console.error(err)
+        throw err
       })
     }
   }

@@ -1,11 +1,11 @@
 <template>
   <div class="card">
-    <div class="card-header with-border">
+    <div class="card-header">
       <h3 class="card-title">
-        {{ $t('text.list') }}
+        {{ $t('menu.gender') }}
       </h3>
       <div class="card-tools">
-        <ButtonAddNew link-to="create-package-type" />
+        <ButtonAddNew link-to="create-gender" />
       </div>
     </div>
     <div class="card-body">
@@ -13,8 +13,8 @@
         ref="oTable"
         :columns="columns"
         :params="params"
-        table-id="package-type-table"
-        url="api/backend/package-type/datatable"
+        table-id="gender-table"
+        url="api/backend/gender/datatable"
       />
     </div>
   </div>
@@ -22,12 +22,11 @@
 <script>
 import Datatable from '@/components/Datatable'
 import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
-
 export default {
-  name: 'PackageTypeList',
+  name: 'Index',
   head () {
     return {
-      title: this.$t('menu.package_type'),
+      title: this.$t('menu.gender'),
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
   },
@@ -47,12 +46,12 @@ export default {
       return [
         { data: 'name_km', name: 'name_km', title: this.$t('table.nameInKhmer') },
         { data: 'name_en', name: 'name_en', title: this.$t('table.nameInEnglish') },
-        { data: 'enabled', name: 'enabled', title: this.$t('label.active') },
+        { data: 'enabled', name: 'enabled', title: this.$t('label.enabled') },
         {
           data: 'created_at',
           name: 'created_at',
           searchable: false,
-          title: this.$t('label.createdAt'),
+          title: this.$t('table.createdAt'),
           render: (data, type, row) => {
             return this.getDateFormat(data)
           }
@@ -82,7 +81,7 @@ export default {
       $(function () {
         $(document).on('click', '.btn-show', function () {
           self.routerPush({
-            name: 'show-package-type',
+            name: 'show-gender',
             params: {
               id: $(this).attr('data-id')
             }
@@ -90,7 +89,7 @@ export default {
         })
         $(document).on('click', '.btn-edit', function () {
           self.routerPush({
-            name: 'edit-package-type',
+            name: 'edit-gender',
             params: {
               id: $(this).attr('data-id')
             }
@@ -106,7 +105,7 @@ export default {
     },
     toggleRecode (id) {
       this.$isLoading(true)
-      this.$axios.post(this.$base_api + '/api/backend/package-type/toggle', { id })
+      this.$axios.post(this.$base_api + '/api/backend/gender/toggle', { id })
         .then((res) => {
           if (this.$refs.oTable) {
             this.$refs.oTable.reinitialise()
@@ -119,7 +118,7 @@ export default {
     },
     deleteRecord (id) {
       this.$swal({
-        html: `<label class="mb-3 font-s-20">${this.$t('swal.delete_package_type')}</label>`,
+        html: `<label class="mb-3 font-s-20">${this.$t('swal.delete_gender')}</label>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#dc3545',
@@ -127,14 +126,14 @@ export default {
         cancelButtonText: this.$t('swal.no_cancel')
       }).then((result) => {
         if (result.value) {
-          this.$axios.post(this.$base_api + '/api/backend/package-type/delete', { id })
+          this.$axios.post(this.$base_api + '/api/backend/gender/delete', { id })
             .then((res) => {
               if (this.$refs.oTable) {
                 this.$refs.oTable.reinitialise()
               }
               this.$swal({
                 position: 'center',
-                html: `<label class="mb-3 font-s-20">${this.$t('swal.package_type_deleted')}</label>`,
+                html: `<label class="mb-3 font-s-20">${this.$t('swal.gender_deleted')}</label>`,
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 2000

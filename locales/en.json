@@ -29,6 +29,8 @@
         "reset": "Reset",
         "return": "Return Back",
         "save": "Save",
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
         "submit": "Submit",
         "update": "Update"
     },
@@ -92,6 +94,7 @@
         "confirmPassword": "Confirm password",
         "create_new_shop": "Create new shop",
         "create_new_third_party_company": "Create a new partner company",
+        "createdAt": "Created at",
         "customer_address": "Customer Address",
         "customer_info": "Customer Info",
         "customer_name": "Customer Name",
@@ -205,6 +208,7 @@
         "shop_owner": "Shop owner",
         "show": "Show",
         "showUser": "Show user",
+        "signInOrRegisterWith": "Sign In Or Register With",
         "signOut": "Sign out",
         "start_delivery": "Do you want to start delivering this package now?",
         "status": "Status",
@@ -219,6 +223,7 @@
             "title": "Are you sure?",
             "yes": "Yes"
         },
+        "symbol": "Symbol",
         "tap_on_image_to_edit": "Tap on the image to edit",
         "third_party_company": "Partner company",
         "total": "Total",
@@ -275,6 +280,7 @@
         "select_driver": "Select a driver before assigning the package"
     },
     "pla": {
+        "code": "Enter the currency code",
         "customer_address": "Enter the customer address",
         "customer_name": "Enter the customer name",
         "customer_phone": "Enter the customer phone number",
@@ -282,13 +288,18 @@
         "discount_by": "Named authorizer for discount ...",
         "email": "Enter the email",
         "home_number": "Enter the home number",
+        "nameEn": "Enter the name as english ",
+        "nameKm": "Enter the name as khmer",
         "note": "Enter the package remark",
         "owner_name": "Enter the owner name",
         "package_price": "Enter the package price",
+        "password": "Enter​ your password",
         "phone_number": "Enter the phone number",
         "shop_name": "Enter the shop name",
         "street_number": "Enter the street number",
-        "what_the_reason": "What is the reason for cancel?"
+        "symbol": "Enter the currency symbols",
+        "what_the_reason": "What is the reason for cancel?",
+        "your_email": "Enter your email"
     },
     "placeholder": {
         "email": "Please input E-mail",
@@ -349,6 +360,20 @@
         "welcomeTo": "Welcome to",
         "welcome_back": "Welcome back",
         "yesIWish!": "Yes, I wish!"
+    },
+    "swal": {
+        "currency_deleted": "The currency deleted",
+        "delete_currency": "Do you want to delete the currency?",
+        "delete_gender": "Do you want to delete the gender?",
+        "delete_package_type": "Do you want to delete the package type?",
+        "delete_payment_type": "Do you want to delete the payment type?",
+        "deleted!": "Deleted!",
+        "gender_deleted": "The gender deleted",
+        "no_cancel": "No, cancel",
+        "package_type_deleted": "The package type deleted",
+        "payment_type_deleted": "The payment type deleted",
+        "yes_delete_it": "Yes, delete it!",
+        "yes_i_do": "Yes, I do"
     },
     "table": {
         "action": "Action",

@@ -2,91 +2,102 @@
   <div class="asr">
     <div class="asr-container">
       <div class="asr-wrap rounded">
-        <div class="asr-block-form">
-          <div class="asr-form-create">
-            <div class="row asr-block-title">
-              <div class="col-md-12">
-                <h2 class="asr-form-title">
-                  {{ appName }}
-                </h2>
-                <p class="asr-form-sub-title">
-                  {{ $t('string.welcome_back') }}
-                </p>
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="asr-form-title">
+              {{ appName }}
+            </h2>
+            <p class="asr-form-sub-title">
+              {{ $t('string.welcome_back') }}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-lg-1 col-lg-10 px-md-0 pb-3">
+            <div class="asr-form-create">
+              <div class="row">
+                <div class="col-12 text-center text-md-left">
+                  <div class="form-group mb-0">
+                    <label class="font-s-22">{{ $t('btn.signIn') }}</label>
+                  </div>
+                </div>
               </div>
-
-              <div v-if="isLoginFail" class="col-md-12">
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                  <button aria-label="Close" class="close" data-dismiss="alert" type="button">
-                    <span
-                      aria-hidden="true"
-                    >&times;</span>
+              <div v-if="isLoginFail">
+                <div class="alert alert-danger alert-dismissible font-s-14" role="alert">
+                  <button aria-label="Close" class="close px-3" data-dismiss="alert" type="button">
+                    <span aria-hidden="true">&times;</span>
                   </button>
-                  <p>{{ messageLoginFail }}</p>
+                  {{ messageLoginFail }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="font-s-14 mb-0">{{ $t('label.email') }}</label>
+                  <input
+                    v-model="credentials.username"
+                    :placeholder="$t('pla.your_email')"
+                    class="form-control form-control-lg"
+                    :class="{'is-invalid' : validations.username}"
+                    type="text"
+                  >
+                  <template v-if="validations.username">
+                    <div class="invalid-feedback">
+                      {{ validations['username'][0] }}
+                    </div>
+                  </template>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="font-s-14 mb-0">{{ $t('label.password') }}</label>
+                  <input
+                    v-model="credentials.password"
+                    :placeholder="$t('pla.password')"
+                    class="form-control form-control-lg"
+                    :class="{'is-invalid' : validations.password}"
+                    type="password"
+                  >
+                  <template v-if="validations.password">
+                    <div class="invalid-feedback">
+                      {{ validations['password'][0] }}
+                    </div>
+                  </template>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 margin-bottom">
+                  <a href="#" class="forget-password">{{ $t('label.forget_password') }}</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 item-center margin-bottom">
+                  <button class="btn btn-primary capitalize btn-lg slide my-3 btn-block mr-1" @click="onLogin">
+                    <strong>{{ $t('btn.signIn') }}</strong>
+                  </button>
+<!--                  <a href="#" class="btn btn-outline-secondary capitalize bnt-lg slide my-3 btn-block">
+                    <strong>{{ $t('btn.signUp') }}</strong>
+                  </a>-->
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div
-                class="col-md-12 form-group"
-              >
-                <input
-                  v-model="credentials.username"
-                  :placeholder="$t('label.username')"
-                  class="form-control"
-                  :class="{'is-invalid' : validations.username}"
-                  type="text"
-                >
-                <template v-if="validations.username">
-                  <div class="invalid-feedback">
-                    {{ validations['username'][0] }}
-                  </div>
-                </template>
-              </div>
-            </div>
-            <div class="row">
-              <div
-                class="col-md-12 form-group"
-              >
-                <input
-                  v-model="credentials.password"
-                  :placeholder="$t('label.password')"
-                  class="form-control"
-                  :class="{'is-invalid' : validations.password}"
-                  type="password"
-                >
-                <template v-if="validations.password">
-                  <div class="invalid-feedback">
-                    {{ validations['password'][0] }}
-                  </div>
-                </template>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 margin-bottom">
-                <a href="#" class="forget-password">{{ $t('label.forget_password') }}</a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 item-center margin-bottom">
-                <button
-                  class="btn btn-primary btn-block capitalize btn-login slide my-3"
-                  @click="onLogin"
-                >
-                  <i class="fa fa-sign-in" /> {{ $t('button.login') }}
-                </button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-center">
-                  <a href="/">Asorasoft.com</a> © {{ (new Date).getFullYear() }}.
-                  {{ $t('string.right_reserved') }}
-                </p>
-              </div>
-            </div>
+          </div>
+<!--          <div class="col-lg-6 px-md-0">-->
+<!--            <div class="asr-form-create">-->
+<!--              <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                  <div class="form-group mb-0">-->
+<!--                    <label class="font-s-22">{{ $t('label.signInOrRegisterWith') }}</label>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="col-lg-12 mt-4">
+            <p class="text-center mb-0">
+              <a href="/">Asorasoft.com</a> © 2021. {{ $t('string.right_reserved') }}
+            </p>
           </div>
         </div>
-        <div class="asr-block-img" style="background-image: url('/img/svgs/login.svg')" />
       </div>
     </div>
   </div>

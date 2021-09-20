@@ -7,54 +7,46 @@
             {{ $t('label.show') }}
           </h3>
           <div class="card-tools">
-            <NuxtLink :to="{name: 'edit-currency', params: {id: $route.params.id}}" class="btn btn-primary btn-sm">
+            <NuxtLink :to="{name: 'edit-gender', params: {id: $route.params.id}}" class="btn btn-primary btn-sm">
               <i class="fas fa-edit mr-2" />
               <strong>{{ $t('btn.edit') }}</strong>
             </NuxtLink>
             <ButtonBack />
           </div>
         </div>
-        <div v-if="currency" class="card-body">
+        <div v-if="gender" class="card-body">
           <table class="table table-striped">
             <tbody>
               <tr>
                 <th>{{ $t('label.nameKm') }}</th>
-                <td>{{ currency.name_km }}</td>
+                <td>{{ gender.name_km }}</td>
               </tr>
               <tr>
                 <th>{{ $t('label.nameEn') }}</th>
-                <td>{{ currency.name_en }}</td>
-              </tr>
-              <tr>
-                <th>{{ $t('label.code') }}</th>
-                <td>{{ currency.code }}</td>
-              </tr>
-              <tr>
-                <th>{{ $t('label.symbol') }}</th>
-                <td>{{ currency.symbol }}</td>
+                <td>{{ gender.name_en }}</td>
               </tr>
               <tr>
                 <th>{{ $t('label.active') }}</th>
                 <td>
-                  <template v-if="currency.enabled">
-                    <span class="badge badge-success">
+                  <template v-if="gender.enabled">
+                    <spna class="badge badge-success">
                       {{ $t('label.enable') }}
-                    </span>
+                    </spna>
                   </template>
                   <template v-else>
-                    <span class="badge badge-danger">
+                    <spna class="badge badge-danger">
                       {{ $t('label.disable') }}
-                    </span>
+                    </spna>
                   </template>
                 </td>
               </tr>
               <tr>
                 <th>{{ $t('label.createdAt') }}</th>
-                <td>{{ getDateFormat(currency.created_at) }}</td>
+                <td>{{ getDateFormat(gender.created_at) }}</td>
               </tr>
               <tr>
                 <th>{{ $t('label.updatedAt') }}</th>
-                <td>{{ getDateFormat(currency.updated_at) }}</td>
+                <td>{{ getDateFormat(gender.updated_at) }}</td>
               </tr>
             </tbody>
           </table>
@@ -66,26 +58,25 @@
 
 <script>
 import ButtonBack from '@/components/UiElements/ButtonBack'
-
 export default {
-  name: 'CurrencyShow',
+  name: 'PackageTypeShow',
   components: { ButtonBack },
   data () {
     return {
-      currency: null
+      gender: null
     }
   },
   mounted () {
-    this.getCurrency()
+    this.getGender()
   },
   methods: {
-    getCurrency () {
+    getGender () {
       this.$axios
-        .post(this.$base_api + '/api/backend/currency/show', {
+        .post(this.$base_api + '/api/backend/gender/show', {
           id: this.$route.params.id
         })
         .then((res) => {
-          this.currency = res.data.data
+          this.gender = res.data.data
         }).catch((error) => {
           this.onResponseError(error)
         })
