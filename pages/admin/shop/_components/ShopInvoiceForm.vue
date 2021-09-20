@@ -458,7 +458,6 @@ export default {
   },
   mounted () {
     this.refreshData()
-    console.log(this.currency)
   },
   methods: {
     setDate (status) {

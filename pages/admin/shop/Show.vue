@@ -204,10 +204,6 @@ export default {
       show_form: 'detail'
     }
   },
-  mounted () {
-    console.log('asdadsa')
-    console.log(this.currency)
-  },
   methods: {
     changeShowForm (type) {
       this.show_form = type

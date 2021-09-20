@@ -22,6 +22,7 @@
 <script>
 import Datatable from '@/components/Datatable'
 import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
+import { mapGetters } from 'vuex'
 export default {
   name: 'CurrencyList',
   head () {
@@ -32,8 +33,12 @@ export default {
   },
   components: { ButtonAddNew, Datatable },
   computed: {
+    ...mapGetters({
+      dcid: 'delivery_company/dcid'
+    }),
     params () {
       return {
+        dcid: this.dcid,
         lang: this.$i18n.locale,
         toggle_on: this.$t('label.enable'),
         toggle_off: this.$t('label.disable'),
@@ -147,7 +152,6 @@ export default {
             })
         }
       }, (dismiss) => {
-        console.log(dismiss)
         if (!(dismiss === 'cancel')) {
           throw dismiss
         }

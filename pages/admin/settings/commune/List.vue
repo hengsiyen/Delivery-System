@@ -4,9 +4,6 @@
       <h3 class="card-title">
         {{ $t('text.list') }}
       </h3>
-      <div class="card-tools">
-        <ButtonAddNew link-to="create-commune" />
-      </div>
     </div>
     <div class="card-body">
       <Datatable
@@ -20,7 +17,6 @@
 </template>
 <script>
 import Datatable from '@/components/Datatable'
-import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
 export default {
   name: 'CommuneList',
   head () {
@@ -29,7 +25,7 @@ export default {
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
   },
-  components: { ButtonAddNew, Datatable },
+  components: { Datatable },
   computed: {
     columns () {
       return [

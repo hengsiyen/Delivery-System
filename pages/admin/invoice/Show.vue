@@ -433,7 +433,6 @@ export default {
       })
     },
     printInvoice () {
-      console.log('sadad')
       const url = `${this.$base_api}/invoice/dc=`
       const invoiceCode = this.invoice ? this.invoice.code : null
       window.open(url + this.dcid + '&id=' + this.$route.params.id + '&c=' + invoiceCode)

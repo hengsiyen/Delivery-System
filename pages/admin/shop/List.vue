@@ -73,7 +73,41 @@
               />
             </div>
           </div>
-          <div class="col-xl-4 d-flex align-items-lg-end justify-content-end">
+          <div class="col-xl-4">
+            <div class="form-group">
+              <label>
+                {{ $t('label.sort_by') }}
+              </label>
+              <div class="d-flex align-items-center">
+                <select
+                  id="sort_by"
+                  v-model="sort_by"
+                  name="status"
+                  class="custom-select w-50 mr-1"
+                  @change="refreshDatatable"
+                >
+                  <template v-if="sort_options && sort_options.length">
+                    <option v-for="(item, key) in sort_options" :key="key" :value="item.value">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
+                </select>
+                <select
+                  v-model="sort_direction"
+                  name="status"
+                  class="custom-select w-50"
+                  @change="refreshDatatable"
+                >
+                  <template v-if="direction_options && direction_options.length">
+                    <option v-for="(item, key) in direction_options" :key="key" :value="item.value">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-12 d-flex align-items-lg-end justify-content-end">
             <div class="form-group">
               <label />
               <button class="btn btn-default" @click="clearFilter">
@@ -253,7 +287,9 @@ export default {
         dcid: this.dcid,
         search: this.search_query,
         is_enable: this.is_enable ? this.is_enable.value : null,
-        created_at: createdAt
+        created_at: createdAt,
+        sort_by: this.sort_by,
+        sort_direction: this.sort_direction
       }
     }
   },
@@ -285,6 +321,15 @@ export default {
       search_query: null,
       is_enable: null,
       created_at: null,
+      sort_by: 'created_at',
+      sort_direction: 'desc',
+      direction_options: [
+        { value: 'asc', name_en: 'Ascending', name_km: 'ពីតូចទៅធំ' },
+        { value: 'desc', name_en: 'Descending', name_km: 'ពីធំមកតូច' }
+      ],
+      sort_options: [
+        { value: 'created_at', name_en: 'Created Date', name_km: 'កាលបរិច្ឆេទបង្កើត' }
+      ],
       statuses: [
         { value: true, name_en: 'Enabled', name_km: 'បើកដំណើរការ' },
         { value: false, name_en: 'Disabled', name_km: 'បិទដំណើរការ' }
