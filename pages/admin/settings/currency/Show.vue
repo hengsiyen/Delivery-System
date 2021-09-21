@@ -70,6 +70,12 @@ import ButtonBack from '@/components/UiElements/ButtonBack'
 export default {
   name: 'CurrencyShow',
   components: { ButtonBack },
+  head () {
+    return {
+      title: this.$t('title.showCurrency'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  },
   data () {
     return {
       currency: null

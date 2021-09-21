@@ -9,6 +9,7 @@ import { packageTypeRouters } from '@/routes/settings/package-type'
 import { paymentTypeRouters } from '@/routes/settings/payment-type'
 import { currencyRouters } from '@/routes/settings/currency'
 import { exchangeRateRouters } from '@/routes/settings/exchange-rate'
+import { companyInfoRouters } from '@/routes/settings/company-info'
 
 export const settingRouters = {
   path: 'settings',
@@ -27,6 +28,7 @@ export const settingRouters = {
     provinceRouters,
     districtRouters,
     communeRouters,
-    villageRouters
+    villageRouters,
+    companyInfoRouters
   ]
 }

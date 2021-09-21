@@ -64,6 +64,12 @@ import ButtonBack from '@/components/UiElements/ButtonBack'
 export default {
   name: 'ExchangeRateShow',
   components: { ButtonBack },
+  head () {
+    return {
+      title: this.$t('title.showExchangeRate'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  },
   data () {
     return {
       exchange_rate: null

@@ -520,7 +520,9 @@ export default {
     },
     storeOrEdit () {
       this.validate = null
-      this.crop()
+      if (this.selected_image) {
+        this.crop()
+      }
       setTimeout(() => {
         const formData = new FormData()
         if (this.id) {

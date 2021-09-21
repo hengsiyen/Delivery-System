@@ -33,6 +33,7 @@ export const getters = {
 export const mutations = {
   setDeliveryCompany (state, data) {
     Vue.set(state, 'delivery_company', data)
+    localStorage.setItem('dc', JSON.stringify(data))
   },
   setExchangeRate (state, data) {
     Vue.set(state, 'exchange', data)

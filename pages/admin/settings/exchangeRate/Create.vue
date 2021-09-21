@@ -6,7 +6,13 @@
 import ExchangeRateForm from '@/pages/admin/settings/exchangeRate/Form'
 export default {
   name: 'Create',
-  components: { ExchangeRateForm }
+  components: { ExchangeRateForm },
+  head () {
+    return {
+      title: this.$t('title.addNewExchangeRate'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  }
 }
 </script>
 

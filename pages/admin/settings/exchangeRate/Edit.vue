@@ -1,12 +1,18 @@
 <template>
-  <ExchangeRateForm is-edit />
+  <ExchangeRateForm is-edit title="label.edit" />
 </template>
 
 <script>
 import ExchangeRateForm from '@/pages/admin/settings/exchangeRate/Form'
 export default {
   name: 'Edit',
-  components: { ExchangeRateForm }
+  components: { ExchangeRateForm },
+  head () {
+    return {
+      title: this.$t('title.editExchangeRate'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  }
 }
 </script>
 

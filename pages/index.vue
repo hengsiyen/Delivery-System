@@ -164,7 +164,6 @@ export default {
               this.$cookies.set('roles', JSON.stringify(result.user.roles))
             }
             if (deliveryCompany) {
-              localStorage.setItem('dc', JSON.stringify(deliveryCompany))
               this.$cookies.set('dc_currency', JSON.stringify(deliveryCompany.currency))
               this.$cookies.set('dc_exchange', JSON.stringify(deliveryCompany.exchange_rate_enabled))
 

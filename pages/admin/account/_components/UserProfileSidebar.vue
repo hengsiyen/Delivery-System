@@ -14,8 +14,12 @@
           </a>
         </div>
         <div>
-          <h3 class="profile-username text-center font-weight-bold">{{ user.full_name }}</h3>
-          <p class="text-muted text-center">{{ user.email }}</p>
+          <h3 class="profile-username text-center font-weight-bold">
+            {{ user.full_name }}
+          </h3>
+          <p class="text-muted text-center">
+            {{ user.email }}
+          </p>
         </div>
       </div>
     </div>

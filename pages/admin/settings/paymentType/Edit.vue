@@ -1,5 +1,5 @@
 <template>
-  <PaymentTypeForm is-edit="true" :old-data="oldDataPaymentType" />
+  <PaymentTypeForm is-edit title="label.edit" :old-data="oldDataPaymentType" />
 </template>
 
 <script>
@@ -7,6 +7,12 @@ import PaymentTypeForm from '@/pages/admin/settings/paymentType/Form'
 export default {
   name: 'PaymentTypeEdit',
   components: { PaymentTypeForm },
+  head () {
+    return {
+      title: this.$t('title.editPaymentType'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  },
   asyncData (ctx) {
     if (ctx.route.params.id) {
       return ctx.$axios

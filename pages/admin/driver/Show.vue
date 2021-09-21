@@ -34,7 +34,7 @@
                 {{ driver_data.phone }}
               </div>
               <div v-if="driver_data.gender" class="col-12 driver-item">
-                <i class="fas mr-2" :class=" 'fa-' + driver_data.gender['name_en'].lowercase()" />
+                <i class="fas mr-2" :class="driver_data.gender['name_en'].toLowerCase() === 'female' ? 'fa-female' : 'fa-male'" />
                 {{ driver_data.gender['name_' + $i18n.locale] }}
               </div>
               <div class="col-12 driver-item user_role">

@@ -61,6 +61,12 @@ import ButtonBack from '@/components/UiElements/ButtonBack'
 export default {
   name: 'PaymentTypeShow',
   components: { ButtonBack },
+  head () {
+    return {
+      title: this.$t('title.showPaymentType'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  },
   data () {
     return {
       payment_type: null

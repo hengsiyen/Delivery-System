@@ -20,6 +20,7 @@ const helpers = {
           avatar: '/img/avatar.png',
           shop_img: '/img/shop.png',
           package_img: '/img/package.png',
+          logo_icon: '/img/logo_icon.png',
           appName: process.env.VUE_APP_NAME
         }
       },

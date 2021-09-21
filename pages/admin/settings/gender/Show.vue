@@ -61,6 +61,12 @@ import ButtonBack from '@/components/UiElements/ButtonBack'
 export default {
   name: 'PackageTypeShow',
   components: { ButtonBack },
+  head () {
+    return {
+      title: this.$t('title.showGender'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  },
   data () {
     return {
       gender: null

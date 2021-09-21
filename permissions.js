@@ -86,6 +86,15 @@ const Permissions = {
         km: 'ការកំណត់'
       },
       manage: 'manage-setting',
+      about: {
+        name: {
+          en: 'Company Info',
+          km: 'ព័ត៌មានក្រុមហ៊ុន'
+        },
+        manage: 'manage-company-info',
+        edit: 'edit-company-info',
+        show: 'show-company-info'
+      },
       gender: {
         name: {
           en: 'Gender',

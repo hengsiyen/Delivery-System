@@ -87,6 +87,9 @@
         "code": "Code",
         "collect_money_total": "Collect Money Total",
         "commune": "Commune",
+        "companyNameEn": "Company Name (English)",
+        "companyNameKm": "Company Name (Khmer)",
+        "company_logo": "Company logo",
         "complete_delivery": "Complete Delivery",
         "complete_delivery_sub": "Do you want to complete this delivery?",
         "complete_package": "Delivered",
@@ -143,6 +146,7 @@
         "invoice": "Invoice",
         "is_paid": "The package is already paid?",
         "lastName": "Last name",
+        "lastUpdatedAt": "Last updated date",
         "last_delivery_date": "Last delivery date",
         "level": "Level",
         "list": {
@@ -249,6 +253,7 @@
         "commune": "Commune / Sangkat",
         "company": "Company",
         "companyType": "Company type",
+        "company_info": "Company Info",
         "currency": "Currency",
         "dashboard": "Dashboard",
         "dataset": "Data set",
@@ -385,9 +390,11 @@
         "amount": "Amount",
         "assignedAt": "Assigned at",
         "code": "Code",
+        "companyHistory": "Company history",
         "confirmed": "Confirmed",
         "createdAt": "Created at",
         "currency": "Currency",
+        "editedBy": "Edited by",
         "email": "Email",
         "finishedAt": "Finished at",
         "gender": "Gender",
@@ -402,6 +409,25 @@
     },
     "text": {
         "list": "List"
+    },
+    "title": {
+        "addNewCurrency": "Add new currency",
+        "addNewExchangeRate": "Add new exchange rate",
+        "addNewGender": "Add new gender",
+        "addNewPackageType": "Add new package type",
+        "addNewPaymentType": "Add new payment type",
+        "editCompanyInfo": "Edit company info",
+        "editCurrency": "Edit currency",
+        "editExchangeRate": "Edit exchange rate",
+        "editGender": "Edit gender",
+        "editPackageType": "Edit package type",
+        "editPaymentType": "Edit payment type",
+        "showCompanyInfo": "Show company info",
+        "showCurrency": "Show currency",
+        "showExchangeRate": "Show exchange rate",
+        "showGender": "Show gender",
+        "showPackageType": "Show package type",
+        "showPaymentType": "Show payment type"
     },
     "validation": {
         "field_is_required": "The field is required."

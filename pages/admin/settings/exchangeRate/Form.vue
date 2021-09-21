@@ -136,8 +136,13 @@ export default {
   },
   methods: {
     getCurrencyOptions () {
+      let excludedId = null
+      if (this.$route.params.id) {
+        excludedId = this.$route.params.id
+      }
       this.$axios.post(this.$base_api + '/api/backend/exchange-rate/currency-options', {
-        dcid: this.dcid
+        dcid: this.dcid,
+        exid: excludedId
       }).then((res) => {
         this.currencies = res.data.data
       }).catch((error) => {

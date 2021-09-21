@@ -183,6 +183,11 @@ export default {
               label: this.$t('menu.village'),
               route: { name: 'list-village', groups: 'village' },
               permissions: [this.$Permissions.backend.setting.village.list]
+            },
+            {
+              label: this.$t('menu.company_info'),
+              route: { name: 'show-company-info', groups: 'company-info' },
+              permissions: [this.$Permissions.backend.setting.about.show]
             }
           ]
         },

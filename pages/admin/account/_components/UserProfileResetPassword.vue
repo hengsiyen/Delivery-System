@@ -87,7 +87,7 @@
                 class="btn btn-primary"
                 @click="resetPassword"
               >
-                <i class="fas fa-sync-alt mr-2"></i>
+                <i class="fas fa-sync-alt mr-2" />
                 <strong>{{ $t('button.resetPassword') }}</strong>
               </button>
             </div>

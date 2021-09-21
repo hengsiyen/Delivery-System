@@ -350,11 +350,11 @@ export default {
   data () {
     return {
       base_api: process.env.VUE_APP_API,
-      villages: [],
 
       provinces: [],
       districts: [],
       communes: [],
+      villages: [],
       validate: null,
       show_shop_logo: false,
       show_shop_owner: false,

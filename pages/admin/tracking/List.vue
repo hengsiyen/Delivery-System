@@ -311,7 +311,7 @@
                   </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4">
-                  <div class="package_item-block" v-if="item.code">
+                  <div v-if="item.code" class="package_item-block">
                     <div class="package_item-block-icon">
                       <i class="fas fa-qrcode mr-2" />
                     </div>
