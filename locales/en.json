@@ -422,6 +422,7 @@
         "editGender": "Edit gender",
         "editPackageType": "Edit package type",
         "editPaymentType": "Edit payment type",
+        "showCompanyHistory": "Show company history",
         "showCompanyInfo": "Show company info",
         "showCurrency": "Show currency",
         "showExchangeRate": "Show exchange rate",

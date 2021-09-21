@@ -2,6 +2,7 @@ import Permissions from '@/permissions'
 import index from '@/pages/admin/settings/companyInfo/Index'
 import edit from '@/pages/admin/settings/companyInfo/Edit'
 import show from '@/pages/admin/settings/companyInfo/Show'
+import showHistory from '@/pages/admin/settings/companyInfo/ShowCompanyHistory'
 
 export const companyInfoRouters = {
   path: 'company-info',
@@ -54,6 +55,29 @@ export const companyInfoRouters = {
           {
             name_en: 'Show',
             name_km: 'បង្ហាញ'
+          }
+        ]
+      }
+    },
+    {
+      path: '/show-history/:id',
+      name: 'show-company-history',
+      component: showHistory,
+      meta: {
+        permissions: [Permissions.backend.setting.about.showHistory],
+        groups: 'company-info',
+        breadcrumb: [
+          {
+            name_en: 'Settings',
+            name_km: 'ការកំណត់'
+          },
+          {
+            name_en: 'Company Info',
+            name_km: 'ព័ត៌មានក្រុមហ៊ុន'
+          },
+          {
+            name_en: 'Show History',
+            name_km: 'បង្ហាញប្រវត្តិកែប្រែ'
           }
         ]
       }

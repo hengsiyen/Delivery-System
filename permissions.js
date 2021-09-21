@@ -93,7 +93,8 @@ const Permissions = {
         },
         manage: 'manage-company-info',
         edit: 'edit-company-info',
-        show: 'show-company-info'
+        show: 'show-company-info',
+        showHistory: 'show-company-history'
       },
       gender: {
         name: {

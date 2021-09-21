@@ -146,8 +146,25 @@ export default {
   mounted () {
     this.$isLoading(true)
     this.getCompanyInfo()
+    this.loadAction()
   },
   methods: {
+    loadAction () {
+      const self = this
+      this.clearEventHandler([
+        '.btn-show'
+      ])
+      $(function () {
+        $(document).on('click', '.btn-show', function () {
+          self.routerPush({
+            name: 'show-company-history',
+            params: {
+              id: $(this).attr('data-id')
+            }
+          })
+        })
+      })
+    },
     getCompanyInfo () {
       this.$axios.post(this.$base_api + '/api/backend/delivery-company/show', {
         dcid: this.dcid
