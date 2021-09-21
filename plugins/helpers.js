@@ -17,6 +17,10 @@ const helpers = {
             process.env.VUE_APP_ROLE_ADMIN,
             'admin'
           ],
+          direction_options: [
+            { value: 'asc', name_en: 'Ascending', name_km: 'ពីតូចទៅធំ' },
+            { value: 'desc', name_en: 'Descending', name_km: 'ពីធំមកតូច' }
+          ],
           avatar: '/img/avatar.png',
           shop_img: '/img/shop.png',
           package_img: '/img/package.png',
@@ -491,7 +495,7 @@ const helpers = {
           return parseFloat(Number.parseFloat(num).toPrecision(digit + floatingPointCount))
         },
         showBtnAssign (item) {
-          const status = ['assigned', 'reject', 'delay', 'cancel']
+          const status = ['new_package', 'assigned', 'reject', 'delay', 'cancel']
           return status.includes(item.final_status)
         }
       }

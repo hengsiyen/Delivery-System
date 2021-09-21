@@ -67,7 +67,41 @@
               />
             </div>
           </div>
-          <div class="col-xl-4 d-flex align-items-lg-end justify-content-end">
+          <div class="col-xl-4">
+            <div class="form-group">
+              <label>
+                {{ $t('label.sort_by') }}
+              </label>
+              <div class="d-flex align-items-center">
+                <select
+                  id="sort_by"
+                  v-model="sort_by"
+                  name="status"
+                  class="custom-select w-50 mr-1"
+                  @change="refreshDatatable"
+                >
+                  <template v-if="sort_options && sort_options.length">
+                    <option v-for="(item, key) in sort_options" :key="key" :value="item.value">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
+                </select>
+                <select
+                  v-model="sort_direction"
+                  name="status"
+                  class="custom-select w-50"
+                  @change="refreshDatatable"
+                >
+                  <template v-if="direction_options && direction_options.length">
+                    <option v-for="(item, key) in direction_options" :key="key" :value="item.value">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-12 d-flex align-items-lg-end justify-content-end">
             <div class="form-group">
               <label />
               <button class="btn btn-default" @click="clearFilter">
@@ -245,7 +279,9 @@ export default {
         dcid: this.dcid,
         search: this.search_query,
         is_delivery: this.is_delivery ? this.is_delivery.value : null,
-        created_at: createdAt
+        created_at: createdAt,
+        sort_by: this.sort_by,
+        sort_direction: this.sort_direction
       }
     }
   },
@@ -259,6 +295,12 @@ export default {
       search_query: null,
       is_delivery: null,
       created_at: null,
+      sort_by: 'created_at',
+      sort_direction: 'desc',
+      sort_options: [
+        { value: 'created_at', name_en: 'Created Date', name_km: 'កាលបរិច្ឆេទបង្កើត' },
+        { value: 'first_name', name_en: 'Name', name_km: 'ឈ្មោះ' }
+      ],
       driver_statuses: [
         { value: true, name_en: 'Delivering', name_km: 'កំពុងដឹកជញ្ជូន' },
         { value: false, name_en: 'Available', name_km: 'ទំនេរ' }

@@ -323,12 +323,9 @@ export default {
       created_at: null,
       sort_by: 'created_at',
       sort_direction: 'desc',
-      direction_options: [
-        { value: 'asc', name_en: 'Ascending', name_km: 'ពីតូចទៅធំ' },
-        { value: 'desc', name_en: 'Descending', name_km: 'ពីធំមកតូច' }
-      ],
       sort_options: [
-        { value: 'created_at', name_en: 'Created Date', name_km: 'កាលបរិច្ឆេទបង្កើត' }
+        { value: 'created_at', name_en: 'Created Date', name_km: 'កាលបរិច្ឆេទបង្កើត' },
+        { value: 'name_en', name_en: 'Shop Name', name_km: 'ឈ្មោះហាង' }
       ],
       statuses: [
         { value: true, name_en: 'Enabled', name_km: 'បើកដំណើរការ' },

@@ -73,7 +73,41 @@
               />
             </div>
           </div>
-          <div class="col-xl-4 d-flex align-items-lg-end justify-content-end">
+          <div class="col-xl-4">
+            <div class="form-group">
+              <label>
+                {{ $t('label.sort_by') }}
+              </label>
+              <div class="d-flex align-items-center">
+                <select
+                  id="sort_by"
+                  v-model="sort_by"
+                  name="status"
+                  class="custom-select w-50 mr-1"
+                  @change="refreshData"
+                >
+                  <template v-if="sort_options && sort_options.length">
+                    <option v-for="(item, key) in sort_options" :key="key" :value="item.value">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
+                </select>
+                <select
+                  v-model="sort_direction"
+                  name="status"
+                  class="custom-select w-50"
+                  @change="refreshData"
+                >
+                  <template v-if="direction_options && direction_options.length">
+                    <option v-for="(item, key) in direction_options" :key="key" :value="item.value">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-12 d-flex align-items-lg-end justify-content-end">
             <div class="form-group">
               <label />
               <button class="btn btn-default" @click="clearFilter">
@@ -96,7 +130,7 @@
       </div>
       <div v-if="is_paid" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.status') }}: {{ is_paid['name_' + $i18n.locale] }}
-        <button class="btn btn-default btn-xs" @click="is_enable = null">
+        <button class="btn btn-default btn-xs" @click="is_paid = null">
           <i class="fa fa-times" />
         </button>
       </div>
@@ -256,6 +290,11 @@ export default {
       search_query: null,
       is_paid: null,
       created_at: null,
+      sort_by: 'created_at',
+      sort_direction: 'desc',
+      sort_options: [
+        { value: 'created_at', name_en: 'Created Date', name_km: 'កាលបរិច្ឆេទបង្កើត' }
+      ],
       paid_status: [
         { name_en: 'Paid', name_km: 'បង់ប្រាក់ហើយ', value: true },
         { name_en: 'Not pay yet', name_km: 'មិនទាន់បង់ប្រាក់', value: false }
@@ -277,7 +316,9 @@ export default {
         dcid: this.dcid,
         search_query: this.search_query,
         is_paid: this.is_paid ? this.is_paid.value : null,
-        created_at: createdAt
+        created_at: createdAt,
+        sort_by: this.sort_by,
+        sort_direction: this.sort_direction
       }
     }
   },
