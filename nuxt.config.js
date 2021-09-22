@@ -41,7 +41,8 @@ export default {
     { src: '~/plugins/vue-infinite-loading.js', mode: 'client', ssr: false },
     { src: '~/plugins/vue-crop-avatar.js', mode: 'client' },
     { src: '~/plugins/vue-croppie.js', mode: 'client', ssr: false },
-    { src: '~/plugins/vue-toggle-button.js', mode: 'client' }
+    { src: '~/plugins/vue-toggle-button.js', mode: 'client' },
+    { src: '~/plugins/vue-select.js', mode: 'client', ssr: false }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

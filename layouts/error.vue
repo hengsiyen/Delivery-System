@@ -67,7 +67,7 @@ export default {
         case 500:
           error = {
             title: this.$t('string.internalServerError'),
-            img: '/img/svgs/notfound'
+            img: '/img/svgs/notfound.svg'
           }
           break
       }

@@ -58,22 +58,15 @@
               <label>
                 {{ $t('label.shop') }}
               </label>
-              <select
-                id="shop"
+              <v-select
                 v-model="shop"
-                name="shop"
-                class="custom-select"
-                @change="refreshDatatable"
-              >
-                <option :value="null">
-                  {{ $t('label.all') }}
-                </option>
-                <template v-if="shops && shops.length">
-                  <option v-for="(item, key) in shops" :key="key" :value="item">
-                    {{ item['name_en'] }}
-                  </option>
-                </template>
-              </select>
+                :class="'custom-v-select'"
+                class="style-chooser"
+                :placeholder="$t('label.select_one_option') + ' ...'"
+                :options="shops"
+                :get-option-key="option => option._id"
+                :label="'name_en'"
+              />
             </div>
           </div>
           <div class="col-xl-3">
@@ -81,24 +74,36 @@
               <label>
                 {{ $t('menu.driver') }}
               </label>
-              <select
-                id="driver"
+              <v-select
                 v-model="driver"
-                name="driver"
-                class="custom-select"
-                @change="refreshDatatable"
-              >
-                <option :value="null">
-                  {{ $t('label.all') }}
-                </option>
-                <template v-if="drivers && drivers.length">
-                  <option v-for="(item, key) in drivers" :key="key" :value="item">
-                    {{ item['full_name'] }}
-                  </option>
-                </template>
-              </select>
+                :class="'custom-v-select'"
+                class="style-chooser"
+                :placeholder="$t('label.select_one_option') + ' ...'"
+                :options="drivers"
+                :get-option-key="option => option._id"
+                :label="'full_name'"
+              />
             </div>
           </div>
+          <div class="col-xl-3">
+            <div class="form-group">
+              <label>
+                {{ $t('label.third_party_company') }}
+              </label>
+              <v-select
+                v-model="partner_company"
+                :class="'custom-v-select'"
+                class="style-chooser"
+                :placeholder="$t('label.select_one_option') + ' ...'"
+                :options="partner_companies"
+                :get-option-key="option => option._id"
+                :label="'name_en'"
+              />
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
           <div class="col-xl-3">
             <div class="form-group">
               <label>
@@ -117,31 +122,6 @@
                 <template v-if="payment_statuses && payment_statuses.length">
                   <option v-for="(item, key) in payment_statuses" :key="key" :value="item">
                     {{ item['name_' + $i18n.locale] }}
-                  </option>
-                </template>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-3">
-            <div class="form-group">
-              <label>
-                {{ $t('label.third_party_company') }}
-              </label>
-              <select
-                id="partner_company"
-                v-model="partner_company"
-                name="partner_company"
-                class="custom-select"
-                @change="refreshDatatable"
-              >
-                <option :value="null">
-                  {{ $t('label.all') }}
-                </option>
-                <template v-if="partner_companies && partner_companies.length">
-                  <option v-for="(item, key) in partner_companies" :key="key" :value="item">
-                    {{ item['name_en'] }}
                   </option>
                 </template>
               </select>
@@ -387,26 +367,6 @@
                       </div>
                     </div>
                   </template>
-                  <!--                  <div class="package_item-block-btn">-->
-                  <!--                    <div class="dropdown">-->
-                  <!--                      <button-->
-                  <!--                        id="dropdownMenuButton"-->
-                  <!--                        class="btn btn-default btn-sm btn-block dropdown-toggle dropdown-no-icon"-->
-                  <!--                        type="button"-->
-                  <!--                        data-toggle="dropdown"-->
-                  <!--                        aria-haspopup="true"-->
-                  <!--                        aria-expanded="false"-->
-                  <!--                      >-->
-                  <!--                        <i class="fas fa-ellipsis-v mr-2" />-->
-                  <!--                        <strong>Other</strong>-->
-                  <!--                      </button>-->
-                  <!--                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">-->
-                  <!--                        <a class="dropdown-item" href="#">Action</a>-->
-                  <!--                        <a class="dropdown-item" href="#">Another action</a>-->
-                  <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
-                  <!--                      </div>-->
-                  <!--                    </div>-->
-                  <!--                  </div>-->
                 </div>
               </div>
             </template>

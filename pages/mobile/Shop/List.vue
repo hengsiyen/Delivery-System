@@ -173,8 +173,7 @@ export default {
   },
   methods: {
     selectShop (shop) {
-      this.$store.dispatch('package/setShop', shop)
-      this.$router.push({ name: 'mobile-package-create' })
+      this.$router.push({ name: 'mobile-shop-show', params: { id: shop._id } })
     },
     clearFilter () {
       this.search_query = null

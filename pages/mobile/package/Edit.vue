@@ -1,11 +1,15 @@
 <template>
-  <PackageMobileForm />
+  <PackageMobileForm is-edit />
 </template>
 
 <script>
 import PackageMobileForm from '@/pages/mobile/package/Form'
 export default {
-  name: 'PackageMobileCreate',
+  name: 'PackageMobileEdit',
   components: { PackageMobileForm }
 }
 </script>
+
+<style scoped>
+
+</style>

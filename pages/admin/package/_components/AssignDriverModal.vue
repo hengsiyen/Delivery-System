@@ -34,20 +34,36 @@
                 type="number"
                 class="form-control"
                 :placeholder="$t('label.delivery_charge')"
-                :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}"
+                :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency'), 'w-75': currencies.length > 2}"
               >
-              <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
-                <button
-                  v-for="(currency, sub_key) in currencies"
-                  :key="sub_key"
-                  class="btn"
-                  type="button"
-                  :class="delivery_charge_currency && delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                  @click="delivery_charge_currency = currency"
-                >
-                  {{ currency.code }}
-                </button>
-              </div>
+              <template v-if="currencies && currencies.length">
+                <template v-if="currencies.length < 3">
+                  <div class="input-group-append">
+                    <button
+                      v-for="(item, key) in currencies"
+                      :key="key"
+                      class="btn"
+                      type="button"
+                      :class="delivery_charge_currency && item._id === delivery_charge_currency._id ? 'btn-primary' : 'input-group-text'"
+                      @click="delivery_charge_currency = item"
+                    >
+                      {{ item.code }}
+                    </button>
+                  </div>
+                </template>
+                <template v-else>
+                  <select v-model="delivery_charge_currency" class="custom-select w-25">
+                    <option :value="null" hidden disabled>
+                      {{ $t('label.select_one_option') }}
+                    </option>
+                    <template v-for="(item, key) in currencies">
+                      <option :key="key" :value="item">
+                        {{ item.code }}
+                      </option>
+                    </template>
+                  </select>
+                </template>
+              </template>
             </div>
             <div v-if="checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')" class="invalid-feedback">
               <template v-if="checkValidate('delivery_charge') ">
@@ -82,19 +98,36 @@
                   type="number"
                   class="form-control"
                   :placeholder="$t('label.extra_charge')"
+                  :class="{'w-75': currencies.length > 2}"
                 >
-                <div v-if="currencies && currencies.length" class="input-group-append">
-                  <button
-                    v-for="(currency, sub_key) in currencies"
-                    :key="sub_key"
-                    class="btn"
-                    type="button"
-                    :class="extra_charge_currency && extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                    @click="extra_charge_currency = currency"
-                  >
-                    {{ currency.code }}
-                  </button>
-                </div>
+                <template v-if="currencies && currencies.length">
+                  <template v-if="currencies.length < 3">
+                    <div class="input-group-append">
+                      <button
+                        v-for="(item, key) in currencies"
+                        :key="key"
+                        class="btn"
+                        type="button"
+                        :class="extra_charge_currency && item._id === extra_charge_currency._id ? 'btn-primary' : 'input-group-text'"
+                        @click="extra_charge_currency = item"
+                      >
+                        {{ item.code }}
+                      </button>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <select v-model="extra_charge_currency" class="custom-select w-25">
+                      <option :value="null" hidden disabled>
+                        {{ $t('label.select_one_option') }}
+                      </option>
+                      <template v-for="(item, key) in currencies">
+                        <option :key="key" :value="item">
+                          {{ item.code }}
+                        </option>
+                      </template>
+                    </select>
+                  </template>
+                </template>
               </div>
             </template>
             <template v-else>
@@ -258,7 +291,8 @@ export default {
       dcid: 'delivery_company/dcid',
       number_per_page: 'delivery_company/number_per_page',
       num_format_km: 'delivery_company/num_format_km',
-      num_format_en: 'delivery_company/num_format_en'
+      num_format_en: 'delivery_company/num_format_en',
+      base_currency: 'delivery_company/currency'
     }),
     confirmMessage () {
       return {
@@ -282,7 +316,6 @@ export default {
       this.awaitingSearch = true
     }
   },
-
   methods: {
     checkValidate (key) {
       if (key) {

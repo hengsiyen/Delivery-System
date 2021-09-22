@@ -126,28 +126,41 @@
                     class="input-group"
                     :class="{'is-invalid': checkValidate('price')}"
                   >
+                    <template v-if="currencies && currencies.length">
+                      <template v-if="currencies.length < 3">
+                        <div id="button-price" class="input-group-prepend">
+                          <button
+                            v-for="(item, key) in currencies"
+                            :key="key"
+                            class="btn"
+                            type="button"
+                            :class="currency && item._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                            @click="currency = item"
+                          >
+                            {{ item.code }}
+                          </button>
+                        </div>
+                      </template>
+                      <template v-else>
+                        <select v-model="currency" class="custom-select w-25">
+                          <template v-for="(item, key) in currencies">
+                            <option :key="key" :value="item">
+                              {{ item.code }}
+                            </option>
+                          </template>
+                        </select>
+                      </template>
+                    </template>
                     <input
                       id="price"
                       v-model="price"
                       name="price"
                       type="number"
                       class="form-control"
-                      :class="{'is-invalid': checkValidate('price')}"
+                      :class="{'is-invalid': checkValidate('price'), 'w-75': currencies.length > 2}"
                       :placeholder="$t('pla.package_price')"
                       aria-describedby="button-price"
                     >
-                    <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
-                      <button
-                        v-for="(item, key) in currencies"
-                        :key="key"
-                        class="btn"
-                        type="button"
-                        :class="currency && item._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                        @click="currency = item"
-                      >
-                        {{ item.code }}
-                      </button>
-                    </div>
                   </div>
                   <div v-if="checkValidate('price')" class="invalid-feedback">
                     {{ validate.price[0] }}

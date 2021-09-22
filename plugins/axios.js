@@ -15,7 +15,7 @@ export default function ({ $axios, redirect, $cookies }) {
 
   $axios.onError((error) => {
     const code = parseInt(error.response && error.response.status)
-    if (code === 400) {
+    if (code === 500) {
       redirect('/admin/notfound')
     } else if (code === 403) {
       redirect('/admin/unauthorized')

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 text-right mt-3">
+  <div class="w-100 text-right mb-3">
     <button
       class="btn btn-default"
       @click="cancel"

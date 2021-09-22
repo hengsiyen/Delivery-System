@@ -7,13 +7,15 @@
             {{ $t('label.show') }}
           </h3>
           <div class="card-tools">
-            <NuxtLink
-              class="btn btn-primary btn-sm"
-              :to="{name: 'edit-package', params: {id: this.$route.params.id}}"
-            >
-              <i class="fas fa-edit mr-1" />
-              <strong>{{ $t('button.edit') }}</strong>
-            </NuxtLink>
+            <template v-if="allowedEdit">
+              <NuxtLink
+                class="btn btn-primary btn-sm"
+                :to="{name: 'edit-package', params: {id: this.$route.params.id}}"
+              >
+                <i class="fas fa-edit mr-1" />
+                <strong>{{ $t('button.edit') }}</strong>
+              </NuxtLink>
+            </template>
             <ButtonBack />
           </div>
         </div>
@@ -127,10 +129,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div
-                                v-if="!(edit_price && edit_cn && edit_cn && edit_cp)"
-                                class="package_form-item-edit text-right"
-                              >
+                              <div v-if="allowedEdit" class="package_form-item-edit text-right">
                                 <button class="btn btn-light pr-0" @click="edit_cn = true">
                                   <i class="fas fa-edit mr-2" />
                                 </button>
@@ -146,22 +145,31 @@
                             <div class="form-group">
                               <label>{{ $t('label.price') }}</label>
                               <div class="input-group">
-                                <div
-                                  v-if="currencies && currencies.length"
-                                  id="button-price"
-                                  class="input-group-prepend"
-                                >
-                                  <button
-                                    v-for="(item, key) in currencies"
-                                    :key="key"
-                                    class="btn"
-                                    type="button"
-                                    :class="currency && item._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                                    @click="currency = item"
-                                  >
-                                    {{ item.code }}
-                                  </button>
-                                </div>
+                                <template v-if="currencies && currencies.length">
+                                  <template v-if="currencies.length < 3">
+                                    <div id="button-price" class="input-group-prepend">
+                                      <button
+                                        v-for="(item, key) in currencies"
+                                        :key="key"
+                                        class="btn"
+                                        type="button"
+                                        :class="currency && item._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                                        @click="currency = item"
+                                      >
+                                        {{ item.code }}
+                                      </button>
+                                    </div>
+                                  </template>
+                                  <template v-else>
+                                    <select v-model="currency" class="custom-select w-25">
+                                      <template v-for="(item, key) in currencies">
+                                        <option :key="key" :value="item">
+                                          {{ item.code }}
+                                        </option>
+                                      </template>
+                                    </select>
+                                  </template>
+                                </template>
                                 <input
                                   id="price"
                                   v-model="price"
@@ -170,7 +178,7 @@
                                   class="form-control"
                                   :placeholder="$t('pla.package_price')"
                                   aria-describedby="button-price"
-                                  :class="{'is-invalid': checkValidate('price')}"
+                                  :class="{'is-invalid': checkValidate('price'), 'w-75': currencies.length > 2}"
                                 >
                                 <div v-if="checkValidate('price')" class="invalid-feedback">
                                   {{ validate.price[0] }}
@@ -241,7 +249,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="package_form-item-edit text-right">
+                              <div v-if="allowedEdit" class="package_form-item-edit text-right">
                                 <button class="btn btn-light pr-0" @click="edit_price = true">
                                   <i class="fas fa-edit mr-2" />
                                 </button>
@@ -334,7 +342,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="package_form-item-edit text-right">
+                              <div v-if="allowedEdit" class="package_form-item-edit text-right">
                                 <button class="btn btn-light pr-0" @click="edit_note = true">
                                   <i class="fas fa-edit mr-2" />
                                 </button>
@@ -369,7 +377,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="package_form-item-edit text-right">
+                          <div v-if="allowedEdit" class="package_form-item-edit text-right">
                             <button class="btn btn-light pr-0" @click="openShopModal">
                               <i class="fas fa-edit mr-2" />
                             </button>
@@ -397,7 +405,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="package_form-item-edit text-right">
+                          <div v-if="allowedEdit" class="package_form-item-edit text-right">
                             <button class="btn btn-light pr-0" @click="openThirdPartyModal">
                               <i class="fas fa-edit mr-2" />
                             </button>
@@ -407,10 +415,17 @@
                           </div>
                         </div>
                         <div v-else>
-                          <button class="btn btn-link btn-sm" @click="openThirdPartyModal">
-                            <i class="fas fa-plus-circle mr-2" />
-                            {{ $t('label.select_third_party_company') }}
-                          </button>
+                          <template v-if="allowedEdit">
+                            <button class="btn btn-link btn-sm" @click="openThirdPartyModal">
+                              <i class="fas fa-plus-circle mr-2" />
+                              {{ $t('label.select_third_party_company') }}
+                            </button>
+                          </template>
+                          <template v-else>
+                            <label class="font-weight-normal">
+                              {{ $t('label.no_select_third_party_company') }}
+                            </label>
+                          </template>
                         </div>
                       </div>
                     </div>
@@ -711,6 +726,9 @@ export default {
       shop: 'package/shop',
       third_party: 'package/third_party'
     }),
+    allowedEdit () {
+      return this.package_data && this.package_data.final_status !== 'success'
+    },
     checkIsPaidUpdate () {
       let pyid = null
       let oldpyid = null
