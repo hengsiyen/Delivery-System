@@ -636,7 +636,7 @@ export default {
 }
 
 .currency-width {
-  width: 200px
+  width: 25.5px
 }
 
 .z-2 {
