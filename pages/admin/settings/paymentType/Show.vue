@@ -8,7 +8,7 @@
           </h3>
           <div class="card-tools">
             <NuxtLink :to="{name: 'edit-payment-type', params: {id: $route.params.id}}" class="btn btn-primary btn-sm">
-              <i class="fas fa-edit mr-2"></i>
+              <i class="fas fa-edit mr-2" />
               <strong>{{ $t('btn.edit') }}</strong>
             </NuxtLink>
             <ButtonBack />

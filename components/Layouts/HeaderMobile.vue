@@ -1,25 +1,23 @@
 <template>
   <nav class="main-modile-header navbar navbar-expand navbar-white navbar-light">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <NuxtLink :to="{name: 'admin'}" class="nav-link">
+      <slot name="btn-back" />
+      <li v-if="!hideButtonHome" class="nav-item">
+        <NuxtLink :to="{name: 'admin'}" class="nav-link text-dark text-bold">
           {{ appName }}
         </NuxtLink>
       </li>
     </ul>
+    <div v-if="showNavbarText" class="navbar-text text-dark text-bold">
+      {{ navbarText }}
+    </div>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <SwitchLocale />
-      <li
-        class="nav-item"
-        @click="logout"
-      >
-        <a
-          class="nav-link text-red"
-          href="#"
-          role="button"
-        >
+      <slot name="btn-action-right"></slot>
+      <li v-if="!hideButtonLogout" class="nav-item" @click="logout">
+        <a class="nav-link text-red" href="#" role="button">
           <i class="fas fa-power-off" />
         </a>
       </li>
@@ -34,6 +32,24 @@ export default {
   name: 'HeaderMobile',
   components: {
     SwitchLocale
+  },
+  props: {
+    hideButtonLogout: {
+      type: Boolean,
+      default: false
+    },
+    hideButtonHome: {
+      type: Boolean,
+      default: false
+    },
+    showNavbarText: {
+      type: Boolean,
+      default: false
+    },
+    navbarText: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
     logout () {

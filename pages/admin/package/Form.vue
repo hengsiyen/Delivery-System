@@ -197,10 +197,7 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label
-                    for="payment_type"
-                    :class="{'text-red': checkValidate('payment_type')}"
-                  >
+                  <label :class="{'text-red': checkValidate('payment_type')}">
                     {{ $t('label.is_paid') }}
                   </label>
                   <div class="input-group">

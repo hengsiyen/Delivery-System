@@ -205,6 +205,10 @@ input.disabled {
   cursor: not-allowed;
 }
 
+.dropdown-toggle.no-icon::after {
+  content: none !important;
+}
+
 @media screen and (max-width: 991.98px) {
   .elevation-4 {
     box-shadow: none !important;

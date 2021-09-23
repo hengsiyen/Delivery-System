@@ -1,18 +1,11 @@
 <template>
-  <div>
-    <HeaderMobile />
-    <div class="mobile-content-h">
-      <Nuxt />
-    </div>
-  </div>
+  <Nuxt />
 </template>
 
 <script>
-import HeaderMobile from '@/components/Layouts/HeaderMobile'
 import { mapGetters } from 'vuex'
 export default {
   name: 'MobileIndex',
-  components: { HeaderMobile },
   computed: {
     ...mapGetters({
       delivery_company: 'delivery_company/delivery_company',
@@ -48,10 +41,5 @@ export default {
 </script>
 
 <style scoped>
-.mobile-content-h {
-  height: calc(100vh - 75px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
-}
+
 </style>

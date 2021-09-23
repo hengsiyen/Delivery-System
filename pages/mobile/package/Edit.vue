@@ -1,5 +1,5 @@
 <template>
-  <PackageMobileForm is-edit />
+  <PackageMobileForm is-edit title="label.edit_package"/>
 </template>
 
 <script>

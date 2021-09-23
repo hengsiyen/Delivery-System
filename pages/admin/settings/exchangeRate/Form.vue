@@ -17,8 +17,8 @@
                 <label class="required col-lg-3 col-form-label text-lg-right">{{ $t('label.currency') }}</label>
                 <div class="col-lg-9">
                   <select
-                    v-model="selected_currency"
                     id="currency"
+                    v-model="selected_currency"
                     name="currency"
                     class="form-control"
                     :class="{'is-invalid': checkValidate('currency')}"

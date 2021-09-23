@@ -1,403 +1,397 @@
 <template>
   <div>
-    <section class="container-header">
-      <div>
-        <h1 class="m-0">
-          {{ $t('menu.package') }}
-        </h1>
-      </div>
-      <div class="text-right">
-        <ButtonBack />
-      </div>
-    </section>
-    <div class="row">
-      <div class="col-lg-8">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <template v-if="shop">
-              <div class="shop__selected">
-                <div>
-                  <i class="fas fa-store mr-2" />
-                  <label>{{ shop.name_en }}</label>
+    <HeaderMobile hide-button-logout hide-button-home show-navbar-text :navbar-text="$t(title)">
+      <template v-slot:btn-back>
+        <ButtonBackMobile />
+      </template>
+    </HeaderMobile>
+    <div class="mobile-content-h col-12 pt-3">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <template v-if="shop">
+                <div class="shop__selected">
+                  <div>
+                    <i class="fas fa-store mr-2" />
+                    <label>{{ shop.name_en }}</label>
+                  </div>
+                  <button class="btn" @click="setShop(null)">
+                    <i class="fas fa-times" />
+                  </button>
                 </div>
-                <button class="btn" @click="setShop(null)">
-                  <i class="fas fa-times" />
-                </button>
-              </div>
-            </template>
-            <template v-else>
-              <div :class="{'is-invalid': checkValidate('shop_id')}">
-                <button
-                  type="button"
-                  class="btn btn-default btn-block"
-                  data-toggle="modal"
-                  data-target="#shopModal"
-                  @click="openShopModal"
-                >
-                  <strong>{{ $t('label.select_shop') }}</strong>
-                </button>
-              </div>
-              <div v-if="checkValidate('shop_id')" class="invalid-feedback">
-                {{ $t('string.theFieldIsRequired') }}
-              </div>
-            </template>
-          </div>
-          <div class="form-group col-md-6">
-            <div
-              class="input-group"
-              :class="{'has-validation': checkValidate('customer_name')}"
-            >
-              <div class="input-group-prepend">
-                <span id="inputGroup-sizing-lg" class="input-group-text">
-                  <i class="fas fa-user" />
-                </span>
-              </div>
-              <input
-                id="customer_name"
-                v-model="customer_name"
-                name="customer_name"
-                class="form-control"
-                :placeholder="$t('pla.customer_name')"
-                :class="{'is-invalid': checkValidate('customer_name')}"
-              >
-              <div v-if="checkValidate('customer_name')" class="invalid-feedback">
-                {{ $t('string.theFieldIsRequired') }}
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <div class="input-group" :class="{'has-validation': checkValidate('customer_phone')}">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-phone" /></span>
-              </div>
-              <input
-                id="customer_phone"
-                v-model="customer_phone"
-                v-mask="'### ### ####'"
-                name="customer_phone"
-                class="form-control"
-                :placeholder="$t('pla.customer_phone')"
-                :class="{'is-invalid': checkValidate('customer_phone')}"
-              >
-              <div v-if="checkValidate('customer_phone')" class="invalid-feedback">
-                {{ $t('string.theFieldIsRequired') }}
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <div class="input-group" :class="{'has-validation': checkValidate('customer_address')}">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-map-marker-alt" /></span>
-              </div>
-              <input
-                id="customer_address"
-                v-model="customer_address"
-                name="customer_address"
-                class="form-control"
-                :placeholder="$t('pla.customer_address')"
-                :class="{'is-invalid': checkValidate('customer_address')}"
-              >
-
-              <div v-if="checkValidate('customer_address')" class="invalid-feedback">
-                {{ $t('string.theFieldIsRequired') }}
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <div class="input-group" :class="{'has-validation': checkValidate('price')}">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fas fa-dollar-sign" />
-                </span>
-              </div>
-              <input
-                id="price"
-                v-model="price"
-                name="price"
-                type="number"
-                class="form-control price-width z-2"
-                :class="{'is-invalid': checkValidate('price')}"
-                :placeholder="$t('pla.package_price')"
-                aria-describedby="button-price"
-              >
-              <template v-if="currencies && currencies.length">
-                <select v-model="currency" name="currency" class="form-control currency-width">
-                  <option v-for="(item, key) in currencies" :key="key" :value="item">
-                    {{ item.code }}
-                  </option>
-                </select>
               </template>
-              <div v-if="checkValidate('price')" class="invalid-feedback">
-                {{ $t('string.theFieldIsRequired') }}
-              </div>
+              <template v-else>
+                <div :class="{'is-invalid': checkValidate('shop_id')}">
+                  <button
+                    type="button"
+                    class="btn btn-default btn-block"
+                    data-toggle="modal"
+                    data-target="#shopModal"
+                    @click="openShopModal"
+                  >
+                    <strong>{{ $t('label.select_shop') }}</strong>
+                  </button>
+                </div>
+                <div v-if="checkValidate('shop_id')" class="invalid-feedback">
+                  {{ $t('string.theFieldIsRequired') }}
+                </div>
+              </template>
             </div>
-          </div>
-          <div class="form-group col-md-6">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fas fa-cube" />
-                </span>
-              </div>
-              <select
-                v-if="package_types"
-                id="package_type"
-                v-model="package_type"
-                name="package_type"
-                class="custom-select w-35"
+            <div class="form-group col-md-6">
+              <div
+                class="input-group"
+                :class="{'has-validation': checkValidate('customer_name')}"
               >
-                <option :value="null" selected hidden>
-                  {{ $t('label.select_one_option') }} ...
-                </option>
-                <template v-for="(item, key) in package_types">
-                  <option :key="key" :value="item">
-                    {{ item['name_' + $i18n.locale] }}
-                  </option>
-                </template>
-              </select>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fas fa-motorcycle" />
-                </span>
+                <div class="input-group-prepend">
+                  <span id="inputGroup-sizing-lg" class="input-group-text">
+                    <i class="fas fa-user" />
+                  </span>
+                </div>
+                <input
+                  id="customer_name"
+                  v-model="customer_name"
+                  name="customer_name"
+                  class="form-control"
+                  :placeholder="$t('pla.customer_name')"
+                  :class="{'is-invalid': checkValidate('customer_name')}"
+                >
+                <div v-if="checkValidate('customer_name')" class="invalid-feedback">
+                  {{ $t('string.theFieldIsRequired') }}
+                </div>
               </div>
-              <date-picker
-                v-model="request_delivery_at"
-                type="datetime"
-                :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
-                :show-second="false"
-                :placeholder="$t('string.select_date')"
-                :lang="datePickerLang"
-                :format="'DD/MM/YYYY hh:mm:ss A'"
-                input-class="form-control"
-                :disabled-date="notBeforeToday"
+            </div>
+            <div class="form-group col-md-6">
+              <div class="input-group" :class="{'has-validation': checkValidate('customer_phone')}">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-phone" /></span>
+                </div>
+                <input
+                  id="customer_phone"
+                  v-model="customer_phone"
+                  v-mask="'### ### ####'"
+                  name="customer_phone"
+                  class="form-control"
+                  :placeholder="$t('pla.customer_phone')"
+                  :class="{'is-invalid': checkValidate('customer_phone')}"
+                >
+                <div v-if="checkValidate('customer_phone')" class="invalid-feedback">
+                  {{ $t('string.theFieldIsRequired') }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="input-group" :class="{'has-validation': checkValidate('customer_address')}">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-map-marker-alt" /></span>
+                </div>
+                <input
+                  id="customer_address"
+                  v-model="customer_address"
+                  name="customer_address"
+                  class="form-control"
+                  :placeholder="$t('pla.customer_address')"
+                  :class="{'is-invalid': checkValidate('customer_address')}"
+                >
+
+                <div v-if="checkValidate('customer_address')" class="invalid-feedback">
+                  {{ $t('string.theFieldIsRequired') }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="input-group" :class="{'has-validation': checkValidate('price')}">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-dollar-sign" />
+                  </span>
+                </div>
+                <input
+                  id="price"
+                  v-model="price"
+                  name="price"
+                  type="number"
+                  class="form-control price-width z-2"
+                  :class="{'is-invalid': checkValidate('price')}"
+                  :placeholder="$t('pla.package_price')"
+                  aria-describedby="button-price"
+                >
+                <template v-if="currencies && currencies.length">
+                  <select v-model="currency" name="currency" class="form-control currency-width">
+                    <option v-for="(item, key) in currencies" :key="key" :value="item">
+                      {{ item.code }}
+                    </option>
+                  </select>
+                </template>
+                <div v-if="checkValidate('price')" class="invalid-feedback">
+                  {{ $t('string.theFieldIsRequired') }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-cube" />
+                  </span>
+                </div>
+                <select
+                  v-if="package_types"
+                  id="package_type"
+                  v-model="package_type"
+                  name="package_type"
+                  class="custom-select w-35"
+                >
+                  <option :value="null" selected hidden>
+                    {{ $t('label.select_one_option') }} ...
+                  </option>
+                  <template v-for="(item, key) in package_types">
+                    <option :key="key" :value="item">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-motorcycle" />
+                  </span>
+                </div>
+                <date-picker
+                  v-model="request_delivery_at"
+                  type="datetime"
+                  :time-picker-options="{start: '06:00', step:'00:30' , end: '23:00', format: 'hh:mm A' }"
+                  :show-second="false"
+                  :placeholder="$t('string.select_date')"
+                  :lang="datePickerLang"
+                  :format="'DD/MM/YYYY hh:mm:ss A'"
+                  input-class="form-control"
+                  :disabled-date="notBeforeToday"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <textarea
+                id="note"
+                v-model="note"
+                class="form-control overflow-auto"
+                rows="3"
+                :placeholder="$t('pla.note') + ' ...'"
+                style="max-height: 120px"
               />
             </div>
-          </div>
-          <div class="form-group col-md-12">
-            <textarea
-              id="note"
-              v-model="note"
-              class="form-control overflow-auto"
-              rows="3"
-              :placeholder="$t('pla.note') + ' ...'"
-              style="max-height: 120px"
-            />
-          </div>
-          <div class="form-group col-md-6">
-            <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <label class="mb-0">{{ $t('label.is_paid') }}</label>
-              </div>
-              <div class="btn-group  btn-group-sm">
-                <button
-                  class="btn"
-                  :class="!is_paid ? 'btn-primary' : 'input-group-text'"
-                  @click="is_paid = false"
-                >
-                  {{ $t('btn.is_paid_no') }}
-                </button>
-                <button
-                  class="btn"
-                  :class="is_paid ? 'btn-primary' : 'input-group-text'"
-                  @click="is_paid = true"
-                >
-                  {{ $t('btn.is_paid_yes') }}
-                </button>
-              </div>
-            </div>
-            <div class="input-group">
-              <select
-                v-if="payment_types && is_paid"
-                id="payment_type"
-                v-model="payment_type"
-                name="package_type"
-                class="custom-select mt-3"
-              >
-                <option :value="null" selected hidden>
-                  {{ $t('label.select_one_option') }} ...
-                </option>
-                <template v-for="(item, key) in payment_types">
-                  <option :key="key" :value="item">
-                    {{ item['name_' + $i18n.locale] }}
-                  </option>
-                </template>
-              </select>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <!-- Button trigger modal -->
-            <template v-if="third_party">
-              <div class="shop__selected">
+            <div class="form-group col-md-6">
+              <div class="d-flex align-items-center justify-content-between">
                 <div>
-                  <i class="fas fa-store mr-2" />
-                  <label>{{ third_party.name_en }}</label>
+                  <label class="mb-0">{{ $t('label.is_paid') }}</label>
                 </div>
-                <button class="btn" @click="setThirdParty(null)">
-                  <i class="fas fa-times" />
-                </button>
+                <div class="btn-group">
+                  <button
+                    class="btn"
+                    :class="!is_paid ? 'btn-primary' : 'input-group-text'"
+                    @click="is_paid = false"
+                  >
+                    {{ $t('btn.is_paid_no') }}
+                  </button>
+                  <button
+                    class="btn"
+                    :class="is_paid ? 'btn-primary' : 'input-group-text'"
+                    @click="is_paid = true"
+                  >
+                    {{ $t('btn.is_paid_yes') }}
+                  </button>
+                </div>
               </div>
-            </template>
-            <template v-else>
-              <div>
-                <button
-                  type="button"
-                  class="btn btn-default btn-block"
-                  data-toggle="modal"
-                  data-target="#thirdPartyCompanyModal"
-                  @click="openThirdPartyModal"
+              <div class="input-group">
+                <select
+                  v-if="payment_types && is_paid"
+                  id="payment_type"
+                  v-model="payment_type"
+                  name="package_type"
+                  class="custom-select mt-3"
                 >
-                  <strong>{{ $t('label.delivery_with_other_company') }}</strong>
-                </button>
+                  <option :value="null" selected hidden>
+                    {{ $t('label.select_one_option') }} ...
+                  </option>
+                  <template v-for="(item, key) in payment_types">
+                    <option :key="key" :value="item">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
+                </select>
               </div>
-            </template>
+            </div>
+            <div class="form-group col-md-6">
+              <!-- Button trigger modal -->
+              <template v-if="third_party">
+                <div class="shop__selected">
+                  <div>
+                    <i class="fas fa-store mr-2" />
+                    <label>{{ third_party.name_en }}</label>
+                  </div>
+                  <button class="btn" @click="setThirdParty(null)">
+                    <i class="fas fa-times" />
+                  </button>
+                </div>
+              </template>
+              <template v-else>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-default btn-block"
+                    data-toggle="modal"
+                    data-target="#thirdPartyCompanyModal"
+                    @click="openThirdPartyModal"
+                  >
+                    <strong>{{ $t('label.delivery_with_other_company') }}</strong>
+                  </button>
+                </div>
+              </template>
+            </div>
           </div>
         </div>
-      </div>
-      <template v-if="selected_image || preview_image">
-        <div class="col-lg-4">
-          <div class="form-group">
-            <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <label class="mb-0">{{ $t('label.package_image') }}</label>
+        <template v-if="selected_image || preview_image">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <label class="mb-0">{{ $t('label.package_image') }}</label>
+                </div>
+                <div />
               </div>
-              <div />
             </div>
-          </div>
 
-          <div class="form-group mx-auto croppie-w">
-            <template v-if="selected_image">
-              <div :style="`width: ${croppie_size}px`" class="text-center mx-auto">
-                <vue-croppie
-                  ref="croppieRef"
-                  :enable-orientation="true"
-                  :boundary="{ width: croppie_size, height: croppie_size}"
-                  :enable-resize="false"
-                  :viewport="{ width: 295, height: 295, type: 'square' }"
-                  @result="result"
-                />
-                <button class="btn btn-primary btn-upload-image">
-                  <i class="fas fa-link" />
+            <div class="form-group mx-auto croppie-w">
+              <template v-if="selected_image">
+                <div :style="`width: ${croppie_size}px`" class="text-center mx-auto">
+                  <vue-croppie
+                    ref="croppieRef"
+                    :enable-orientation="true"
+                    :boundary="{ width: croppie_size, height: croppie_size}"
+                    :enable-resize="false"
+                    :viewport="{ width: 295, height: 295, type: 'square' }"
+                    @result="result"
+                  />
+                  <button class="btn btn-primary btn-upload-image">
+                    <i class="fas fa-link" />
+                    <input
+                      ref="getPackageImg"
+                      type="file"
+                      name="file"
+                      accept="image/*"
+                      @change="getPackageImg"
+                    >
+                  </button>
+                  <!-- Rotate angle is Number -->
+                  <button class="btn btn-light" @click="rotate(-90)">
+                    <i class="fas fa-undo-alt" />
+                  </button>
+                  <button class="btn btn-light" @click="rotate(90)">
+                    <i class="fas fa-redo-alt" />
+                  </button>
+                  <button class="btn btn-light" @click="removePackageImg">
+                    <i class="fas fa-times" />
+                  </button>
+                </div>
+              </template>
+              <template v-else>
+                <div
+                  :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
+                  class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
+                >
+                  <template v-if="isEdit && preview_image">
+                    <img :src="preview_image" class="img-thumbnail">
+                  </template>
+                  <template v-else>
+                    <div class="text-gray">
+                      <i class="fas fa-upload fa-2x" />
+                      <p class="mt-2">
+                        {{ $t('label.click_here_to_browse_image') }}
+                      </p>
+                    </div>
+                  </template>
                   <input
                     ref="getPackageImg"
                     type="file"
                     name="file"
                     accept="image/*"
+                    class="cursor-pointer"
                     @change="getPackageImg"
                   >
-                </button>
-                <!-- Rotate angle is Number -->
-                <button class="btn btn-light" @click="rotate(-90)">
-                  <i class="fas fa-undo-alt" />
-                </button>
-                <button class="btn btn-light" @click="rotate(90)">
-                  <i class="fas fa-redo-alt" />
-                </button>
-                <button class="btn btn-light" @click="removePackageImg">
-                  <i class="fas fa-times" />
-                </button>
-              </div>
-            </template>
-            <template v-else>
-              <div
-                :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
-                class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
-              >
-                <template v-if="isEdit && preview_image">
-                  <img :src="preview_image" class="img-thumbnail">
-                </template>
-                <template v-else>
-                  <div class="text-gray">
-                    <i class="fas fa-upload fa-2x" />
-                    <p class="mt-2">
-                      {{ $t('label.click_here_to_browse_image') }}
-                    </p>
-                  </div>
-                </template>
-                <input
-                  ref="getPackageImg"
-                  type="file"
-                  name="file"
-                  accept="image/*"
-                  class="cursor-pointer"
-                  @change="getPackageImg"
-                >
-              </div>
-            </template>
-            <template v-if="isEdit && preview_image && !selected_image">
-              <p class="mt-2 text-center">
-                {{ $t('label.tap_on_image_to_edit') }}
-              </p>
-            </template>
+                </div>
+              </template>
+              <template v-if="isEdit && preview_image && !selected_image">
+                <p class="mt-2 text-center">
+                  {{ $t('label.tap_on_image_to_edit') }}
+                </p>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+      <div class="btn-action border-top">
+        <div class="w-50">
+          <div class="btn btn-default btn-upload-image">
+            <i class="fas fa-image" />
+            <input
+              ref="getPackageImg"
+              type="file"
+              name="file"
+              accept="image/*"
+              class="cursor-pointer"
+              @change="getPackageImg"
+            >
           </div>
         </div>
-      </template>
-    </div>
-    <div class="btn-action border-top">
-      <div class="w-50">
-        <button class="btn btn-light" @click="$router.back()">
-          <i class="fas fa-times mr-2" />
-          <strong>{{ $t('btn.cancel') }}</strong>
-        </button>
-      </div>
-      <div class="w-50 text-right">
-        <div class="btn btn-default btn-upload-image">
-          <i class="fas fa-image" />
-          <input
-            ref="getPackageImg"
-            type="file"
-            name="file"
-            accept="image/*"
-            class="cursor-pointer"
-            @change="getPackageImg"
+        <div class="w-100 text-right">
+          <button
+            class="btn"
+            :class="isEdit ? 'btn-primary' : 'btn-success'"
+            @click="storeOrEdit"
           >
+            <i class="fas fa-save mr-2" />
+            <strong>{{ isEdit ? $t('btn.update') : $t('btn.save') }}</strong>
+          </button>
         </div>
-        <button
-          class="btn"
-          :class="isEdit ? 'btn-primary' : 'btn-success'"
-          @click="storeOrEdit"
-        >
-          <i class="fas fa-save mr-2" />
-          <strong>{{ isEdit ? $t('btn.update') : $t('btn.save') }}</strong>
-        </button>
       </div>
-    </div>
-    <div
-      id="thirdPartyCompanyModal"
-      class="modal fade"
-      data-backdrop="static"
-      tabindex="-1"
-    >
-      <ThirdPartyCompanyModal ref="thirdPartyCompanyModal" />
-    </div>
-    <div
-      id="shopModal"
-      class="modal fade"
-      tabindex="-1"
-      data-backdrop="static"
-    >
-      <ShopModal ref="shopModal" />
+      <div
+        id="thirdPartyCompanyModal"
+        class="modal fade"
+        data-backdrop="static"
+        tabindex="-1"
+      >
+        <ThirdPartyCompanyModal ref="thirdPartyCompanyModal" />
+      </div>
+      <div
+        id="shopModal"
+        class="modal fade"
+        tabindex="-1"
+        data-backdrop="static"
+      >
+        <ShopModal ref="shopModal" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 
+import { mapGetters } from 'vuex'
 import ThirdPartyCompanyModal from '@/pages/admin/package/_components/ThirdPartyCompanyModal'
 import ShopModal from '@/pages/admin/package/_components/ShopModal'
-import { mapGetters } from 'vuex'
-import ButtonBack from '@/components/UiElements/ButtonBack'
+import HeaderMobile from '@/components/Layouts/HeaderMobile'
+import ButtonBackMobile from '@/components/UiElements/ButtonBackMobile'
 
 export default {
   name: 'PackageMobileForm',
-  components: { ButtonBack, ThirdPartyCompanyModal, ShopModal },
+  components: { ButtonBackMobile, HeaderMobile, ThirdPartyCompanyModal, ShopModal },
   props: {
     title: {
       type: String,
-      default: 'label.add_new'
+      default: 'label.create_package'
     },
     isEdit: {
       type: Boolean,
@@ -630,6 +624,9 @@ export default {
 
 <style scoped lang="scss">
 @import "assets/scss/pages/mobile";
+.mobile-content-h {
+  height: calc(100vh - 113px);
+}
 
 .price-width {
   width: calc(100% - 200px) !important;

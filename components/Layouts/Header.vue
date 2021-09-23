@@ -19,7 +19,7 @@
           href="#"
           role="button"
         >
-          <i class="fas fa-mobile-alt"></i>
+          <i class="fas fa-mobile-alt" />
         </NuxtLink>
       </li>
       <li class="nav-item">

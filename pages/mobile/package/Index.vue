@@ -1,7 +1,5 @@
 <template>
-  <div class="mobile-container">
-    <Nuxt />
-  </div>
+  <Nuxt />
 </template>
 
 <script>

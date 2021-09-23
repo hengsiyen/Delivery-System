@@ -11,7 +11,9 @@
     }
   }
 }
-
-.mobile-container-h {
-  min-height: calc(100vh - 75px);
+.mobile-content-h {
+  height: calc(100vh - 75px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 }
