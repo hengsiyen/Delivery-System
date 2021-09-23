@@ -1,21 +1,27 @@
 <template>
   <div class="mobile-footer border-top">
-    <ul class="nav nav-pills justify-content-between w-75 mx-auto">
+    <ul class="nav nav-pills justify-content-between w-100 mx-auto">
       <li class="nav-item">
         <NuxtLink class="nav-link text-center py-0 line-1-2" :to="{name: 'mobile-shop-list'}">
-          <p class="mb-0"><i class="fas fa-store" /></p>
+          <p class="mb-0">
+            <i class="fas fa-store" />
+          </p>
           <small class="mb-0">{{ $t('menu.shop') }}</small>
         </NuxtLink>
       </li>
       <li class="nav-item">
         <NuxtLink class="nav-link text-center py-0 line-1-2" :to="{name: 'mobile-assigned-list-package'}">
-          <p class="mb-0"><i class="fas fa-user-check" /></p>
+          <p class="mb-0">
+            <i class="fas fa-user-check" />
+          </p>
           <small class="mb-0">{{ $t('label.assigned') }}</small>
         </NuxtLink>
       </li>
       <li class="nav-item">
         <NuxtLink class="nav-link text-center py-0 line-1-2" :to="{name: 'mobile-delivery-list-package'}">
-          <p class="mb-0"><i class="fas fa-motorcycle" /></p>
+          <p class="mb-0">
+            <i class="fas fa-motorcycle" />
+          </p>
           <small class="mb-0">{{ $t('menu.delivery') }}</small>
         </NuxtLink>
       </li>
