@@ -227,7 +227,7 @@ export default {
 @import "assets/scss/pages/mobile";
 @import "assets/scss/components/list_item";
 .mobile-content-h {
-  height: calc(100vh - 117px);
+  height: calc(100vh - 177px);
 }
 .list_item-hover:hover {
   background-color: rgb(245, 245, 245);
