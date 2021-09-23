@@ -36,10 +36,15 @@ export default {
       exchange: 'delivery_company/dc_exchange_rate',
       currencies: 'delivery_company/currencies',
       currency: 'delivery_company/currency',
-      display_roles: 'user/getDisplayRoles'
+      display_roles: 'user/getDisplayRoles',
+      user: 'user/getUser'
     })
   },
   beforeMount () {
+    if (!this.user) {
+      const user = this.$cookies.get('user')
+      this.$store.dispatch('user/setUserRolesPermissions', { user })
+    }
     if (!this.delivery_company) {
       const deliveryCompany = localStorage.getItem('dc')
       this.$store.dispatch('delivery_company/setDeliveryCompany', JSON.parse(deliveryCompany))

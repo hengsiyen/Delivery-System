@@ -341,14 +341,16 @@ export default {
         confirmButtonText: this.$t('string.ok'),
         cancelButtonText: this.$t('string.cancel')
       }).then((accept) => {
-        this.$axios.post(this.$base_api + '/api/backend/driver/reject-delivery', {
-          id: this.$route.params.id,
-          package_id: packageId
-        }).then((res) => {
-          this.driver_data = res.data.data
-        }).catch((error) => {
-          this.onResponseError(error)
-        })
+        if (accept) {
+          this.$axios.post(this.$base_api + '/api/backend/driver/reject-delivery', {
+            id: this.$route.params.id,
+            package_id: packageId
+          }).then((res) => {
+            this.driver_data = res.data.data
+          }).catch((error) => {
+            this.onResponseError(error)
+          })
+        }
       })
     },
     refreshDriverData () {

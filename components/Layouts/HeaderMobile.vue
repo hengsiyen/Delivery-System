@@ -8,7 +8,7 @@
         </NuxtLink>
       </li>
     </ul>
-    <div v-if="showNavbarText" class="navbar-text text-dark text-bold">
+    <div v-if="showNavbarText" class="navbar-text text-dark text-bold nav-link">
       {{ navbarText }}
     </div>
 

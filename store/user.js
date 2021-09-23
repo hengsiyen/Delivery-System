@@ -78,7 +78,6 @@ export const mutations = {
     const user = data.user
     Vue.set(data.user, 'permissions', data.permissions)
     Vue.set(data.user, 'roles', data.roles)
-
     state.data = user
   },
 

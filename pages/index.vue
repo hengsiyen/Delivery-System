@@ -161,6 +161,7 @@ export default {
               }
             })
             if (result.user && result.user.roles) {
+              this.$cookies.set('user', JSON.stringify(result.user))
               this.$cookies.set('roles', JSON.stringify(result.user.roles))
             }
             if (deliveryCompany) {

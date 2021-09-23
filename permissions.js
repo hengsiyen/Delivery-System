@@ -22,7 +22,8 @@ const Permissions = {
         km: 'ការដឹកជញ្ជូន'
       },
       manage: 'manage-delivery',
-      assign: 'assign-delivery'
+      assign: 'assign-delivery',
+      listPackage: 'list-package-delivery'
     },
     shop: {
       name: {
