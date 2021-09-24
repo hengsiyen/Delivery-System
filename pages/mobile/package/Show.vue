@@ -19,40 +19,40 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <template v-if="isPackageOnAssigned(packageData)">
-              <a class="dropdown-item text-primary py-2" @click="acceptByEachPackage(packageData)">
+              <a class="dropdown-item text-primary py-3" @click="acceptByEachPackage(packageData)">
                 <i class="fas fa-check-circle mr-2" />
                 {{ $t('btn.accept') }}
               </a>
-              <a class="dropdown-item text-danger py-2" @click="rejectByEachPackage(packageData)">
+              <a class="dropdown-item text-danger py-3" @click="rejectByEachPackage(packageData)">
                 <i class="fas fa-times-circle mr-2" />
                 {{ $t('btn.reject') }}
               </a>
               <div class="dropdown-divider" />
             </template>
             <template v-if="isPackageOnDelivery(packageData)">
-              <a class="dropdown-item text-success py-2" data-toggle="modal" data-target="#completePackageModal">
+              <a class="dropdown-item text-success py-3" data-toggle="modal" data-target="#completePackageModal">
                 <i class="fas fa-map-marker-alt mr-2" />
                 {{ $t('btn.complete') }}
               </a>
-              <a class="dropdown-item py-2" data-toggle="modal" data-target="#delayModal">
+              <a class="dropdown-item py-3" data-toggle="modal" data-target="#delayModal">
                 <i class="fas fa-hourglass-half mr-2" />
                 {{ $t('btn.delay') }}
               </a>
-              <a class="dropdown-item text-danger py-2" data-toggle="modal" data-target="#cancelModal">
+              <a class="dropdown-item text-danger py-3" data-toggle="modal" data-target="#cancelModal">
                 <i class="far fa-times-circle mr-2" />
                 {{ $t('btn.cancel') }}
               </a>
               <div class="dropdown-divider" />
             </template>
-            <a class="dropdown-item py-2" data-toggle="modal" data-target="#packageHistoryModal">
+            <a class="dropdown-item py-3" data-toggle="modal" data-target="#packageHistoryModal">
               <i class="fas fa-history mr-2" />
               {{ $t('label.package_history') }}
             </a>
-            <NuxtLink :to="{name: 'mobile-package-edit', params: {id: packageData._id}}" class="dropdown-item py-2">
+            <NuxtLink :to="{name: 'mobile-package-edit', params: {id: packageData._id}}" class="dropdown-item py-3">
               <i class="fas fa-edit mr-2" />
               {{ $t('label.edit_package') }}
             </NuxtLink>
-            <a class="dropdown-item text-danger py-2" @click="deletePackage(packageData._id)">
+            <a class="dropdown-item text-danger py-3" @click="deletePackage(packageData._id)">
               <i class="fas fa-trash-alt mr-2" />
               {{ $t('label.deleteThisPackage') }}
             </a>

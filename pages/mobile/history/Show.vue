@@ -79,6 +79,11 @@
             </template>
           </div>
         </div>
+        <div v-else>
+          <div class="list_item align-items-center w-100 justify-content-center">
+            {{ $t('label.no_result_found') }}
+          </div>
+        </div>
       </div>
     </div>
     <FooterMobile />
