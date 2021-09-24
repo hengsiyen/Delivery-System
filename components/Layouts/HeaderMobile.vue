@@ -15,7 +15,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <SwitchLocale />
-      <slot name="btn-action-right"></slot>
+      <slot name="btn-action-right" />
       <li v-if="!hideButtonLogout" class="nav-item" @click="logout">
         <a class="nav-link text-red" href="#" role="button">
           <i class="fas fa-power-off" />

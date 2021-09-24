@@ -73,11 +73,14 @@ body {
   justify-content: center;
 
   & i {
-    color: var(--primary);
-    font-size: 35px;
+    color: #999;
+    font-size: 24px;
   }
 }
-
+i.fa-circle-notch.fa-spin {
+  color: #999;
+  font-size: 24px;
+}
 
 .card-header {
   display: flex;

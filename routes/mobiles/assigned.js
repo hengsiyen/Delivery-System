@@ -6,6 +6,10 @@ export const mobileAssignedRouters = {
   path: 'assigned',
   component: Index,
   redirect: 'assigned/list-package',
+  meta: {
+    permissions: [Permissions.backend.delivery.manage],
+    groups: 'mobile-assigned'
+  },
   children: [
     {
       name: 'mobile-assigned-list-package',
@@ -13,7 +17,7 @@ export const mobileAssignedRouters = {
       component: ListPackage,
       meta: {
         permissions: [Permissions.backend.delivery.listPackage],
-        groups: 'assigned'
+        groups: 'mobile-assigned'
       }
     }
   ]

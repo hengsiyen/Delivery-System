@@ -41,10 +41,10 @@ export default {
     })
   },
   beforeMount () {
-    if (!this.user) {
-      const user = this.$cookies.get('user')
-      this.$store.dispatch('user/setUserRolesPermissions', { user })
-    }
+    // if (!this.user) {
+    //   const user = this.$cookies.get('user')
+    //   this.$store.dispatch('user/setUserRolesPermissions', { user })
+    // }
     if (!this.delivery_company) {
       const deliveryCompany = localStorage.getItem('dc')
       this.$store.dispatch('delivery_company/setDeliveryCompany', JSON.parse(deliveryCompany))

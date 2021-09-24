@@ -5,11 +5,13 @@
         <div :key="key" class="list_item">
           <div class="col-md-2 col-lg-2">
             <template v-if="item.media">
-              <div>sdfsf</div>
+              <div class="package__item-image">
+                <img :src="getSrc(item.media.src)" alt="" width="100%">
+              </div>
             </template>
             <template v-else>
               <div class="package__item-image">
-                <img src="/img/package.png" alt="" width="100%">
+                <img :src="package_img" alt="" width="100%">
               </div>
             </template>
           </div>

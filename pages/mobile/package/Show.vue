@@ -18,11 +18,41 @@
             <i class="fas fa-ellipsis-v" />
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <NuxtLink :to="{name: 'mobile-package-edit', params: {id: packageData._id}}" class="dropdown-item py-3">
+            <template v-if="isPackageOnAssigned(packageData)">
+              <a class="dropdown-item text-primary py-2" @click="acceptByEachPackage(packageData)">
+                <i class="fas fa-check-circle mr-2" />
+                {{ $t('btn.accept') }}
+              </a>
+              <a class="dropdown-item text-danger py-2" @click="rejectByEachPackage(packageData)">
+                <i class="fas fa-times-circle mr-2" />
+                {{ $t('btn.reject') }}
+              </a>
+              <div class="dropdown-divider" />
+            </template>
+            <template v-if="isPackageOnDelivery(packageData)">
+              <a class="dropdown-item text-success py-2" data-toggle="modal" data-target="#completePackageModal">
+                <i class="fas fa-map-marker-alt mr-2" />
+                {{ $t('btn.complete') }}
+              </a>
+              <a class="dropdown-item py-2" data-toggle="modal" data-target="#delayModal">
+                <i class="fas fa-hourglass-half mr-2" />
+                {{ $t('btn.delay') }}
+              </a>
+              <a class="dropdown-item text-danger py-2" data-toggle="modal" data-target="#cancelModal">
+                <i class="far fa-times-circle mr-2" />
+                {{ $t('btn.cancel') }}
+              </a>
+              <div class="dropdown-divider" />
+            </template>
+            <a class="dropdown-item py-2" data-toggle="modal" data-target="#packageHistoryModal">
+              <i class="fas fa-history mr-2" />
+              {{ $t('label.package_history') }}
+            </a>
+            <NuxtLink :to="{name: 'mobile-package-edit', params: {id: packageData._id}}" class="dropdown-item py-2">
               <i class="fas fa-edit mr-2" />
               {{ $t('label.edit_package') }}
             </NuxtLink>
-            <a class="dropdown-item text-danger py-3" @click="deletePackage(packageData._id)">
+            <a class="dropdown-item text-danger py-2" @click="deletePackage(packageData._id)">
               <i class="fas fa-trash-alt mr-2" />
               {{ $t('label.deleteThisPackage') }}
             </a>
@@ -85,9 +115,9 @@
                 <p class="mb-0">
                   {{ packageData.is_paid ? $t('label.payment_with_order') : $t('label.payment_on_delivery') }}
                 </p>
-                <tempate v-if="packageData.is_paid && packageData.payment_type">
+                <template v-if="packageData.is_paid && packageData.payment_type">
                   <small>( {{ packageData.payment_type['name_' + $i18n.locale ] }} )</small>
-                </tempate>
+                </template>
               </td>
             </tr>
             <tr>
@@ -141,6 +171,16 @@
         </div>
       </div>
     </div>
+    <PackageHistoryModal :package-history="packageData ? packageData.package_histories : []" />
+    <div id="completePackageModal" class="modal fade" tabindex="-1" data-backdrop="static">
+      <CompletePackageModel :payment-types="payment_types" :package-id="$route.params.id" @onSubmit="getDataFromChild" />
+    </div>
+    <div id="delayModal" class="modal fade" tabindex="-1" data-backdrop="static">
+      <DelayPackageModal ref="delayPackageModal" :package-data="packageData" @onSubmit="getDataFromChild" />
+    </div>
+    <div id="cancelModal" class="modal fade" tabindex="-1" data-backdrop="static">
+      <CancelPackageModal ref="cancelPackageModal" :package-id="$route.params.id" @onSubmit="getDataFromChild" />
+    </div>
   </div>
 </template>
 
@@ -149,24 +189,44 @@
 import { mapGetters } from 'vuex'
 import HeaderMobile from '@/components/Layouts/HeaderMobile'
 import ButtonBackMobile from '@/components/UiElements/ButtonBackMobile'
+import CompletePackageModel from '@/pages/admin/package/_components/CompletePackageModel'
+import DelayPackageModal from '@/pages/admin/package/_components/DelayPackageModal'
+import CancelPackageModal from '@/pages/admin/package/_components/CancelPackageModal'
+import PackageHistoryModal from '@/pages/admin/package/_components/PackageHistoryModal'
 export default {
   name: 'PackageMobileShow',
-  components: { ButtonBackMobile, HeaderMobile },
+  head () {
+    return {
+      title: this.$t('label.packageInfo'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  },
+  components: { PackageHistoryModal, CancelPackageModal, DelayPackageModal, CompletePackageModel, ButtonBackMobile, HeaderMobile },
   computed: {
     ...mapGetters({
       num_format_km: 'delivery_company/num_format_km',
-      num_format_en: 'delivery_company/num_format_en'
+      num_format_en: 'delivery_company/num_format_en',
+      user: 'user/getUser'
     })
   },
   data () {
     return {
+      currencies: [],
+      package_types: [],
+      payment_types: [],
       packageData: null
     }
   },
   mounted () {
+    this.getFetchData()
     this.getPackageData()
   },
   methods: {
+    getDataFromChild (value) {
+      if (value) {
+        this.packageData = value
+      }
+    },
     getPackageData () {
       this.$axios
         .post(this.$base_api + '/api/backend/package/show', {
@@ -218,6 +278,96 @@ export default {
         console.error(err)
         throw err
       })
+    },
+    getFetchData () {
+      this.$axios
+        .get(process.env.VUE_APP_API + '/api/backend/fetch-data/data-for-package')
+        .then((res) => {
+          const result = res.data.data
+          this.currencies = result.currencies
+          this.package_types = result.package_types
+          this.payment_types = result.payment_types
+          if (this.currencies.length) {
+            this.currency = this.currencies.find((item) => {
+              if (item.code === 'USD') {
+                return item
+              }
+              return null
+            })
+          }
+          if (!this.package_type && this.package_types.length) {
+            this.package_type = this.package_types[0]
+          }
+        }).catch((error) => {
+          this.onResponseError(error)
+        })
+    },
+    isPackageOnAssigned (item) {
+      return item && item.final_status === 'assigned'
+    },
+    isPackageOnDelivery (item) {
+      return item && item.final_status === 'delivery'
+    },
+
+    acceptByEachPackage (item) {
+      if (item) {
+        this.acceptDelivery(event, item._id)
+      }
+    },
+    acceptDelivery (event, packageId = null) {
+      this.onConfirm({
+        icon: 'warning',
+        title: this.$t('menu.delivery'),
+        text: packageId ? this.$t('label.start_delivery') : this.$t('label.accept_all_packages'),
+        confirmButtonText: this.$t('string.ok'),
+        cancelButtonText: this.$t('string.cancel')
+      }).then((accept) => {
+        if (accept) {
+          let userId = null
+          if (this.user) {
+            userId = this.user._id
+          }
+          this.$axios.post(this.$base_api + '/api/backend/driver/accept-delivery', {
+            id: userId,
+            package_id: packageId
+          }).then((res) => {
+            this.getPackageData()
+          }).catch((error) => {
+            this.onResponseError(error)
+          })
+        }
+      })
+    },
+    rejectByEachPackage (item) {
+      if (item) {
+        this.rejectDelivery(event, item._id)
+      }
+    },
+    rejectDelivery (event, packageId = null) {
+      this.onConfirm({
+        icon: 'warning',
+        title: this.$t('menu.delivery'),
+        text: packageId ? this.$t('label.reject_package') : this.$t('label.reject_all_packages'),
+        cancelButtonColor: '#3a7afe',
+        confirmButtonColor: '#ed524f',
+        confirmButtonText: this.$t('string.ok'),
+        cancelButtonText: this.$t('string.cancel')
+      }).then((accept) => {
+        if (accept) {
+          let userId = null
+          if (this.user) {
+            userId = this.user._id
+          }
+          this.$axios.post(this.$base_api + '/api/backend/driver/reject-delivery', {
+            id: userId,
+            package_id: packageId
+          }).then((res) => {
+            this.getPackageData()
+          }).catch((error) => {
+            this.onResponseError(error)
+          })
+        }
+      })
     }
   }
 }
@@ -232,4 +382,5 @@ export default {
 .table.custom-padding th {
   padding: 0.35rem !important;
 }
+
 </style>

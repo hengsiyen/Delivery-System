@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-dialog-scrollable">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 id="completePackageModalLabel" class="modal-title">

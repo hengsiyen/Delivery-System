@@ -375,7 +375,7 @@ const helpers = {
             case 'assigned':
               return 'fa-user-check bg-info'
             case 'reject':
-              return 'fa-user-times'
+              return 'fa-user-times bg-orange'
             case 'delivery':
               return 'fa-motorcycle bg-blue'
             case 'success':

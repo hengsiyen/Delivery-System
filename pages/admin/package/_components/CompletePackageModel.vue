@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-dialog-scrollable">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 id="completePackageModalLabel" class="modal-title">
@@ -66,7 +66,8 @@
           <div class="upload-btn-wrapper">
             <button class="btn btn-block">
               <i class="fas fa-link mr-2" />
-              Upload a photo ( Back transaction )
+              {{ $t('label.uploadBankTransaction') }}
+              ( {{ $t('label.bankPaymentTransaction') }} )
             </button>
             <input
               ref="completePhoto"
@@ -76,8 +77,8 @@
               @change="onUploadFile"
             >
           </div>
-          <div id="preview mt-3">
-            <img v-if="url" class="img-thumbnail mt-3" :src="url">
+          <div id="preview">
+            <img v-if="url" class="img-thumbnail mt-3 mx-auto" :src="url">
           </div>
         </div>
       </div>
@@ -193,6 +194,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+#preview {
+  text-align: center;
+  width: 75%;
+  margin: 0 auto;
+}
 </style>

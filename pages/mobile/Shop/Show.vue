@@ -181,7 +181,7 @@ export default {
     }),
     metadata () {
       const data = {
-        title: this.$t('menu.shop')
+        title: this.$t('label.shopInfo')
       }
 
       if (this.shop) {

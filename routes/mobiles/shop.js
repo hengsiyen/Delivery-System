@@ -6,16 +6,25 @@ export const mobileShopRouters = {
   path: 'shop',
   component: Index,
   redirect: 'shop/list',
+  meta: {
+    groups: 'mobile-shop'
+  },
   children: [
     {
       name: 'mobile-shop-list',
       path: 'list',
-      component: List
+      component: List,
+      meta: {
+        groups: 'mobile-shop'
+      }
     },
     {
       name: 'mobile-shop-show',
       path: 'show/:id',
-      component: Show
+      component: Show,
+      meta: {
+        groups: 'mobile-shop'
+      }
     }
   ]
 }

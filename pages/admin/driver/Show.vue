@@ -329,7 +329,9 @@ export default {
       })
     },
     rejectByEachPackage (item) {
-      this.rejectDelivery(event, item._id)
+      if (item) {
+        this.rejectDelivery(event, item._id)
+      }
     },
     rejectDelivery (event, packageId = null) {
       this.onConfirm({

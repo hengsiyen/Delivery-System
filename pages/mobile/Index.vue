@@ -19,7 +19,11 @@ export default {
   beforeMount () {
     if (!this.user) {
       const user = this.$cookies.get('user')
-      this.$store.dispatch('user/setUserRolesPermissions', { user })
+      this.$store.dispatch('user/setUserRolesPermissions', {
+        user,
+        permission: user.permission,
+        roles: user.roles
+      })
     }
     if (!this.delivery_company) {
       const deliveryCompany = localStorage.getItem('dc')
