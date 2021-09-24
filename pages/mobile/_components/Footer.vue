@@ -67,6 +67,5 @@ export default {
 
 .line-1-2 {
   line-height: 1.2;
-  width: 96px;
 }
 </style>
