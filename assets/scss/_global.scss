@@ -212,6 +212,18 @@ input.disabled {
   content: none !important;
 }
 
+.w-300px {
+  width: 300px;
+}
+
+.w-65 {
+  width: 65% !important;
+}
+
+.w-35 {
+  width: 35% !important;
+}
+
 @media screen and (max-width: 991.98px) {
   .elevation-4 {
     box-shadow: none !important;

@@ -228,19 +228,12 @@ export default {
       default: false
     }
   },
-  data () {
-    return {
-      payment_types: []
-    }
-  },
   computed: {
     ...mapGetters({
       num_format_en: 'delivery_company/num_format_en',
-      num_format_km: 'delivery_company/num_format_km'
+      num_format_km: 'delivery_company/num_format_km',
+      payment_types: 'delivery_company/payment_types'
     })
-  },
-  mounted () {
-    this.getFetchData()
   },
   methods: {
     onClickAccept (item) {
@@ -251,16 +244,6 @@ export default {
     },
     refreshData () {
       this.$emit('refreshData')
-    },
-    getFetchData () {
-      this.$axios
-        .get(process.env.VUE_APP_API + '/api/backend/fetch-data/data-for-package')
-        .then((res) => {
-          const result = res.data.data
-          this.payment_types = result.payment_types
-        }).catch((error) => {
-          this.onResponseError(error)
-        })
     }
   }
 }

@@ -35,16 +35,14 @@ export default {
       delivery_company: 'delivery_company/delivery_company',
       exchange: 'delivery_company/dc_exchange_rate',
       currencies: 'delivery_company/currencies',
+      package_types: 'delivery_company/package_types',
+      payment_types: 'delivery_company/payment_types',
       currency: 'delivery_company/currency',
       display_roles: 'user/getDisplayRoles',
       user: 'user/getUser'
     })
   },
   beforeMount () {
-    // if (!this.user) {
-    //   const user = this.$cookies.get('user')
-    //   this.$store.dispatch('user/setUserRolesPermissions', { user })
-    // }
     if (!this.delivery_company) {
       const deliveryCompany = localStorage.getItem('dc')
       this.$store.dispatch('delivery_company/setDeliveryCompany', JSON.parse(deliveryCompany))
@@ -57,9 +55,17 @@ export default {
       const exchange = this.$cookies.get('dc_exchange')
       this.$store.dispatch('delivery_company/setExchangeRate', exchange)
     }
-    if (!(this.currencies && this.currencies.length === 0)) {
+    if (!(this.currencies && this.currencies.length)) {
       const currencies = this.$cookies.get('currencies')
       this.$store.dispatch('delivery_company/setCurrencies', currencies)
+    }
+    if (!(this.package_types && this.package_types.length)) {
+      const packageTypes = this.$cookies.get('package_types')
+      this.$store.dispatch('delivery_company/setPackageTypes', packageTypes)
+    }
+    if (!(this.payment_types && this.payment_types.length)) {
+      const paymentTypes = this.$cookies.get('payment_types')
+      this.$store.dispatch('delivery_company/setPaymentTypes', paymentTypes)
     }
     if (this.display_roles && this.display_roles.length === 0) {
       const displayRoles = this.$cookies.get('roles')

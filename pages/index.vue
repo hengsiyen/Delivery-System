@@ -162,6 +162,7 @@ export default {
             })
             if (result.user && result.user.roles) {
               this.$cookies.set('user', JSON.stringify(result.user))
+              this.$cookies.set('permissions', JSON.stringify(result.permissions))
               this.$cookies.set('roles', JSON.stringify(result.user.roles))
             }
             if (deliveryCompany) {
@@ -172,7 +173,7 @@ export default {
               this.$store.dispatch('delivery_company/setCurrency', deliveryCompany.currency)
               this.$store.dispatch('delivery_company/setExchangeRate', deliveryCompany.exchange_rate_enabled)
             }
-            this.getCurrency()
+            this.getFetchData()
             this.$store.dispatch('user/setUserRolesPermissions', result)
             this.$router.push({ name: 'admin' })
           }
@@ -192,13 +193,20 @@ export default {
           this.$isLoading(false)
         })
     },
-    getCurrency () {
-      this.$axios.post(this.$base_api + '/api/backend/currency/get-options')
+    getFetchData () {
+      this.$axios
+        .get(process.env.VUE_APP_API + '/api/backend/fetch-data/data-for-package')
         .then((res) => {
-          this.$cookies.set('currencies', JSON.stringify(res.data.data))
-          this.$store.dispatch('delivery_company/setCurrencies', res.data.data)
-        })
-        .catch((error) => {
+          const result = res.data.data
+          this.$cookies.set('currencies', JSON.stringify(result.currencies))
+          this.$store.dispatch('delivery_company/setCurrencies', result.currencies)
+
+          this.$cookies.set('package_types', JSON.stringify(result.package_types))
+          this.$store.dispatch('delivery_company/setPackageTypes', result.package_types)
+
+          this.$cookies.set('payment_types', JSON.stringify(result.payment_types))
+          this.$store.dispatch('delivery_company/setPaymentTypes', result.payment_types)
+        }).catch((error) => {
           this.onResponseError(error)
         })
     },

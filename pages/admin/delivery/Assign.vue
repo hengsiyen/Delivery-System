@@ -2,7 +2,7 @@
   <div class="card position-relative">
     <div class="card-body">
       <div class="row h-100">
-        <div class="col-xl-6 h-100 border-right">
+        <div class="col-xl-5 h-100 border-right">
           <div class="form-group">
             <div class="input-group">
               <input
@@ -18,13 +18,13 @@
                 class="custom-select custom-select-lg w-35 search__type"
               >
                 <option value="shop">
-                  Shop
+                  {{ $t('menu.shop') }}
                 </option>
                 <option value="address">
-                  Address
+                  {{ $t('label.address') }}
                 </option>
                 <option value="code">
-                  Code
+                  {{ $t('label.code') }}
                 </option>
               </select>
             </div>
@@ -144,7 +144,7 @@
             </div>
           </template>
         </div>
-        <div class="col-xl-6 h-100">
+        <div class="col-xl-7 h-100">
           <template v-if="selected_packages && selected_packages.length">
             <div class="form-group d-flex align-items-center justify-content-between text-right">
               <template v-if="selected_driver">
@@ -245,20 +245,37 @@
                           name="price"
                           type="number"
                           class="form-control"
+                          :class="{'w-65': currencies && currencies.length > 3}"
                           :placeholder="$t('label.delivery_charge')"
                         >
-                        <div v-if="currencies && currencies.length" id="button-price" class="input-group-append">
-                          <button
-                            v-for="(currency, sub_key) in currencies"
-                            :key="sub_key"
-                            class="btn"
-                            type="button"
-                            :class="item.delivery_charge_currency && item.delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                            @click="item.delivery_charge_currency = currency"
-                          >
-                            {{ currency.code }}
-                          </button>
-                        </div>
+                        <template v-if="currencies && currencies.length">
+                          <template v-if="currencies.length < 3">
+                            <div class="input-group-append">
+                              <button
+                                v-for="(currency, sub_key) in currencies"
+                                :key="sub_key"
+                                class="btn"
+                                type="button"
+                                :class="item.delivery_charge_currency && item.delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                                @click="item.delivery_charge_currency = currency"
+                              >
+                                {{ item.code }}
+                              </button>
+                            </div>
+                          </template>
+                          <template v-else>
+                            <select v-model="item.delivery_charge_currency" class="custom-select w-35">
+                              <option :value="null" hidden disabled>
+                                {{ $t('label.select') }}
+                              </option>
+                              <template v-for="(currency, sub_key) in currencies">
+                                <option :key="sub_key" :value="currency">
+                                  {{ currency.code }}
+                                </option>
+                              </template>
+                            </select>
+                          </template>
+                        </template>
                       </div>
                     </template>
                     <template v-else>
@@ -283,20 +300,37 @@
                           name="price"
                           type="number"
                           class="form-control"
+                          :class="{'w-65': currencies && currencies.length > 3}"
                           :placeholder="$t('label.extra_charge')"
                         >
-                        <div v-if="currencies && currencies.length" class="input-group-append">
-                          <button
-                            v-for="(currency, sub_key) in currencies"
-                            :key="sub_key"
-                            class="btn"
-                            type="button"
-                            :class="item.extra_charge_currency && item.extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
-                            @click="item.extra_charge_currency = currency"
-                          >
-                            {{ currency.code }}
-                          </button>
-                        </div>
+                        <template v-if="currencies && currencies.length">
+                          <template v-if="currencies.length < 3">
+                            <div class="input-group-append">
+                              <button
+                                v-for="(currency, sub_key) in currencies"
+                                :key="sub_key"
+                                class="btn"
+                                type="button"
+                                :class="item.extra_charge_currency && item.extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
+                                @click="item.extra_charge_currency = currency"
+                              >
+                                {{ item.code }}
+                              </button>
+                            </div>
+                          </template>
+                          <template v-else>
+                            <select v-model="item.extra_charge_currency" class="custom-select w-35">
+                              <option :value="null" hidden disabled>
+                                {{ $t('label.select') }}
+                              </option>
+                              <template v-for="(currency, sub_key) in currencies">
+                                <option :key="sub_key" :value="currency">
+                                  {{ currency.code }}
+                                </option>
+                              </template>
+                            </select>
+                          </template>
+                        </template>
                       </div>
                     </template>
                     <template v-else>
@@ -483,6 +517,10 @@ export default {
 .btn-remove {
   top: 8px;
   right: 8px;
+}
+
+.list_item-block {
+  margin: 0;
 }
 
 .card-body {

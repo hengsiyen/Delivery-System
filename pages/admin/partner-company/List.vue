@@ -7,6 +7,7 @@
           :placeholder="$t('label.search') + '...'"
           class="form-control"
           type="search"
+          @keyup="refreshDatatable"
         >
         <div class="input-group-append">
           <span class="input-group-text bg-white border-left-0">
@@ -28,7 +29,7 @@
       </div>
       <div class="col-lg-2">
         <ButtonAddNew
-          :link-to="'create-shop'"
+          :link-to="'create-partner-company'"
           :custom-class="'btn btn-success btn-lg btn-block text-capitalize'"
         />
       </div>
@@ -128,9 +129,9 @@
           <i class="fa fa-times" />
         </button>
       </div>
-      <div v-if="is_enable" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
-        {{ $t('label.status') }}: {{ is_enable['name_' + $i18n.locale] }}
-        <button class="btn btn-default btn-xs" @click="is_enable = null">
+      <div v-if="status" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
+        {{ $t('label.status') }}: {{ status['name_' + $i18n.locale] }}
+        <button class="btn btn-default btn-xs" @click="status = null">
           <i class="fa fa-times" />
         </button>
       </div>
@@ -149,12 +150,12 @@
     <template v-else>
       <div class="row">
         <div class="list_items col-12">
-          <template v-if="list_shops && list_shops.length">
-            <template v-for="(item, key) in list_shops">
+          <template v-if="partner_companies && partner_companies.length">
+            <template v-for="(item, key) in partner_companies">
               <div :key="key" class="list_item">
                 <div class="col-md-2 col-lg-2 col-xl-1">
-                  <template v-if="item.logo">
-                    <img :src="getSrc(item.logo)" alt="" class="img-thumbnail">
+                  <template v-if="item.media">
+                    <img :src="getSrc(item.media.src)" alt="" class="img-thumbnail">
                   </template>
                   <template v-else>
                     <img :src="shop_img" alt="" class="img-thumbnail">
@@ -190,10 +191,10 @@
                 <div class="col-md-4 col-lg-4 col-xl-5">
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
-                      <i class="fas fa-user mr-2" />
+                      <i class="fas fa-qrcode mr-2" />
                     </div>
                     <div class="list_item-label text-truncate">
-                      {{ item.owner_name }}
+                      {{ item.code }}
                     </div>
                   </div>
                   <div class="list_item-block">
@@ -215,19 +216,13 @@
                 </div>
                 <div class="col-md-2 col-lg-2 col-xl-1 list_item-block-action">
                   <div class="list_item-block-btn">
-                    <NuxtLink
-                      class="btn btn-default btn-sm btn-block"
-                      :to="{name: 'show-shop', params:{id: item._id}}"
-                    >
+                    <NuxtLink class="btn btn-default btn-sm btn-block" :to="{name: 'show-partner-company', params:{id: item._id}}">
                       <i class="fas fa-eye mr-2" />
                       <strong>{{ $t('label.view') }}</strong>
                     </NuxtLink>
                   </div>
                   <div class="list_item-block-btn">
-                    <NuxtLink
-                      :to="{name: 'edit-shop', params: {id: item._id}}"
-                      class="btn btn-default btn-sm btn-block"
-                    >
+                    <NuxtLink :to="{name: 'edit-partner-company', params: {id: item._id}}" class="btn btn-default btn-sm btn-block">
                       <i class="fas fa-edit mr-2" />
                       <strong>{{ $t('btn.edit') }}</strong>
                     </NuxtLink>
@@ -237,61 +232,54 @@
             </template>
           </template>
           <template v-else>
-            <div class="list_item align-items-center w-100 justify-content-center">
+            <div class="package_item align-items-center w-100 justify-content-center">
               {{ $t('label.no_result_found') }}
             </div>
           </template>
-        </div>
-      </div>
-      <div v-if="list_shops && total_pages > 1" class="row">
-        <div class="col-12">
-          <paginate
-            v-model="page"
-            :page-count="total_pages"
-            :page-range="3"
-            :margin-pages="2"
-            :click-handler="getShopList"
-            :prev-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.prev')}</span>`"
-            :next-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.next')}</span>`"
-            :container-class="'pagination justify-content-end mt-3'"
-            :page-class="'page-item outline-none ml-0 mr-1 mx-sm-1 text-bold'"
-            :prev-class="'page-item outline-none ml-0 mr-1 mx-sm-1'"
-            :next-class="'page-item outline-none ml-0 mr-1 mx-sm-1'"
-            :page-link-class="'page-link font-bold box-shadow-none rounded border-2'"
-            :prev-link-class="'page-link font-bold box-shadow-none rounded border-2'"
-            :next-link-class="'page-link font-bold box-shadow-none rounded border-2'"
-          />
+          <div v-if="partner_companies && total_pages > 1" class="row">
+            <div class="col-12">
+              <paginate
+                v-model="page"
+                :page-count="total_pages"
+                :page-range="3"
+                :margin-pages="2"
+                :click-handler="getPartnerCompanyList"
+                :prev-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.prev')}</span>`"
+                :next-text="`<span class='d-none d-sm-inline-block text-bold'>${$t('btn.next')}</span>`"
+                :container-class="'pagination justify-content-end mt-3'"
+                :page-class="'page-item outline-none ml-0 mr-1 mx-sm-1 text-bold'"
+                :prev-class="'page-item outline-none ml-0 mr-1 mx-sm-1'"
+                :next-class="'page-item outline-none ml-0 mr-1 mx-sm-1'"
+                :page-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+                :prev-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+                :next-link-class="'page-link font-bold box-shadow-none rounded border-2'"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </template>
   </div>
 </template>
+
 <script>
-import { debounce } from 'debounce'
 import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
+import { debounce } from 'debounce'
 import { mapGetters } from 'vuex'
+
 export default {
-  name: 'ShopList',
+  name: 'PartnerCompanyList',
   components: { ButtonAddNew },
+  head () {
+    return {
+      title: this.$t('menu.partner_company'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  },
   computed: {
     ...mapGetters({
       dcid: 'delivery_company/dcid'
-    }),
-    params () {
-      let createdAt = null
-      if (this.created_at) {
-        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
-      }
-      return {
-        lang: this.$i18n.locale,
-        dcid: this.dcid,
-        search: this.search_query,
-        is_enable: this.is_enable ? this.is_enable.value : null,
-        created_at: createdAt,
-        sort_by: this.sort_by,
-        sort_direction: this.sort_direction
-      }
-    }
+    })
   },
   watch: {
     params () {
@@ -304,7 +292,7 @@ export default {
           clearTimeout(this.time_out)
         }
         this.time_out = setTimeout(() => {
-          this.getShopList(1)
+          this.getPartnerCompanyList(1)
           this.awaitingSearch = false
         }, 1000)
       }
@@ -314,18 +302,19 @@ export default {
   data () {
     return {
       onloading: true,
-      list_shops: [],
+      partner_companies: [],
       page: 1,
       total_pages: 0,
       date_format: 'DD/MM/YYYY',
       search_query: null,
+      status: null,
       is_enable: null,
       created_at: null,
       sort_by: 'created_at',
       sort_direction: 'desc',
       sort_options: [
         { value: 'created_at', name_en: 'Created Date', name_km: 'កាលបរិច្ឆេទបង្កើត' },
-        { value: 'name_en', name_en: 'Shop Name', name_km: 'ឈ្មោះហាង' }
+        { value: 'name_' + this.$i18n.locale, name_en: 'Name', name_km: 'ឈ្មោះ' }
       ],
       statuses: [
         { value: true, name_en: 'Enabled', name_km: 'បើកដំណើរការ' },
@@ -334,7 +323,7 @@ export default {
     }
   },
   mounted () {
-    this.getShopList(1)
+    this.getPartnerCompanyList(1)
   },
   methods: {
     clearFilter () {
@@ -343,31 +332,35 @@ export default {
       this.created_at = null
       this.refreshDatatable()
     },
-    refreshDatatable () {
+    refreshDatatable: debounce(function () {
+      this.getPartnerCompanyList(1)
+    }, 500),
+    getPartnerCompanyList (page = null) {
       this.onloading = true
-      setTimeout(() => {
-        this.getShopList(1)
-      }, 500)
-    },
-    getShopList: debounce(function (page = null) {
-      if (page) {
-        this.page = page
-      }
-      this.$axios.post(this.$base_api + '/api/backend/shop/list',
-        Object.assign({
-          page: this.page,
-          number_per_page: this.number_per_page,
-          ...this.params
-        }, this.params))
+      let createdAt = null
+      if (page) { this.page = page }
+      if (this.created_at) { createdAt = this.$moment(this.created_at).format('YYYY-MM-DD') }
+
+      this.$axios.post(this.$base_api + '/api/backend/third-party-company/list', {
+        page: this.page,
+        number_per_page: this.number_per_page,
+        lang: this.$i18n.locale,
+        dcid: this.dcid,
+        search: this.search_query,
+        is_enable: this.is_enable ? this.is_enable.value : null,
+        created_at: createdAt,
+        sort_by: this.sort_by,
+        sort_direction: this.sort_direction
+      })
         .then((res) => {
           this.total_pages = res.data.total_pages
-          this.list_shops = res.data.data
+          this.partner_companies = res.data.data
         }).catch((error) => {
           this.onResponseError(error)
         }).finally(() => {
           this.onloading = false
         })
-    }, 500)
+    }
   }
 }
 </script>

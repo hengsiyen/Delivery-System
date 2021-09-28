@@ -42,6 +42,13 @@
                     <th>{{ $t('label.address') }}</th>
                     <td>{{ company_info['address_' + $i18n.locale] ? company_info['address_' + $i18n.locale] : '-' }}</td>
                   </tr>
+                  <tr v-if="company_info.currency">
+                    <th>{{ $t('label.currency') }}</th>
+                    <td>
+                      {{ company_info.currency['name_' + $i18n.locale] ? company_info.currency['name_' + $i18n.locale] : '-' }}
+                      <span v-if="company_info.currency.code">( {{ company_info.currency.code }} )</span>
+                    </td>
+                  </tr>
                   <tr>
                     <th>{{ $t('label.description') }}</th>
                     <td>{{ company_info.description ? company_info.description : '-' }}</td>

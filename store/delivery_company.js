@@ -41,6 +41,12 @@ export const mutations = {
   setCurrencies (state, data) {
     Vue.set(state, 'currencies', data)
   },
+  setPackageTypes (state, data) {
+    Vue.set(state, 'package_types', data)
+  },
+  setPaymentTypes (state, data) {
+    Vue.set(state, 'payment_types', data)
+  },
   setCurrency (state, data) {
     Vue.set(state, 'currency', data)
   }
@@ -55,6 +61,12 @@ export const actions = {
   },
   setCurrencies ({ commit, state }, data) {
     commit('setCurrencies', data)
+  },
+  setPackageTypes ({ commit, state }, data) {
+    commit('setPackageTypes', data)
+  },
+  setPaymentTypes ({ commit, state }, data) {
+    commit('setPaymentTypes', data)
   },
   setCurrency ({ commit, state }, data) {
     commit('setCurrency', data)

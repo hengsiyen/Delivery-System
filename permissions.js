@@ -61,6 +61,18 @@ const Permissions = {
       show: 'show-invoice',
       delete: 'delete-invoice'
     },
+    partnerCompany: {
+      name: {
+        en: 'Partner Company',
+        km: 'ក្រុមហ៊ុនដែគូ'
+      },
+      manage: 'manage-partner-company',
+      list: 'list-partner-company',
+      create: 'create-partner-company',
+      edit: 'edit-partner-company',
+      show: 'show-partner-company',
+      delete: 'delete-partner-company'
+    },
     tracking: {
       name: {
         en: 'Tracking',
@@ -80,6 +92,14 @@ const Permissions = {
       edit: 'edit-driver',
       show: 'show-driver',
       delete: 'delete-driver'
+    },
+    report: {
+      name: {
+        en: 'Report',
+        km: 'របាយការណ៍'
+      },
+      manage: 'manage-shop',
+      dashboard: 'report-dashboard'
     },
     setting: {
       name: {

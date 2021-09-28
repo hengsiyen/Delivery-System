@@ -114,17 +114,16 @@ export default {
   data () {
     return {
       activity: null,
-      select_package: null,
-      payment_types: []
+      select_package: null
     }
   },
   computed: {
     ...mapGetters({
-      user: 'user/getUser'
+      user: 'user/getUser',
+      payment_types: 'delivery_company/payment_types'
     })
   },
   mounted () {
-    this.getFetchData()
     this.getDriverActivity()
   },
   methods: {
@@ -147,16 +146,6 @@ export default {
       }).catch((error) => {
         this.onResponseError(error)
       })
-    },
-    getFetchData () {
-      this.$axios
-        .get(process.env.VUE_APP_API + '/api/backend/fetch-data/data-for-package')
-        .then((res) => {
-          const result = res.data.data
-          this.payment_types = result.payment_types
-        }).catch((error) => {
-          this.onResponseError(error)
-        })
     }
   }
 }

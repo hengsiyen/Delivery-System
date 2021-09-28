@@ -206,19 +206,18 @@ export default {
     ...mapGetters({
       num_format_km: 'delivery_company/num_format_km',
       num_format_en: 'delivery_company/num_format_en',
-      user: 'user/getUser'
+      user: 'user/getUser',
+      currencies: 'delivery_company/currencies',
+      package_types: 'delivery_company/package_types',
+      payment_types: 'delivery_company/payment_types'
     })
   },
   data () {
     return {
-      currencies: [],
-      package_types: [],
-      payment_types: [],
       packageData: null
     }
   },
   mounted () {
-    this.getFetchData()
     this.getPackageData()
   },
   methods: {
@@ -278,29 +277,6 @@ export default {
         console.error(err)
         throw err
       })
-    },
-    getFetchData () {
-      this.$axios
-        .get(process.env.VUE_APP_API + '/api/backend/fetch-data/data-for-package')
-        .then((res) => {
-          const result = res.data.data
-          this.currencies = result.currencies
-          this.package_types = result.package_types
-          this.payment_types = result.payment_types
-          if (this.currencies.length) {
-            this.currency = this.currencies.find((item) => {
-              if (item.code === 'USD') {
-                return item
-              }
-              return null
-            })
-          }
-          if (!this.package_type && this.package_types.length) {
-            this.package_type = this.package_types[0]
-          }
-        }).catch((error) => {
-          this.onResponseError(error)
-        })
     },
     isPackageOnAssigned (item) {
       return item && item.final_status === 'assigned'

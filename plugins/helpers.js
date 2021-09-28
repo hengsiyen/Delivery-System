@@ -51,7 +51,7 @@ const helpers = {
             if (this.$moment(date, 'YYYY-MM-DD').isValid()) {
               return this.$moment(date, 'YYYY-MM-DD hh:mm:ss A').format(format)
             }
-            return this.$t('string.na')
+            return '-'
           } catch (error) {
             return date
           }

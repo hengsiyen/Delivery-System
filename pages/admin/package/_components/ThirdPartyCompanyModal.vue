@@ -40,10 +40,7 @@
               </div>
             </div>
             <div class="form-group col-lg-12">
-              <label
-                for="third_party_company_phone"
-                :class="{'text-red': checkValidate('phone')}"
-              >
+              <label for="third_party_company_phone" :class="{'text-red': checkValidate('phone')}">
                 {{ $t('label.phone') }}
               </label>
               <input
@@ -244,7 +241,8 @@ export default {
         search: this.t_search_query,
         page: this.page,
         number_per_page: this.number_per_page,
-        dcid: this.dcid
+        dcid: this.dcid,
+        select: ['name_en', '_id', 'phone']
       }).then(({ data }) => {
         if (!(this.page > data.total_pages)) {
           this.page += 1

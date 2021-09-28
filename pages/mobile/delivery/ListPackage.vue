@@ -168,14 +168,14 @@ export default {
   computed: {
     ...mapGetters({
       dcid: 'delivery_company/dcid',
-      user: 'user/getUser'
+      user: 'user/getUser',
+      payment_types: 'delivery_company/payment_types'
     })
   },
   data () {
     return {
       onloading: true,
       list_packages: [],
-      payment_types: [],
       page: 1,
       total_pages: 0,
       date_format: 'DD/MM/YYYY',
@@ -186,7 +186,6 @@ export default {
     }
   },
   mounted () {
-    this.getFetchData()
     this.search()
   },
   methods: {
@@ -242,16 +241,6 @@ export default {
           this.onResponseError(error)
         }).finally(() => {
           this.onloading = false
-        })
-    },
-    getFetchData () {
-      this.$axios
-        .get(process.env.VUE_APP_API + '/api/backend/fetch-data/data-for-package')
-        .then((res) => {
-          const result = res.data.data
-          this.payment_types = result.payment_types
-        }).catch((error) => {
-          this.onResponseError(error)
         })
     }
   }

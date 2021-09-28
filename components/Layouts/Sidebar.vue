@@ -80,51 +80,65 @@ export default {
         {
           label: this.$t('menu.dashboard'),
           route: { name: 'admin', groups: 'dashboard' },
-          icon: 'nav-icon fas fa-tachometer-alt',
+          icon: 'fas fa-tachometer-alt',
           children: null,
           permissions: [this.$Permissions.backend.manage]
         },
         {
           label: this.$t('menu.tracking'),
           route: { name: 'list-tracking', groups: 'tracking' },
-          icon: 'nav-icon fas fa-search-location',
+          icon: 'fas fa-search-location',
           children: null,
           permissions: [this.$Permissions.backend.tracking.manage]
         },
         {
           label: this.$t('menu.package'),
           route: { name: 'list-package', groups: 'package' },
-          icon: 'nav-icon fa fa-cube',
+          icon: 'fa fa-cube',
           children: null,
           permissions: [this.$Permissions.backend.package.manage]
         },
         {
           label: this.$t('menu.delivery'),
           route: { name: 'assign-package', groups: 'delivery' },
-          icon: 'nav-icon fas fa-truck',
+          icon: 'fas fa-truck',
           children: null,
           permissions: [this.$Permissions.backend.delivery.manage]
         },
         {
           label: this.$t('menu.driver'),
           route: { name: 'list-driver', groups: 'driver' },
-          icon: 'nav-icon fas fa-motorcycle',
+          icon: 'fas fa-motorcycle',
           children: null,
           permissions: [this.$Permissions.backend.driver.manage]
         },
         {
           label: this.$t('menu.shop'),
           route: { name: 'list-shop', groups: 'shop' },
-          icon: 'nav-icon fas fa-building',
+          icon: 'fas fa-store',
           children: null,
           permissions: [this.$Permissions.backend.shop.manage]
         },
         {
           label: this.$t('menu.invoice'),
           route: { name: 'list-invoice', groups: 'invoice' },
-          icon: 'nav-icon fas fa-address-book',
+          icon: 'fas fa-address-book',
           children: null,
           permissions: [this.$Permissions.backend.invoice.manage]
+        },
+        {
+          label: this.$t('menu.partner_company'),
+          route: { name: 'list-partner-company', groups: 'partner_company' },
+          icon: 'fas fa-building',
+          children: null,
+          permissions: [this.$Permissions.backend.partnerCompany.manage]
+        },
+        {
+          label: this.$t('menu.report'),
+          route: { name: 'report-dashboard', groups: 'report' },
+          icon: 'fas fa-chart-bar',
+          children: null,
+          permissions: [this.$Permissions.backend.report.manage]
         },
         {
           label: this.$t('menu.system'),
@@ -136,7 +150,7 @@ export default {
         {
           label: this.$t('menu.settings'),
           route: null,
-          icon: 'nav-icon fas fa-cog',
+          icon: 'fas fa-cog',
           permissions: [this.$Permissions.backend.setting.manage],
           children: [
             {
@@ -194,7 +208,7 @@ export default {
         {
           label: this.$t('menu.administration'),
           route: null,
-          icon: 'nav-icon fa fa-code',
+          icon: 'fa fa-code',
           permissions: [this.$Permissions.backend.administration.manage],
           children: [
             {

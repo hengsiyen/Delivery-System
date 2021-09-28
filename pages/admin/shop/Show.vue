@@ -60,6 +60,7 @@
                         {{ shop.enabled ? $t('label.enable') : $t('label.disable') }}
                       </small>
                     </div>
+                    <small class="d-block text-center">{{ shop['address_' + $i18n.locale] }}</small>
                   </div>
                   <div class="col-12">
                     <div class="shop_owner">
@@ -71,13 +72,12 @@
                           <img :src="avatar" alt="" class="img-thumbnail rounded-circle">
                         </template>
                       </div>
-                      <div class="shop_owner-info">
+                      <div class="shop_owner-info d-flex flex-column justify-content-center">
                         <div class="text-bold ">
                           {{ shop.owner_name }}
                         </div>
                         <small class="d-block">{{ shop.phone }}</small>
                         <small class="d-block">{{ shop.email }}</small>
-                        <small class="d-block">{{ shop['address_' + $i18n.locale] }}</small>
                       </div>
                     </div>
                   </div>

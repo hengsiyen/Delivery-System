@@ -724,7 +724,8 @@ export default {
   computed: {
     ...mapGetters({
       shop: 'package/shop',
-      third_party: 'package/third_party'
+      third_party: 'package/third_party',
+      dc: 'delivery_company/delivery_company'
     }),
     allowedEdit () {
       return this.package_data && this.package_data.final_status !== 'success'
@@ -863,9 +864,9 @@ export default {
           this.currencies = result.currencies
           this.package_types = result.package_types
           this.payment_types = result.payment_types
-          if (this.currencies.length) {
+          if (this.currencies.length && this.dc && this.dc.currency) {
             this.currency = this.currencies.find((item) => {
-              if (item.code === 'USD') {
+              if (item.code === this.dc.currency.code) {
                 return item
               }
               return null

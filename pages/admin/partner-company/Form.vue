@@ -15,45 +15,37 @@
             <div class="col-lg-8">
               <div class="form-row">
                 <div class="form-group col-lg-6">
-                  <label
-                    for="shop_name"
-                    class="required"
-                    :class="{'text-red': checkValidate('shop_name')}"
-                  >
-                    {{ $t('label.shop_name') }}
+                  <label class="required" :class="{'text-red': checkValidate('name_en')}">
+                    {{ $t('label.nameEn') }}
                   </label>
                   <input
-                    id="shop_name"
-                    v-model="shop_name"
+                    v-model="name_en"
                     type="text"
                     class="form-control"
-                    :placeholder="$t('pla.shop_name')"
-                    :class="{'is-invalid': checkValidate('shop_name')}"
+                    :placeholder="$t('pla.nameEn')"
+                    :class="{'is-invalid': checkValidate('name_en')}"
                   >
-                  <div v-if="checkValidate('shop_name')" class="invalid-feedback">
-                    {{ validate.shop_name[0] }}
+                  <div v-if="checkValidate('name_en')" class="invalid-feedback">
+                    {{ validate.name_en[0] }}
                   </div>
                 </div>
                 <div class="form-group col-lg-6">
-                  <label
-                    for="owner_name"
-                    class="required"
-                    :class="{'text-red': checkValidate('owner_name')}"
-                  >
-                    {{ $t('label.owner_name') }}
+                  <label :class="{'text-red': checkValidate('name_km')}">
+                    {{ $t('label.nameKm') }}
                   </label>
                   <input
-                    id="owner_name"
-                    v-model="owner_name"
+                    v-model="name_km"
                     type="text"
                     class="form-control"
-                    :placeholder="$t('pla.owner_name')"
-                    :class="{'is-invalid': checkValidate('owner_name')}"
+                    :placeholder="$t('pla.nameKm')"
+                    :class="{'is-invalid': checkValidate('name_km')}"
                   >
-                  <div v-if="checkValidate('owner_name')" class="invalid-feedback">
-                    {{ validate.owner_name[0] }}
+                  <div v-if="checkValidate('name_km')" class="invalid-feedback">
+                    {{ validate.name_km[0] }}
                   </div>
                 </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-lg-6">
                   <label
                     for="phone"
@@ -75,30 +67,8 @@
                     {{ validate.phone[0] }}
                   </div>
                 </div>
-                <div class="form-group col-lg-6">
-                  <label
-                    for="email"
-                    class="required"
-                    :class="{'text-red': checkValidate('email')}"
-                  >
-                    {{ $t('label.email') }}
-                  </label>
-                  <input
-                    id="email"
-                    v-model="email"
-                    type="email"
-                    class="form-control"
-                    :placeholder="$t('pla.email')"
-                    :class="{'is-invalid': checkValidate('email')}"
-                  >
-                  <div v-if="checkValidate('email')" class="invalid-feedback">
-                    {{ validate.email[0] }}
-                  </div>
-                </div>
-                <div class="form-group col-lg-6">
-                  <label for="home_number">
-                    {{ $t('label.home_number') }}
-                  </label>
+                <div class="form-group col-lg-3">
+                  <label>{{ $t('label.home_number') }}</label>
                   <input
                     id="home_number"
                     v-model="home_number"
@@ -107,10 +77,8 @@
                     :placeholder="$t('pla.home_number')"
                   >
                 </div>
-                <div class="form-group col-lg-6">
-                  <label for="street_number">
-                    {{ $t('label.street_number') }}
-                  </label>
+                <div class="form-group col-lg-3">
+                  <label>{{ $t('label.street_number') }}</label>
                   <input
                     id="street_number"
                     v-model="street_number"
@@ -119,6 +87,8 @@
                     :placeholder="$t('pla.street_number')"
                   >
                 </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-lg-6">
                   <label>
                     {{ $t('menu.province') }}
@@ -140,9 +110,7 @@
                   </select>
                 </div>
                 <div class="form-group col-lg-6">
-                  <label>
-                    {{ $t('menu.district') }}
-                  </label>
+                  <label>{{ $t('menu.district') }}</label>
                   <select
                     id="district"
                     v-model="district"
@@ -160,10 +128,10 @@
                     </template>
                   </select>
                 </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-lg-6">
-                  <label>
-                    {{ $t('menu.commune') }}
-                  </label>
+                  <label>{{ $t('menu.commune') }}</label>
                   <select
                     id="commune"
                     v-model="commune"
@@ -182,9 +150,7 @@
                   </select>
                 </div>
                 <div class="form-group col-lg-6">
-                  <label>
-                    {{ $t('menu.village') }}
-                  </label>
+                  <label>{{ $t('menu.village') }}</label>
                   <select
                     id="village"
                     v-model="village"
@@ -201,10 +167,10 @@
                     </template>
                   </select>
                 </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-lg-12">
-                  <label for="description">
-                    {{ $t('label.description') }}
-                  </label>
+                  <label for="description">{{ $t('label.description') }}</label>
                   <textarea
                     id="description"
                     v-model="description"
@@ -214,6 +180,8 @@
                     style="max-height: 237px"
                   />
                 </div>
+              </div>
+              <div class="form-row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label>{{ $t('label.enabled') }}</label>
@@ -242,66 +210,71 @@
               </div>
             </div>
             <div class="col-lg-4">
-              <div class="form-group text-center mb-5">
-                <label>
-                  {{ $t('label.shop_logo') }}
-                </label>
-                <template v-if="preview_shop_logo">
-                  <img :src="preview_shop_logo" alt="" width="100%" class="no-shop-logo">
-                </template>
-                <template v-else>
-                  <div class="no-shop-logo">
-                    <label>250x250</label>
-                  </div>
-                </template>
-                <div class="shop__btn-upload">
-                  <button class="btn btn-primary btn-block mt-2" @click="toggleShowShopLogo">
-                    {{ $t('label.uploadShopLogo') }}
-                  </button>
-                  <vue-crop-avatar
-                    v-model="show_shop_logo"
-                    field="logo"
-                    :width="250"
-                    :lang-type="langType"
-                    :height="250"
-                    :url="''"
-                    :params="params"
-                    :headers="headers"
-                    img-format="png"
-                    @crop-success="cropShopLogoSuccess"
-                  />
-                </div>
-              </div>
-
               <div class="form-group text-center">
-                <label>
-                  {{ $t('label.shop_owner') }}
-                </label>
-                <template v-if="preview_shop_owner">
-                  <img :src="preview_shop_owner" alt="" width="100%" class="no-shop-logo">
-                </template>
-                <template v-else>
-                  <div class="no-shop-logo">
-                    <label>250x250</label>
+                <label>{{ $t('label.image') }}</label>
+                <template v-if="selected_image">
+                  <div :style="`width: ${croppie_size}px`" class="mx-auto">
+                    <vue-croppie
+                      ref="croppieRef"
+                      :enable-orientation="true"
+                      :boundary="{ width: croppie_size, height: croppie_size}"
+                      :enable-resize="false"
+                      :viewport="{ width: 295, height: 295, type: 'square' }"
+                      @result="result"
+                    />
+                    <button class="btn btn-primary btn-upload-image">
+                      <i class="fas fa-link" />
+                      <input
+                        ref="bindImg"
+                        type="file"
+                        name="file"
+                        accept="image/*"
+                        @change="bindImg"
+                      >
+                    </button>
+                    <!-- Rotate angle is Number -->
+                    <button class="btn btn-light" @click="rotate(-90)">
+                      <i class="fas fa-undo-alt" />
+                    </button>
+                    <button class="btn btn-light" @click="rotate(90)">
+                      <i class="fas fa-redo-alt" />
+                    </button>
+                    <button class="btn btn-light" @click="removeImg">
+                      <i class="fas fa-times" />
+                    </button>
                   </div>
                 </template>
-                <div class="shop__btn-upload">
-                  <button class="btn btn-primary btn-block mt-2" @click="toggleShowShopOwner">
-                    {{ $t('label.uploadShopOwner') }}
-                  </button>
-                  <vue-crop-avatar
-                    v-model="show_shop_owner"
-                    field="avatar"
-                    :width="250"
-                    :lang-type="langType"
-                    :height="250"
-                    :url="''"
-                    :params="params"
-                    :headers="headers"
-                    img-format="png"
-                    @crop-success="cropShopOwnerSuccess"
-                  />
-                </div>
+                <template v-else>
+                  <div
+                    :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
+                    class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
+                  >
+                    <template v-if="isEdit && preview_img">
+                      <img :src="getSrc(preview_img.src)" class="img-thumbnail">
+                    </template>
+                    <template v-else>
+                      <div class="text-gray">
+                        <i class="fas fa-upload fa-2x" />
+                        <p class="mt-2">
+                          {{ $t('label.click_here_to_browse_image') }}
+                        </p>
+                      </div>
+                    </template>
+                    <input
+                      ref="bindImg"
+                      type="file"
+                      name="file"
+                      accept="image/*"
+                      class="cursor-pointer"
+                      @change="bindImg"
+                    >
+                  </div>
+                </template>
+                <template v-if="isEdit && preview_img && !selected_image">
+                  <p class="mt-2">
+                    {{ $t('label.tap_on_image_to_edit') }}
+                  </p>
+                </template>
               </div>
             </div>
           </div>
@@ -327,9 +300,9 @@
 
 <script>
 import ButtonBack from '@/components/UiElements/ButtonBack'
-
+import { mapGetters } from 'vuex'
 export default {
-  name: 'ShopForm',
+  name: 'PartnerCompanyForm',
   components: { ButtonBack },
   props: {
     title: {
@@ -339,13 +312,12 @@ export default {
     isEdit: {
       type: Boolean,
       default: false
-    },
-    oldData: {
-      type: Object,
-      default: () => {
-        return null
-      }
     }
+  },
+  computed: {
+    ...mapGetters({
+      dcid: 'delivery_company/dcid'
+    })
   },
   data () {
     return {
@@ -356,74 +328,31 @@ export default {
       communes: [],
       villages: [],
       validate: null,
-      show_shop_logo: false,
-      show_shop_owner: false,
-      headers: null,
-      preview_shop_logo: null,
-      preview_shop_owner: null,
 
       id: null,
-      shop_name: null,
-      owner_name: null,
+      name_en: null,
+      name_km: null,
       phone: null,
-      email: null,
       home_number: null,
       street_number: null,
       province: null,
       district: null,
       commune: null,
       village: null,
-      logo: null,
       description: null,
-      owner_avatar: null,
-      enabled: false,
-      params: {
-        shop_id: null,
-        name: 'avatar'
-      }
-    }
-  },
-  computed: {
-    langType () {
-      return this.$i18n.locale
-    }
-  },
-  created () {
-    if (this.oldData) {
-      this.id = this.oldData._id
-      this.shop_name = this.oldData.name_en
-      this.owner_name = this.oldData.owner_name
-      this.phone = this.oldData.phone
-      this.email = this.oldData.email
-      this.home_number = this.oldData.home_number
-      this.street_number = this.oldData.street_number
-      this.description = this.oldData.description
-      this.enabled = this.oldData.enabled
-      if (this.oldData.province) {
-        this.province = this.oldData.province
-      }
-      if (this.oldData.province) {
-        this.getDistrict()
-        this.district = this.oldData.district
-      }
-      if (this.oldData.district) {
-        this.getCommune()
-        this.commune = this.oldData.commune
-      }
-      if (this.oldData.commune) {
-        this.getVillage()
-        this.village = this.oldData.village
-      }
-      if (this.oldData.logo) {
-        this.preview_shop_logo = process.env.VUE_APP_API + '/' + this.oldData.logo
-      }
-      if (this.oldData.avatar) {
-        this.preview_shop_owner = process.env.VUE_APP_API + '/' + this.oldData.avatar
-      }
+      enabled: true,
+      preview_img: null,
+
+      croppie_size: 300,
+      cropped: null,
+      selected_image: null
     }
   },
   mounted () {
     this.getProvince()
+    if (this.$route.params.id) {
+      this.getPartnerCompany()
+    }
   },
   methods: {
     checkValidate (key) {
@@ -432,51 +361,37 @@ export default {
       }
       return false
     },
-    toggleShowShopOwner () {
-      this.show_shop_owner = !this.show_shop_owner
-    },
-    toggleShowShopLogo () {
-      this.show_shop_logo = !this.show_shop_logo
-    },
-    cropShopLogoSuccess (imgDataUrl, field) {
-      this.logo = imgDataUrl
-      this.preview_shop_logo = imgDataUrl
-    },
-    cropShopOwnerSuccess (imgDataUrl, field) {
-      this.owner_avatar = imgDataUrl
-      this.preview_shop_owner = imgDataUrl
-    },
     storeOrEdit () {
       this.validate = null
-      const formData = new FormData()
-      if (this.id) {
-        formData.append('id', this.id)
+      if (this.selected_image) {
+        this.crop()
       }
-      if (this.shop_name) { formData.append('shop_name', this.shop_name) }
-      if (this.owner_name) { formData.append('owner_name', this.owner_name) }
-      if (this.phone) { formData.append('phone', this.phone) }
-      if (this.email) { formData.append('email', this.email) }
-      if (this.home_number) { formData.append('home_number', this.home_number) }
-      if (this.street_number) { formData.append('street_number', this.street_number) }
-      if (this.province) { formData.append('province_id', this.province._id) }
-      if (this.district) { formData.append('district_id', this.district._id) }
-      if (this.commune) { formData.append('commune_id', this.commune._id) }
-      if (this.village) { formData.append('village_id', this.village._id) }
-      if (this.description) { formData.append('description', this.description) }
-      if (this.logo) { formData.append('logo', this.logo) }
-      if (this.owner_avatar) { formData.append('shop_owner', this.owner_avatar) }
-      formData.append('enabled', this.enabled)
-      this.$axios
-        .post(this.$base_api + '/api/backend/shop/store-or-edit', formData)
-        .then((res) => {
-          this.$router.push({ name: 'list-shop' })
-        }).catch((error) => {
-          if (error.response.status === 422) {
-            this.validate = error.response.data.errors
-          } else {
-            this.onResponseError(error)
-          }
-        })
+      setTimeout(() => {
+        const data = new FormData()
+        if (this.$route.params.id) { data.append('id', this.$route.params.id) }
+        if (this.name_en) { data.append('name_en', this.name_en) }
+        if (this.name_km) { data.append('name_km', this.name_km) }
+        if (this.phone) { data.append('phone', this.phone) }
+        if (this.home_number) { data.append('home_number', this.home_number) }
+        if (this.street_number) { data.append('street_number', this.street_number) }
+        if (this.province) { data.append('province_id', this.province._id) }
+        if (this.district) { data.append('district_id', this.district._id) }
+        if (this.commune) { data.append('commune_id', this.commune._id) }
+        if (this.village) { data.append('village_id', this.village._id) }
+        if (this.description) { data.append('description', this.description) }
+        if (this.enabled) { data.append('enabled', this.enabled) }
+        if (this.cropped) { data.append('image', this.cropped) }
+        this.$axios.post(this.$base_api + '/api/backend/third-party-company/store-or-edit', data)
+          .then((res) => {
+            this.$router.push({ name: 'list-partner-company' })
+          }).catch((error) => {
+            if (error.response.status === 422) {
+              this.validate = error.response.data.errors
+            } else {
+              this.onResponseError(error)
+            }
+          })
+      }, 500)
     },
     getProvince () {
       this.$axios.get(this.$base_api + '/api/backend/location/province/get-province')
@@ -521,29 +436,79 @@ export default {
         }).catch((error) => {
           this.onResponseError(error)
         })
+    },
+    getPartnerCompany () {
+      this.$axios.post(this.$base_api + '/api/backend/third-party-company/show', {
+        dcid: this.dcid,
+        id: this.$route.params.id
+      }).then((res) => {
+        const pc = res.data.data
+        this.name_en = pc.name_en
+        this.name_km = pc.name_km
+        this.home_number = pc.home_number
+        this.street_number = pc.street_number
+        this.description = pc.description
+        this.enabled = pc.enabled
+        this.phone = pc.phone
+        this.preview_img = pc.media
+        if (pc.province) {
+          this.province = pc.province
+        }
+        if (pc.province) {
+          this.getDistrict()
+          this.district = pc.district
+        }
+        if (pc.district) {
+          this.getCommune()
+          this.commune = pc.commune
+        }
+        if (pc.commune) {
+          this.getVillage()
+          this.village = pc.village
+        }
+      }).catch((error) => {
+        this.onResponseError(error)
+      })
+    },
+
+    bindImg (event) {
+      const self = this
+      const file = event.target.files[0]
+      const reader = new FileReader()
+      this.selected_image = file
+      reader.onload = function (e) {
+        if (self.$refs.croppieRef) {
+          self.$refs.croppieRef.bind({
+            url: e.target.result
+          })
+        }
+      }
+      reader.readAsDataURL(file)
+    },
+    crop () {
+      const options = {
+        format: 'png',
+        circle: false
+      }
+      this.$refs.croppieRef.result(options, (output) => {
+        this.cropped = output
+      })
+    },
+    result (output) {
+      this.cropped = output
+    },
+    rotate (rotationAngle) {
+      this.$refs.croppieRef.rotate(rotationAngle)
+    },
+    removeImg () {
+      this.cropped = null
+      this.selected_image = null
+      this.$refs.croppieRef.refresh()
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
-.no-shop-logo,
-.shop__btn-upload {
-  width: 250px;
-  margin: 0 auto;
-}
+<style scoped>
 
-.no-shop-logo {
-  height: 250px;
-  background-color: #6c757d;
-  border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: .25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.no-shop-logo label {
-  color: white;
-}
 </style>
