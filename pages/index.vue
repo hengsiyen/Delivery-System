@@ -166,8 +166,8 @@ export default {
               this.$cookies.set('roles', JSON.stringify(result.user.roles))
             }
             if (deliveryCompany) {
-              this.$cookies.set('dc_currency', JSON.stringify(deliveryCompany.currency))
-              this.$cookies.set('dc_exchange', JSON.stringify(deliveryCompany.exchange_rate_enabled))
+              localStorage.setItem('dc_currency', JSON.stringify(deliveryCompany.currency))
+              localStorage.setItem('dc_exchange', JSON.stringify(deliveryCompany.exchange_rate_enabled))
 
               this.$store.dispatch('delivery_company/setDeliveryCompany', deliveryCompany)
               this.$store.dispatch('delivery_company/setCurrency', deliveryCompany.currency)
@@ -198,13 +198,13 @@ export default {
         .get(process.env.VUE_APP_API + '/api/backend/fetch-data/data-for-package')
         .then((res) => {
           const result = res.data.data
-          this.$cookies.set('currencies', JSON.stringify(result.currencies))
+          localStorage.setItem('currencies', JSON.stringify(result.currencies))
           this.$store.dispatch('delivery_company/setCurrencies', result.currencies)
 
-          this.$cookies.set('package_types', JSON.stringify(result.package_types))
+          localStorage.setItem('package_types', JSON.stringify(result.package_types))
           this.$store.dispatch('delivery_company/setPackageTypes', result.package_types)
 
-          this.$cookies.set('payment_types', JSON.stringify(result.payment_types))
+          localStorage.setItem('payment_types', JSON.stringify(result.payment_types))
           this.$store.dispatch('delivery_company/setPaymentTypes', result.payment_types)
         }).catch((error) => {
           this.onResponseError(error)
