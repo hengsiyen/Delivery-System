@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-12">
+  <div>
     <div class="form-group row mb-3">
       <div class="input-group input-group-lg col-lg-10">
         <input

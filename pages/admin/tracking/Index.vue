@@ -5,7 +5,7 @@
         <div class="row mb-2">
           <div class="col-12">
             <h1 class="m-0">
-              {{ $t('menu.tracking') }}
+              {{ $t('menu.package') }}
             </h1>
           </div>
         </div>
@@ -14,7 +14,9 @@
     <div class="col-lg-6 d-flex align-items-center">
       <Breadcrumb />
     </div>
-    <Nuxt />
+    <div class="col-lg-12">
+      <Nuxt />
+    </div>
   </div>
 </template>
 
