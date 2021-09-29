@@ -79,7 +79,7 @@
         </div>
         <div class="card-footer text-right">
           <button class="btn btn-light" @click="$router.back()">
-            <i class="fas fa-times mr-2" />
+            <i class="fas fa-times-circle mr-2" />
             <strong>{{ $t('btn.cancel') }}</strong>
           </button>
           <button

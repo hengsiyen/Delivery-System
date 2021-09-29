@@ -4,7 +4,7 @@
       class="btn btn-default"
       @click="cancel"
     >
-      <i class="fas fa-times mr-2" />
+      <i class="fas fa-times-circle mr-2" />
       <strong>{{ $t('btn.cancel') }}</strong>
     </button>
     <button

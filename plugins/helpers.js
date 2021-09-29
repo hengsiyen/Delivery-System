@@ -413,8 +413,8 @@ const helpers = {
               break
             case 'delivery':
               st = {
-                en: 'Delivering',
-                km: 'កំពុងដឹកជញ្ជូន'
+                en: 'Delivery',
+                km: 'ដឹកជញ្ជូន'
               }
               break
             case 'reject':

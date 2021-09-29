@@ -16,7 +16,7 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label
-                    class="required"
+                    class="required text-capitalize"
                     :class="{'text-red': checkValidate('shop_id')}"
                   >
                     {{ $t('label.shop') }}
@@ -50,6 +50,7 @@
                 <div class="form-group col-md-6">
                   <label
                     for="customer_name"
+                    class="text-capitalize"
                     :class="{'text-red': checkValidate('customer_name')}"
                   >
                     {{ $t('label.customer_name') }}
@@ -72,7 +73,7 @@
                 <div class="form-group col-md-6">
                   <label
                     for="customer_phone"
-                    class="required"
+                    class="required text-capitalize"
                     :class="{'text-red': checkValidate('customer_phone')}"
                   >
                     {{ $t('label.customer_phone') }}
@@ -94,7 +95,7 @@
                 <div class="form-group col-md-6">
                   <label
                     for="customer_address"
-                    class="required"
+                    class="required text-capitalize"
                     :class="{'text-red': checkValidate('customer_address')}"
                   >
                     {{ $t('label.customer_address') }}
@@ -117,7 +118,7 @@
                 <div class="form-group col-md-6">
                   <label
                     for="price"
-                    class="required"
+                    class="required text-capitalize"
                     :class="{'text-red': checkValidate('price')}"
                   >
                     {{ $t('label.price') }}
@@ -167,9 +168,7 @@
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label
-                    :class="{'text-red': checkValidate('amount')}"
-                  >
+                  <label class="text-capitalize" :class="{'text-red': checkValidate('amount')}">
                     {{ $t('menu.package_type') }}
                   </label>
                   <div class="input-group" :class="{'is-invalid': checkValidate('amount')}">
@@ -197,7 +196,7 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label :class="{'text-red': checkValidate('payment_type')}">
+                  <label class="text-capitalize" :class="{'text-red': checkValidate('payment_type')}">
                     {{ $t('label.is_paid') }}
                   </label>
                   <div class="input-group">
@@ -239,9 +238,7 @@
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label>
-                    {{ $t('label.delivery_at') }}
-                  </label>
+                  <label class="text-capitalize">{{ $t('label.delivery_at') }}</label>
                   <div class="w-100">
                     <date-picker
                       v-model="request_delivery_at"
@@ -260,7 +257,7 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label>{{ $t('label.delivery_with_other_company') }}</label>
+                  <label class="text-capitalize">{{ $t('label.delivery_with_other_company') }}</label>
                   <!-- Button trigger modal -->
                   <template v-if="third_party">
                     <div class="shop__selected">
@@ -279,7 +276,7 @@
                         data-target="#thirdPartyCompanyModal"
                         @click="openThirdPartyModal"
                       >
-                        <strong>{{ $t('label.select_third_party_company') }}</strong>
+                        <strong class="text-capitalize">{{ $t('label.select_third_party_company') }}</strong>
                       </button>
                     </div>
                   </template>
@@ -305,7 +302,7 @@
               <div class="form-group text-center">
                 <label>{{ $t('label.package_image') }}</label>
                 <template v-if="selected_image">
-                  <div :style="`width: ${croppie_size}px`">
+                  <div :style="`width: ${croppie_size}px`" class="mx-auto">
                     <vue-croppie
                       ref="croppieRef"
                       :enable-orientation="true"
@@ -347,7 +344,7 @@
                     <template v-else>
                       <div class="text-gray">
                         <i class="fas fa-upload fa-2x" />
-                        <p class="mt-2">
+                        <p class="mt-2 text-capitalize">
                           {{ $t('label.click_here_to_browse_image') }}
                         </p>
                       </div>
@@ -373,7 +370,7 @@
         </div>
         <div class="card-footer text-right">
           <button class="btn btn-light" @click="$router.back()">
-            <i class="fas fa-times mr-2" />
+            <i class="fas fa-times-circle mr-2" />
             <strong>{{ $t('btn.cancel') }}</strong>
           </button>
           <button

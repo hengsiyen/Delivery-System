@@ -211,7 +211,7 @@
                   </template>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-5">
-                  <div class="package_item-block">
+                  <div v-if="item.customer_name" class="package_item-block">
                     <div class="package_item-block-icon">
                       <i class="fas fa-user mr-2" />
                     </div>

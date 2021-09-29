@@ -31,7 +31,7 @@
                           <div :key="key">
                             <i class="fas" :class="statusIcon(item)" />
                             <div class="timeline-item shadow-none">
-                              <div class="text-dark">
+                              <div class="text-dark text-capitalize">
                                 <strong>{{ checkStatus(item.status) }}</strong>
                               </div>
                               <div><small>{{ item.description[$i18n.locale] }}</small></div>
@@ -46,8 +46,8 @@
                       <div>
                         <button class="btn btn-default" @click="toggle_timeline = !toggle_timeline">
                           <i class="mr-2 fas" :class="toggle_timeline ? 'fa-chevron-up' : 'fa-chevron-down'" />
-                          <strong v-if="toggle_timeline">{{ $t('label.view_package_transitions') }}</strong>
-                          <strong v-else>{{ $t('label.hide_package_transitions') }}</strong>
+                          <strong v-if="!toggle_timeline" class="text-capitalize">{{ $t('label.view_package_transactions') }}</strong>
+                          <strong v-else class="text-capitalize">{{ $t('label.hide_package_transitions') }}</strong>
                         </button>
                       </div>
                     </div>
@@ -111,21 +111,21 @@
                         </div>
                         <div v-else>
                           <div class="form-group show-with-border">
-                            <label>{{ $t('label.customer_info') }}</label>
+                            <label class="text-capitalize">{{ $t('label.customer_info') }}</label>
                             <div class="d-flex align-items-center justify-content-between">
-                              <div class="d-flex align-items-center">
+                              <div class="d-flex align-items-center package_form-display">
                                 <div class="package_form-customer-img">
                                   <img :src="avatar" class="img-thumbnail">
                                 </div>
                                 <div class="package_form-item-content">
-                                  <div class="package_form-item-content-label w-100 text-truncate">
-                                    <label class="mb-0">{{ customer_name }}</label>
+                                  <div class="package_form-item-content-label text-bold w-100 text-truncate">
+                                    {{ customer_phone }}
+                                    <template v-if="customer_name">
+                                      -  {{ customer_name }}
+                                    </template>
                                   </div>
                                   <div>
-                                    <small class="text-muted">
-                                      <span class="d-block">{{ customer_phone }}</span>
-                                      <span class="d-block">{{ customer_address }}</span>
-                                    </small>
+                                    <label class="mb-0 text-normal w-100 text-truncate">{{ customer_address }}</label>
                                   </div>
                                 </div>
                               </div>
@@ -235,10 +235,10 @@
                         </div>
                         <div v-else>
                           <div class="form-group show-with-border">
-                            <label class="customer-mb-12">{{ $t('label.payment') }}</label>
+                            <label class="customer-mb-12 text-capitalize">{{ $t('label.payment') }}</label>
                             <div class="d-flex align-items-center justify-content-between">
-                              <div class="d-flex align-items-center">
-                                <div class="package_form-item-content">
+                              <div class="d-flex align-items-center package_form-display">
+                                <div class="package_form-item-content w-100">
                                   <div class="package_form-item-content-label w-100 text-truncate">
                                     <i class="fas fa-money-bill mr-2" />
                                     <label>{{ currency ? price + ' ' + currency.code : price }}</label>
@@ -323,8 +323,8 @@
                           <div class="form-group show-with-border">
                             <label class="customer-mb-12">{{ $t('label.remark') }}</label>
                             <div class="d-flex align-items-center justify-content-between">
-                              <div class="d-flex align-items-center">
-                                <div class="package_form-item-content">
+                              <div class="d-flex align-items-center package_form-display">
+                                <div class="package_form-item-content w-100">
                                   <div v-if="package_type" class="package_form-item-content-label w-100 text-truncate">
                                     <i class="fas fa-cube mr-2" />
                                     <label>{{ package_type['name_' + $i18n.locale] }}</label>
@@ -353,9 +353,9 @@
                       </template>
 
                       <div class="form-group show-with-border">
-                        <label>{{ $t('label.shop') }}</label>
+                        <label class="text-capitalize">{{ $t('label.shop') }}</label>
                         <div v-if="shop" class="d-flex align-items-center justify-content-between">
-                          <div class="d-flex align-items-center">
+                          <div class="d-flex align-items-center package_form-display">
                             <div class="package_form-customer-img">
                               <template v-if="shop.logo">
                                 <img :src="getSrc(shop.logo)" class="img-thumbnail">
@@ -365,11 +365,12 @@
                               </template>
                             </div>
                             <div class="package_form-item-content">
-                              <div class="package_form-item-content-label w-100 text-truncate">
-                                <NuxtLink :to="{name: 'show-shop', params: {id: shop._id}}" class="mb-0 text-bold">
-                                  {{ shop.name_en }}
-                                </NuxtLink>
-                              </div>
+                              <NuxtLink
+                                :to="{name: 'show-shop', params: {id: shop._id}}"
+                                class="package_form-item-content-label w-100 text-truncate text-bold"
+                              >
+                                {{ shop.name_en }}
+                              </NuxtLink>
                               <div>
                                 <small class="text-muted">
                                   <span class="d-block">{{ shop.phone }}</span>
@@ -386,17 +387,15 @@
                       </div>
 
                       <div class="form-group show-with-border">
-                        <label>{{ $t('label.delivery_with_other_company') }}</label>
+                        <label class="text-capitalize">{{ $t('label.delivery_with_other_company') }}</label>
                         <div v-if="third_party" class="d-flex align-items-center justify-content-between">
-                          <div class="d-flex align-items-center">
+                          <div class="d-flex align-items-center package_form-display_2">
                             <div class="package_form-customer-img">
                               <img :src="shop_img" class="img-thumbnail">
                             </div>
                             <div class="package_form-item-content">
-                              <div class="package_form-item-content-label w-100 text-truncate">
-                                <label class="mb-0">
-                                  {{ third_party.name_en }}
-                                </label>
+                              <div class="package_form-item-content-label text-bold w-100 text-truncate">
+                                {{ third_party.name_en }}
                               </div>
                               <div>
                                 <small class="text-muted">
@@ -416,13 +415,13 @@
                         </div>
                         <div v-else>
                           <template v-if="allowedEdit">
-                            <button class="btn btn-link btn-sm" @click="openThirdPartyModal">
+                            <button class="btn btn-link btn-sm text-capitalize" @click="openThirdPartyModal">
                               <i class="fas fa-plus-circle mr-2" />
                               {{ $t('label.select_third_party_company') }}
                             </button>
                           </template>
                           <template v-else>
-                            <label class="font-weight-normal">
+                            <label class="font-weight-normal text-capitalize">
                               {{ $t('label.no_select_third_party_company') }}
                             </label>
                           </template>
@@ -503,7 +502,7 @@
                             <template v-else>
                               <div class="text-gray">
                                 <i class="fas fa-upload fa-2x" />
-                                <p class="mt-2">
+                                <p class="mt-2 text-capitalize">
                                   {{ $t('label.click_here_to_browse_image') }}
                                 </p>
                               </div>
@@ -519,7 +518,7 @@
                           </div>
                         </template>
                         <template v-if="package_data && package_data.media && !selected_image">
-                          <p class="mt-2">
+                          <p class="mt-2 text-capitalize">
                             {{ $t('label.tap_on_image_to_edit') }}
                           </p>
                         </template>
@@ -535,7 +534,7 @@
                     data-target="#packageHistoryModal"
                   >
                     <i class="fas fa-history mr-2" />
-                    <strong>{{ $t('label.package_history') }}</strong>
+                    <strong class="text-capitalize">{{ $t('label.package_history') }}</strong>
                   </button>
                   <template v-if="showBtnCancel">
                     <button
@@ -1142,10 +1141,24 @@ export default {
     margin-bottom: 8px;
   }
 }
+.package_form-display {
+  width: calc(100% - 50px);
+}
+
+.package_form-display_2 {
+  width: calc(100% - 85px);
+}
 
 .package_form-customer-img {
   width: 65px;
   margin-right: 15px;
+}
+
+.package_form-item-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: calc(100% - 100px);
 }
 
 .show-with-border {

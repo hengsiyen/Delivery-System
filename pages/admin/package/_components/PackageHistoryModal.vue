@@ -1,6 +1,6 @@
 <template>
   <div id="packageHistoryModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 id="exampleModalLabel" class="modal-title">
@@ -60,8 +60,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            {{ $t('btn.close') }}
+          <button type="button" class="btn btn-light" data-dismiss="modal">
+            <i class="fas fa-times-circle mr-2"></i>
+            <strong>{{ $t('btn.close') }}</strong>
           </button>
         </div>
       </div>

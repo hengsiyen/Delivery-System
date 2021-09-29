@@ -41,11 +41,11 @@
                 </td>
               </tr>
               <tr>
-                <th>{{ $t('label.createdAt') }}</th>
+                <th class="text-capitalize">{{ $t('label.createdAt') }}</th>
                 <td>{{ getDateFormat(gender.created_at) }}</td>
               </tr>
               <tr>
-                <th>{{ $t('label.updatedAt') }}</th>
+                <th class="text-capitalize">{{ $t('label.updatedAt') }}</th>
                 <td>{{ getDateFormat(gender.updated_at) }}</td>
               </tr>
             </tbody>

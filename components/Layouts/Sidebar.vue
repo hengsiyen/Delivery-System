@@ -128,7 +128,7 @@ export default {
         },
         {
           label: this.$t('menu.partner_company'),
-          route: { name: 'list-partner-company', groups: 'partner_company' },
+          route: { name: 'list-partner-company', groups: 'partner-company' },
           icon: 'fas fa-building',
           children: null,
           permissions: [this.$Permissions.backend.partnerCompany.manage]

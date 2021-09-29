@@ -6,17 +6,17 @@
           <div class="col-md-2 col-lg-2">
             <template v-if="item.media">
               <div class="package__item-image">
-                <img :src="getSrc(item.media.src)" alt="" width="100%">
+                <img :src="getSrc(item.media.src)" alt="" class="img-thumbnail">
               </div>
             </template>
             <template v-else>
               <div class="package__item-image">
-                <img :src="package_img" alt="" width="100%">
+                <img :src="package_img" alt="" class="img-thumbnail">
               </div>
             </template>
           </div>
           <div class="col-md-4 col-lg-4">
-            <div class="list_item-block">
+            <div v-if="item.customer_name" class="list_item-block">
               <div class="list_item-block-icon">
                 <i class="fas fa-user mr-2" />
               </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="list_item-block">
               <div class="list_item-block-icon">
-                <i class="fas fa-dollar-sign mr-2" />
+                <i class="fas fa-money-bill mr-2" />
               </div>
               <div class="list_item-label text-truncate">
                 {{ item.price | numFormat(checkFormatCurrency(item.currency)) }}

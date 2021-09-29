@@ -22,7 +22,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 driver-header">
+              <div class="col-12 driver-header text-capitalize">
                 {{ $t('label.personal_information') }}
               </div>
               <div class="col-12 driver-item">
@@ -43,7 +43,7 @@
                   {{ item['display_name_' + $i18n.locale] }}
                 </span>
               </div>
-              <div class="col-12 driver-header mt-4">
+              <div class="col-12 driver-header mt-4 text-capitalize">
                 {{ $t('label.delivery_information') }}
               </div>
               <div class="col-lg-12 driver-item d-flex align-items-start">
@@ -61,7 +61,7 @@
                 </label>
               </div>
               <div v-if="driver_data.last_deliver_date" class="col-lg-12 driver-item d-flex align-items-start">
-                <label class="d-block mr-4">{{ $t('label.last_delivery_date') }}</label>
+                <label class="d-block mr-4 text-capitalize">{{ $t('label.last_delivery_date') }}</label>
                 <label class="d-block">
                   {{ $moment(driver_data.last_deliver_date).format('llll') }}
                 </label>

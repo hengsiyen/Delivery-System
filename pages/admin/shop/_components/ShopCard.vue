@@ -69,11 +69,12 @@ export default {
     & .shop_card-title {
       width: calc(100% - 40px);
       padding-left: 20px;
-      font-size: 15pxpx;
+      font-size: 15px;
       font-weight: 700;
       height: 56px;
       display: flex;
       align-items: center;
+      text-transform: capitalize;
     }
   }
   & .shop_card-content {

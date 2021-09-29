@@ -40,11 +40,11 @@
                     <td>{{ company_info.description ? company_info.description : '-' }}</td>
                   </tr>
                   <tr>
-                    <th>{{ $t('label.createdAt') }}</th>
+                    <th class="text-capitalize">{{ $t('label.createdAt') }}</th>
                     <td>{{ getDateFormat(company_info.created_at) }}</td>
                   </tr>
                   <tr>
-                    <th>{{ $t('label.lastUpdatedAt') }}</th>
+                    <th class="text-capitalize">{{ $t('label.lastUpdatedAt') }}</th>
                     <td>{{ getDateFormat(company_info.updated_at) }}</td>
                   </tr>
                 </tbody>

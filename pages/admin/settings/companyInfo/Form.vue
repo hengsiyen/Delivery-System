@@ -165,9 +165,7 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label for="village">
-                      {{ $t('menu.village') }}
-                    </label>
+                    <label>{{ $t('menu.village') }}</label>
                     <select
                       id="village"
                       v-model="village"
@@ -274,7 +272,7 @@
         </div>
         <div class="card-footer text-right">
           <button class="btn btn-light" @click="$router.back()">
-            <i class="fas fa-times mr-2" />
+            <i class="fas fa-times-circle mr-2" />
             <strong>{{ $t('btn.cancel') }}</strong>
           </button>
           <button

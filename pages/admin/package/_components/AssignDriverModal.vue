@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-dialog-scrollable modal-min-height modal-lg">
+  <div class="modal-dialog modal-dialog-scrollable modal-min-height modal-lg modal-dialog-centered">
     <div v-if="packageData" class="modal-content">
       <div class="modal-header">
         <h5 id="staticBackdropLabel" class="modal-title text-capitalize">
@@ -24,7 +24,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label class="w-100 text-left required"> {{ $t('label.delivery_charge') }}</label>
+          <label class="w-100 text-left required text-capitalize"> {{ $t('label.delivery_charge') }}</label>
           <template v-if="!(packageData.delivery_charge && packageData.driver_id) || packageData.edit_deliver_charge">
             <div class="input-group" :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')}">
               <input
@@ -32,9 +32,9 @@
                 v-model="delivery_charge"
                 name="price"
                 type="number"
-                class="form-control"
+                class="form-control z-2"
                 :placeholder="$t('label.delivery_charge')"
-                :class="{'is-invalid': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency'), 'w-75': currencies.length > 2}"
+                :class="{'is-invalid ': checkValidate('delivery_charge') || checkValidate('delivery_charge_currency'), 'w-75': currencies.length > 2}"
               >
               <template v-if="currencies && currencies.length">
                 <template v-if="currencies.length < 3">
@@ -52,7 +52,11 @@
                   </div>
                 </template>
                 <template v-else>
-                  <select v-model="delivery_charge_currency" class="custom-select w-25">
+                  <select
+                    v-model="delivery_charge_currency"
+                    class="custom-select w-25"
+                    :class="{'is-invalid': checkValidate('delivery_charge_currency')}"
+                  >
                     <option :value="null" hidden disabled>
                       {{ $t('label.select_one_option') }}
                     </option>
@@ -65,13 +69,15 @@
                 </template>
               </template>
             </div>
-            <div v-if="checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')" class="invalid-feedback">
-              <template v-if="checkValidate('delivery_charge') ">
-                {{ validate.delivery_charge[0] }}
-              </template>
-              <template v-if="checkValidate('delivery_charge_currency') ">
-                {{ validate.delivery_charge_currency[0] }}
-              </template>
+            <div v-if="checkValidate('delivery_charge') || checkValidate('delivery_charge_currency')" class="invalid-feedback text-left">
+              <ul type="none" class="pl-1">
+                <li v-if="checkValidate('delivery_charge')">
+                  {{ validate.delivery_charge[0] }}
+                </li>
+                <li v-if="checkValidate('delivery_charge_currency')">
+                  {{ validate.delivery_charge_currency[0] }}
+                </li>
+              </ul>
             </div>
           </template>
           <template v-else>
@@ -86,9 +92,9 @@
             </div>
           </template>
         </div>
-        <template v-if="packageData && packageData.partner_company">
+        <template v-if="packageData && packageData.third_party_company_id">
           <div class="form-group">
-            <label class="w-100 text-left"> {{ $t('label.extra_charge') }}</label>
+            <label class="w-100 text-left text-capitalize"> {{ $t('label.extra_charge') }}</label>
             <template v-if="!(packageData.extra_charge && packageData.driver_id) || packageData.edit_extra_charge">
               <div class="input-group">
                 <input
@@ -144,7 +150,7 @@
           </div>
         </template>
         <div class="form-group shop__search">
-          <label class="w-100 text-left required">{{ $t('label.selectDriver') }}</label>
+          <label class="w-100 text-left text-capitalize required">{{ $t('label.selectDriver') }}</label>
           <input
             v-model="search"
             type="search"
@@ -235,11 +241,7 @@
           </button>
         </template>
         <template v-else>
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="assignDriver"
-          >
+          <button type="button" class="btn btn-primary" @click="assignDriver">
             <i class="fas fa-check-circle mr-2" />
             <strong>{{ $t('btn.assign') }}</strong>
           </button>
@@ -327,7 +329,7 @@ export default {
       if (pac) {
         this.delivery_charge = pac.delivery_charge
         this.delivery_charge_currency = pac.delivery_charge_currency
-        if (pac.partner_company) {
+        if (pac.third_party_company_id) {
           this.extra_charge = pac.extra_charge
           this.extra_charge_currency = pac.extra_charge_currency
         }
@@ -348,8 +350,8 @@ export default {
     },
     setDefaultCurrency (currencies = []) {
       if (currencies && currencies.length) {
-        this.delivery_charge_currency = currencies[0]
-        if (this.packageData && this.packageData.partner_company) {
+        // this.delivery_charge_currency = currencies[0]
+        if (this.packageData && this.packageData.third_party_company_id) {
           this.extra_charge_currency = currencies[0]
         }
       }
@@ -448,7 +450,7 @@ export default {
 }
 
 .driver__items {
-  height: calc(100% - 3.5rem);
+  height: auto;
   overflow-y: auto;
   padding: 0 7.5px;
 }

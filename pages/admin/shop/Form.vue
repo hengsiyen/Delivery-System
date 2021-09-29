@@ -12,32 +12,48 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-lg-8">
+            <div class="col-xl-8">
               <div class="form-row">
                 <div class="form-group col-lg-6">
                   <label
-                    for="shop_name"
-                    class="required"
-                    :class="{'text-red': checkValidate('shop_name')}"
+                    class="required text-capitalize"
+                    :class="{'text-red': checkValidate('shop_name_en')}"
                   >
-                    {{ $t('label.shop_name') }}
+                    {{ $t('label.nameEn') }}
                   </label>
                   <input
-                    id="shop_name"
-                    v-model="shop_name"
+                    v-model="shop_name_en"
                     type="text"
                     class="form-control"
-                    :placeholder="$t('pla.shop_name')"
-                    :class="{'is-invalid': checkValidate('shop_name')}"
+                    :placeholder="$t('pla.nameEn')"
+                    :class="{'is-invalid': checkValidate('shop_name_en')}"
                   >
-                  <div v-if="checkValidate('shop_name')" class="invalid-feedback">
-                    {{ validate.shop_name[0] }}
+                  <div v-if="checkValidate('shop_name_en')" class="invalid-feedback">
+                    {{ validate.shop_name_en[0] }}
+                  </div>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label
+                    class="text-capitalize"
+                    :class="{'text-red': checkValidate('shop_name_km')}"
+                  >
+                    {{ $t('label.nameKm') }}
+                  </label>
+                  <input
+                    v-model="shop_name_km"
+                    type="text"
+                    class="form-control"
+                    :placeholder="$t('pla.nameKm')"
+                    :class="{'is-invalid': checkValidate('shop_name_km')}"
+                  >
+                  <div v-if="checkValidate('shop_name_km')" class="invalid-feedback">
+                    {{ validate.shop_name_km[0] }}
                   </div>
                 </div>
                 <div class="form-group col-lg-6">
                   <label
                     for="owner_name"
-                    class="required"
+                    class="required text-capitalize"
                     :class="{'text-red': checkValidate('owner_name')}"
                   >
                     {{ $t('label.owner_name') }}
@@ -57,7 +73,7 @@
                 <div class="form-group col-lg-6">
                   <label
                     for="phone"
-                    class="required"
+                    class="required text-capitalize"
                     :class="{'text-red': checkValidate('phone')}"
                   >
                     {{ $t('label.phone') }}
@@ -78,7 +94,7 @@
                 <div class="form-group col-lg-6">
                   <label
                     for="email"
-                    class="required"
+                    class="text-capitalize"
                     :class="{'text-red': checkValidate('email')}"
                   >
                     {{ $t('label.email') }}
@@ -95,10 +111,8 @@
                     {{ validate.email[0] }}
                   </div>
                 </div>
-                <div class="form-group col-lg-6">
-                  <label for="home_number">
-                    {{ $t('label.home_number') }}
-                  </label>
+                <div class="form-group col-lg-3">
+                  <label for="home_number" class="text-capitalize">{{ $t('label.home_number') }}</label>
                   <input
                     id="home_number"
                     v-model="home_number"
@@ -107,10 +121,8 @@
                     :placeholder="$t('pla.home_number')"
                   >
                 </div>
-                <div class="form-group col-lg-6">
-                  <label for="street_number">
-                    {{ $t('label.street_number') }}
-                  </label>
+                <div class="form-group col-lg-3">
+                  <label for="street_number" class="text-capitalize">{{ $t('label.street_number') }}</label>
                   <input
                     id="street_number"
                     v-model="street_number"
@@ -241,7 +253,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-xl-4 d-block d-md-flex d-lg-flex d-xl-block justify-content-md-around justify-content-lg-around">
               <div class="form-group text-center mb-5">
                 <label>
                   {{ $t('label.shop_logo') }}
@@ -363,7 +375,8 @@ export default {
       preview_shop_owner: null,
 
       id: null,
-      shop_name: null,
+      shop_name_en: null,
+      shop_name_km: null,
       owner_name: null,
       phone: null,
       email: null,
@@ -391,7 +404,8 @@ export default {
   created () {
     if (this.oldData) {
       this.id = this.oldData._id
-      this.shop_name = this.oldData.name_en
+      this.shop_name_en = this.oldData.name_en
+      this.shop_name_km = this.oldData.name_km
       this.owner_name = this.oldData.owner_name
       this.phone = this.oldData.phone
       this.email = this.oldData.email
@@ -452,7 +466,8 @@ export default {
       if (this.id) {
         formData.append('id', this.id)
       }
-      if (this.shop_name) { formData.append('shop_name', this.shop_name) }
+      if (this.shop_name_en) { formData.append('shop_name_en', this.shop_name_en) }
+      if (this.shop_name_km) { formData.append('shop_name_km', this.shop_name_km) }
       if (this.owner_name) { formData.append('owner_name', this.owner_name) }
       if (this.phone) { formData.append('phone', this.phone) }
       if (this.email) { formData.append('email', this.email) }

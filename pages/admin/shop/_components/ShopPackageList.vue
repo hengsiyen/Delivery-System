@@ -34,7 +34,7 @@
             </div>
             <div class="list_item-block">
               <div class="list_item-block-icon">
-                <i class="fas fa-dollar-sign mr-2" />
+                <i class="fas fa-money-bill mr-2" />
               </div>
               <div class="list_item-label text-truncate">
                 {{ item.price | numFormat(checkFormatCurrency(item.currency)) }}

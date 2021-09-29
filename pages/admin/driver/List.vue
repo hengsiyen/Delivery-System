@@ -154,7 +154,7 @@
                     <img :src="avatar" alt="" class="img-thumbnail rounded-circle">
                   </template>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="col-md-4 col-lg-4 col-xl-5">
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
                       <i class="fas fa-user mr-2" />
@@ -196,7 +196,7 @@
                   </div>
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
-                      <i class="fas fa-dollar-sign mr-2" />
+                      <i class="fas fa-money-bill mr-2" />
                     </div>
                     <div class="list_item-label text-truncate">
                       {{ calcPackagePrice(item.packages).totalKm | numFormat(num_format_km) }} KHR
@@ -212,7 +212,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-2 col-lg-2 col-xl-3 list_item-block-action text-right">
+                <div class="col-md-2 col-lg-2 col-xl-2 list_item-block-action text-right">
                   <div class="list_item-block-btn">
                     <NuxtLink
                       class="btn btn-default btn-sm btn-block"

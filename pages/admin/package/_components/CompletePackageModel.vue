@@ -19,7 +19,7 @@
       <div class="modal-body">
         <div class="form-group">
           <label>
-            <span class="required">Complete at</span>
+            <span class="required text-capitalize">{{ $t('label.completeAt') }}</span>
             <span class="ml-2">{{ $moment(complete_at).format('DD/MM/YYYY hh:mm:ss A') }}</span>
           </label>
           <date-picker
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label><span class="required">Payment Method</span></label>
+          <label><span class="required">{{ $t('menu.payment_type') }}</span></label>
           <select
             v-if="paymentTypes"
             id="payment_type"
@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Payment reference</label>
+          <label class="text-capitalize">{{ $t('label.paymentReference') }}</label>
           <div class="upload-btn-wrapper">
             <button class="btn btn-block">
               <i class="fas fa-link mr-2" />

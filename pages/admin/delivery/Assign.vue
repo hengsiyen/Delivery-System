@@ -7,15 +7,17 @@
             <div class="input-group">
               <input
                 v-model="search_package"
-                type="search"
-                class="form-control form-control-lg w-65"
+                type="text"
+                class="form-control form-control-lg w-65 z-2"
                 :placeholder="$t('label.search') + '...'"
+                @keyup="searchPackage"
               >
               <select
                 id="search_type"
                 v-model="search_type"
                 name="search_type"
                 class="custom-select custom-select-lg w-35 search__type"
+                @change="searchPackage"
               >
                 <option value="shop">
                   {{ $t('menu.shop') }}
@@ -30,7 +32,8 @@
             </div>
           </div>
           <div class="p-2 mb-2 bg-light rounded">
-            {{ $t('label.total_package') }}: {{ list_packages.length }}
+            <span class="text-capitalize">{{ $t('label.total_package') }}</span>:
+            {{ list_packages.length }}
           </div>
           <template v-if="onloading">
             <div class="onloading">
@@ -50,17 +53,17 @@
                     <div class="col-md-2 col-lg-2">
                       <template v-if="item.media">
                         <div class="package__item-image">
-                          <img :src="getSrc(item.media.src)" alt="" width="100%">
+                          <img :src="getSrc(item.media.src)" alt="" class="img-thumbnail">
                         </div>
                       </template>
                       <template v-else>
                         <div class="package__item-image">
-                          <img :src="package_img" alt="" width="100%">
+                          <img :src="package_img" alt="" width="100%" class="img-thumbnail">
                         </div>
                       </template>
                     </div>
                     <div class="col-md-5 col-lg-5">
-                      <div class="list_item-block">
+                      <div v-if=" item.customer_name" class="list_item-block">
                         <div class="list_item-block-icon">
                           <i class="fas fa-user mr-2" />
                         </div>
@@ -72,13 +75,13 @@
                         <div class="list_item-block-icon">
                           <i class="fas fa-phone mr-2" />
                         </div>
-                        <div class="list_item-label text-truncate">
+                        <div class="list_item-label text-bold text-truncate">
                           {{ item.customer_phone }}
                         </div>
                       </div>
                       <div class="list_item-block">
                         <div class="list_item-block-icon">
-                          <i class="fas fa-dollar-sign mr-2" />
+                          <i class="fas fa-money-bill mr-2" />
                         </div>
                         <div class="list_item-label text-truncate">
                           {{ item.price | numFormat(checkFormatCurrency(item.currency)) }}
@@ -95,12 +98,12 @@
                       </div>
                     </div>
                     <div class="col-md-5 col-lg-5">
-                      <div class="list_item-block">
+                      <div v-if="item.shop" class="list_item-block">
                         <div class="list_item-block-icon">
                           <i class="fas fa-store mr-2" />
                         </div>
                         <div class="list_item-label text-truncate">
-                          {{ item.shop ? item.shop.name_en : '' }}
+                          {{ item.shop['name_' + $i18n.locale ] }}
                         </div>
                       </div>
                       <div class="list_item-block">
@@ -113,7 +116,7 @@
                       </div>
                       <div v-if="item.partner_company" class="list_item-block">
                         <div class="list_item-block-icon">
-                          <i class="fas fa-truck mr-2" />
+                          <i class="fas fa-building mr-2" />
                         </div>
                         <div class="list_item-label text-truncate">
                           {{ item.partner_company.name_en }}
@@ -150,9 +153,7 @@
               <template v-if="selected_driver">
                 <div class="d-flex align-items-center justify-content-between bg-light rounded pl-3 w-100">
                   <div>
-                    <label class="mb-0">
-                      {{ selected_driver.full_name }}
-                    </label>
+                    <label class="mb-0">{{ selected_driver.full_name }}</label>
                   </div>
                   <div>
                     <button class="btn btn-lg btn-light" @click="setDriver(null)">
@@ -175,8 +176,8 @@
                 </div>
               </template>
             </div>
-            <div class="p-2 mb-2 bg-light rounded">
-              Assign Package to Driver: {{ selected_packages.length }}
+            <div class="p-2 mb-2 bg-light rounded text-capitalize">
+              {{ $t('label.numberPackageToDriver') }}: {{ selected_packages.length }}
             </div>
             <div class="package__items-select">
               <div
@@ -188,12 +189,12 @@
                 <div class="col-md-2 col-lg-2">
                   <template v-if="item.media">
                     <div class="package__item-image">
-                      <img :src="getSrc(item.media.src)" alt="" width="100%">
+                      <img :src="getSrc(item.media.src)" alt="" class="img-thumbnail">
                     </div>
                   </template>
                   <template v-else>
                     <div class="package__item-image">
-                      <img :src="package_img" alt="" width="100%">
+                      <img :src="package_img" alt="" class="img-thumbnail">
                     </div>
                   </template>
                 </div>
@@ -203,7 +204,27 @@
                       <i class="fas fa-store mr-2" />
                     </div>
                     <div class="list_item-label text-truncate">
-                      {{ item.shop ? item.shop.name_en : '' }}
+                      {{ item.shop ? item.shop['name_' + $i18n.locale] : '' }}
+                    </div>
+                  </div>
+                  <div v-if="item.customer_phone" class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-phone mr-2" />
+                    </div>
+                    <div class="list_item-label text-bold text-truncate">
+                      {{ item.customer_phone }}
+                      <template v-if="item.customer_name">
+                        - {{ item.customer_name }}
+                      </template>
+                    </div>
+                  </div>
+                  <div class="list_item-block">
+                    <div class="list_item-block-icon">
+                      <i class="fas fa-money-bill mr-2" />
+                    </div>
+                    <div class="list_item-label text-truncate">
+                      {{ item.price | numFormat(checkFormatCurrency(item.currency)) }}
+                      {{ item.currency ? item.currency.code : null }}
                     </div>
                   </div>
                   <div class="list_item-block">
@@ -216,10 +237,10 @@
                   </div>
                   <div v-if="item.partner_company" class="list_item-block">
                     <div class="list_item-block-icon">
-                      <i class="fas fa-truck mr-2" />
+                      <i class="fas fa-building mr-2" />
                     </div>
                     <div class="list_item-label text-truncate">
-                      {{ item.partner_company.name_en }}
+                      {{ item.partner_company['name_' + $i18n.locale] }}
                     </div>
                   </div>
                   <div class="list_item-block">
@@ -236,7 +257,7 @@
                 </div>
                 <div class="col-md-5 col-lg-5">
                   <div class="form-group">
-                    <label class="mb-0 font-s-14"> {{ $t('label.delivery_charge') }}</label>
+                    <label class="mb-0 font-s-14 text-capitalize"> {{ $t('label.delivery_charge') }}</label>
                     <template v-if="isAssignedPackage(item) || item.edit_deliver_charge">
                       <div class="input-group">
                         <input
@@ -291,7 +312,7 @@
                     </template>
                   </div>
                   <div v-if="item.partner_company" class="form-group">
-                    <label class="mb-0 font-s-14"> {{ $t('label.extra_charge') }}</label>
+                    <label class="mb-0 font-s-14 text-capitalize"> {{ $t('label.extra_charge') }}</label>
                     <template v-if="isAssignedPackage(item) || item.edit_extra_charge">
                       <div class="input-group">
                         <input
@@ -406,26 +427,12 @@ export default {
       num_format_km: 'delivery_company/num_format_km'
     })
   },
-  watch: {
-    search_package (val) {
-      this.onloading = true
-      if (!this.awaitingSearchPackage) {
-        if (this.time_out_package) {
-          clearTimeout(this.time_out_package)
-        }
-        this.time_out_package = setTimeout(() => {
-          this.searchPackage(1)
-          this.awaitingSearchPackage = false
-        }, 1000)
-      }
-      this.awaitingSearchPackage = true
-    }
-  },
   mounted () {
     this.searchPackage(1)
   },
   methods: {
-    searchPackage (page = null) {
+    searchPackage: debounce(function (page = null) {
+      this.onloading = true
       this.page = 1
       if (page) {
         this.page = page
@@ -433,8 +440,8 @@ export default {
       this.list_packages = []
       this.pacakgeInfiniteId += 1
       this.getPackages()
-    },
-    getPackages: debounce(function ($state) {
+    }, 500),
+    getPackages ($state) {
       this.$axios.post(this.$base_api + '/api/backend/package/list', {
         search: this.search_package,
         page: this.page,
@@ -443,8 +450,8 @@ export default {
         search_type: this.search_type,
         number_per_page: this.number_per_page
       }).then(({ data }) => {
-        if (!(this.page > data.total_pages)) {
-          this.page += 1
+        if (data.data && data.data.length) {
+          this.page++
           this.list_packages.push(...data.data)
           $state.loaded()
         } else {
@@ -455,7 +462,7 @@ export default {
       }).finally(() => {
         this.onloading = false
       })
-    }, 500),
+    },
     setDriver (driver) {
       this.$store.dispatch('delivery/setDriver', driver)
     },

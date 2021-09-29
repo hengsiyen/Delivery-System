@@ -8,10 +8,7 @@
       >
         <thead>
           <tr>
-            <th
-              v-for="(header, key) in columns"
-              :key="key"
-            >
+            <th v-for="(header, key) in columns" :key="key" class="text-capitalize">
               {{ header.title }}
             </th>
           </tr>

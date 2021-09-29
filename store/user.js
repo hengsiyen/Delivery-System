@@ -75,13 +75,10 @@ export const mutations = {
   },
 
   setUserRolesPermissions (state, data) {
-    console.log(data)
     const user = data.user
     Vue.set(data.user, 'permissions', data.permissions)
     Vue.set(data.user, 'roles', data.roles)
     state.data = user
-    console.log('result')
-    console.log(state.data)
   },
 
   setAvatar (state, avatar) {

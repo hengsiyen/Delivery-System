@@ -3,14 +3,11 @@
     <div class="row">
       <div class="col-md-12">
         <form method="POST" action="/">
-          <div
-            class="form-group row"
-          >
-            <label
-              for="email"
-              class="col-md-4 col-form-label text-md-right"
-            >{{ $t('label.oldPassword') }}</label>
-            <div class="col-md-6">
+          <div class="form-group row">
+            <label for="email" class="col-lg-3 text-lg-right col-form-label required">
+              {{ $t('label.oldPassword') }}
+            </label>
+            <div class="col-lg-9">
               <input
                 id="email"
                 v-model="user.old_password"
@@ -23,20 +20,16 @@
               >
               <template v-if="validations.old_password">
                 <div class="invalid-feedback" role="alert">
-                  <strong>{{ validations['old_password'][0] }}</strong>
+                  {{ validations['old_password'][0] }}
                 </div>
               </template>
             </div>
           </div>
-
-          <div
-            class="form-group row"
-          >
-            <label
-              for="password"
-              class="col-md-4 col-form-label text-md-right"
-            >{{ $t('label.password') }}</label>
-            <div class="col-md-6">
+          <div class="form-group row">
+            <label for="password" class="col-lg-3 text-lg-right col-form-label required">
+              {{ $t('label.password') }}
+            </label>
+            <div class="col-lg-9">
               <input
                 id="password"
                 v-model="user.password"
@@ -48,20 +41,16 @@
               >
               <template v-if="validations.password">
                 <div class="invalid-feedback" role="alert">
-                  <strong>{{ validations['password'][0] }}</strong>
+                  {{ validations['password'][0] }}
                 </div>
               </template>
             </div>
           </div>
-
-          <div
-            class="form-group row"
-          >
-            <label
-              for="password-confirm"
-              class="col-md-4 col-form-label text-md-right"
-            >{{ $t('label.confirmPassword') }}</label>
-            <div class="col-md-6">
+          <div class="form-group row">
+            <label for="password-confirm" class="col-lg-3 text-lg-right col-form-label required">
+              {{ $t('label.confirmPassword') }}
+            </label>
+            <div class="col-lg-9">
               <input
                 id="password-confirm"
                 v-model="user.password_confirmation"
@@ -73,12 +62,11 @@
               >
               <template v-if="validations.password">
                 <div class="invalid-feedback" role="alert">
-                  <strong>{{ validations['password'][0] }}</strong>
+                  {{ validations['password'][0] }}
                 </div>
               </template>
             </div>
           </div>
-
           <div class="form-group row">
             <div class="col-md-4" />
             <div class="col-md-6">

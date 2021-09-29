@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-min-height">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-min-height modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 id="staticBackdropLabel" class="modal-title text-capitalize">
@@ -22,28 +22,44 @@
           <div class="form-row">
             <div class="form-group col-lg-6">
               <label
-                for="shop_name"
-                class="required"
-                :class="{'text-red': checkValidate('shop_name')}"
+                class="required text-capitalize"
+                :class="{'text-red': checkValidate('shop_name_en')}"
               >
-                {{ $t('label.shop_name') }}
+                {{ $t('label.nameEn') }}
               </label>
               <input
-                id="shop_name"
-                v-model="shop_name"
+                v-model="shop_name_en"
                 type="text"
                 class="form-control"
-                :placeholder="$t('pla.shop_name')"
-                :class="{'is-invalid': checkValidate('shop_name')}"
+                :placeholder="$t('pla.nameEn')"
+                :class="{'is-invalid': checkValidate('shop_name_en')}"
               >
-              <div v-if="checkValidate('shop_name')" class="invalid-feedback">
-                {{ validate.shop_name[0] }}
+              <div v-if="checkValidate('shop_name_en')" class="invalid-feedback">
+                {{ validate.shop_name_en[0] }}
+              </div>
+            </div>
+            <div class="form-group col-lg-6">
+              <label
+                class="text-capitalize"
+                :class="{'text-red': checkValidate('shop_name_km')}"
+              >
+                {{ $t('label.nameKm') }}
+              </label>
+              <input
+                v-model="shop_name_km"
+                type="text"
+                class="form-control"
+                :placeholder="$t('pla.nameKm')"
+                :class="{'is-invalid': checkValidate('shop_name_km')}"
+              >
+              <div v-if="checkValidate('shop_name_km')" class="invalid-feedback">
+                {{ validate.shop_name_km[0] }}
               </div>
             </div>
             <div class="form-group col-lg-6">
               <label
                 for="owner_name"
-                class="required"
+                class="required text-capitalize"
                 :class="{'text-red': checkValidate('owner_name')}"
               >
                 {{ $t('label.owner_name') }}
@@ -81,26 +97,26 @@
                 {{ validate.phone[0] }}
               </div>
             </div>
-            <div class="form-group col-lg-6">
-              <label
-                for="email"
-                class="required"
-                :class="{'text-red': checkValidate('email')}"
-              >
-                {{ $t('label.email') }}
-              </label>
-              <input
-                id="email"
-                v-model="shop_email"
-                type="email"
-                class="form-control"
-                :placeholder="$t('pla.email')"
-                :class="{'is-invalid': checkValidate('email')}"
-              >
-              <div v-if="checkValidate('email')" class="invalid-feedback">
-                {{ validate.email[0] }}
-              </div>
-            </div>
+<!--            <div class="form-group col-lg-6">-->
+<!--              <label-->
+<!--                for="email"-->
+<!--                class="required"-->
+<!--                :class="{'text-red': checkValidate('email')}"-->
+<!--              >-->
+<!--                {{ $t('label.email') }}-->
+<!--              </label>-->
+<!--              <input-->
+<!--                id="email"-->
+<!--                v-model="shop_email"-->
+<!--                type="email"-->
+<!--                class="form-control"-->
+<!--                :placeholder="$t('pla.email')"-->
+<!--                :class="{'is-invalid': checkValidate('email')}"-->
+<!--              >-->
+<!--              <div v-if="checkValidate('email')" class="invalid-feedback">-->
+<!--                {{ validate.email[0] }}-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
         </template>
         <template v-else>
@@ -177,12 +193,11 @@
       <div class="modal-footer">
         <template v-if="create_shop">
           <a type="button" class="btn btn-light" @click="create_shop = false">
-            <i class="fas fa-times-circle mr-2" />
-            <strong>{{ $t('btn.cancel') }}</strong>
+            <i class="fas fa-arrow-circle-left mr-2" />
+            <strong>{{ $t('button.back') }}</strong>
           </a>
           <button
             class="btn btn-success"
-            data-dismiss="modal"
             @click="storeShop"
           >
             <i class="fas fa-save mr-2" />
@@ -225,7 +240,8 @@ export default {
       sonloading: false,
       search_shop: null,
       create_shop: false,
-      shop_name: null,
+      shop_name_en: null,
+      shop_name_km: null,
       owner_name: null,
       shop_phone: null,
       shop_email: null,
@@ -298,8 +314,11 @@ export default {
       if (this.id) {
         formData.append('id', this.id)
       }
-      if (this.shop_name) {
-        formData.append('shop_name', this.shop_name)
+      if (this.shop_name_en) {
+        formData.append('shop_name_en', this.shop_name_en)
+      }
+      if (this.shop_name_km) {
+        formData.append('shop_name_km', this.shop_name_km)
       }
       if (this.owner_name) {
         formData.append('owner_name', this.owner_name)
@@ -307,18 +326,20 @@ export default {
       if (this.shop_phone) {
         formData.append('phone', this.shop_phone)
       }
-      if (this.shop_email) {
-        formData.append('email', this.shop_email)
-      }
+      // if (this.shop_email) {
+      //   formData.append('email', this.shop_email)
+      // }
       formData.append('enabled', true)
       this.$axios
         .post(this.$base_api + '/api/backend/shop/store-or-edit', formData)
         .then((res) => {
           this.$store.dispatch('package/setShop', {
             _id: res.data.data._id,
-            name_en: res.data.data.name_en
+            name_en: res.data.data.name_en,
+            name_km: res.data.data.name_km
           })
           this.cancelCreateShop()
+          this.searchShop()
         }).catch((error) => {
           if (error.response.status === 422) {
             this.validate = error.response.data.errors

@@ -126,12 +126,12 @@
         </tr>
         <template v-if="!isUpdating">
           <tr>
-            <th>{{ $t('fields.createdAt') }}</th>
-            <td>{{ user.created_at }}</td>
+            <th class="text-capitalize">{{ $t('fields.createdAt') }}</th>
+            <td>{{ getDateFormat(user.created_at) }}</td>
           </tr>
           <tr>
-            <th>{{ $t('fields.updatedAt') }}</th>
-            <td>{{ user.updated_at }}</td>
+            <th class="text-capitalize">{{ $t('fields.updatedAt') }}</th>
+            <td>{{ getDateFormat(user.updated_at) }}</td>
           </tr>
         </template>
       </tbody>

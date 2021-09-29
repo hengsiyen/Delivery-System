@@ -210,5 +210,6 @@ export default {
   font-weight: 700;
   margin-bottom: 1rem;
   margin-left: 7.5px;
+  text-transform: capitalize;
 }
 </style>

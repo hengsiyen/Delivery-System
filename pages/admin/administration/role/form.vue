@@ -5,6 +5,9 @@
         <h3 class="card-title">
           {{ title }}
         </h3>
+        <div class="card-tools">
+          <ButtonBack />
+        </div>
       </div>
       <div class="card-body">
         <div class="row">
@@ -84,20 +87,19 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group row">
-                <div class="col-sm-9 offset-sm-3">
-                  <button
-                    class="btn btn-primary btn-sm"
-                    @click="onSubmit"
-                  >
-                    {{ $t('button.save') }}
-                  </button>
-                  <ButtonBack />
-                </div>
-              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="card-footer text-right">
+        <button class="btn btn-default" @click="$router.back()">
+          <i class="far fa-times-circle mr-2" />
+          <strong>{{ $t('button.cancel') }}</strong>
+        </button>
+        <button class="btn btn-primary btn-sm" @click="onSubmit">
+          <i class="fas fa-save mr-2"></i>
+          <strong> {{ $t('button.save') }}</strong>
+        </button>
       </div>
     </div>
   </div>

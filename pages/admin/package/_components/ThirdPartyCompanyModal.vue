@@ -1,8 +1,9 @@
 <template>
-  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-min-height">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-min-height modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title text-capitalize">
+          <i class="fas fa-building mr-2" />
           {{ create_form ? $t('label.create_new_third_party_company') : $t('label.select_third_party_company') }}
         </h5>
         <button
@@ -22,33 +23,57 @@
             <div class="form-group col-lg-12">
               <label
                 for="third_party_company_name"
-                class="required"
-                :class="{'text-red': checkValidate('name')}"
+                class="required text-capitalize"
+                :class="{'text-red': checkValidate('name_en')}"
               >
-                {{ $t('label.name') }}
+                {{ $t('label.nameEn') }}
               </label>
               <input
                 id="third_party_company_name"
-                v-model="name"
+                v-model="name_en"
                 type="text"
                 class="form-control"
-                :placeholder="$t('pla.name')"
-                :class="{'is-invalid': checkValidate('name')}"
+                :placeholder="$t('pla.nameEn')"
+                :class="{'is-invalid': checkValidate('name_en')}"
               >
-              <div v-if="checkValidate('name')" class="invalid-feedback">
-                {{ validate.name[0] }}
+              <div v-if="checkValidate('name_en')" class="invalid-feedback">
+                {{ validate.name_en[0] }}
               </div>
             </div>
             <div class="form-group col-lg-12">
-              <label for="third_party_company_phone" :class="{'text-red': checkValidate('phone')}">
+              <label
+                for="third_party_company_name"
+                class="text-capitalize"
+                :class="{'text-red': checkValidate('name_km')}"
+              >
+                {{ $t('label.nameKm') }}
+              </label>
+              <input
+                v-model="name_km"
+                type="text"
+                class="form-control"
+                :placeholder="$t('pla.nameKm')"
+                :class="{'is-invalid': checkValidate('name_km')}"
+              >
+              <div v-if="checkValidate('name_km')" class="invalid-feedback">
+                {{ validate.name_km[0] }}
+              </div>
+            </div>
+            <div class="form-group col-lg-12">
+              <label
+                for="third_party_company_phone"
+                class="required"
+                :class="{'text-red': checkValidate('phone')}"
+              >
                 {{ $t('label.phone') }}
               </label>
               <input
                 id="third_party_company_phone"
                 v-model="phone"
                 type="text"
+                v-mask="'### ### ####'"
                 class="form-control"
-                :placeholder="$t('pla.phone')"
+                :placeholder="$t('pla.phone_number')"
                 :class="{'is-invalid': checkValidate('phone')}"
               >
               <div v-if="checkValidate('phone')" class="invalid-feedback">
@@ -131,12 +156,11 @@
       <div class="modal-footer">
         <template v-if="create_form">
           <a type="button" class="btn btn-light" @click="cancelCreateThirdParty">
-            <i class="fas fa-times-circle mr-2" />
-            <strong>{{ $t('btn.cancel') }}</strong>
+            <i class="fas fa-arrow-circle-left mr-2" />
+            <strong>{{ $t('button.back') }}</strong>
           </a>
           <button
             class="btn btn-success"
-            data-dismiss="modal"
             @click="storeThirdParty"
           >
             <i class="fas fa-save mr-2" />
@@ -189,7 +213,8 @@ export default {
       pcOnloading: false,
       t_search_query: null,
       create_form: false,
-      name: null,
+      name_en: null,
+      name_km: null,
       phone: null,
 
       pcInfiniteId: +new Date(),
@@ -242,7 +267,7 @@ export default {
         page: this.page,
         number_per_page: this.number_per_page,
         dcid: this.dcid,
-        select: ['name_en', '_id', 'phone']
+        select: ['name_en', 'name_km', '_id', 'phone']
       }).then(({ data }) => {
         if (!(this.page > data.total_pages)) {
           this.page += 1
@@ -261,15 +286,18 @@ export default {
       this.validate = null
       this.$axios
         .post(this.$base_api + '/api/backend/third-party-company/store-or-edit', {
-          name: this.name,
+          name_en: this.name_en,
+          name_km: this.name_km,
           phone: this.phone
         })
         .then((res) => {
           this.$store.dispatch('package/setThirdParty', {
             _id: res.data.data._id,
-            name_en: res.data.data.name_en
+            name_en: res.data.data.name_en,
+            name_km: res.data.data.name_km
           })
           this.cancelCreateThirdParty()
+          this.searchThirdParty()
         }).catch((error) => {
           if (error.response.status === 422) {
             this.validate = error.response.data.errors
@@ -291,7 +319,8 @@ export default {
     },
     cancelCreateThirdParty () {
       this.create_form = false
-      this.name = null
+      this.name_en = null
+      this.name_km = null
       this.phone = null
       this.t_search_query = null
     },

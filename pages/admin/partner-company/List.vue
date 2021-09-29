@@ -161,7 +161,7 @@
                     <img :src="shop_img" alt="" class="img-thumbnail">
                   </template>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xl-5">
+                <div class="col-md-4 col-lg-4 col-xl-4">
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
                       <i class="fas fa-store mr-2" />
@@ -189,7 +189,7 @@
                   </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-5">
-                  <div class="list_item-block">
+                  <div v-if="item.code" class="list_item-block">
                     <div class="list_item-block-icon">
                       <i class="fas fa-qrcode mr-2" />
                     </div>
@@ -197,7 +197,7 @@
                       {{ item.code }}
                     </div>
                   </div>
-                  <div class="list_item-block">
+                  <div v-if="item['address_' + $i18n.locale]" class="list_item-block">
                     <div class="list_item-block-icon">
                       <i class="fas fa-map-marker-alt mr-2" />
                     </div>
@@ -205,7 +205,7 @@
                       {{ item['address_' + $i18n.locale] }}
                     </div>
                   </div>
-                  <div class="list_item-block">
+                  <div v-if="item.created_at" class="list_item-block">
                     <div class="list_item-block-icon">
                       <i class="fas fa-calendar-alt mr-2" />
                     </div>
@@ -214,7 +214,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-2 col-lg-2 col-xl-1 list_item-block-action">
+                <div class="col-md-2 col-lg-2 col-xl-2 list_item-block-action">
                   <div class="list_item-block-btn">
                     <NuxtLink class="btn btn-default btn-sm btn-block" :to="{name: 'show-partner-company', params:{id: item._id}}">
                       <i class="fas fa-eye mr-2" />

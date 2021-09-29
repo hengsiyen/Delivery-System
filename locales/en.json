@@ -95,6 +95,7 @@
         "companyNameEn": "Company Name (English)",
         "companyNameKm": "Company Name (Khmer)",
         "company_logo": "Company logo",
+        "completeAt": "Complete at",
         "complete_delivery": "Complete Delivery",
         "complete_delivery_sub": "Do you want to complete this delivery?",
         "complete_package": "Delivered",
@@ -182,6 +183,7 @@
         "not_accept_delivery_yet": "Not accept delivery yet",
         "not_pay_yet": "Not pay yet",
         "note": "Note",
+        "numberPackageToDriver": "Number of packages to the driver",
         "number_packages_delivery": "Number of packages (Delivery)",
         "oldPassword": "Old password",
         "on_delivery": "On Delivery",
@@ -205,6 +207,7 @@
         "password": "Password",
         "passwordConfirmation": "Password confirmation",
         "payment": "Payment",
+        "paymentReference": "Payment reference",
         "payment_on_delivery": "Cash on delivery",
         "payment_status": "Payment status",
         "payment_with_order": "Payment with order",
@@ -278,7 +281,7 @@
         "username": "Username",
         "view": "View",
         "viewBy": "View By",
-        "view_package_transitions": "View package transitions",
+        "view_package_transactions": "View package transactions",
         "village": "Village"
     },
     "menu": {

@@ -22,7 +22,7 @@
               role="tab"
               class="nav-link active"
             >
-              <i class="fa fa-user" /> {{ $t('label.profile') }}
+              <i class="fa fa-user mr-2" /> <strong>{{ $t('label.profile') }}</strong>
             </a>
           </li>
         </ul>
@@ -50,30 +50,25 @@
                             >
                           </template>
                           <template v-else>
-                            <img
-                              :src="avatar"
-                              class="user-image"
-                              alt="User Avatar"
-                              width="200px"
-                            >
+                            <img :src="avatar" class="user-image" alt="User Avatar" width="200px">
                           </template>
                         </td>
                       </tr>
                       <tr>
                         <td>{{ $t('label.firstName') }}</td>
-                        <td>: {{ user.first_name }}</td>
+                        <td>{{ user.first_name }}</td>
                       </tr>
                       <tr>
                         <td>{{ $t('label.lastName') }}</td>
-                        <td>: {{ user.last_name }}</td>
+                        <td>{{ user.last_name }}</td>
                       </tr>
                       <tr>
                         <td>{{ $t('label.gender') }}</td>
-                        <td>: {{ user.gender !== null ? user.gender.name_en : 'N/A' }}</td>
+                        <td>{{ user.gender !== null ? user.gender.name_en : 'N/A' }}</td>
                       </tr>
                       <tr>
                         <td>{{ $t('label.updatedAt') }}</td>
-                        <td>: {{ user.updated_at || 'N/A' }}</td>
+                        <td>{{ user.updated_at || 'N/A' }}</td>
                       </tr>
                       <tr>
                         <td>{{ $t('label.role') }}</td>

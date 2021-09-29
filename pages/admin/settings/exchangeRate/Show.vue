@@ -43,11 +43,11 @@
                 </td>
               </tr>
               <tr>
-                <th>{{ $t('label.createdAt') }}</th>
+                <th class="text-capitalize">{{ $t('label.createdAt') }}</th>
                 <td>{{ getDateFormat(exchange_rate.created_at) }}</td>
               </tr>
               <tr>
-                <th>{{ $t('label.updatedAt') }}</th>
+                <th class="text-capitalize">{{ $t('label.updatedAt') }}</th>
                 <td>{{ getDateFormat(exchange_rate.updated_at) }}</td>
               </tr>
             </tbody>

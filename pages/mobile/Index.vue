@@ -33,24 +33,32 @@ export default {
       this.$store.dispatch('delivery_company/setDeliveryCompany', JSON.parse(deliveryCompany))
     }
     if (!this.currency) {
-      const currency = this.$cookies.get('dc_currency')
-      this.$store.dispatch('delivery_company/setCurrency', currency)
+      if (localStorage.hasOwnProperty('dc_currency') && localStorage.getItem('dc_currency')) {
+        const currency = localStorage.getItem('dc_currency')
+        this.$store.dispatch('delivery_company/setCurrency', JSON.parse(currency))
+      }
     }
     if (!this.exchange) {
       const exchange = this.$cookies.get('dc_exchange')
       this.$store.dispatch('delivery_company/setExchangeRate', exchange)
     }
     if (!(this.currencies && this.currencies.length)) {
-      const currencies = this.$cookies.get('currencies')
-      this.$store.dispatch('delivery_company/setCurrencies', currencies)
+      if (localStorage.hasOwnProperty('currencies') && localStorage.getItem('currencies')) {
+        const currencies = localStorage.getItem('currencies')
+        this.$store.dispatch('delivery_company/setCurrencies', JSON.parse(currencies))
+      }
     }
     if (!(this.package_types && this.package_types.length)) {
-      const packageTypes = this.$cookies.get('package_types')
-      this.$store.dispatch('delivery_company/setPackageTypes', packageTypes)
+      if (localStorage.hasOwnProperty('package_types') && localStorage.getItem('package_types')) {
+        const packageTypes = localStorage.getItem('package_types')
+        this.$store.dispatch('delivery_company/setPackageTypes', JSON.parse(packageTypes))
+      }
     }
     if (!(this.payment_types && this.payment_types.length)) {
-      const paymentTypes = this.$cookies.get('payment_types')
-      this.$store.dispatch('delivery_company/setPaymentTypes', paymentTypes)
+      if (localStorage.hasOwnProperty('payment_types') && localStorage.getItem('payment_types')) {
+        const paymentTypes = localStorage.getItem('payment_types')
+        this.$store.dispatch('delivery_company/setPaymentTypes', JSON.parse(paymentTypes))
+      }
     }
     if (this.display_roles && this.display_roles.length === 0) {
       const displayRoles = this.$cookies.get('roles')

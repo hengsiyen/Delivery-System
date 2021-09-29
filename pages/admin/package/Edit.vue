@@ -24,7 +24,8 @@ export default {
           if (result.shop) {
             ctx.store.dispatch('package/setShop', {
               _id: result.shop._id,
-              name_en: result.shop.name_en
+              name_en: result.shop.name_en,
+              name_km: result.shop.name_km
             })
           }
           return {

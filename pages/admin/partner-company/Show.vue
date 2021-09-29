@@ -66,11 +66,11 @@
                     <td>{{ partner_company.creator.full_name }}</td>
                   </tr>
                   <tr>
-                    <th>{{ $t('label.createdAt') }}</th>
+                    <th class="text-capitalize">{{ $t('label.createdAt') }}</th>
                     <td>{{ getDateFormat(partner_company.created_at) }}</td>
                   </tr>
                   <tr>
-                    <th>{{ $t('label.updatedAt') }}</th>
+                    <th class="text-capitalize">{{ $t('label.updatedAt') }}</th>
                     <td>{{ getDateFormat(partner_company.updated_at) }}</td>
                   </tr>
                 </tbody>

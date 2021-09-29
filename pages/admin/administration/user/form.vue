@@ -5,14 +5,14 @@
         <h3 class="card-title">
           {{ title }}
         </h3>
+        <div class="card-tools">
+          <ButtonBack />
+        </div>
       </div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-12">
-            <div
-              v-if="isEdit"
-              class="form-group text-center margin-50"
-            >
+            <div v-if="isEdit" class="form-group text-center margin-50">
               <div class="change-avatar">
                 <div style="display: inline-grid">
                   <img
@@ -20,10 +20,9 @@
                     alt="User Avatar"
                     class="container-avatar"
                   >
-                  <a
-                    class="btn btn-primary"
-                    @click="toggleShow"
-                  >{{ $t('label.uploadYourAvatar') }}</a>
+                  <a class="btn btn-primary" @click="toggleShow">
+                    {{ $t('label.uploadYourAvatar') }}
+                  </a>
                 </div>
                 <vue-crop-avatar
                   v-model="show"
@@ -140,12 +139,10 @@
                 </div>
               </div>
             </template>
-            <div
-              class="form-group row"
-            >
-              <label
-                class="required col-sm-3 col-form-label text-right"
-              >{{ $t('label.gender') }}</label>
+            <div class="form-group row">
+              <label class="required col-sm-3 col-form-label text-right">
+                {{ $t('label.gender') }}
+              </label>
               <div class="col-sm-9">
                 <select
                   v-model="user.gender_id"
@@ -155,12 +152,11 @@
                   <option selected disabled value="0">
                     {{ $t('string.selectGender') }}
                   </option>
-                  <option value="1">
-                    {{ $t('label.male') }}
-                  </option>
-                  <option value="2">
-                    {{ $t('label.female') }}
-                  </option>
+                  <template v-if="genders && genders.length">
+                    <option v-for="(item, key) in genders" :key="key" :value="item._id">
+                      {{ item['name_' + $i18n.locale] }}
+                    </option>
+                  </template>
                 </select>
                 <div
                   v-if="validations !== null && validations.hasOwnProperty('gender_id')"
@@ -171,9 +167,9 @@
               </div>
             </div>
             <div class="form-group row">
-              <label
-                class="required col-sm-3 col-form-label text-right"
-              >{{ $t('label.active') }}</label>
+              <label class="required col-sm-3 col-form-label text-right">
+                {{ $t('label.active') }}
+              </label>
               <div class="col-sm-9">
                 <label>
                   <input
@@ -184,10 +180,10 @@
                 </label>
               </div>
             </div>
-            <div
-              class="form-group row"
-            >
-              <label class="required col-sm-3 col-form-label text-right">{{ $t('label.role') }}</label>
+            <div class="form-group row">
+              <label class="required col-sm-3 col-form-label text-right">
+                {{ $t('label.role') }}
+              </label>
               <div class="col-sm-9">
                 <div class="row">
                   <template v-if="rolesOption.length > 0">
@@ -227,19 +223,19 @@
                 </div>
               </div>
             </div>
-            <div class="form-group row">
-              <div class="col-sm-9 offset-sm-3">
-                <button
-                  class="btn btn-primary btn-sm"
-                  @click="onSubmit"
-                >
-                  {{ $t('button.save') }}
-                </button>
-                <ButtonBack />
-              </div>
-            </div>
+            <div class="form-group row" />
           </div>
         </div>
+      </div>
+      <div class="card-footer text-right">
+        <button class="btn btn-default" @click="$router.back()">
+          <i class="far fa-times-circle mr-2" />
+          <strong>{{ $t('button.cancel') }}</strong>
+        </button>
+        <button class="btn btn-primary btn-sm" @click="onSubmit">
+          <i class="fas fa-save mr-2" />
+          <strong>{{ $t('button.save') }}</strong>
+        </button>
       </div>
     </div>
   </div>
@@ -251,10 +247,7 @@ import PermissionTree from '~/pages/admin/administration/permission/_components/
 
 export default {
   name: 'UserForm',
-  components: {
-    ButtonBack,
-    PermissionTree
-  },
+  components: { ButtonBack, PermissionTree },
   props: {
     title: {
       type: String,
@@ -292,7 +285,8 @@ export default {
         name: 'avatar'
       },
       headers: null,
-      imgDataUrl: ''
+      imgDataUrl: '',
+      genders: []
     }
   },
   computed: {
@@ -314,6 +308,14 @@ export default {
     user () {
       this.selected = this.user.permissions
       this.imgDataUrl = this.user.avatar ? this.apiUrl + '/' + this.user.avatar : this.user.avatar
+    }
+  },
+  mounted () {
+    this.fetchRoles()
+    this.getGenders()
+    this.headers = {
+      Authorization: 'Bearer ' + localStorage.getItem(this.$token),
+      Accept: 'application/json'
     }
   },
   methods: {
@@ -338,13 +340,12 @@ export default {
       this.imgDataUrl = this.apiUrl + '/' + jsonData.data.avatar
     },
     cropUploadFail (status, field) {
-    }
-  },
-  mounted () {
-    this.fetchRoles()
-    this.headers = {
-      Authorization: 'Bearer ' + localStorage.getItem(this.$token),
-      Accept: 'application/json'
+    },
+    getGenders () {
+      this.$axios.get(this.$base_api + '/api/backend/gender/get-options')
+        .then((res) => {
+          this.genders = res.data.data
+        })
     }
   }
 }
@@ -368,8 +369,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 10vh;
-  padding-bottom: 10vh;
 }
 .container-avatar {
   width: 300px;

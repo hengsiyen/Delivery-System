@@ -103,7 +103,7 @@
               <div class="input-group" :class="{'has-validation': checkValidate('price')}">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
-                    <i class="fas fa-dollar-sign" />
+                    <i class="fas fa-money-bill" />
                   </span>
                 </div>
                 <input
@@ -455,7 +455,8 @@ export default {
             if (result.shop) {
               this.$store.dispatch('package/setShop', {
                 _id: result.shop._id,
-                name_en: result.shop.name_en
+                name_en: result.shop.name_en,
+                name_km: result.shop.name_km
               })
             }
             this.id = result._id

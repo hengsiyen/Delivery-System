@@ -95,6 +95,7 @@
         "companyNameEn": "ឈ្មោះក្រុមហ៊ុន (អង់គ្លេស)",
         "companyNameKm": "ឈ្មោះក្រុមហ៊ុន (ខ្មែរ)",
         "company_logo": "និមិត្តសញ្ញាក្រុមហ៊ុន",
+        "completeAt": "បញ្ចប់នៅ",
         "complete_delivery": "បញ្ចប់ការដឹកជញ្ជូន",
         "complete_delivery_sub": "តើអ្នកចង់បញ្ចប់ការដឹកជញ្ជូននេះទេ?",
         "complete_package": "ការដឹកជញ្ជូនរួចរាល់",
@@ -182,6 +183,7 @@
         "not_accept_delivery_yet": "មិនទាន់ទទួលយកការដឹកជញ្ជូននៅឡើយទេ",
         "not_pay_yet": "មិនទាន់បង់ប្រាក់",
         "note": "ចំណាំ",
+        "numberPackageToDriver": "ចំនួនកញ្ចប់សម្រាប់អ្នកបើកបរ",
         "number_packages_delivery": "ចំនួនកញ្ចប់ (ការដឹកជញ្ជូន)",
         "oldPassword": "ពាក្យសំងាត់ចាស់",
         "on_delivery": "កំពុងដឹកជញ្ជូន",
@@ -205,6 +207,7 @@
         "password": "ពាក្យសំងាត់",
         "passwordConfirmation": "ការបញ្ជាក់ពាក្យសម្ងាត់",
         "payment": "ការទូទាត់",
+        "paymentReference": "ឯកសារយោងការទូទាត់",
         "payment_on_delivery": "បង់ប្រាក់ពេលទទួលទំនិញ",
         "payment_status": "ស្ថានភាពការទូទាត់ប្រាក់",
         "payment_with_order": "បង់ប្រាក់ពេលបញ្ជាទិញ",
@@ -278,7 +281,7 @@
         "username": "ឈ្មោះ​អ្នកប្រើប្រាស់",
         "view": "មើល",
         "viewBy": "បង្ហាញតាម",
-        "view_package_transitions": "មើលដំណើរផ្លាស់ប្តូរកញ្ចប់អីវា៉ន់",
+        "view_package_transactions": "មើលប្រតិបត្តិការកញ្ចប់អីវា៉ន់",
         "village": "ភូមិ"
     },
     "menu": {
