@@ -49,6 +49,7 @@ export default {
       currency: 'delivery_company/currency'
     }),
     numberFormat () {
+      console.log(this.currency)
       if (this.currency) {
         return this.currency.code === 'KHR' ? this.num_format_km : this.num_format_en
       }

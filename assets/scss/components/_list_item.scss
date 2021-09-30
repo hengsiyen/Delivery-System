@@ -111,30 +111,32 @@
 //  }
 //}
 @media screen and (min-width: 1600px) {
+  .list_item-block-btn,
   .package_item-block-btn {
     width: 70%;
   }
 }
 
 @media screen and (max-width: 1600px) {
+  .list_item-block-btn,
   .package_item-block-btn {
     width: 75%;
   }
 }
 
 @media screen and (max-width: 1500px) {
+  .list_item-block-btn,
   .package_item-block-btn {
     width: 83%;
   }
 }
 
 @media screen and (max-width: 1400px) {
+  .list_item-block-btn,
   .package_item-block-btn {
     width: 100%;
   }
 }
-
-
 
 @media screen and (max-width: 768px) {
   .package_item,

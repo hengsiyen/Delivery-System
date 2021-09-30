@@ -187,7 +187,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xl-5">
+                <div class="col-md-4 col-lg-4 col-xl-4">
                   <div class="list_item-block">
                     <div class="list_item-block-icon">
                       <i class="fas fa-user mr-2" />
@@ -213,7 +213,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-2 col-lg-2 col-xl-1 list_item-block-action">
+                <div class="col-md-2 col-lg-2 col-xl-2 list_item-block-action">
                   <div class="list_item-block-btn">
                     <NuxtLink
                       class="btn btn-default btn-sm btn-block"
