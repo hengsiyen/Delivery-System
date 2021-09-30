@@ -30,7 +30,7 @@ export const roleRouters = {
             name_km: 'តួនាទី'
           },
           {
-            name_en: 'Role',
+            name_en: 'List',
             name_km: 'បញ្ជី'
           }
         ]

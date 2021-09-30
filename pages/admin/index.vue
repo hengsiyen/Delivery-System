@@ -3,6 +3,7 @@
     <Header />
     <Sidebar />
     <div class="content-wrapper">
+      <Breadcrumb />
       <div class="content">
         <div class="container-fluid">
           <Nuxt />
@@ -20,12 +21,14 @@ import Header from '@/components/Layouts/Header'
 import Footer from '@/components/Layouts/Footer'
 import { mapGetters } from 'vuex'
 import helpers from '@/plugins/helpers'
+import Breadcrumb from '@/components/Layouts/Breadcrumb'
 
 Vue.use(helpers)
 
 export default {
   name: 'Admin',
   components: {
+    Breadcrumb,
     Footer,
     Sidebar,
     Header
