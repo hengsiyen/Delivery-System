@@ -41,11 +41,15 @@
                 </td>
               </tr>
               <tr>
-                <th class="text-capitalize">{{ $t('label.createdAt') }}</th>
+                <th class="text-capitalize">
+                  {{ $t('label.createdAt') }}
+                </th>
                 <td>{{ getDateFormat(payment_type.created_at) }}</td>
               </tr>
               <tr>
-                <th class="text-capitalize">{{ $t('label.updatedAt') }}</th>
+                <th class="text-capitalize">
+                  {{ $t('label.updatedAt') }}
+                </th>
                 <td>{{ getDateFormat(payment_type.updated_at) }}</td>
               </tr>
             </tbody>

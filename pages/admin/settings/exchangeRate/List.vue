@@ -50,7 +50,7 @@ export default {
     columns () {
       return [
         { data: 'currency', name: 'currency', title: this.$t('table.currency') },
-        { data: 'value', name: 'value', title: this.$t('table.amount') },
+        { data: 'value', name: 'value', title: this.$t('table.amountToKhr') },
         { data: 'enabled', name: 'enabled', title: this.$t('label.enabled') },
         {
           data: 'created_at',

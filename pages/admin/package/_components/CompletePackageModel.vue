@@ -49,7 +49,7 @@
             :class="{'is-invalid': checkValidate('payment_type_id')}"
           >
             <option :value="null" selected hidden>
-              {{ $t('label.select_one_option') }} ...
+              {{ $t('label.select_one_option') }}
             </option>
             <template v-for="(item, key) in paymentTypes">
               <option :key="key" :value="item">

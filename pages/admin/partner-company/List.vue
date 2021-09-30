@@ -1,23 +1,25 @@
 <template>
   <div>
-    <div class="form-group row mb-3">
-      <div class="input-group input-group-lg col-lg-8">
-        <input
-          v-model="search_query"
-          :placeholder="$t('label.search') + '...'"
-          class="form-control"
-          type="search"
-          @keyup="refreshDatatable"
-        >
-        <div class="input-group-append">
+    <div class="form-group search-on_header mb-3">
+      <div class="search-with_btn_2">
+        <div class="input-group input-group-lg">
+          <input
+            v-model="search_query"
+            :placeholder="$t('label.search') + '...'"
+            class="form-control"
+            type="search"
+            @keyup="refreshDatatable"
+          >
+          <div class="input-group-append">
           <span class="input-group-text bg-white border-left-0">
             <i class="fas fa-search" />
           </span>
+          </div>
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="search-_btn_2">
         <button
-          class="btn btn-primary btn-lg btn-block"
+          class="btn btn-primary btn-lg mr-1"
           type="button"
           data-toggle="collapse"
           data-target="#advancedFilter"
@@ -26,11 +28,9 @@
         >
           <strong><i class="fas fa-filter mr-2" /> {{ $t('btn.advanced_filters') }}</strong>
         </button>
-      </div>
-      <div class="col-lg-2">
         <ButtonAddNew
           :link-to="'create-partner-company'"
-          :custom-class="'btn btn-success btn-lg btn-block text-capitalize'"
+          :custom-class="'btn btn-success btn-lg text-capitalize'"
         />
       </div>
     </div>

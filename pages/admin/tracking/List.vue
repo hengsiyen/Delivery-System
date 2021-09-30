@@ -1,22 +1,24 @@
 <template>
   <div>
-    <div class="form-group row mb-3">
-      <div class="input-group input-group-lg col-lg-10">
-        <input
-          v-model="search_query"
-          :placeholder="$t('label.search') + '...'"
-          class="form-control"
-          type="search"
-        >
-        <div class="input-group-append">
-          <span class="input-group-text bg-white border-left-0">
-            <i class="fas fa-search" />
-          </span>
+    <div class="form-group mb-3 search-on_header">
+      <div class="search-with_btn_1">
+        <div class="input-group input-group-lg ">
+          <input
+            v-model="search_query"
+            :placeholder="$t('label.search') + '...'"
+            class="form-control"
+            type="search"
+          >
+          <div class="input-group-append">
+            <span class="input-group-text bg-white border-left-0">
+              <i class="fas fa-search" />
+            </span>
+          </div>
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="search-_btn_1">
         <button
-          class="btn btn-primary btn-lg btn-block"
+          class="btn btn-primary btn-lg"
           type="button"
           data-toggle="collapse"
           data-target="#advancedFilter"
@@ -62,7 +64,7 @@
                 v-model="shop"
                 :class="'custom-v-select'"
                 class="style-chooser"
-                :placeholder="$t('label.select_one_option') + ' ...'"
+                :placeholder="$t('label.select_one_option')"
                 :options="shops"
                 :get-option-key="option => option._id"
                 :label="'name_en'"
@@ -78,7 +80,7 @@
                 v-model="driver"
                 :class="'custom-v-select'"
                 class="style-chooser"
-                :placeholder="$t('label.select_one_option') + ' ...'"
+                :placeholder="$t('label.select_one_option')"
                 :options="drivers"
                 :get-option-key="option => option._id"
                 :label="'full_name'"
@@ -94,7 +96,7 @@
                 v-model="partner_company"
                 :class="'custom-v-select'"
                 class="style-chooser"
-                :placeholder="$t('label.select_one_option') + ' ...'"
+                :placeholder="$t('label.select_one_option')"
                 :options="partner_companies"
                 :get-option-key="option => option._id"
                 :label="'name_en'"
@@ -412,39 +414,9 @@ export default {
     ...mapGetters({
       number_per_page: 'delivery_company/number_per_page',
       currencies: 'delivery_company/currencies'
-    }),
-    params () {
-      // eslint-disable-next-line camelcase
-      let createdAt = null
-      let assignedAt = null
-      let finishedAt = null
-      if (this.created_at) {
-        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
-      }
-      if (this.assigned_at) {
-        assignedAt = this.$moment(this.assigned_at).format('YYYY-MM-DD')
-      }
-      if (this.finished_at) {
-        finishedAt = this.$moment(this.finished_at).format('YYYY-MM-DD')
-      }
-      return {
-        lang: this.$i18n.locale,
-        status: this.status ? this.status.value : null,
-        shop_id: this.shop ? this.shop._id : null,
-        driver_id: this.driver ? this.driver._id : null,
-        is_paid: this.is_paid ? this.is_paid.value : null,
-        partner_company_id: this.partner_company ? this.partner_company._id : null,
-        created_at: createdAt,
-        assigned_at: assignedAt,
-        finished_at: finishedAt,
-        search_query: this.search_query
-      }
-    }
+    })
   },
   watch: {
-    params () {
-      this.refreshDatatable()
-    },
     search_query (val) {
       this.onloading = true
       if (!this.awaitingSearch) {
@@ -541,12 +513,32 @@ export default {
       if (page) {
         this.page = page
       }
-      this.$axios.post(this.$base_api + '/api/backend/tracking/list',
-        Object.assign({
-          page: this.page,
-          number_per_page: this.number_per_page,
-          ...this.params
-        }, this.params))
+      let createdAt = null
+      let assignedAt = null
+      let finishedAt = null
+      if (this.created_at) {
+        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
+      }
+      if (this.assigned_at) {
+        assignedAt = this.$moment(this.assigned_at).format('YYYY-MM-DD')
+      }
+      if (this.finished_at) {
+        finishedAt = this.$moment(this.finished_at).format('YYYY-MM-DD')
+      }
+      this.$axios.post(this.$base_api + '/api/backend/tracking/list', {
+        page: this.page,
+        number_per_page: this.number_per_page,
+        lang: this.$i18n.locale,
+        status: this.status ? this.status.value : null,
+        shop_id: this.shop ? this.shop._id : null,
+        driver_id: this.driver ? this.driver._id : null,
+        is_paid: this.is_paid ? this.is_paid.value : null,
+        partner_company_id: this.partner_company ? this.partner_company._id : null,
+        created_at: createdAt,
+        assigned_at: assignedAt,
+        finished_at: finishedAt,
+        search_query: this.search_query
+      })
         .then((res) => {
           this.total_pages = res.data.total_pages
           this.list_packages = res.data.data

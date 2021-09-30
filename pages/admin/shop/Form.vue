@@ -142,7 +142,7 @@
                     @change="getDistrict"
                   >
                     <option selected hidden :value="null">
-                      {{ $t('label.select_one_option') }} ...
+                      {{ $t('label.select_one_option') }}
                     </option>
                     <template v-if="provinces && provinces.length > 0">
                       <option v-for="(item, key) in provinces" :key="key" :value="item">
@@ -163,7 +163,7 @@
                     @change="getCommune"
                   >
                     <option selected hidden :value="null">
-                      {{ $t('label.select_one_option') }} ...
+                      {{ $t('label.select_one_option') }}
                     </option>
                     <template v-if="districts && districts.length > 0">
                       <option v-for="(item, key) in districts" :key="key" :value="item">
@@ -184,7 +184,7 @@
                     @change="getVillage"
                   >
                     <option selected hidden :value="null">
-                      {{ $t('label.select_one_option') }} ...
+                      {{ $t('label.select_one_option') }}
                     </option>
                     <template v-if="communes && communes.length > 0">
                       <option v-for="(item, key) in communes" :key="key" :value="item">
@@ -204,7 +204,7 @@
                     :disabled="!commune"
                   >
                     <option selected hidden :value="null">
-                      {{ $t('label.select_one_option') }} ...
+                      {{ $t('label.select_one_option') }}
                     </option>
                     <template v-if="villages && villages.length > 0">
                       <option v-for="(item, key) in villages" :key="key" :value="item">
@@ -222,7 +222,7 @@
                     v-model="description"
                     class="form-control overflow-auto"
                     rows="10"
-                    :placeholder="$t('pla.description') + ' ...'"
+                    :placeholder="$t('pla.description')"
                     style="max-height: 237px"
                   />
                 </div>

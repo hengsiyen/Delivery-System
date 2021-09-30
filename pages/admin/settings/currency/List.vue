@@ -53,7 +53,6 @@ export default {
         { data: 'name_en', name: 'name_en', title: this.$t('table.nameInEnglish') },
         { data: 'code', name: 'code', title: this.$t('table.code') },
         { data: 'symbol', name: 'symbol', title: this.$t('table.symbol') },
-        { data: 'enabled', name: 'enabled', title: this.$t('label.enabled') },
         {
           data: 'created_at',
           name: 'created_at',
@@ -62,13 +61,6 @@ export default {
           render: (data, type, row) => {
             return this.getDateFormat(data)
           }
-        },
-        {
-          data: 'actions',
-          name: 'actions',
-          searchable: false,
-          orderable: false,
-          title: this.$t('label.action')
         }
       ]
     }

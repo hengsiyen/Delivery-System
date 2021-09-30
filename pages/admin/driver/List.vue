@@ -1,22 +1,24 @@
 <template>
   <div>
-    <div class="form-group row mb-3">
-      <div class="input-group input-group-lg col-lg-10">
-        <input
-          v-model="search_query"
-          :placeholder="$t('label.search') + '...'"
-          class="form-control"
-          type="search"
-        >
-        <div class="input-group-append">
-          <span class="input-group-text bg-white border-left-0">
-            <i class="fas fa-search" />
-          </span>
+    <div class="form-group mb-3 search-on_header">
+      <div class="search-with_btn_1">
+        <div class="input-group input-group-lg">
+          <input
+            v-model="search_query"
+            :placeholder="$t('label.search') + '...'"
+            class="form-control"
+            type="search"
+          >
+          <div class="input-group-append">
+            <span class="input-group-text bg-white border-left-0">
+              <i class="fas fa-search" />
+            </span>
+          </div>
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="search-_btn_1">
         <button
-          class="btn btn-primary btn-lg btn-block"
+          class="btn btn-primary btn-lg"
           type="button"
           data-toggle="collapse"
           data-target="#advancedFilter"

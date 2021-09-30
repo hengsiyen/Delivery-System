@@ -6,6 +6,7 @@
   margin-bottom: 15px;
   border: 1px solid #ced4da;
   display: flex;
+  flex-wrap: wrap;
 
   &-status {
     border-radius: 0.25rem;
@@ -34,7 +35,6 @@
     }
 
     &-btn {
-      width: 100%;
       margin-bottom: 8px;
 
       &:last-child {
@@ -110,6 +110,31 @@
 //    }
 //  }
 //}
+@media screen and (min-width: 1600px) {
+  .package_item-block-btn {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .package_item-block-btn {
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .package_item-block-btn {
+    width: 83%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .package_item-block-btn {
+    width: 100%;
+  }
+}
+
+
 
 @media screen and (max-width: 768px) {
   .package_item,

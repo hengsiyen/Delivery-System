@@ -4,6 +4,10 @@
   line-height: 1.5;
   color: #495057;
 
+  &.is-invalid .vs__dropdown-toggle {
+    border-color: #dc3545;
+  }
+
   & .vs__dropdown-toggle {
     height: calc(2.25rem + 2px);
     padding: 0;

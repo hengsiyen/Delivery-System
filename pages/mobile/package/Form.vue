@@ -143,7 +143,7 @@
                   class="custom-select w-35"
                 >
                   <option :value="null" selected hidden>
-                    {{ $t('label.select_one_option') }} ...
+                    {{ $t('label.select_one_option') }}
                   </option>
                   <template v-for="(item, key) in package_types">
                     <option :key="key" :value="item">
@@ -179,7 +179,7 @@
                 v-model="note"
                 class="form-control overflow-auto"
                 rows="3"
-                :placeholder="$t('pla.note') + ' ...'"
+                :placeholder="$t('pla.note')"
                 style="max-height: 120px"
               />
             </div>
@@ -214,7 +214,7 @@
                   class="custom-select mt-3"
                 >
                   <option :value="null" selected hidden>
-                    {{ $t('label.select_one_option') }} ...
+                    {{ $t('label.select_one_option') }}
                   </option>
                   <template v-for="(item, key) in payment_types">
                     <option :key="key" :value="item">

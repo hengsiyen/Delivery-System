@@ -10,20 +10,20 @@
                 type="text"
                 class="form-control form-control-lg w-65 z-2"
                 :placeholder="$t('label.search') + '...'"
-                @keyup="searchPackage"
+                @keyup="searchPackage(1)"
               >
               <select
                 id="search_type"
                 v-model="search_type"
                 name="search_type"
                 class="custom-select custom-select-lg w-35 search__type"
-                @change="searchPackage"
+                @change="searchPackage(1)"
               >
                 <option value="shop">
                   {{ $t('menu.shop') }}
                 </option>
-                <option value="address">
-                  {{ $t('label.address') }}
+                <option value="customer">
+                  {{ $t('label.customerInfo') }}
                 </option>
                 <option value="code">
                   {{ $t('label.code') }}
@@ -49,7 +49,7 @@
                   class="package__item"
                   @click="selectPackage(item)"
                 >
-                  <div :key="key" class="list_item">
+                  <div :key="key" class="list_item hover">
                     <div class="col-md-2 col-lg-2">
                       <template v-if="item.media">
                         <div class="package__item-image">
@@ -435,6 +435,7 @@ export default {
       this.onloading = true
       this.page = 1
       if (page) {
+        console.log(page)
         this.page = page
       }
       this.list_packages = []
@@ -533,6 +534,11 @@ export default {
 .card-body {
   min-height: calc(100vh - 210px);
   height: calc(100vh - 210px);
+}
+
+.list_item.hover:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
 }
 
 .package__items-select {

@@ -29,14 +29,14 @@
                 <th>{{ $t('label.active') }}</th>
                 <td>
                   <template v-if="gender.enabled">
-                    <spna class="badge badge-success">
+                    <span class="badge badge-success">
                       {{ $t('label.enable') }}
-                    </spna>
+                    </span>
                   </template>
                   <template v-else>
-                    <spna class="badge badge-danger">
+                    <span class="badge badge-danger">
                       {{ $t('label.disable') }}
-                    </spna>
+                    </span>
                   </template>
                 </td>
               </tr>

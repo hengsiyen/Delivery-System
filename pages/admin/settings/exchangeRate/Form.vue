@@ -16,22 +16,15 @@
               <div class="form-group row">
                 <label class="required col-lg-3 col-form-label text-lg-right">{{ $t('label.currency') }}</label>
                 <div class="col-lg-9">
-                  <select
-                    id="currency"
+                  <v-select
                     v-model="selected_currency"
-                    name="currency"
-                    class="form-control"
-                    :class="{'is-invalid': checkValidate('currency')}"
-                  >
-                    <option :value="null">
-                      {{ $t('label.select_one_option') }} ...
-                    </option>
-                    <template v-for="(item, key) in currencies">
-                      <option :key="key" :value="item">
-                        {{ item['name_' + $i18n.locale] }}
-                      </option>
-                    </template>
-                  </select>
+                    :class="checkValidate('currency') ? 'custom-v-select is-invalid' : 'custom-v-select'"
+                    class="style-chooser"
+                    :placeholder="$t('label.select_one_option')"
+                    :options="currencies"
+                    :get-option-key="option => option._id"
+                    :label="'name_' + $i18n.locale"
+                  />
                   <small v-if="checkValidate('currency')" class="invalid-feedback">
                     {{ validate.currency[0] }}
                   </small>
@@ -40,7 +33,7 @@
             </div>
             <div class="col-lg-12">
               <div class="form-group row">
-                <label class="required col-lg-3 col-form-label text-lg-right">{{ $t('label.amount') }}</label>
+                <label class="required col-lg-3 col-form-label text-lg-right">{{ $t('table.amountToKhr') }}</label>
                 <div class="col-lg-9">
                   <input
                     v-model="amount"

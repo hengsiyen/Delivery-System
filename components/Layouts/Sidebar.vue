@@ -164,11 +164,6 @@ export default {
               permissions: [this.$Permissions.backend.setting.paymentType.list]
             },
             {
-              label: this.$t('menu.currency'),
-              route: { name: 'list-currency', groups: 'currency' },
-              permissions: [this.$Permissions.backend.setting.currency.list]
-            },
-            {
               label: this.$t('menu.exchange_rate'),
               route: { name: 'list-exchange-rate', groups: 'exchange-rate' },
               permissions: [this.$Permissions.backend.setting.exchangeRate.list]
@@ -177,6 +172,11 @@ export default {
               label: this.$t('menu.gender'),
               route: { name: 'list-gender', groups: 'gender' },
               permissions: [this.$Permissions.backend.setting.gender.list]
+            },
+            {
+              label: this.$t('menu.currency'),
+              route: { name: 'list-currency', groups: 'currency' },
+              permissions: [this.$Permissions.backend.setting.currency.list]
             },
             {
               label: this.$t('menu.province'),

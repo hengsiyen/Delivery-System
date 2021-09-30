@@ -214,7 +214,7 @@
                                   class="custom-select"
                                 >
                                   <option :value="null" selected hidden>
-                                    {{ $t('label.select_one_option') }} ...
+                                    {{ $t('label.select_one_option') }}
                                   </option>
                                   <template v-for="(item, key) in payment_types">
                                     <option :key="key" :value="item">
@@ -272,7 +272,7 @@
                                 class="custom-select"
                               >
                                 <option :value="null" selected hidden>
-                                  {{ $t('label.select_one_option') }} ...
+                                  {{ $t('label.select_one_option') }}
                                 </option>
                                 <template v-for="(item, key) in package_types">
                                   <option :key="key" :value="item">

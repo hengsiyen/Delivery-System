@@ -159,9 +159,9 @@
           >
         </div>
         <div v-if="checkValidate('driver_id')" class="form-group">
-          <div class="d-flex align-items-center justify-content-center bg-red py-1 rounded text-capitalize">
+          <small class="d-flex align-items-center justify-content-start py-1 rounded text-danger">
             {{ $t('message.select_driver') }}
-          </div>
+          </small>
         </div>
         <template v-if="onloading">
           <div class="shop__onloading">
@@ -179,7 +179,7 @@
                   @click="selectDriver(item)"
                 >
                   <div
-                    class="driver__item"
+                    class="driver__item text-left"
                     :class="{'bg-primary text-white': selected_driver && selected_driver._id === item._id}"
                   >
                     <div class="driver__image">

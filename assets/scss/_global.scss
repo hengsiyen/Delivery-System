@@ -227,6 +227,28 @@ input.disabled {
 .z-2 {
   z-index: 2;
 }
+.search-on_header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.search-with_btn_1 {
+  width: calc(100% - 225px)
+}
+
+.search-_btn_1 {
+margin-left:  auto;
+}
+
+.search-with_btn_2 {
+  width: calc(100% - 365px)
+}
+
+.search-_btn_2 {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
 
 @media screen and (max-width: 991.98px) {
   .elevation-4 {
