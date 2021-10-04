@@ -155,7 +155,7 @@
             v-model="search"
             type="search"
             class="form-control"
-            :placeholder="$t('label.search') + '...'"
+            :placeholder="$t('label.search')"
           >
         </div>
         <div v-if="checkValidate('driver_id')" class="form-group">

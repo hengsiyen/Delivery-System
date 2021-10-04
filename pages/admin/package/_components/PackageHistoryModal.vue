@@ -61,7 +61,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-light" data-dismiss="modal">
-            <i class="fas fa-times-circle mr-2"></i>
+            <i class="fas fa-times-circle mr-2" />
             <strong>{{ $t('btn.close') }}</strong>
           </button>
         </div>

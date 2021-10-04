@@ -361,7 +361,7 @@
           </div>
           <div class="row mt-2 mb-4">
             <div class="col-12 text-right">
-              <button class="btn btn-success" @click="store">
+              <button class="btn btn-success" @click="confirmToCreateInvoice">
                 <i class="fas fa-save mr-2" />
                 <strong>{{ $t('btn.save') }}</strong>
               </button>
@@ -375,7 +375,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { debounce } from 'debounce'
 import EditDeliveryChargeModal from '@/pages/admin/shop/_components/EditDeliveryChargeModal'
 import NoResult from '@/components/NoResult'
 
@@ -428,6 +427,14 @@ export default {
         amount = parseFloat(this.subTotal)
       }
       return amount
+    },
+    messageWarning () {
+      return {
+        warning_date_en: `You already created the invoice on date: <span class="text-danger">${this.getDateFormat(this.filter_date[0], 'DD/MM/YYYY')} ~ ${this.getDateFormat(this.filter_date[1], 'DD/MM/YYYY')}</span>`,
+        warning_date_km: `You already created the invoice on date: <span class="text-danger">${this.getDateFormat(this.filter_date[0], 'DD/MM/YYYY')} ~ ${this.getDateFormat(this.filter_date[1], 'DD/MM/YYYY')}</span>`,
+        ask_en: 'Do you really want to create new invoices on this date?',
+        ask_km: 'តើអ្នកពិតជាចង់បង្កើតវិក្កយបត្រថ្មីនៅកាលបរិច្ឆេទនេះមែនទេ?'
+      }
     }
   },
   data () {
@@ -453,11 +460,12 @@ export default {
       count_delay_packages: 0,
       count_complete_packages: 0,
       count_cancel_packages: 0,
-      count_return_packages: 0
+      count_return_packages: 0,
+      has_invoice_created: false
     }
   },
   mounted () {
-    this.refreshData()
+    this.getShopReport(1)
   },
   methods: {
     setDate (status) {
@@ -503,16 +511,8 @@ export default {
         })
       }
     },
-    refreshData () {
+    getShopReport () {
       this.onloading = true
-      setTimeout(() => {
-        this.getShopReport(1)
-      }, 500)
-    },
-    getShopReport: debounce(function (page = null) {
-      if (page) {
-        this.page = page
-      }
       let date = []
       if (this.filter_date.length) {
         date = [
@@ -522,37 +522,25 @@ export default {
       }
       const data = {
         dcid: this.dc ? this.dc._id : null,
-        filter_date: date,
-        number_per_page: this.number_per_page,
-        page: this.page,
-        filter_column: 'finished_at'
+        sid: this.shop ? this.shop._id : null,
+        filter_date: date
       }
-      if (this.shop) {
-        data.sid = this.shop._id
-      }
-      this.$axios.post(this.$base_api + '/api/backend/shop/shop-report', data)
+      this.$axios.post(this.$base_api + '/api/backend/invoice/list-packages-by-shop', data)
         .then((res) => {
-          this.packages = res.data.data
-          this.gerRemainingPackages()
+          this.has_invoice_created = res.data.data.invoice > 0
+          this.packages = res.data.data.packages
+          const remainingPackages = res.data.data.remaining_packages
+          if (remainingPackages) {
+            this.count_new_packages = this.countPackageByStatus(remainingPackages).new_p.length
+            this.count_assigned_packages = this.countPackageByStatus(remainingPackages).assigned_p.length
+            this.count_reject_packages = this.countPackageByStatus(remainingPackages).reject_p.length
+            this.count_delivery_packages = this.countPackageByStatus(remainingPackages).delivery_p.length
+            this.count_delay_packages = this.countPackageByStatus(remainingPackages).delay_p.length
+            this.count_cancel_packages = this.countPackageByStatus(remainingPackages).cancel_p.length
+          }
         }).finally(() => {
           this.onloading = false
         })
-    }, 500),
-    gerRemainingPackages () {
-      this.$axios.post(this.$base_api + '/api/backend/shop/remaining-packages', {
-        dcid: this.dcid,
-        sid: this.shop._id
-      }).then((res) => {
-        const packages = res.data.data
-        if (packages) {
-          this.count_new_packages = this.countPackageByStatus(packages).new_p.length
-          this.count_assigned_packages = this.countPackageByStatus(packages).assigned_p.length
-          this.count_reject_packages = this.countPackageByStatus(packages).reject_p.length
-          this.count_delivery_packages = this.countPackageByStatus(packages).delivery_p.length
-          this.count_delay_packages = this.countPackageByStatus(packages).delay_p.length
-          this.count_cancel_packages = this.countPackageByStatus(packages).cancel_p.length
-        }
-      })
     },
     countPackageByStatus (packages) {
       const result = {
@@ -600,7 +588,39 @@ export default {
     close () {
       this.$emit('onClickClose')
     },
+    confirmToCreateInvoice () {
+      if (this.has_invoice_created) {
+        this.$swal({
+          html: `<label class="mb-3 font-s-20 d-block">${this.$t(this.messageWarning['warning_date_' + this.$i18n.locale])}</label>
+                  <label class="mb-3 d-block">${this.$t(this.messageWarning['ask_' + this.$i18n.locale])}</label>`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc3545',
+          confirmButtonText: this.$t('swal.yes_create_it'),
+          cancelButtonText: this.$t('swal.no_cancel')
+        }).then((result) => {
+          if (result.value) {
+            this.store()
+          }
+        }, (dismiss) => {
+          if (!(dismiss === 'cancel')) {
+            throw dismiss
+          }
+        }).catch(function (err) {
+          throw err
+        })
+      } else {
+        this.store()
+      }
+    },
     store () {
+      let date = []
+      if (this.filter_date.length) {
+        date = [
+          this.$moment(this.filter_date[0]).format('YYYY-MM-DD'),
+          this.$moment(this.filter_date[1]).format('YYYY-MM-DD')
+        ]
+      }
       const data = {
         dcid: this.dcid,
         sid: this.shop ? this.shop._id : null,
@@ -622,11 +642,13 @@ export default {
         discount_by: this.discount_by,
         discount: this.discount,
         discount_currency: this.currency,
-        is_percentage: this.is_percentage
+        is_percentage: this.is_percentage,
+        delivery_date: date
       }
       this.$axios.post(this.$base_api + '/api/backend/invoice/store', data)
         .then((res) => {
           this.$toastr('success', this.$t('message.create_invoice'), this.$t('label.invoice'))
+          this.close()
           this.close()
         }).catch((error) => {
           this.onResponseError(error)

@@ -11,7 +11,7 @@
           <div class="input-group col-12">
             <input
               v-model="search_query"
-              :placeholder="$t('label.search') + '...'"
+              :placeholder="$t('label.search')"
               class="form-control"
               type="text"
               @keyup="search"
@@ -123,6 +123,7 @@ export default {
   components: { FooterMobile, ButtonBackMobile, HeaderMobile, ButtonAddNew },
   computed: {
     ...mapGetters({
+      number_per_page: 'delivery_company/number_per_page',
       dcid: 'delivery_company/dcid'
     })
   },
@@ -169,19 +170,14 @@ export default {
       }
     }, 500),
     getShopList ($state) {
-      let createdAt = null
-      if (this.created_at) {
-        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
-      }
-      this.$axios.post(this.$base_api + '/api/backend/shop/list', {
-        page: this.page,
-        number_per_page: 2,
-        lang: this.$i18n.locale,
-        dcid: this.dcid,
-        search: this.search_query,
-        is_enable: this.is_enable ? this.is_enable.value : null,
-        created_at: createdAt
-      })
+      this.$axios
+        .post(this.$base_api + '/api/backend/shop/list', {
+          page: this.page,
+          number_per_page: this.number_per_page,
+          lang: this.$i18n.locale,
+          dcid: this.dcid,
+          search: this.search_query
+        })
         .then(({ data }) => {
           if (data.data && data.data.length) {
             this.page++
@@ -190,9 +186,11 @@ export default {
           } else {
             $state.complete()
           }
-        }).catch((error) => {
+        })
+        .catch((error) => {
           this.onResponseError(error)
-        }).finally(() => {
+        })
+        .finally(() => {
           this.onloading = false
         })
     }

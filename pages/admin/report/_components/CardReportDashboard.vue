@@ -2,18 +2,18 @@
   <div class="card">
     <div class="card-body bg-white rounded">
       <label v-if="title" class="font-s-16 text-muted w-100">
-        <span class="text-uppercase mr-2">{{ $t(title) }}</span>
+        <span class="text-uppercase mr-2">{{ title }}</span>
         <span class="d-block font-s-14" :class="'text-' + colorLabelCompare">
           <i class="fas mr-1" :class="classIcon" />
           <template v-if="labelCompare">{{ $t(labelCompare) }}</template>
           <template v-if="calcCompValueAsPercent">
-            ({{ calcCompValueAsPercent | numFormat(numberFormat) }}%)
+            ({{ calcCompValueAsPercent }}%)
           </template>
         </span>
       </label>
       <div class="margin-bottom">
         <label class="d-block font-s-28 text-bold no-margin">
-          <template v-if="hasFormat">
+          <template v-if="hasFormat && mainValue">
             <template v-if="hasCurrency">{{ currency ? currency.code : '' }}</template>
             {{ mainValue | numFormat(numberFormat) }} <slot name="main-value" />
           </template>
@@ -23,7 +23,7 @@
           </template>
         </label>
         <small class="text-muted font-s-16 text-bold">
-          <template v-if="hasFormat">
+          <template v-if="hasFormat && lastData">
             <template v-if="hasCurrency">{{ currency ? currency.code : '' }}</template>
             {{ lastData | numFormat(numberFormat) }} <slot name="last-value" />
           </template>
@@ -49,7 +49,6 @@ export default {
       currency: 'delivery_company/currency'
     }),
     numberFormat () {
-      console.log(this.currency)
       if (this.currency) {
         return this.currency.code === 'KHR' ? this.num_format_km : this.num_format_en
       }

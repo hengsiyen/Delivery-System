@@ -5,14 +5,14 @@
         <div class="input-group input-group-lg">
           <input
             v-model="search_query"
-            :placeholder="$t('label.search') + '...'"
+            :placeholder="$t('label.search')"
             class="form-control"
             type="search"
           >
           <div class="input-group-append">
-          <span class="input-group-text bg-white border-left-0">
-            <i class="fas fa-search" />
-          </span>
+            <span class="input-group-text bg-white border-left-0">
+              <i class="fas fa-search" />
+            </span>
           </div>
         </div>
       </div>
@@ -228,15 +228,15 @@
                       <strong>{{ $t('label.view') }}</strong>
                     </NuxtLink>
                   </div>
-                  <div class="list_item-block-btn">
-                    <NuxtLink
-                      :to="{name: 'edit-invoice', params: {id: item._id}}"
-                      class="btn btn-default btn-sm btn-block"
-                    >
-                      <i class="fas fa-edit mr-2" />
-                      <strong>{{ $t('btn.edit') }}</strong>
-                    </NuxtLink>
-                  </div>
+<!--                  <div class="list_item-block-btn">-->
+<!--                    <NuxtLink-->
+<!--                      :to="{name: 'edit-invoice', params: {id: item._id}}"-->
+<!--                      class="btn btn-default btn-sm btn-block"-->
+<!--                    >-->
+<!--                      <i class="fas fa-edit mr-2" />-->
+<!--                      <strong>{{ $t('btn.edit') }}</strong>-->
+<!--                    </NuxtLink>-->
+<!--                  </div>-->
                 </div>
               </div>
             </template>

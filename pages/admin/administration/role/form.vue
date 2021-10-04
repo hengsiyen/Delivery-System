@@ -97,7 +97,7 @@
           <strong>{{ $t('button.cancel') }}</strong>
         </button>
         <button class="btn btn-primary btn-sm" @click="onSubmit">
-          <i class="fas fa-save mr-2"></i>
+          <i class="fas fa-save mr-2" />
           <strong> {{ $t('button.save') }}</strong>
         </button>
       </div>

@@ -7,7 +7,7 @@
           <div class="input-group col-12">
             <input
               v-model="search_query"
-              :placeholder="$t('label.search') + '...'"
+              :placeholder="$t('label.search')"
               class="form-control"
               type="text"
               @keyup="search"

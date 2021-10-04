@@ -94,10 +94,11 @@
                     <button
                       class="btn btn-block btn-default"
                       data-toggle="modal"
-                      data-target="#shopReport"
+                      data-target="#shopListInvoice"
+                      @click="openInvoiceListModal"
                     >
                       <i class="fas fa-clipboard-list mr-2" />
-                      <strong>{{ $t('btn.report') }}</strong>
+                      <strong>{{ $t('label.invoices') }}</strong>
                     </button>
                   </div>
                   <div class="col-12">
@@ -117,36 +118,7 @@
         </div>
       </div>
     </div>
-    <div
-      id="shopReport"
-      class="modal fade"
-      data-backdrop="static"
-      data-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 id="staticBackdropLabel" class="modal-title">
-              Modal title
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">
-              Understood
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ShopInvoiceListModal ref="shopListInvoices"/>
   </div>
 </template>
 
@@ -155,10 +127,11 @@ import ButtonBack from '@/components/UiElements/ButtonBack'
 import ShopInvoiceForm from '@/pages/admin/shop/_components/ShopInvoiceForm'
 import ShopPackageDetail from '@/pages/admin/shop/_components/ShopPackageDetail'
 import { mapGetters } from 'vuex'
+import ShopInvoiceListModal from '@/pages/admin/shop/_components/ShopInvoiceListModal'
 
 export default {
   name: 'ShopShow',
-  components: { ShopPackageDetail, ShopInvoiceForm, ButtonBack },
+  components: { ShopInvoiceListModal, ShopPackageDetail, ShopInvoiceForm, ButtonBack },
   asyncData (ctx) {
     if (ctx.route.params.id) {
       return ctx.$axios
@@ -205,6 +178,11 @@ export default {
     }
   },
   methods: {
+    openInvoiceListModal () {
+      if (this.$refs.shopListInvoices) {
+        this.$refs.shopListInvoices.search()
+      }
+    },
     changeShowForm (type) {
       this.show_form = type
     }

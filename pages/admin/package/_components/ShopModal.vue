@@ -97,26 +97,26 @@
                 {{ validate.phone[0] }}
               </div>
             </div>
-<!--            <div class="form-group col-lg-6">-->
-<!--              <label-->
-<!--                for="email"-->
-<!--                class="required"-->
-<!--                :class="{'text-red': checkValidate('email')}"-->
-<!--              >-->
-<!--                {{ $t('label.email') }}-->
-<!--              </label>-->
-<!--              <input-->
-<!--                id="email"-->
-<!--                v-model="shop_email"-->
-<!--                type="email"-->
-<!--                class="form-control"-->
-<!--                :placeholder="$t('pla.email')"-->
-<!--                :class="{'is-invalid': checkValidate('email')}"-->
-<!--              >-->
-<!--              <div v-if="checkValidate('email')" class="invalid-feedback">-->
-<!--                {{ validate.email[0] }}-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div class="form-group col-lg-6">-->
+            <!--              <label-->
+            <!--                for="email"-->
+            <!--                class="required"-->
+            <!--                :class="{'text-red': checkValidate('email')}"-->
+            <!--              >-->
+            <!--                {{ $t('label.email') }}-->
+            <!--              </label>-->
+            <!--              <input-->
+            <!--                id="email"-->
+            <!--                v-model="shop_email"-->
+            <!--                type="email"-->
+            <!--                class="form-control"-->
+            <!--                :placeholder="$t('pla.email')"-->
+            <!--                :class="{'is-invalid': checkValidate('email')}"-->
+            <!--              >-->
+            <!--              <div v-if="checkValidate('email')" class="invalid-feedback">-->
+            <!--                {{ validate.email[0] }}-->
+            <!--              </div>-->
+            <!--            </div>-->
           </div>
         </template>
         <template v-else>
@@ -125,7 +125,7 @@
               v-model="search_shop"
               type="search"
               class="form-control"
-              :placeholder="$t('label.search') + '...'"
+              :placeholder="$t('label.search')"
             >
             <button class="btn btn-success" @click="create_shop = true">
               <i class="fas fa-plus mr-1" />
@@ -147,24 +147,13 @@
                     class="col-lg-6"
                     @click="selectShop(item)"
                   >
-                    <div
-                      class="modal__item d-flex"
-                      :class="{'active': shop && shop._id === item._id}"
-                    >
+                    <div class="modal__item d-flex" :class="{'active': shop && shop._id === item._id}">
                       <div class="modal__image" style="width: 75px;">
                         <template v-if="item.logo">
-                          <img
-                            :src="`${baseUrl}/${item.logo}`"
-                            class="img-thumbnail"
-                            alt="User Image"
-                          >
+                          <img :src="`${baseUrl}/${item.logo}`" class="img-thumbnail" alt="User Image">
                         </template>
                         <template v-else>
-                          <img
-                            :src="shop_img"
-                            class="img-thumbnail"
-                            alt="User Image"
-                          >
+                          <img :src="shop_img" class="img-thumbnail" alt="User Image">
                         </template>
                       </div>
                       <div class="modal__info">
@@ -196,10 +185,7 @@
             <i class="fas fa-arrow-circle-left mr-2" />
             <strong>{{ $t('button.back') }}</strong>
           </a>
-          <button
-            class="btn btn-success"
-            @click="storeShop"
-          >
+          <button class="btn btn-success" @click="storeShop">
             <i class="fas fa-save mr-2" />
             <strong>{{ $t('btn.save') }}</strong>
           </button>

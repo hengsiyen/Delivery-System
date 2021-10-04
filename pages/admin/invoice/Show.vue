@@ -33,13 +33,15 @@
               </div>
               <div v-if="invoice" class="col-lg-6 text-right">
                 <h4 class="text-bold text-uppercase">
-                  Invoice
+                  {{ $t('menu.invoice') }}
                 </h4>
-                <div>Date : {{ $moment(invoice.created_at).format('DD/MM/YYYY') }}</div>
+                <div>
+                  {{ $t('label.date') }} : {{ $moment(invoice.created_at).format('DD/MM/YYYY') }}
+                </div>
                 <div><label class="mb-0 text-normal">No : <strong>{{ invoice.code }}</strong></label></div>
                 <div>
                   <label class="mb-0 text-normal">
-                    Delivery Fee ( Date ) :
+                    {{  $t('label.deliveryFee') }} ( {{ $t('label.date') }} ) :
                     <template
                       v-if="$moment(invoice.from_date).format('DD/MM/YYYY') === $moment(invoice.to_date).format('DD/MM/YYYY')"
                     >
@@ -57,7 +59,7 @@
               <div class="col-lg-6">
                 <div class="border border-2 border-dark">
                   <label class="text-uppercase py-2 px-3 bg-dark text-white w-100">
-                    Bill To :
+                    {{ $t('label.billTo') }} :
                   </label>
                   <div class="pl-3 pb-2">
                     <div>{{ $t('label.shop_name') }} : <label class="mb-0">{{ shop.name_en }}</label></div>
@@ -72,7 +74,7 @@
             </div>
             <div class="mt-4 border border-2 border-dark">
               <label class="text-uppercase py-2 px-3 bg-dark text-white w-100">
-                Remaining Packages :
+                {{ $t('label.remainingPackages') }} :
               </label>
               <div class="row px-3">
                 <div class="col-lg-4">
@@ -146,16 +148,14 @@
                               <template v-if="item.driver">
                                 {{ item.driver.full_name }}
                               </template>
-                              <template v-else>
-                                -
-                              </template>
+                              <template v-else>-</template>
                             </label>
                             <small class="d-block mb-0">
                               <strong>{{ checkStatus(item.final_status) }}</strong>
                             </small>
-                            <small class="d-block mb-0">{{
-                              $moment(item.finished_at).format('DD/MM/YYYY hh:mm:ss A')
-                            }}</small>
+                            <small class="d-block mb-0">
+                              {{ $moment(item.finished_at).format('DD/MM/YYYY hh:mm:ss A') }}
+                            </small>
                           </td>
                           <td class="text-center">
                             <label v-if="item.delivery_charge" class="d-block mb-0">
@@ -185,7 +185,7 @@
                         <td colspan="2" />
                         <td>
                           <p class="mb-0 text-uppercase text-bold">
-                            Sub Total
+                            {{ $t('label.sub_total') }}
                           </p>
                           <p class="mb-0 text-bold text-sm">
                             <em>(1) + (2)</em>
@@ -242,7 +242,7 @@
                         <td colspan="2" />
                         <td>
                           <p class="mb-0 text-uppercase text-lg text-bold">
-                            Total
+                            {{ $t('label.total') }}
                           </p>
                         </td>
                         <td colspan="3" class="text-right">
@@ -291,7 +291,7 @@
                         <td colspan="2" />
                         <td>
                           <p class="mb-0 text-uppercase text-lg text-bold">
-                            Amount Paid
+                            {{ $t('label.amountPay') }}
                           </p>
                         </td>
                         <td colspan="3" class="text-right">
@@ -313,9 +313,8 @@
                               }} USD
                             </p>
                             <p class="mb-0 text-sm text-bold text-red">
-                              <del>{{
-                                invoice ? invoice.sub_total_dollar : '0' | numFormat(checkFormatCurrency({code: 'KHR'}))
-                              }} KHR
+                              <del>
+                                {{ invoice ? invoice.sub_total_dollar : '0' | numFormat(checkFormatCurrency({code: 'KHR'})) }} KHR
                               </del>
                             </p>
                           </template>

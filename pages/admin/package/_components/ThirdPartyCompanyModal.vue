@@ -70,8 +70,8 @@
               <input
                 id="third_party_company_phone"
                 v-model="phone"
-                type="text"
                 v-mask="'### ### ####'"
+                type="text"
                 class="form-control"
                 :placeholder="$t('pla.phone_number')"
                 :class="{'is-invalid': checkValidate('phone')}"
@@ -88,7 +88,7 @@
               v-model="t_search_query"
               type="search"
               class="form-control"
-              :placeholder="$t('label.search') + '...'"
+              :placeholder="$t('label.search')"
             >
             <button class="btn btn-success" @click="create_form = true">
               <i class="fas fa-plus mr-1" />

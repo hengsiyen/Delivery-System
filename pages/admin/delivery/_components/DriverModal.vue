@@ -22,7 +22,7 @@
             v-model="search"
             type="search"
             class="form-control"
-            :placeholder="$t('label.search') + '...'"
+            :placeholder="$t('label.search')"
           >
         </div>
         <template v-if="onloading">

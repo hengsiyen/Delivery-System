@@ -67,6 +67,17 @@
   }
 }
 
+.package_item.hover:hover,
+.list_item.hover:hover {
+  background-color: #f8f9fa;
+}
+
+.package_item.pointer:hover,
+.list_item.pointer:hover {
+  cursor: pointer;
+}
+
+
 
 //.package_item {
 //  background-color: white;

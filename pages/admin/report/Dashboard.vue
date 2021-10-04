@@ -102,7 +102,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3">
         <CardReportDashboard
           :title="$t('label.packageReceived')"
-          :has-format="true"
+          has-format
           :main-value="package_total"
           :color-label-compare="status_package"
           :class-icon="chartStatus(status_package)"
@@ -114,7 +114,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3">
         <CardReportDashboard
           :title="$t('label.packageSuccess')"
-          :has-format="true"
+          has-format
           :main-value="package_success_total"
           :color-label-compare="status_package_success"
           :class-icon="chartStatus(status_package_success)"
@@ -126,7 +126,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3">
         <CardReportDashboard
           :title="$t('label.packageCancel')"
-          :has-format="true"
+          has-format
           :main-value="package_cancel_total"
           :color-label-compare="status_package_cancel"
           :class-icon="chartStatus(status_package_cancel)"
@@ -138,7 +138,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3">
         <CardReportDashboard
           :title="$t('label.packageDelivery')"
-          :has-format="true"
+          has-format
           :main-value="package_delivery_total"
           :color-label-compare="status_package_delivery"
           :class-icon="chartStatus(status_package_delivery)"
@@ -150,7 +150,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3">
         <CardReportDashboard
           :title="$t('label.packageDelay')"
-          :has-format="true"
+          has-format
           :main-value="package_delay_total"
           :color-label-compare="status_package_delay"
           :class-icon="chartStatus(status_package_delay)"

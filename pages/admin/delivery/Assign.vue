@@ -9,7 +9,7 @@
                 v-model="search_package"
                 type="text"
                 class="form-control form-control-lg w-65 z-2"
-                :placeholder="$t('label.search') + '...'"
+                :placeholder="$t('label.search')"
                 @keyup="searchPackage(1)"
               >
               <select
@@ -49,7 +49,7 @@
                   class="package__item"
                   @click="selectPackage(item)"
                 >
-                  <div :key="key" class="list_item hover">
+                  <div :key="key" class="list_item hover pointer">
                     <div class="col-md-2 col-lg-2">
                       <template v-if="item.media">
                         <div class="package__item-image">
@@ -266,7 +266,7 @@
                           name="price"
                           type="number"
                           class="form-control"
-                          :class="{'w-65': currencies && currencies.length > 3}"
+                          :class="{'w-65': currencies && currencies.length > 2}"
                           :placeholder="$t('label.delivery_charge')"
                         >
                         <template v-if="currencies && currencies.length">
@@ -321,7 +321,7 @@
                           name="price"
                           type="number"
                           class="form-control"
-                          :class="{'w-65': currencies && currencies.length > 3}"
+                          :class="{'w-65': currencies && currencies.length > 2}"
                           :placeholder="$t('label.extra_charge')"
                         >
                         <template v-if="currencies && currencies.length">
@@ -534,11 +534,6 @@ export default {
 .card-body {
   min-height: calc(100vh - 210px);
   height: calc(100vh - 210px);
-}
-
-.list_item.hover:hover {
-  background-color: #f8f9fa;
-  cursor: pointer;
 }
 
 .package__items-select {

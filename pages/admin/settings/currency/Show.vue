@@ -49,11 +49,15 @@
                 </td>
               </tr>
               <tr>
-                <th class="text-capitalize">{{ $t('label.createdAt') }}</th>
+                <th class="text-capitalize">
+                  {{ $t('label.createdAt') }}
+                </th>
                 <td>{{ getDateFormat(currency.created_at) }}</td>
               </tr>
               <tr>
-                <th class="text-capitalize">{{ $t('label.updatedAt') }}</th>
+                <th class="text-capitalize">
+                  {{ $t('label.updatedAt') }}
+                </th>
                 <td>{{ getDateFormat(currency.updated_at) }}</td>
               </tr>
             </tbody>

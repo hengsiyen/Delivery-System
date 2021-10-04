@@ -5,15 +5,15 @@
         <div class="input-group input-group-lg">
           <input
             v-model="search_query"
-            :placeholder="$t('label.search') + '...'"
+            :placeholder="$t('label.search')"
             class="form-control"
             type="search"
             @keyup="refreshDatatable"
           >
           <div class="input-group-append">
-          <span class="input-group-text bg-white border-left-0">
-            <i class="fas fa-search" />
-          </span>
+            <span class="input-group-text bg-white border-left-0">
+              <i class="fas fa-search" />
+            </span>
           </div>
         </div>
       </div>

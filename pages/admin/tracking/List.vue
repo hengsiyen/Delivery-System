@@ -5,7 +5,7 @@
         <div class="input-group input-group-lg ">
           <input
             v-model="search_query"
-            :placeholder="$t('label.search') + '...'"
+            :placeholder="$t('label.search')"
             class="form-control"
             type="search"
           >
