@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form-group search-on_header mb-3">
-      <div class="search-with_btn_2">
+      <div class="search-with_btn_3">
         <div class="input-group input-group-lg">
           <input
             v-model="search_query"
@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="search-_btn_2">
+      <div class="search-_btn_3">
         <button
           class="btn btn-primary btn-lg mr-1"
           type="button"
@@ -25,7 +25,14 @@
           aria-expanded="false"
           aria-controls="advancedFilter"
         >
-          <strong><i class="fas fa-filter mr-2" /> {{ $t('btn.advanced_filters') }}</strong>
+          <i class="fas fa-filter mr-2" />
+          <strong>{{ $t('btn.filters') }}</strong>
+        </button>
+        <button class="btn btn-secondary btn-lg mr-1" @click="generateDailyInvoice">
+          <i class="fas fa-file-invoice-dollar mr-2" />
+          <strong>
+            {{ $t('label.generateDailyInvoice') }}
+          </strong>
         </button>
         <ButtonAddNew
           :link-to="'create-invoice'"
@@ -228,15 +235,6 @@
                       <strong>{{ $t('label.view') }}</strong>
                     </NuxtLink>
                   </div>
-<!--                  <div class="list_item-block-btn">-->
-<!--                    <NuxtLink-->
-<!--                      :to="{name: 'edit-invoice', params: {id: item._id}}"-->
-<!--                      class="btn btn-default btn-sm btn-block"-->
-<!--                    >-->
-<!--                      <i class="fas fa-edit mr-2" />-->
-<!--                      <strong>{{ $t('btn.edit') }}</strong>-->
-<!--                    </NuxtLink>-->
-<!--                  </div>-->
                 </div>
               </div>
             </template>
@@ -351,7 +349,6 @@ export default {
       this.refreshData()
     },
     refreshData () {
-      this.onloading = true
       setTimeout(() => {
         this.getInvoiceList(1)
       }, 500)
@@ -374,7 +371,16 @@ export default {
         }).finally(() => {
           this.onloading = false
         })
-    }, 500)
+    }, 500),
+    generateDailyInvoice () {
+      this.$axios.post(this.$base_api + '/api/backend/invoice/generate-daily-invoice', {
+        dcid: this.dcid
+      }).then((res) => {
+        this.refreshData()
+      }).catch((error) => {
+        this.onResponseError(error)
+      })
+    }
   }
 }
 </script>

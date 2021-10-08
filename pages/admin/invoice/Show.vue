@@ -41,7 +41,7 @@
                 <div><label class="mb-0 text-normal">No : <strong>{{ invoice.code }}</strong></label></div>
                 <div>
                   <label class="mb-0 text-normal">
-                    {{  $t('label.deliveryFee') }} ( {{ $t('label.date') }} ) :
+                    {{ $t('label.deliveryFee') }} ( {{ $t('label.date') }} ) :
                     <template
                       v-if="$moment(invoice.from_date).format('DD/MM/YYYY') === $moment(invoice.to_date).format('DD/MM/YYYY')"
                     >
@@ -66,6 +66,7 @@
                     <div>{{ $t('label.owner_name') }} : <label class="mb-0">{{ shop.owner_name }}</label></div>
                     <div>{{ $t('label.phone') }} : <label class="mb-0">{{ shop.phone }}</label></div>
                     <div class="w-75">
+                      {{ $t('label.address') }} :
                       <label class="mb-0">{{ shop['address_' + $i18n.locale] }}</label>
                     </div>
                   </div>
@@ -194,7 +195,7 @@
                         <td colspan="3" class="text-right">
                           <p class="mb-0 text-bold">
                             <span v-if="invoice">
-                              {{ invoice.sub_total_dollar | numFormat(checkFormatCurrency({code: 'KHR'})) }}
+                              {{ invoice.sub_total_riel | numFormat(checkFormatCurrency({code: 'KHR'})) }}
                             </span>
                             <span v-else>{{ '0' }}</span> KHR
                           </p>
@@ -287,7 +288,7 @@
                           </template>
                         </td>
                       </tr>
-                      <tr>
+                      <tr v-if="invoice.is_paid">
                         <td colspan="2" />
                         <td>
                           <p class="mb-0 text-uppercase text-lg text-bold">
@@ -295,41 +296,12 @@
                           </p>
                         </td>
                         <td colspan="3" class="text-right">
-                          <template v-if="invoice.discount > 0">
-                            <p class="mb-0 text-lg text-bold">
-                              {{
-                                invoice ? invoice.total_price_riel : '0' | numFormat(checkFormatCurrency({code: 'KHR'}))
-                              }} KHR
-                            </p>
-                            <p class="mb-0 text-md text-bold text-red">
-                              <del>{{
-                                invoice ? invoice.sub_total_riel : '0' | numFormat(checkFormatCurrency({code: 'KHR'}))
-                              }} KHR
-                              </del>
-                            </p>
-                            <p class="mb-0 text-bold">
-                              {{
-                                invoice ? invoice.total_price_dollar : '0' | numFormat(checkFormatCurrency({code: 'USD'}))
-                              }} USD
-                            </p>
-                            <p class="mb-0 text-sm text-bold text-red">
-                              <del>
-                                {{ invoice ? invoice.sub_total_dollar : '0' | numFormat(checkFormatCurrency({code: 'KHR'})) }} KHR
-                              </del>
-                            </p>
-                          </template>
-                          <template v-else>
-                            <p class="mb-0 text-lg text-bold">
-                              {{
-                                invoice ? invoice.total_price_riel : '0' | numFormat(checkFormatCurrency({code: 'KHR'}))
-                              }} KHR
-                            </p>
-                            <p class="mb-0 text-bold">
-                              {{
-                                invoice ? invoice.total_price_dollar : '0' | numFormat(checkFormatCurrency({code: 'USD'}))
-                              }} USD
-                            </p>
-                          </template>
+                          <p class="mb-0 text-lg text-bold">
+                            {{ invoice ? invoice.amount_paid_riel : '0' | numFormat('0,0') }} KHR
+                          </p>
+                          <p class="mb-0 text-bold">
+                            {{ invoice ? invoice.amount_paid_dollar : '0' | numFormat('0,0.00') }} USD
+                          </p>
                         </td>
                       </tr>
                     </template>
@@ -348,7 +320,7 @@
               <div class="col-12 text-right">
                 <template v-if="invoice && !invoice.is_paid">
                   <button type="button" class="btn btn-success" data-toggle="modal" data-target="#payment">
-                    Payment
+                    {{ $t('btn.payment') }}
                   </button>
                 </template>
               </div>

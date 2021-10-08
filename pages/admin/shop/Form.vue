@@ -441,10 +441,7 @@ export default {
   },
   methods: {
     checkValidate (key) {
-      if (key) {
-        return this.validate && this.validate.hasOwnProperty(key)
-      }
-      return false
+      return this.validate && this.validate.hasOwnProperty(key)
     },
     toggleShowShopOwner () {
       this.show_shop_owner = !this.show_shop_owner

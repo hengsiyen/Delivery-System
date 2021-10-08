@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 id="staticBackdropLabel" class="modal-title">
-          Payment Invoice ( No: {{ invoice ? invoice.code : null }})
+          {{ $t('label.invoice_payment') }} ( {{ $t('label.number') }}: {{ invoice ? invoice.code : null }})
         </h5>
         <button ref="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -38,7 +38,7 @@
               <tr class="border-top border-dark border-2">
                 <td>
                   <p class="mb-0 text-uppercase text-bold">
-                    Sub Total
+                    {{ $t('label.sub_total') }}
                   </p>
                   <p class="mb-0 text-bold text-sm">
                     <em>(1) + (2)</em>
@@ -83,7 +83,7 @@
               <tr>
                 <td>
                   <p class="mb-0 text-uppercase text-lg text-bold">
-                    Total
+                    {{ $t('label.total') }}
                   </p>
                 </td>
                 <td class="text-right">
@@ -193,31 +193,31 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <!--        <div v-if="amountOwe > 0" class="row">-->
+        <!--          <div class="col-lg-6">-->
+        <!--            <div class="form-group">-->
+        <!--              <label>Amount Own</label>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--          <div class="col-lg-6 text-right">-->
+        <!--            <div class="form-group">-->
+        <!--              <label class="d-block">-->
+        <!--                {{ amountOwe | numFormat(checkFormatCurrency(currency)) }}-->
+        <!--                {{ currency ? currency.code : 'USD' }}-->
+        <!--              </label>-->
+        <!--              <small class="d-block text-bold">-->
+        <!--                ( {{-->
+        <!--                  moneyEquivalent(currency ? currency.code : 'USD', amountOwe) | numFormat(oppositeCurrency(currency) === 'KHR' ? numFormatKm : numFormatEn )-->
+        <!--                }}-->
+        <!--                {{ oppositeCurrency(currency) }} )-->
+        <!--              </small>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <div v-if="amountDue > 0" class="row">
           <div class="col-lg-6">
             <div class="form-group">
-              <label>Amount Own</label>
-            </div>
-          </div>
-          <div class="col-lg-6 text-right">
-            <div class="form-group">
-              <label class="d-block">
-                {{ amountOwe | numFormat(checkFormatCurrency(currency)) }}
-                {{ currency ? currency.code : 'USD' }}
-              </label>
-              <small class="d-block text-bold">
-                ( {{
-                  moneyEquivalent(currency ? currency.code : 'USD', amountOwe) | numFormat(oppositeCurrency(currency) === 'KHR' ? numFormatKm : numFormatEn )
-                }}
-                {{ oppositeCurrency(currency) }} )
-              </small>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label>Amount Due</label>
+              <label>{{ $t('label.balance') }}</label>
             </div>
           </div>
           <div class="col-lg-6 text-right">
@@ -237,7 +237,7 @@
         </div>
         <div class="row">
           <div class="col-lg-12">
-            <small>Exchange Rate 1USD = {{ dc_exchange_rate ? dc_exchange_rate.value : '4,100' }}KHR</small>
+            <small>{{ $t('label.exchange_rate') }} 1USD = {{ dc_exchange_rate ? dc_exchange_rate.value : '4,100' }}KHR</small>
           </div>
         </div>
       </div>

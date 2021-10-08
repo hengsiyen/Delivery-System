@@ -7,7 +7,7 @@
     </HeaderMobile>
     <div class="mobile-content-h col-12 pt-3">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-8 mobile-body-padding">
           <div class="form-row">
             <div class="form-group col-md-6">
               <template v-if="shop">
@@ -44,7 +44,7 @@
                 :class="{'has-validation': checkValidate('customer_name')}"
               >
                 <div class="input-group-prepend">
-                  <span id="inputGroup-sizing-lg" class="input-group-text">
+                  <span id="inputGroup-sizing-lg" class="input-group-text mobile-icon">
                     <i class="fas fa-user" />
                   </span>
                 </div>
@@ -64,7 +64,7 @@
             <div class="form-group col-md-6">
               <div class="input-group" :class="{'has-validation': checkValidate('customer_phone')}">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-phone" /></span>
+                  <span class="input-group-text mobile-icon"><i class="fas fa-phone" /></span>
                 </div>
                 <input
                   id="customer_phone"
@@ -83,7 +83,7 @@
             <div class="form-group col-md-6">
               <div class="input-group" :class="{'has-validation': checkValidate('customer_address')}">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-map-marker-alt" /></span>
+                  <span class="input-group-text mobile-icon"><i class="fas fa-map-marker-alt" /></span>
                 </div>
                 <input
                   id="customer_address"
@@ -102,7 +102,7 @@
             <div class="form-group col-md-6">
               <div class="input-group" :class="{'has-validation': checkValidate('price')}">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">
+                  <span class="input-group-text mobile-icon">
                     <i class="fas fa-money-bill" />
                   </span>
                 </div>
@@ -131,7 +131,7 @@
             <div class="form-group col-md-6">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">
+                  <span class="input-group-text mobile-icon">
                     <i class="fas fa-cube" />
                   </span>
                 </div>
@@ -156,7 +156,7 @@
             <div class="form-group col-md-6">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">
+                  <span class="input-group-text mobile-icon">
                     <i class="fas fa-motorcycle" />
                   </span>
                 </div>
@@ -332,7 +332,7 @@
           </div>
         </template>
       </div>
-      <div class="btn-action border-top">
+      <div class="mobile-btn-action border-top">
         <div class="w-50">
           <div class="btn btn-default btn-upload-image">
             <i class="fas fa-image" />
@@ -365,12 +365,7 @@
       >
         <ThirdPartyCompanyModal ref="thirdPartyCompanyModal" />
       </div>
-      <div
-        id="shopModal"
-        class="modal fade"
-        tabindex="-1"
-        data-backdrop="static"
-      >
+      <div id="shopModal" class="modal fade" tabindex="-1" data-backdrop="static">
         <ShopModal ref="shopModal" />
       </div>
     </div>
@@ -642,10 +637,6 @@ export default {
   z-index: 2;
 }
 
-.input-group-text i {
-  width: 15px;
-}
-
 .input-group .mx-datepicker {
   position: relative;
   flex: 1 1 auto;
@@ -665,18 +656,6 @@ export default {
   & label {
     margin-bottom: 0;
   }
-}
-
-.btn-action {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  padding: 8px;
-  background-color: white;
-  z-index: 1000;
 }
 
 .croppie-w {

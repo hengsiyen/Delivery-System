@@ -6,7 +6,7 @@
       </template>
     </HeaderMobile>
     <div class="mobile-content-h">
-      <div class="col-lg-12" style="padding-top: 1rem">
+      <div class="col-lg-12 mobile-body-padding pt-4">
         <div class="form-group row mb-3">
           <div class="input-group col-12">
             <input
@@ -25,7 +25,7 @@
           <div class="d-flex align-items-center w-100 mt-3">
             <div class="col-lg-12">
               <ButtonAddNew
-                :link-to="'create-shop'"
+                :link-to="'mobile-shop-create'"
                 :custom-class="'btn btn-success btn-block text-capitalize'"
               />
             </div>

@@ -89,9 +89,9 @@ const helpers = {
               switch (to) {
                 case 'KHR':
                   if (this.dc_exchange_rate) {
-                    return value * parseFloat(this.dc_exchange_rate.value)
+                    return Math.round((value * parseFloat(this.dc_exchange_rate.value)) / 100) * 100
                   } else {
-                    return value * 4100
+                    return Math.round((value * 4100) / 100) * 100
                   }
               }
             // eslint-disable-next-line no-fallthrough

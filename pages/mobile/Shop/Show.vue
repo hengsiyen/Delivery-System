@@ -7,7 +7,7 @@
     </HeaderMobile>
     <div class="mobile-content-h">
       <div class="h-100 position-relative">
-        <div class="mobile-container mobile-container-h">
+        <div class="mobile-container mobile-container-h mobile-body-padding">
           <template v-if="onLoading">
             <div class="onloading" style="height: 150px">
               <i class="fas fa-circle-notch fa-spin" />
@@ -15,6 +15,12 @@
           </template>
           <template v-else>
             <template v-if="shop">
+              <div class="form-group text-right">
+                <NuxtLink :to="{name: 'mobile-shop-edit', params: {id: $route.params.id}}" class="btn btn-primary">
+                  <i class="fas fa-edit mr-2" />
+                  <strong>{{ $t('btn.edit') }}</strong>
+                </NuxtLink>
+              </div>
               <div class="shop-info-block">
                 <div class="row">
                   <div class="col-12">
@@ -30,7 +36,7 @@
                           />
                         </template>
                       </div>
-                      <div class="shop-info text-truncate">
+                      <div class="shop-info">
                         <div class="shop_name">
                           <label class="text-bold mb-0">{{ shop.name_en }}</label>
                         </div>
@@ -39,6 +45,9 @@
                           <small class="ml-3 badge" :class="shop.enabled ? 'badge-success' : 'badge-danger'">
                             {{ shop.enabled ? $t('label.enable') : $t('label.disable') }}
                           </small>
+                        </div>
+                        <div>
+                          <small class="d-block">{{ shop['address_' + $i18n.locale] }}</small>
                         </div>
                       </div>
                     </div>
@@ -57,7 +66,6 @@
                         </div>
                         <small class="d-block">{{ shop.phone }}</small>
                         <small class="d-block">{{ shop.email }}</small>
-                        <small class="d-block">{{ shop['address_' + $i18n.locale] }}</small>
                       </div>
                     </div>
                   </div>
@@ -289,9 +297,15 @@ export default {
   }
 }
 
+.shop-info {
+  width: calc(100% - 75px);
+}
+
 .shop-info,
 .shop_owner-info {
-  width: calc(100% - 75px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .btn-create-package {
@@ -299,11 +313,18 @@ export default {
   bottom: 12px;
   right: 12px;
   z-index: 1000;
+  & .btn-lg {
+    padding: .6rem 1rem;
+  }
 }
 
 .btn-edit-package {
   position: absolute;
   top: 8px;
   right: 8px;
+  & .btn-sm {
+    padding-top: .35rem;
+    padding-bottom: .35rem;
+  }
 }
 </style>
