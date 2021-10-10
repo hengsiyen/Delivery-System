@@ -2,6 +2,7 @@ import Permissions from '@/permissions'
 import index from '@/pages/admin/invoice/Index'
 import list from '@/pages/admin/invoice/List'
 import show from '@/pages/admin/invoice/Show'
+import showHistory from '@/pages/admin/invoice/ShowInvoiceHistory'
 import create from '@/pages/admin/invoice/Create'
 // import edit from '@/pages/admin/Invoice/Edit'
 
@@ -86,6 +87,25 @@ export const invoiceRouters = {
           {
             name_en: 'Show',
             name_km: 'បង្ហាញ'
+          }
+        ]
+      }
+    },
+    {
+      path: 'show-invoice-history/:id',
+      name: 'show-invoice-history',
+      component: showHistory,
+      meta: {
+        permissions: [Permissions.backend.invoice.showHistory],
+        groups: 'invoice',
+        breadcrumb: [
+          {
+            name_en: 'Invoice',
+            name_km: 'វិក្កយបត្រ'
+          },
+          {
+            name_en: 'Invoice Editing History Show',
+            name_km: 'បង្ហាញប្រវត្តិកែសម្រួលវិក្កយបត្រ'
           }
         ]
       }

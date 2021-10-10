@@ -8,6 +8,7 @@
             :placeholder="$t('label.search')"
             class="form-control"
             type="search"
+            @keyup="getShopList(1)"
           >
           <div class="input-group-append">
             <span class="input-group-text bg-white border-left-0">
@@ -46,7 +47,7 @@
                 v-model="is_enable"
                 name="status"
                 class="custom-select"
-                @change="refreshDatatable"
+                @change="getShopList(1)"
               >
                 <option :value="null">
                   {{ $t('label.all') }}
@@ -68,8 +69,8 @@
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"
-                @input="refreshDatatable"
-                @clear="refreshDatatable"
+                @input="getShopList(1)"
+                @clear="getShopList(1)"
               />
             </div>
           </div>
@@ -84,7 +85,7 @@
                   v-model="sort_by"
                   name="status"
                   class="custom-select w-50 mr-1"
-                  @change="refreshDatatable"
+                  @change="getShopList(1)"
                 >
                   <template v-if="sort_options && sort_options.length">
                     <option v-for="(item, key) in sort_options" :key="key" :value="item.value">
@@ -96,7 +97,7 @@
                   v-model="sort_direction"
                   name="status"
                   class="custom-select w-50"
-                  @change="refreshDatatable"
+                  @change="getShopList(1)"
                 >
                   <template v-if="direction_options && direction_options.length">
                     <option v-for="(item, key) in direction_options" :key="key" :value="item.value">
@@ -124,19 +125,19 @@
     <div class="w-100 d-flex align-items-center filter-items flex-wrap">
       <div v-if="search_query" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.search') }}: {{ search_query }}
-        <button class="btn btn-default btn-xs" @click="search_query= null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('search_query')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="is_enable" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.status') }}: {{ is_enable['name_' + $i18n.locale] }}
-        <button class="btn btn-default btn-xs" @click="is_enable = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('is_enable')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="created_at" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('table.createdAt') }}: {{ $moment(created_at).format(date_format) }}
-        <button class="btn btn-default btn-xs" @click="created_at = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('created_at')">
           <i class="fa fa-times" />
         </button>
       </div>
@@ -276,40 +277,7 @@ export default {
   computed: {
     ...mapGetters({
       dcid: 'delivery_company/dcid'
-    }),
-    params () {
-      let createdAt = null
-      if (this.created_at) {
-        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
-      }
-      return {
-        lang: this.$i18n.locale,
-        dcid: this.dcid,
-        search: this.search_query,
-        is_enable: this.is_enable ? this.is_enable.value : null,
-        created_at: createdAt,
-        sort_by: this.sort_by,
-        sort_direction: this.sort_direction
-      }
-    }
-  },
-  watch: {
-    params () {
-      this.refreshDatatable()
-    },
-    search_query (val) {
-      this.onloading = true
-      if (!this.awaitingSearch) {
-        if (this.time_out) {
-          clearTimeout(this.time_out)
-        }
-        this.time_out = setTimeout(() => {
-          this.getShopList(1)
-          this.awaitingSearch = false
-        }, 1000)
-      }
-      this.awaitingSearch = true
-    }
+    })
   },
   data () {
     return {
@@ -337,28 +305,44 @@ export default {
     this.getShopList(1)
   },
   methods: {
+    removeKeyword (keyword) {
+      switch (keyword) {
+        case 'search_query':
+          this.search_query = null
+          break
+        case 'is_enable':
+          this.is_enable = null
+          break
+        case 'created_at':
+          this.created_at = null
+          break
+      }
+      this.getShopList(1)
+    },
     clearFilter () {
       this.search_query = null
       this.is_enable = null
       this.created_at = null
-      this.refreshDatatable()
-    },
-    refreshDatatable () {
-      this.onloading = true
-      setTimeout(() => {
-        this.getShopList(1)
-      }, 500)
+      this.getShopList(1)
     },
     getShopList: debounce(function (page = null) {
-      if (page) {
-        this.page = page
+      this.onloading = true
+      if (page) { this.page = page }
+      let createdAt = null
+      if (this.created_at) {
+        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
       }
-      this.$axios.post(this.$base_api + '/api/backend/shop/list',
-        Object.assign({
-          page: this.page,
-          number_per_page: this.number_per_page,
-          ...this.params
-        }, this.params))
+      this.$axios.post(this.$base_api + '/api/backend/shop/list', {
+        page: this.page,
+        number_per_page: this.number_per_page,
+        lang: this.$i18n.locale,
+        dcid: this.dcid,
+        search: this.search_query,
+        is_enable: this.is_enable ? this.is_enable.value : null,
+        created_at: createdAt,
+        sort_by: this.sort_by,
+        sort_direction: this.sort_direction
+      })
         .then((res) => {
           this.total_pages = res.data.total_pages
           this.list_shops = res.data.data

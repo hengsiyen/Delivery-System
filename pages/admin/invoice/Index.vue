@@ -4,7 +4,13 @@
 
 <script>
 export default {
-  name: 'Index'
+  name: 'InvoiceIndex',
+  head () {
+    return {
+      title: this.$t('menu.invoice'),
+      titleTemplate: '%s | ' + process.env.VUE_APP_NAME
+    }
+  }
 }
 </script>
 

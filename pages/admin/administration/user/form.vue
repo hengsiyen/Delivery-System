@@ -232,7 +232,7 @@
           <i class="far fa-times-circle mr-2" />
           <strong>{{ $t('button.cancel') }}</strong>
         </button>
-        <button class="btn btn-primary btn-sm" @click="onSubmit">
+        <button class="btn btn-primary" @click="onSubmit">
           <i class="fas fa-save mr-2" />
           <strong>{{ $t('button.save') }}</strong>
         </button>

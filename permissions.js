@@ -59,6 +59,7 @@ const Permissions = {
       create: 'create-invoice',
       edit: 'edit-invoice',
       show: 'show-invoice',
+      showHistory: 'show-invoice-history',
       delete: 'delete-invoice'
     },
     partnerCompany: {

@@ -8,6 +8,7 @@
             :placeholder="$t('label.search')"
             class="form-control"
             type="search"
+            @keyup="getInvoiceList(1)"
           >
           <div class="input-group-append">
             <span class="input-group-text bg-white border-left-0">
@@ -30,7 +31,7 @@
         </button>
         <button class="btn btn-secondary btn-lg mr-1" @click="generateDailyInvoice">
           <i class="fas fa-file-invoice-dollar mr-2" />
-          <strong>
+          <strong class="text-capitalize">
             {{ $t('label.generateDailyInvoice') }}
           </strong>
         </button>
@@ -53,7 +54,7 @@
                 v-model="is_paid"
                 name="status"
                 class="custom-select"
-                @change="refreshData"
+                @change="getInvoiceList(1)"
               >
                 <option :value="null">
                   {{ $t('label.all') }}
@@ -75,8 +76,8 @@
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"
-                @input="refreshData"
-                @clear="refreshData"
+                @input="getInvoiceList(1)"
+                @clear="getInvoiceList(1)"
               />
             </div>
           </div>
@@ -91,7 +92,7 @@
                   v-model="sort_by"
                   name="status"
                   class="custom-select w-50 mr-1"
-                  @change="refreshData"
+                  @change="getInvoiceList(1)"
                 >
                   <template v-if="sort_options && sort_options.length">
                     <option v-for="(item, key) in sort_options" :key="key" :value="item.value">
@@ -103,7 +104,7 @@
                   v-model="sort_direction"
                   name="status"
                   class="custom-select w-50"
-                  @change="refreshData"
+                  @change="getInvoiceList(1)"
                 >
                   <template v-if="direction_options && direction_options.length">
                     <option v-for="(item, key) in direction_options" :key="key" :value="item.value">
@@ -131,19 +132,19 @@
     <div class="w-100 d-flex align-items-center filter-items flex-wrap">
       <div v-if="search_query" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.search') }}: {{ search_query }}
-        <button class="btn btn-default btn-xs" @click="search_query= null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('search_query')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="is_paid" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.status') }}: {{ is_paid['name_' + $i18n.locale] }}
-        <button class="btn btn-default btn-xs" @click="is_paid = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('is_paid')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="created_at" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('table.createdAt') }}: {{ $moment(created_at).format(date_format) }}
-        <button class="btn btn-default btn-xs" @click="created_at = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('created_at')">
           <i class="fa fa-times" />
         </button>
       </div>
@@ -303,13 +304,44 @@ export default {
     ...mapGetters({
       number_per_page: 'delivery_company/number_per_page',
       dcid: 'delivery_company/dcid'
-    }),
-    params () {
+    })
+  },
+  mounted () {
+    this.getInvoiceList(1)
+  },
+  methods: {
+    clearFilter () {
+      this.search_query = null
+      this.is_paid = null
+      this.created_at = null
+      this.getInvoiceList(1)
+    },
+    removeKeyword (keyword) {
+      switch (keyword) {
+        case 'search_query':
+          this.search_query = null
+          break
+        case 'is_paid':
+          this.is_paid = null
+          break
+        case 'created_at':
+          this.created_at = null
+          break
+      }
+      this.getInvoiceList(1)
+    },
+    getInvoiceList: debounce(function (page = 1) {
+      this.onloading = true
+      if (page) {
+        this.page = page
+      }
       let createdAt = null
       if (this.created_at) {
         createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
       }
-      return {
+      this.$axios.post(this.$base_api + '/api/backend/invoice/list', {
+        page: this.page,
+        number_per_page: this.number_per_page,
         lang: this.$i18n.locale,
         dcid: this.dcid,
         search_query: this.search_query,
@@ -317,52 +349,7 @@ export default {
         created_at: createdAt,
         sort_by: this.sort_by,
         sort_direction: this.sort_direction
-      }
-    }
-  },
-  watch: {
-    params () {
-      this.refreshData()
-    },
-    search_query (val) {
-      this.onloading = true
-      if (!this.awaitingSearch) {
-        if (this.time_out) {
-          clearTimeout(this.time_out)
-        }
-        this.time_out = setTimeout(() => {
-          this.getInvoiceList(1)
-          this.awaitingSearch = false
-        }, 1000)
-      }
-      this.awaitingSearch = true
-    }
-  },
-  mounted () {
-    this.refreshData()
-  },
-  methods: {
-    clearFilter () {
-      this.search_query = null
-      this.is_paid = null
-      this.created_at = null
-      this.refreshData()
-    },
-    refreshData () {
-      setTimeout(() => {
-        this.getInvoiceList(1)
-      }, 500)
-    },
-    getInvoiceList: debounce(function (page = 1) {
-      if (page) {
-        this.page = page
-      }
-      this.$axios.post(this.$base_api + '/api/backend/invoice/list',
-        Object.assign({
-          page: this.page,
-          number_per_page: this.number_per_page,
-          ...this.params
-        }, this.params))
+      })
         .then((res) => {
           this.total_pages = res.data.total_pages
           this.invoices = res.data.data
@@ -373,12 +360,31 @@ export default {
         })
     }, 500),
     generateDailyInvoice () {
-      this.$axios.post(this.$base_api + '/api/backend/invoice/generate-daily-invoice', {
-        dcid: this.dcid
-      }).then((res) => {
-        this.refreshData()
-      }).catch((error) => {
-        this.onResponseError(error)
+      this.$swal({
+        html: `<label class="mb-3 font-s-20 d-block">${this.$t('swal.generateTodayInvoices')}</label>` +
+          `<label class="mb-3 font-s-20 d-block">${this.$t('swal.generateTodayInvoicesDes')}</label>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        confirmButtonText: this.$t('swal.yes_create_it'),
+        cancelButtonText: this.$t('swal.no_cancel')
+      }).then((result) => {
+        if (result.value) {
+          this.$axios.post(this.$base_api + '/api/backend/invoice/generate-daily-invoice', {
+            dcid: this.dcid
+          }).then((res) => {
+            this.getInvoiceList(1)
+          }).catch((error) => {
+            this.onResponseError(error)
+          })
+        }
+      }, (dismiss) => {
+        if (!(dismiss === 'cancel')) {
+          throw dismiss
+        }
+      }).catch(function (err) {
+        console.error(err)
+        throw err
       })
     }
   }

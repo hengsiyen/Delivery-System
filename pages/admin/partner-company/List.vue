@@ -8,7 +8,7 @@
             :placeholder="$t('label.search')"
             class="form-control"
             type="search"
-            @keyup="refreshDatatable"
+            @keyup="getPartnerCompanyList(1)"
           >
           <div class="input-group-append">
             <span class="input-group-text bg-white border-left-0">
@@ -47,7 +47,7 @@
                 v-model="is_enable"
                 name="status"
                 class="custom-select"
-                @change="refreshDatatable"
+                @change="getPartnerCompanyList(1)"
               >
                 <option :value="null">
                   {{ $t('label.all') }}
@@ -69,8 +69,8 @@
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"
-                @input="refreshDatatable"
-                @clear="refreshDatatable"
+                @input="getPartnerCompanyList(1)"
+                @clear="getPartnerCompanyList(1)"
               />
             </div>
           </div>
@@ -85,7 +85,7 @@
                   v-model="sort_by"
                   name="status"
                   class="custom-select w-50 mr-1"
-                  @change="refreshDatatable"
+                  @change="getPartnerCompanyList(1)"
                 >
                   <template v-if="sort_options && sort_options.length">
                     <option v-for="(item, key) in sort_options" :key="key" :value="item.value">
@@ -97,7 +97,7 @@
                   v-model="sort_direction"
                   name="status"
                   class="custom-select w-50"
-                  @change="refreshDatatable"
+                  @change="getPartnerCompanyList(1)"
                 >
                   <template v-if="direction_options && direction_options.length">
                     <option v-for="(item, key) in direction_options" :key="key" :value="item.value">
@@ -125,19 +125,19 @@
     <div class="w-100 d-flex align-items-center filter-items flex-wrap">
       <div v-if="search_query" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.search') }}: {{ search_query }}
-        <button class="btn btn-default btn-xs" @click="search_query= null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('search_query')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="status" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.status') }}: {{ status['name_' + $i18n.locale] }}
-        <button class="btn btn-default btn-xs" @click="status = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('status')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="created_at" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('table.createdAt') }}: {{ $moment(created_at).format(date_format) }}
-        <button class="btn btn-default btn-xs" @click="created_at = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('created_at')">
           <i class="fa fa-times" />
         </button>
       </div>
@@ -281,24 +281,6 @@ export default {
       dcid: 'delivery_company/dcid'
     })
   },
-  watch: {
-    params () {
-      this.refreshDatatable()
-    },
-    search_query (val) {
-      this.onloading = true
-      if (!this.awaitingSearch) {
-        if (this.time_out) {
-          clearTimeout(this.time_out)
-        }
-        this.time_out = setTimeout(() => {
-          this.getPartnerCompanyList(1)
-          this.awaitingSearch = false
-        }, 1000)
-      }
-      this.awaitingSearch = true
-    }
-  },
   data () {
     return {
       onloading: true,
@@ -326,16 +308,27 @@ export default {
     this.getPartnerCompanyList(1)
   },
   methods: {
+    removeKeyword (keyword) {
+      switch (keyword) {
+        case 'search_query':
+          this.search_query = null
+          break
+        case 'status':
+          this.status = null
+          break
+        case 'created_at':
+          this.created_at = null
+          break
+      }
+      this.getPartnerCompanyList(1)
+    },
     clearFilter () {
       this.search_query = null
       this.is_enable = null
       this.created_at = null
-      this.refreshDatatable()
-    },
-    refreshDatatable: debounce(function () {
       this.getPartnerCompanyList(1)
-    }, 500),
-    getPartnerCompanyList (page = null) {
+    },
+    getPartnerCompanyList: debounce(function (page = 1) {
       this.onloading = true
       let createdAt = null
       if (page) { this.page = page }
@@ -360,7 +353,7 @@ export default {
         }).finally(() => {
           this.onloading = false
         })
-    }
+    }, 500)
   }
 }
 </script>

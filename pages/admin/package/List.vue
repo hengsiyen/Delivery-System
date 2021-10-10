@@ -8,6 +8,7 @@
             :placeholder="$t('label.search')"
             class="form-control"
             type="search"
+            @keyup="getTrackingPackageList(1)"
           >
           <div class="input-group-append">
             <span class="input-group-text bg-white border-left-0">
@@ -46,7 +47,7 @@
                 v-model="shop"
                 name="shop"
                 class="custom-select"
-                @change="refreshDatatable"
+                @change="getTrackingPackageList(1)"
               >
                 <option :value="null">
                   {{ $t('label.all') }}
@@ -69,7 +70,7 @@
                 v-model="partner_company"
                 name="partner_company"
                 class="custom-select"
-                @change="refreshDatatable"
+                @change="getTrackingPackageList(1)"
               >
                 <option :value="null">
                   {{ $t('label.all') }}
@@ -92,7 +93,7 @@
                 v-model="is_paid"
                 name="payment_status"
                 class="custom-select"
-                @change="refreshDatatable"
+                @change="getTrackingPackageList(1)"
               >
                 <option :value="null">
                   {{ $t('label.all') }}
@@ -115,7 +116,7 @@
                 v-model="status"
                 name="status"
                 class="custom-select"
-                @change="refreshDatatable"
+                @change="getTrackingPackageList(1)"
               >
                 <option :value="null">
                   {{ $t('label.all') }}
@@ -137,8 +138,8 @@
                 :lang="datePickerLang"
                 :format="date_format"
                 input-class="form-control"
-                @input="refreshDatatable"
-                @clear="refreshDatatable"
+                @input="getTrackingPackageList(1)"
+                @clear="getTrackingPackageList(1)"
               />
             </div>
           </div>
@@ -156,37 +157,37 @@
     <div class="w-100 d-flex align-items-center filter-items flex-wrap">
       <div v-if="search_query" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.search') }}: {{ search_query }}
-        <button class="btn btn-default btn-xs" @click="search_query= null">
-          <i class="fa fa-times" />
-        </button>
-      </div>
-      <div v-if="status" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
-        {{ $t('label.status') }}: {{ status['name_' +$i18n.locale] }}
-        <button class="btn btn-default btn-xs" @click="status = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('search_query')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="shop" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.shop') }}: {{ shop.name_en }}
-        <button class="btn btn-default btn-xs" @click="shop = null">
-          <i class="fa fa-times" />
-        </button>
-      </div>
-      <div v-if="is_paid" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
-        {{ $t('label.payment_status') }}: {{ is_paid['name_' + $i18n.locale] }}
-        <button class="btn btn-default btn-xs" @click="is_paid = true">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('shop')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="partner_company" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('label.third_party_company') }}: {{ partner_company.name_en }}
-        <button class="btn btn-default btn-xs" @click="partner_company = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('partner_company')">
+          <i class="fa fa-times" />
+        </button>
+      </div>
+      <div v-if="is_paid" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
+        {{ $t('label.payment_status') }}: {{ is_paid['name_' + $i18n.locale] }}
+        <button class="btn btn-default btn-xs" @click="removeKeyword('is_paid')">
+          <i class="fa fa-times" />
+        </button>
+      </div>
+      <div v-if="status" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
+        {{ $t('label.status') }}: {{ status['name_' +$i18n.locale] }}
+        <button class="btn btn-default btn-xs" @click="removeKeyword('status')">
           <i class="fa fa-times" />
         </button>
       </div>
       <div v-if="created_at" class="mb-3 rounded py-1 px-2 text-white bg-white shadow-item">
         {{ $t('table.createdAt') }}: {{ $moment(created_at).format(date_format) }}
-        <button class="btn btn-default btn-xs" @click="created_at = null">
+        <button class="btn btn-default btn-xs" @click="removeKeyword('created_at')">
           <i class="fa fa-times" />
         </button>
       </div>
@@ -316,7 +317,7 @@
                         :ref="'driverModal' + item._id"
                         :package-data="item"
                         :currencies="currencies"
-                        @onSubmit="refreshDatatable"
+                        @onSubmit="getTrackingPackageList(1)"
                       />
                     </div>
                   </div>
@@ -367,41 +368,7 @@ export default {
     ...mapGetters({
       number_per_page: 'delivery_company/number_per_page',
       currencies: 'delivery_company/currencies'
-    }),
-    params () {
-      // eslint-disable-next-line camelcase
-      let createdAt = null
-      if (this.created_at) {
-        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
-      }
-      return {
-        lang: this.$i18n.locale,
-        status: this.status ? this.status.value : null,
-        shop_id: this.shop ? this.shop._id : null,
-        is_paid: this.is_paid ? this.is_paid.value : null,
-        partner_company_id: this.partner_company ? this.partner_company._id : null,
-        created_at: createdAt,
-        search_query: this.search_query
-      }
-    }
-  },
-  watch: {
-    params () {
-      this.refreshDatatable()
-    },
-    search_query (val) {
-      this.onloading = true
-      if (!this.awaitingSearch) {
-        if (this.time_out) {
-          clearTimeout(this.time_out)
-        }
-        this.time_out = setTimeout(() => {
-          this.getTrackingPackageList(1)
-          this.awaitingSearch = false
-        }, 1000)
-      }
-      this.awaitingSearch = true
-    }
+    })
   },
   data () {
     return {
@@ -429,6 +396,38 @@ export default {
     this.getTrackingPackageList(1)
   },
   methods: {
+    removeKeyword (keyword) {
+      switch (keyword) {
+        case 'search_query':
+          this.search_query = null
+          break
+        case 'status':
+          this.status = null
+          break
+        case 'shop':
+          this.shop = null
+          break
+        case 'driver':
+          this.driver = null
+          break
+        case 'is_paid':
+          this.is_paid = null
+          break
+        case 'partner_company':
+          this.partner_company = null
+          break
+        case 'created_at':
+          this.created_at = null
+          break
+        case 'assigned_at':
+          this.assigned_at = null
+          break
+        case 'finished_at':
+          this.finished_at = null
+          break
+      }
+      this.getTrackingPackageList(1)
+    },
     openDriverModal (item = null) {
       if (this.$refs['driverModal' + item._id]) {
         if (item && item.driver_id && item.delivery_charge) {
@@ -444,12 +443,6 @@ export default {
         }
       }
     },
-    refreshDatatable () {
-      this.onloading = true
-      setTimeout(() => {
-        this.getTrackingPackageList(1)
-      }, 500)
-    },
     clearFilter () {
       this.search_query = null
       this.status = null
@@ -459,7 +452,7 @@ export default {
       this.partner_company_id = null
       this.partner_company = null
       this.created_at = new Date()
-      this.refreshDatatable()
+      this.getTrackingPackageList(1)
     },
     getFetchData () {
       this.$axios.get(this.$base_api + '/api/backend/fetch-data/data-for-tracking')
@@ -474,15 +467,23 @@ export default {
         })
     },
     getTrackingPackageList: debounce(function (page = null) {
-      if (page) {
-        this.page = page
+      this.onloading = true
+      if (page) { this.page = page }
+      let createdAt = null
+      if (this.created_at) {
+        createdAt = this.$moment(this.created_at).format('YYYY-MM-DD')
       }
-      this.$axios.post(this.$base_api + '/api/backend/tracking/list',
-        Object.assign({
-          page: this.page,
-          number_per_page: this.number_per_page,
-          ...this.params
-        }, this.params))
+      this.$axios.post(this.$base_api + '/api/backend/tracking/list', {
+        page: this.page,
+        number_per_page: this.number_per_page,
+        lang: this.$i18n.locale,
+        status: this.status ? this.status.value : null,
+        shop_id: this.shop ? this.shop._id : null,
+        is_paid: this.is_paid ? this.is_paid.value : null,
+        partner_company_id: this.partner_company ? this.partner_company._id : null,
+        created_at: createdAt,
+        search_query: this.search_query
+      })
         .then((res) => {
           this.total_pages = res.data.total_pages
           this.list_packages = res.data.data

@@ -350,7 +350,7 @@ export default {
     },
     setDefaultCurrency (currencies = []) {
       if (currencies && currencies.length) {
-        // this.delivery_charge_currency = currencies[0]
+        this.delivery_charge_currency = currencies[0]
         if (this.packageData && this.packageData.third_party_company_id) {
           this.extra_charge_currency = currencies[0]
         }
