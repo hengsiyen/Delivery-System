@@ -280,7 +280,7 @@
                                 :class="item.delivery_charge_currency && item.delivery_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
                                 @click="item.delivery_charge_currency = currency"
                               >
-                                {{ item.code }}
+                                {{ currency.code }}
                               </button>
                             </div>
                           </template>
@@ -335,7 +335,7 @@
                                 :class="item.extra_charge_currency && item.extra_charge_currency._id === currency._id ? 'btn-primary' : 'input-group-text'"
                                 @click="item.extra_charge_currency = currency"
                               >
-                                {{ item.code }}
+                                {{ currency.code }}
                               </button>
                             </div>
                           </template>
@@ -435,7 +435,6 @@ export default {
       this.onloading = true
       this.page = 1
       if (page) {
-        console.log(page)
         this.page = page
       }
       this.list_packages = []
