@@ -176,15 +176,15 @@
                   </td>
                   <td colspan="3" class="text-right">
                     <p class="mb-0 text-bold">
-                    <span v-if="invoice.sub_total_riel">
-                      {{ invoice.sub_total_riel | numFormat(checkFormatCurrency({code: 'KHR'})) }}
-                    </span>
+                      <span v-if="invoice.sub_total_riel">
+                        {{ invoice.sub_total_riel | numFormat(checkFormatCurrency({code: 'KHR'})) }}
+                      </span>
                       <span v-else>{{ '0' }}</span> KHR
                     </p>
                     <p class="mb-0 text-bold">
-                    <span v-if="invoice.sub_total_dollar">
-                      {{ invoice.sub_total_dollar | numFormat(checkFormatCurrency({code: 'USD'})) }}
-                    </span>
+                      <span v-if="invoice.sub_total_dollar">
+                        {{ invoice.sub_total_dollar | numFormat(checkFormatCurrency({code: 'USD'})) }}
+                      </span>
                       <span v-else>{{ '0' }}</span> USD
                     </p>
                   </td>
@@ -240,8 +240,8 @@
                       </p>
                       <p class="mb-0 text-md text-bold text-red">
                         <del>{{
-                            invoice ? invoice.sub_total_riel : '0' | numFormat(checkFormatCurrency({code: 'KHR'}))
-                          }} KHR
+                          invoice ? invoice.sub_total_riel : '0' | numFormat(checkFormatCurrency({code: 'KHR'}))
+                        }} KHR
                         </del>
                       </p>
                       <p class="mb-0 text-bold">
@@ -251,8 +251,8 @@
                       </p>
                       <p class="mb-0 text-sm text-bold text-red">
                         <del>{{
-                            invoice ? invoice.sub_total_dollar : '0' | numFormat(checkFormatCurrency({code: 'KHR'}))
-                          }} KHR
+                          invoice ? invoice.sub_total_dollar : '0' | numFormat(checkFormatCurrency({code: 'KHR'}))
+                        }} KHR
                         </del>
                       </p>
                     </template>
@@ -299,7 +299,7 @@
         </table>
       </div>
     </div>
-    <slot></slot>
+    <slot />
   </div>
 </template>
 

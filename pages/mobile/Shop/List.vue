@@ -47,55 +47,56 @@
         <template v-else>
           <div class="row">
             <div class="list_items col-12">
-              <template v-for="(item, key) in list_shops">
-                <div :key="key" class="list_item list_item-hover d-flex px-0" @click="selectShop(item)">
-                  <div class="col-3 col-md-2 col-lg-2 col-xl-1">
-                    <template v-if="item.logo">
-                      <img :src="getSrc(item.logo)" alt="" class="img-thumbnail">
-                    </template>
-                    <template v-else>
-                      <img :src="shop_img" alt="" class="img-thumbnail">
-                    </template>
+              <template v-if="list_shops && list_shops.length">
+                <template v-for="(item, key) in list_shops">
+                  <div :key="key" class="list_item list_item-hover d-flex px-0" @click="selectShop(item)">
+                    <div class="col-3 col-md-2 col-lg-2 col-xl-1">
+                      <template v-if="item.logo">
+                        <img :src="getSrc(item.logo)" alt="" class="img-thumbnail">
+                      </template>
+                      <template v-else>
+                        <img :src="shop_img" alt="" class="img-thumbnail">
+                      </template>
+                    </div>
+                    <div class="col-9 col-md-4 col-lg-4 col-xl-5">
+                      <div class="list_item-block m-0">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-store mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.name_en }}
+                        </div>
+                      </div>
+                      <div class="list_item-block m-0">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-user mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.owner_name }}
+                        </div>
+                      </div>
+                      <div class="list_item-block m-0">
+                        <div class="list_item-block-icon">
+                          <i class="fas fa-phone mr-2" />
+                        </div>
+                        <div class="list_item-label text-truncate">
+                          {{ item.phone }}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-9 col-md-4 col-lg-4 col-xl-5">
-                    <div class="list_item-block m-0">
-                      <div class="list_item-block-icon">
-                        <i class="fas fa-store mr-2" />
-                      </div>
-                      <div class="list_item-label text-truncate">
-                        {{ item.name_en }}
-                      </div>
-                    </div>
-                    <div class="list_item-block m-0">
-                      <div class="list_item-block-icon">
-                        <i class="fas fa-user mr-2" />
-                      </div>
-                      <div class="list_item-label text-truncate">
-                        {{ item.owner_name }}
-                      </div>
-                    </div>
-                    <div class="list_item-block m-0">
-                      <div class="list_item-block-icon">
-                        <i class="fas fa-phone mr-2" />
-                      </div>
-                      <div class="list_item-label text-truncate">
-                        {{ item.phone }}
-                      </div>
-                    </div>
+                </template>
+                <infinite-loading ref="infinite" spinner="spiral" :identifier="infiniteId" @infinite="getShopList">
+                  <div slot="spinner">
+                    <i class="fas fa-circle-notch fa-spin" />
                   </div>
-                </div>
+                  <div slot="no-more" />
+                  <div slot="no-results" />
+                </infinite-loading>
               </template>
-              <infinite-loading ref="infinite" spinner="spiral" @infinite="getShopList">
-                <div slot="spinner">
-                  <i class="fas fa-circle-notch fa-spin" />
-                </div>
-                <div slot="no-more" />
-                <div slot="no-results">
-                  <div class="list_item align-items-center w-100 justify-content-center">
-                    {{ $t('label.no_result_found') }}
-                  </div>
-                </div>
-              </infinite-loading>
+              <template v-else>
+                <NoResult />
+              </template>
             </div>
           </div>
         </template>
@@ -111,6 +112,7 @@ import ButtonAddNew from '@/components/UiElements/ButtonAddNew'
 import HeaderMobile from '@/components/Layouts/HeaderMobile'
 import ButtonBackMobile from '@/components/UiElements/ButtonBackMobile'
 import FooterMobile from '@/pages/mobile/_components/Footer'
+import NoResult from '@/components/NoResult'
 
 export default {
   name: 'MobileShopList',
@@ -120,7 +122,7 @@ export default {
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
   },
-  components: { FooterMobile, ButtonBackMobile, HeaderMobile, ButtonAddNew },
+  components: { NoResult, FooterMobile, ButtonBackMobile, HeaderMobile, ButtonAddNew },
   computed: {
     ...mapGetters({
       number_per_page: 'delivery_company/number_per_page',
@@ -131,6 +133,7 @@ export default {
     return {
       onloading: true,
       list_shops: [],
+      infiniteId: +new Date(),
       page: 1,
       total_pages: 0,
       date_format: 'DD/MM/YYYY',
@@ -155,19 +158,11 @@ export default {
       this.search_query = null
       this.search()
     },
-    resetStateChanger () {
-      if (this.$refs.infinite && this.$refs.infinite.stateChanger) {
-        this.$refs.infinite.stateChanger.reset()
-      }
-    },
     search: debounce(function () {
-      if (this.$refs.infinite) {
-        this.page = 1
-        this.list_shops = []
-        this.resetStateChanger()
-      } else {
-        this.getShopList()
-      }
+      this.infiniteId += 1
+      this.page = 1
+      this.list_shops = []
+      this.getShopList()
     }, 500),
     getShopList ($state) {
       this.$axios

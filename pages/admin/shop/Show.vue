@@ -118,7 +118,7 @@
         </div>
       </div>
     </div>
-    <ShopInvoiceListModal ref="shopListInvoices"/>
+    <ShopInvoiceListModal ref="shopListInvoices" />
   </div>
 </template>
 

@@ -9,7 +9,13 @@
       <div class="row mobile-body-padding">
         <div class="col-lg-12 p-0">
           <div class="form-row">
+            <div class="col-lg-12 mb-3 text-center border-bottom asr-form-sub-title text-capitalize">
+              <label>{{ $t('label.shopInfo') }}</label>
+            </div>
+          </div>
+          <div class="form-row">
             <div class="form-group col-lg-6">
+              <label class="font-s-14 required">{{ $t('label.nameEn') }}</label>
               <div class="input-group" :class="{'is-invalid': checkValidate('shop_name_en')}">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-store" /></span>
@@ -27,6 +33,7 @@
               </div>
             </div>
             <div class="form-group col-lg-6">
+              <label class="font-s-14">{{ $t('label.nameKm') }}</label>
               <div class="input-group" :class="{'is-invalid': checkValidate('shop_name_km')}">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-store" /></span>
@@ -44,24 +51,7 @@
               </div>
             </div>
             <div class="form-group col-lg-6">
-              <div class="input-group" :class="{'is-invalid': checkValidate('owner_name')}">
-                <div class="input-group-prepend">
-                  <span class=" input-group-text mobile-icon"><i class="fas fa-user" /></span>
-                </div>
-                <input
-                  id="owner_name"
-                  v-model="owner_name"
-                  type="text"
-                  class="form-control"
-                  :placeholder="$t('pla.owner_name')"
-                  :class="{'is-invalid': checkValidate('owner_name')}"
-                >
-              </div>
-              <div v-if="checkValidate('owner_name')" class="invalid-feedback">
-                {{ validate.owner_name[0] }}
-              </div>
-            </div>
-            <div class="form-group col-lg-6">
+              <label class="font-s-14 required">{{ $t('label.phone') }}</label>
               <div class="input-group" :class="{'is-invalid': checkValidate('phone')}">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-phone" /></span>
@@ -81,6 +71,7 @@
               </div>
             </div>
             <div class="form-group col-lg-6">
+              <label class="font-s-14">{{ $t('label.email') }}</label>
               <div class="input-group" :class="{'is-invalid': checkValidate('email')}">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-envelope" /></span>
@@ -99,6 +90,7 @@
               </div>
             </div>
             <div class="form-group col-lg-3">
+              <label class="font-s-14">{{ $t('label.home_number') }}</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-hashtag" /></span>
@@ -113,6 +105,7 @@
               </div>
             </div>
             <div class="form-group col-lg-3">
+              <label class="font-s-14">{{ $t('label.street_number') }}</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-road" /></span>
@@ -127,6 +120,7 @@
               </div>
             </div>
             <div class="form-group col-lg-6">
+              <label class="font-s-14">{{ $t('label.province') }}</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-map-marker-alt" /></span>
@@ -149,6 +143,7 @@
               </div>
             </div>
             <div class="form-group col-lg-6">
+              <label class="font-s-14">{{ $t('label.district') }}</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-map-marker-alt" /></span>
@@ -172,17 +167,12 @@
               </div>
             </div>
             <div class="form-group col-lg-6">
+              <label class="font-s-14">{{ $t('label.commune') }}</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-map-marker-alt" /></span>
                 </div>
-                <select
-                  id="commune"
-                  v-model="commune"
-                  class="form-control"
-                  :disabled="!district"
-                  @change="getVillage"
-                >
+                <select id="commune" v-model="commune" class="form-control" :disabled="!district" @change="getVillage">
                   <option selected hidden :value="null">
                     {{ $t('label.select_commune') }}
                   </option>
@@ -195,16 +185,12 @@
               </div>
             </div>
             <div class="form-group col-lg-6">
+              <label class="font-s-14">{{ $t('label.village') }}</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class=" input-group-text mobile-icon"><i class="fas fa-map-marker-alt" /></span>
                 </div>
-                <select
-                  id="village"
-                  v-model="village"
-                  class="form-control"
-                  :disabled="!commune"
-                >
+                <select id="village" v-model="village" class="form-control" :disabled="!commune">
                   <option selected hidden :value="null">
                     {{ $t('label.select_village') }}
                   </option>
@@ -217,6 +203,7 @@
               </div>
             </div>
             <div class="form-group col-lg-12">
+              <label class="font-s-14">{{ $t('label.description') }}</label>
               <textarea
                 id="description"
                 v-model="description"
@@ -228,6 +215,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group">
+                <label class="font-s-14">{{ $t('label.status') }}</label>
                 <div class="w-100">
                   <div class="btn-group" role="group" aria-label="Basic example">
                     <button
@@ -251,185 +239,219 @@
               </div>
             </div>
           </div>
-        </div>
-        <template v-if="selected_shop_logo || preview_shop_logo">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <div class="d-flex align-items-center justify-content-between">
-                <div><label class="mb-0">{{ $t('label.shop_logo') }}</label></div>
+          <div class="form-row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div><label class="mb-0">{{ $t('label.shop_logo') }}</label></div>
+                  <div>
+                    <div class="btn btn-default btn-upload-image">
+                      <i class="fas fa-image" />
+                      <input
+                        ref="getShopLogoImg"
+                        type="file"
+                        name="file"
+                        accept="image/*"
+                        class="cursor-pointer"
+                        @change="getShopLogoImg"
+                      >
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div class="form-group mx-auto croppie-w">
-              <template v-if="selected_shop_logo">
-                <div :style="`width: ${croppie_size}px`" class="text-center mx-auto">
-                  <vue-croppie
-                    ref="croppieShopLogoRef"
-                    :enable-orientation="true"
-                    :boundary="{ width: croppie_size, height: croppie_size}"
-                    :enable-resize="false"
-                    :viewport="{ width: 295, height: 295, type: 'square' }"
-                    @result="resultShopLogo"
-                  />
-                  <button class="btn btn-primary btn-upload-image">
-                    <i class="fas fa-link" />
-                    <input
-                      ref="getShopLogoImg"
-                      type="file"
-                      name="file"
-                      accept="image/*"
-                      @change="getShopLogoImg"
-                    >
-                  </button>
-                  <button class="btn btn-light" @click="rotateShopLogo(-90)">
-                    <i class="fas fa-undo-alt" />
-                  </button>
-                  <button class="btn btn-light" @click="rotateShopLogo(90)">
-                    <i class="fas fa-redo-alt" />
-                  </button>
-                  <button class="btn btn-light" @click="removeShopLogoImg">
-                    <i class="fas fa-times" />
-                  </button>
-                </div>
-              </template>
-              <template v-else>
-                <div
-                  :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
-                  class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
-                >
-                  <template v-if="isEdit && preview_shop_logo">
-                    <img :src="preview_shop_logo" class="img-thumbnail">
-                  </template>
-                  <template v-else>
-                    <div class="text-gray">
-                      <i class="fas fa-upload fa-2x" />
-                      <p class="mt-2">
-                        {{ $t('label.click_here_to_browse_image') }}
-                      </p>
+            <template v-if="selected_shop_logo || preview_shop_logo">
+              <div class="col-lg-12">
+                <div class="form-group mx-auto croppie-w">
+                  <template v-if="selected_shop_logo">
+                    <div :style="`width: ${croppie_size}px`" class="text-center mx-auto">
+                      <vue-croppie
+                        ref="croppieShopLogoRef"
+                        :enable-orientation="true"
+                        :boundary="{ width: croppie_size, height: croppie_size}"
+                        :enable-resize="false"
+                        :viewport="{ width: 295, height: 295, type: 'square' }"
+                        @result="resultShopLogo"
+                      />
+                      <button class="btn btn-primary btn-upload-image">
+                        <i class="fas fa-link" />
+                        <input
+                          ref="getShopLogoImg"
+                          type="file"
+                          name="file"
+                          accept="image/*"
+                          @change="getShopLogoImg"
+                        >
+                      </button>
+                      <button class="btn btn-light" @click="rotateShopLogo(-90)">
+                        <i class="fas fa-undo-alt" />
+                      </button>
+                      <button class="btn btn-light" @click="rotateShopLogo(90)">
+                        <i class="fas fa-redo-alt" />
+                      </button>
+                      <button class="btn btn-light" @click="removeShopLogoImg">
+                        <i class="fas fa-times" />
+                      </button>
                     </div>
                   </template>
-                  <input
-                    ref="getShopLogoImg"
-                    type="file"
-                    name="file"
-                    accept="image/*"
-                    class="cursor-pointer"
-                    @change="getShopLogoImg"
-                  >
+                  <template v-else>
+                    <div
+                      :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
+                      class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
+                    >
+                      <template v-if="isEdit && preview_shop_logo">
+                        <img :src="preview_shop_logo" class="img-thumbnail">
+                      </template>
+                      <template v-else>
+                        <div class="text-gray">
+                          <i class="fas fa-upload fa-2x" />
+                          <p class="mt-2">
+                            {{ $t('label.click_here_to_browse_image') }}
+                          </p>
+                        </div>
+                      </template>
+                      <input
+                        ref="getShopLogoImg"
+                        type="file"
+                        name="file"
+                        accept="image/*"
+                        class="cursor-pointer"
+                        @change="getShopLogoImg"
+                      >
+                    </div>
+                  </template>
+                  <template v-if="isEdit && preview_shop_logo && !selected_shop_logo">
+                    <p class="mt-2 text-center">
+                      {{ $t('label.tap_on_image_to_edit') }}
+                    </p>
+                  </template>
                 </div>
-              </template>
-              <template v-if="isEdit && preview_shop_logo && !selected_shop_logo">
-                <p class="mt-2 text-center">
-                  {{ $t('label.tap_on_image_to_edit') }}
-                </p>
-              </template>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="col-lg-12 p-0 mt-4">
+          <div class="form-row">
+            <div class="col-lg-12 mb-3 text-center border-bottom asr-form-sub-title text-capitalize">
+              <label>{{ $t('label.ownerInfo') }}</label>
             </div>
           </div>
-        </template>
-        <template v-if="selected_shop_owner || preview_shop_owner">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <div class="d-flex align-items-center justify-content-between">
-                <div>
-                  <label class="mb-0">{{ $t('label.shop_owner') }}</label>
+          <div class="form-row">
+            <div class="form-group col-lg-6">
+              <label class="font-s-14 required">{{ $t('label.owner_name') }}</label>
+              <div class="input-group" :class="{'is-invalid': checkValidate('owner_name')}">
+                <div class="input-group-prepend">
+                  <span class=" input-group-text mobile-icon"><i class="fas fa-user" /></span>
                 </div>
-                <div />
+                <input
+                  id="owner_name"
+                  v-model="owner_name"
+                  type="text"
+                  class="form-control"
+                  :placeholder="$t('pla.owner_name')"
+                  :class="{'is-invalid': checkValidate('owner_name')}"
+                >
+              </div>
+              <div v-if="checkValidate('owner_name')" class="invalid-feedback">
+                {{ validate.owner_name[0] }}
               </div>
             </div>
-
-            <div class="form-group mx-auto croppie-w">
-              <template v-if="selected_shop_owner">
-                <div :style="`width: ${croppie_size}px`" class="text-center mx-auto">
-                  <vue-croppie
-                    ref="croppieShopOwnerRef"
-                    :enable-orientation="true"
-                    :boundary="{ width: croppie_size, height: croppie_size}"
-                    :enable-resize="false"
-                    :viewport="{ width: 295, height: 295, type: 'square' }"
-                    @result="resultShopOwner"
-                  />
-                  <button class="btn btn-primary btn-upload-image">
-                    <i class="fas fa-link" />
+          </div>
+          <div class="form-row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <label class="mb-0">{{ $t('label.shop_owner_image') }}</label>
+                  </div>
+                  <div class="btn btn-default btn-upload-image">
+                    <i class="fas fa-user-circle" />
                     <input
-                      ref="getShopLogoImg"
+                      ref="getShopOwnerImg"
                       type="file"
                       name="file"
                       accept="image/*"
+                      class="cursor-pointer"
                       @change="getShopOwnerImg"
                     >
-                  </button>
-                  <!-- Rotate angle is Number -->
-                  <button class="btn btn-light" @click="rotateShopOwner(-90)">
-                    <i class="fas fa-undo-alt" />
-                  </button>
-                  <button class="btn btn-light" @click="rotateShopOwner(90)">
-                    <i class="fas fa-redo-alt" />
-                  </button>
-                  <button class="btn btn-light" @click="removeShopOwnerImg">
-                    <i class="fas fa-times" />
-                  </button>
+                  </div>
                 </div>
-              </template>
-              <template v-else>
-                <div
-                  :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
-                  class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
-                >
-                  <template v-if="isEdit && preview_shop_owner">
-                    <img :src="preview_shop_owner" class="img-thumbnail">
-                  </template>
-                  <template v-else>
-                    <div class="text-gray">
-                      <i class="fas fa-upload fa-2x" />
-                      <p class="mt-2">
-                        {{ $t('label.click_here_to_browse_image') }}
-                      </p>
+              </div>
+            </div>
+            <template v-if="selected_shop_owner || preview_shop_owner">
+              <div class="col-lg-12">
+                <div class="form-group mx-auto croppie-w">
+                  <template v-if="selected_shop_owner">
+                    <div :style="`width: ${croppie_size}px`" class="text-center mx-auto">
+                      <vue-croppie
+                        ref="croppieShopOwnerRef"
+                        :enable-orientation="true"
+                        :boundary="{ width: croppie_size, height: croppie_size}"
+                        :enable-resize="false"
+                        :viewport="{ width: 295, height: 295, type: 'square' }"
+                        @result="resultShopOwner"
+                      />
+                      <button class="btn btn-primary btn-upload-image">
+                        <i class="fas fa-link" />
+                        <input
+                          ref="getShopLogoImg"
+                          type="file"
+                          name="file"
+                          accept="image/*"
+                          @change="getShopOwnerImg"
+                        >
+                      </button>
+                      <!-- Rotate angle is Number -->
+                      <button class="btn btn-light" @click="rotateShopOwner(-90)">
+                        <i class="fas fa-undo-alt" />
+                      </button>
+                      <button class="btn btn-light" @click="rotateShopOwner(90)">
+                        <i class="fas fa-redo-alt" />
+                      </button>
+                      <button class="btn btn-light" @click="removeShopOwnerImg">
+                        <i class="fas fa-times" />
+                      </button>
                     </div>
                   </template>
-                  <input
-                    ref="getShopOwnerImg"
-                    type="file"
-                    name="file"
-                    accept="image/*"
-                    class="cursor-pointer"
-                    @change="getShopOwnerImg"
-                  >
+                  <template v-else>
+                    <div
+                      :style="`width: ${croppie_size}px; height: ${croppie_size}px`"
+                      class="mx-auto bg-whitesmoke d-flex align-items-center justify-content-center rounded btn-upload-image border cursor-pointer"
+                    >
+                      <template v-if="isEdit && preview_shop_owner">
+                        <img :src="preview_shop_owner" class="img-thumbnail">
+                      </template>
+                      <template v-else>
+                        <div class="text-gray">
+                          <i class="fas fa-upload fa-2x" />
+                          <p class="mt-2">
+                            {{ $t('label.click_here_to_browse_image') }}
+                          </p>
+                        </div>
+                      </template>
+                      <input
+                        ref="getShopOwnerImg"
+                        type="file"
+                        name="file"
+                        accept="image/*"
+                        class="cursor-pointer"
+                        @change="getShopOwnerImg"
+                      >
+                    </div>
+                  </template>
+                  <template v-if="isEdit && preview_shop_owner && !selected_shop_owner">
+                    <p class="mt-2 text-center">
+                      {{ $t('label.tap_on_image_to_edit') }}
+                    </p>
+                  </template>
                 </div>
-              </template>
-              <template v-if="isEdit && preview_shop_owner && !selected_shop_owner">
-                <p class="mt-2 text-center">
-                  {{ $t('label.tap_on_image_to_edit') }}
-                </p>
-              </template>
-            </div>
-          </div>
-        </template>
-      </div>
-      <div class="mobile-btn-action border-top mobile-body-padding">
-        <div class="w-50">
-          <div class="btn btn-default btn-upload-image">
-            <i class="fas fa-image" />
-            <input
-              ref="getShopLogoImg"
-              type="file"
-              name="file"
-              accept="image/*"
-              class="cursor-pointer"
-              @change="getShopLogoImg"
-            >
-          </div>
-          <div class="btn btn-default btn-upload-image">
-            <i class="fas fa-user-circle" />
-            <input
-              ref="getShopOwnerImg"
-              type="file"
-              name="file"
-              accept="image/*"
-              class="cursor-pointer"
-              @change="getShopOwnerImg"
-            >
+              </div>
+            </template>
           </div>
         </div>
+      </div>
+      <div class="mobile-btn-action border-top mobile-body-padding">
         <div class="w-100 text-right">
           <button
             class="btn"

@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex align-items-center justify-content-center bg-light rounded no-found text-capitalize">
+  <div
+    class="d-flex align-items-center justify-content-center rounded no-found text-capitalize"
+    :class="customClass"
+  >
     {{ $t(message) }}
   </div>
 </template>
@@ -11,6 +14,10 @@ export default {
     message: {
       type: String,
       default: 'label.no_result_found'
+    },
+    customClass: {
+      type: String,
+      default: ''
     }
   }
 }

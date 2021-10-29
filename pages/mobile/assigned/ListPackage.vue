@@ -35,90 +35,91 @@
         <template v-else>
           <div class="row">
             <div class="list_items col-12">
-              <div v-if="list_packages && list_packages.length" class="pt-3 pb-3 d-flex">
-                <button class="btn btn-link btn-block text-danger mr-1" @click="rejectDelivery">
-                  <i class="fas fa-times-circle mr-2" />
-                  <strong>{{ $t('btn.reject_all_packages') }}</strong>
-                </button>
-                <button class="btn btn-primary btn-block mt-0" @click="acceptDelivery">
-                  <i class="fas fa-check-circle mr-2" />
-                  <strong>{{ $t('btn.accept_all_packages') }}</strong>
-                </button>
-              </div>
-              <template v-for="(item, key) in list_packages">
-                <div :key="key" class="list_item list_item-hover">
-                  <div class="d-flex px-0 w-100" @click="showPackage(item)">
-                    <div class="col-3 col-md-2 col-lg-2 col-xl-1">
-                      <template v-if="item.media">
-                        <img :src="getSrc(item.media.src)" alt="" class="img-thumbnail">
-                      </template>
-                      <template v-else>
-                        <img :src="package_img" alt="" class="img-thumbnail">
-                      </template>
-                    </div>
-                    <div class="col-9 col-md-4 col-lg-4 col-xl-5">
-                      <div class="list_item-block m-0 font-s-14">
-                        <div class="list_item-label text-truncate">
-                          <strong>{{ item.customer_phone }} - {{ item.customer_name }}</strong>
-                        </div>
-                      </div>
-                      <div class="list_item-block m-0 font-s-13">
-                        <div class="list_item-block-icon">
-                          <i class="fas fa-qrcode mr-2" />
-                        </div>
-                        <div class="list_item-label text-truncate">
-                          {{ item.code }}
-                        </div>
-                      </div>
-                      <div class="list_item-block m-0 font-s-13">
-                        <div class="list_item-block-icon">
-                          <i class="fas fa-map-marker-alt mr-2" />
-                        </div>
-                        <div class="list_item-label">
-                          <strong>{{ item.customer_address }}</strong>
-                        </div>
-                      </div>
-                      <div v-if="item.note" class="list_item-block m-0 font-s-13">
-                        <div class="list_item-block-icon">
-                          <i class="fas fa-sticky-note mr-2" />
-                        </div>
-                        <div class="list_item-label">
-                          {{ item.note }}
-                        </div>
-                      </div>
-                      <div v-if="item.assigned_at" class="list_item-block m-0 font-s-13">
-                        <div class="list_item-block-icon">
-                          <i class="fas fa-user-check mr-2" />
-                        </div>
-                        <div class="list_item-label text-truncate">
-                          {{ getDateFormat(item.assigned_at) }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pt-2 d-flex">
-                    <button class="btn btn-link text-danger btn-block mr-1" @click="rejectByEachPackage(item)">
-                      <i class="fas fa-times-circle mr-2" />
-                      <strong>{{ $t('btn.reject') }}</strong>
-                    </button>
-                    <button class="btn btn-primary btn-block mt-0" @click="acceptByEachPackage(item)">
-                      <i class="fas fa-check-circle mr-2" />
-                      <strong>{{ $t('btn.accept') }}</strong>
-                    </button>
-                  </div>
+              <template v-if="list_packages && list_packages.length">
+                <div class="pt-3 pb-3 d-flex">
+                  <button class="btn btn-link btn-block text-danger mr-1" @click="rejectDelivery">
+                    <i class="fas fa-times-circle mr-2" />
+                    <strong>{{ $t('btn.reject_all_packages') }}</strong>
+                  </button>
+                  <button class="btn btn-primary btn-block mt-0" @click="acceptDelivery">
+                    <i class="fas fa-check-circle mr-2" />
+                    <strong>{{ $t('btn.accept_all_packages') }}</strong>
+                  </button>
                 </div>
+                <template v-for="(item, key) in list_packages">
+                  <div :key="key" class="list_item list_item-hover">
+                    <div class="d-flex px-0 w-100" @click="showPackage(item)">
+                      <div class="col-3 col-md-2 col-lg-2 col-xl-1">
+                        <template v-if="item.media">
+                          <img :src="getSrc(item.media.src)" alt="" class="img-thumbnail">
+                        </template>
+                        <template v-else>
+                          <img :src="package_img" alt="" class="img-thumbnail">
+                        </template>
+                      </div>
+                      <div class="col-9 col-md-4 col-lg-4 col-xl-5">
+                        <div class="list_item-block m-0 font-s-14">
+                          <div class="list_item-label text-truncate">
+                            <strong>{{ item.customer_phone }} - {{ item.customer_name }}</strong>
+                          </div>
+                        </div>
+                        <div class="list_item-block m-0 font-s-13">
+                          <div class="list_item-block-icon">
+                            <i class="fas fa-qrcode mr-2" />
+                          </div>
+                          <div class="list_item-label text-truncate">
+                            {{ item.code }}
+                          </div>
+                        </div>
+                        <div class="list_item-block m-0 font-s-13">
+                          <div class="list_item-block-icon">
+                            <i class="fas fa-map-marker-alt mr-2" />
+                          </div>
+                          <div class="list_item-label">
+                            <strong>{{ item.customer_address }}</strong>
+                          </div>
+                        </div>
+                        <div v-if="item.note" class="list_item-block m-0 font-s-13">
+                          <div class="list_item-block-icon">
+                            <i class="fas fa-sticky-note mr-2" />
+                          </div>
+                          <div class="list_item-label">
+                            {{ item.note }}
+                          </div>
+                        </div>
+                        <div v-if="item.assigned_at" class="list_item-block m-0 font-s-13">
+                          <div class="list_item-block-icon">
+                            <i class="fas fa-user-check mr-2" />
+                          </div>
+                          <div class="list_item-label text-truncate">
+                            {{ getDateFormat(item.assigned_at) }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pt-2 d-flex">
+                      <button class="btn btn-link text-danger btn-block mr-1" @click="rejectByEachPackage(item)">
+                        <i class="fas fa-times-circle mr-2" />
+                        <strong>{{ $t('btn.reject') }}</strong>
+                      </button>
+                      <button class="btn btn-primary btn-block mt-0" @click="acceptByEachPackage(item)">
+                        <i class="fas fa-check-circle mr-2" />
+                        <strong>{{ $t('btn.accept') }}</strong>
+                      </button>
+                    </div>
+                  </div>
+                </template>
+                <infinite-loading ref="infinite" spinner="spiral" :identifier="infiniteId" @infinite="getPackageList">
+                  <div slot="spinner">
+                    <i class="fas fa-circle-notch fa-spin" />
+                  </div>
+                  <div slot="no-more" />
+                  <div slot="no-results" />
+                </infinite-loading>
               </template>
-              <infinite-loading ref="infinite" spinner="spiral" @infinite="getPackageList">
-                <div slot="spinner">
-                  <i class="fas fa-circle-notch fa-spin" />
-                </div>
-                <div slot="no-more" />
-                <div slot="no-results">
-                  <div class="list_item align-items-center w-100 justify-content-center">
-                    {{ $t('label.no_result_found') }}
-                  </div>
-                </div>
-              </infinite-loading>
+              <template v-else>
+                <NoResult />
+              </template>
             </div>
           </div>
         </template>
@@ -133,6 +134,7 @@ import HeaderMobile from '@/components/Layouts/HeaderMobile'
 import { mapGetters } from 'vuex'
 import { debounce } from 'debounce'
 import FooterMobile from '@/pages/mobile/_components/Footer'
+import NoResult from '@/components/NoResult'
 
 export default {
   name: 'AssignedListPackage',
@@ -142,7 +144,7 @@ export default {
       titleTemplate: '%s | ' + process.env.VUE_APP_NAME
     }
   },
-  components: { FooterMobile, HeaderMobile },
+  components: { NoResult, FooterMobile, HeaderMobile },
   computed: {
     ...mapGetters({
       dcid: 'delivery_company/dcid',
@@ -157,6 +159,7 @@ export default {
       total_pages: 0,
       date_format: 'DD/MM/YYYY',
       search_query: null,
+      infiniteId: +new Date(),
       is_enable: null,
       created_at: null
     }
@@ -172,19 +175,11 @@ export default {
       this.search_query = null
       this.search()
     },
-    resetStateChanger () {
-      if (this.$refs.infinite && this.$refs.infinite.stateChanger) {
-        this.$refs.infinite.stateChanger.reset()
-      }
-    },
     search: debounce(function () {
-      if (this.$refs.infinite) {
-        this.page = 1
-        this.list_packages = []
-        this.resetStateChanger()
-      } else {
-        this.getPackageList()
-      }
+      this.page = 1
+      this.infiniteId += 1
+      this.list_packages = []
+      this.getPackageList()
     }, 500),
     getPackageList ($state) {
       let userId = null

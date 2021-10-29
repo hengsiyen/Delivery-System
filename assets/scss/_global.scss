@@ -265,4 +265,11 @@ margin-left:  auto;
   .swal2-content {
     padding: 0 !important;
   }
+
+  .card-header {
+    display: block;
+    & .card-title {
+      margin-bottom: 15px;
+    }
+  }
 }
