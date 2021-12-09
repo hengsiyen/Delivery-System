@@ -20,7 +20,7 @@ export default {
           return this.msg
         }
       }
-      return this.$t('validation.fieled_is_required')
+      return this.$t('validation.field_is_required')
     }
   }
 }
