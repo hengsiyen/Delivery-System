@@ -1,0 +1,275 @@
+:root {
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #f4623a;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: var(--blue);
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --secondary-font: #{$secondary-font};
+  --primary-font: #{$primary-font};
+}
+
+body {
+  font-family: var(--primary-font);
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.bg-unset {
+  background-color: unset !important;
+  background: unset !important;
+}
+
+.w-65 {
+  width: 65% !important;
+}
+
+.w-35 {
+  width: 35% !important;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+.onloading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & i {
+    color: #999;
+    font-size: 24px;
+  }
+}
+i.fa-circle-notch.fa-spin {
+  color: #999;
+  font-size: 24px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  &:after {
+    content: unset;
+  }
+
+  & .card-title {
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  & .card-tools,
+  & .card-title {
+    display: block;
+    float: unset;
+  }
+
+  & .card-tools {
+    margin-right: 0;
+  }
+}
+
+.bg-teal {
+  background-color: var(--teal);
+}
+
+.bg-orange {
+  background-color: var(--orange);
+}
+
+.bg-orange, .bg-orange>a {
+  color: white !important;
+}
+
+.mx-datepicker {
+  display: block;
+  width: 100%;
+}
+
+.mx-calendar-content .cell {
+  color: var(--dark);
+  &.today {
+    color: var(--primary);
+    &.active {
+      color: white;
+    }
+  }
+}
+
+.mx-btn-text,
+.mx-calendar-content .cell,
+.mx-table th,
+.today {
+  font-weight: 700;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  & .btn {
+    border: 1px solid lightgray;
+    color: var(--dark);
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: white;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+  }
+
+  & input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.comma {
+  &:after {
+    content: ', ';
+    margin-right: 8px;
+  }
+  &:last-child:after {
+    content: none;
+    margin-right: 0;
+  }
+}
+
+.input-group .mx-datepicker .mx-input-wrapper input.form-control {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.btn-upload-image {
+  position: relative;
+  overflow: hidden;
+
+  & input {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.bg-whitesmoke {
+  background-color: #f4f6f9;
+}
+
+input.disabled {
+  cursor: not-allowed;
+}
+
+.dropdown-toggle.no-icon::after {
+  content: none !important;
+}
+
+.w-300px {
+  width: 300px;
+}
+
+.w-65 {
+  width: 65% !important;
+}
+
+.w-35 {
+  width: 35% !important;
+}
+
+.z-2 {
+  z-index: 2;
+}
+.search-on_header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.search-with_btn_1 {
+  width: calc(100% - 225px)
+}
+
+.search-_btn_1 {
+margin-left:  auto;
+}
+
+.search-with_btn_2 {
+  width: calc(100% - 365px)
+}
+
+.search-with_btn_3 {
+  width: calc(100% - 535px)
+}
+
+.search-_btn_3,
+.search-_btn_2 {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 991.98px) {
+  .elevation-4 {
+    box-shadow: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .swal2-content {
+    padding: 0 !important;
+  }
+
+  .card-header {
+    display: block;
+    & .card-title {
+      margin-bottom: 15px;
+    }
+  }
+}

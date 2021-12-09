@@ -1,0 +1,40 @@
+.mobile-container {
+  padding: 1rem .5rem;
+  & .container-header {
+    padding: 0 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & h1 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+}
+.mobile-content-h {
+  height: calc(100vh - 75px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.mobile-body-padding {
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+}
+
+.input-group-text.mobile-icon i {
+  width: 15px;
+}
+
+.mobile-btn-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 8px;
+  background-color: white;
+  z-index: 1000;
+}

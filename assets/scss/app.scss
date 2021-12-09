@@ -1,0 +1,18 @@
+@import "variables";
+
+@import "node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "node_modules/admin-lte/dist/css/adminlte.min.css";
+@import "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+@import 'node_modules/vue2-datepicker/index.css';
+@import 'node_modules/croppie/croppie.css';
+
+@import "fonts";
+@import "plugins";
+@import "components";
+
+@import "utils";
+@import "typography";
+@import "pages";
+@import "icon";
+@import "global";

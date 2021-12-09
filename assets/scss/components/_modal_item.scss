@@ -1,0 +1,153 @@
+.driver__search,
+{
+  & .form-control {
+    width: 100%;
+  }
+
+  & .btn {
+    width: 19%;
+    margin-left: auto;
+  }
+}
+
+.third_party_company__search,
+.shop__search {
+  display: flex;
+  & .form-control {
+    width: 80%;
+  }
+
+  & .btn {
+    width: 19%;
+    margin-left: auto;
+  }
+}
+
+.third_party_company__items,
+.shop__items,
+.driver__items {
+  height: calc(100% - 3.5rem);
+  overflow-y: auto;
+  padding: 0 7.5px;
+}
+
+.modal__item {
+  background-color: #f8f8f8;
+  border-radius: 0.25rem;
+  display: flex;
+  position: relative;
+  margin: 8px 0;
+  padding: 15px;
+  color: var(--dark);
+  width: 100%;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: #e6e6e6;
+    & .modal__image {
+      & .img-thumbnail {
+        background-color: #e6e6e6;
+        border-color: #e6e6e6;
+      }
+    }
+  }
+
+  &.active {
+    background-color: var(--primary);
+    color: white;
+    & .modal__image {
+      & .img-thumbnail {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+    }
+  }
+
+  & .modal__image {
+    width: 75px;
+    & .img-thumbnail {
+      background-color: #f8f8f8;
+      border-color: #f8f8f8;
+      box-shadow: none;
+    }
+  }
+
+  & .modal__info {
+    width: calc(100% - 75px);
+    padding: 8px 16px;
+
+    & label {
+      cursor: pointer;
+    }
+  }
+
+  & i.icon-left {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: 11px;
+  }
+
+  & span.icon-right,
+  & i.icon-right {
+    right: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+  & i.icon-right {
+    font-size: 16px;
+  }
+
+  & span.icon-right {
+    font-size: 8px;
+    color: var(--primary)
+  }
+}
+
+.third_party_company__onloading,
+.driver__onloading,
+.shop__onloading {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & i {
+    font-size: 35px;
+    color: var(--primary);
+  }
+}
+
+@media screen and (max-width: 576px){
+  .third_party_company__search,
+  .shop__search {
+    display: block;
+    & .form-control {
+      width: 100%;
+    }
+
+    & .btn {
+      margin-top: 0.75rem;
+      width: 100%;
+      display: block;
+    }
+  }
+
+  .third_party_company__items,
+  .shop__items,
+  .driver__items {
+    height: calc(100% - 6.5rem);
+    padding: 0;
+    & .row {
+      margin: 0;
+      & .col-lg-6 {
+        padding: 0;
+      }
+    }
+  }
+}

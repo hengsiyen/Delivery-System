@@ -1,0 +1,106 @@
+.required:after {
+  content: ' *';
+  color: var(--danger);
+}
+
+.margin-right-5 {
+  margin-right: 5px;
+}
+
+.label-error {
+  color: var(--danger);
+  font-size: 12px;
+}
+
+.tooltip {
+  position: fixed;
+}
+
+.table-full-width {
+  width: 100% !important;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
+
+.tooltip {
+  font-family: var(--primary-font);
+}
+
+.margin-top {
+  margin-top: 15px;
+}
+
+.mx-datepicker-popup {
+  z-index: 1060 !important;
+}
+
+.box-title {
+  display: inline-block;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1;
+}
+
+.card-footer {
+  background-color: white;
+  border-width: 1px;
+}
+
+.toast {
+  opacity: 1 !important;
+}
+
+a.nav-link:hover {
+  cursor: pointer;
+}
+
+.modal-min-height {
+  min-height: calc(100% - 24rem);
+}
+
+.dropdown-no-icon.dropdown-toggle::after {
+  content: unset;
+}
+
+.has-bg {
+  & .nav-item {
+    margin-right: 8px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+    & .nav-link {
+      background-color: var(--light);
+      &.active {
+        background-color: var(--primary);
+      }
+  }
+}
+
+label.text-normal {
+  font-weight: 500 !important;
+}
+
+.border-1 {
+  border-width: 1px !important;
+}
+
+.border-2 {
+  border-width: 2px !important;
+}
+
+.table .thead-dark th {
+  background-color: var(--dark);
+}
+
+.modal-title {
+  text-transform: capitalize;
+}
+

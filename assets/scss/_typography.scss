@@ -1,0 +1,82 @@
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+p, span, article, b, ul, li, ol,
+.toast-message, .toast-title {
+  font-family: var(--primary-font);
+}
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+.label-default {
+  background-color: var(--secondary);
+}
+
+.label-primary {
+  background-color: var(--primary);
+}
+
+.label-success {
+  background-color: var(--success);
+}
+
+.label-info {
+  background-color: var(--info);
+}
+
+.label-warning {
+  background-color: var(--warning);
+}
+
+.label-danger {
+  background-color: var(--danger);
+}
+.font-s-10 {
+  font-size: 10px;
+}
+
+.font-s-11 {
+  font-size: 11px;
+}
+
+.font-s-13 {
+  font-size: 13px;
+}
+
+.font-s-14 {
+  font-size: 14px;
+}
+
+.font-s-16 {
+  font-size: 18px;
+}
+
+.font-s-18 {
+  font-size: 18px;
+}
+
+.font-s-20 {
+  font-size: 20px;
+}
+
+.font-s-22 {
+  font-size: 22px;
+}
+
+.font-s-24 {
+  font-size: 24px;
+}
+
+.font-s-28 {
+  font-size: 28px;
+}

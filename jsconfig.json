@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "target": "ES6",
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["build", ".nuxt", "node_modules"]
+}
