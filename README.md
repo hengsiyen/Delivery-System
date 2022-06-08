@@ -3,7 +3,7 @@ Delivery System Backend
 
 A Delivery System backend is integrated with the Nuxtjs framework
 
-![Screenshot](https://adminlte.io/AdminLTE3.png)
+#![Screenshot](https://adminlte.io/AdminLTE3.png)
 
 ## Build Setup
 
